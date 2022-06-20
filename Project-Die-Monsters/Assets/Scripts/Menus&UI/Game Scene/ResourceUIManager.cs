@@ -157,7 +157,7 @@ public class ResourceUIManager : MonoBehaviour // This Script now tracks player 
 
     public void updateLifeText()
     {
-        BoardMang[1].GetComponent<Text>().text = "3 / 3";
+        BoardMang[1].GetComponent<Text>().text = GameObject.FindGameObjectWithTag("GameController").get
     }
 
     public void endTurnBtnControll()
