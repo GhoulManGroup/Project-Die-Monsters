@@ -141,6 +141,7 @@ public class LevelController : MonoBehaviour
         this.GetComponent<ResourceUIManager>().turnPlayer = participants[turnPlayer].gameObject;
         this.GetComponent<CreaturePoolController>().turnPlayer = participants[turnPlayer].gameObject;
         whoseTurn = "Player" + turnPlayer.ToString();
+        this.GetComponent<ResourceUIManager>().updateLifeText();
     }
 
 
@@ -165,9 +166,7 @@ public class LevelController : MonoBehaviour
                         break;
                 }
 
-                this.GetComponent<CreatureController>().ResetCreatureStates();
-                this.GetComponent<CameraController>().ActiveCam = "Board";
-                this.GetComponent<CameraController>().switchCamera();
+                ResetFunction();
                 this.GetComponent<ResourceUIManager>().BoardMang[0].GetComponent<Image>().enabled = true;
             }
         }
@@ -193,5 +192,14 @@ public class LevelController : MonoBehaviour
                      break;
              }
          }*/
-    }        
+    } 
+    
+    public void ResetFunction()
+    {
+
+        this.GetComponent<ResourceUIManager>().updateLifeText();
+        this.GetComponent<CreatureController>().ResetCreatureStates();
+        this.GetComponent<CameraController>().ActiveCam = "Board";
+        this.GetComponent<CameraController>().switchCamera();
+    }
 }
