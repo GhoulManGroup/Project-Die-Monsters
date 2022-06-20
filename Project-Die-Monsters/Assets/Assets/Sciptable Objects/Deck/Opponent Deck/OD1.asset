@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6551d4dcbe800794097012028b64dc56, type: 3}
+  m_Name: OD1
+  m_EditorClassIdentifier: 
+  DeckDie:
+  - {fileID: 11400000, guid: 2f5edf0700295814eb68f0721002c58e, type: 2}
+  - {fileID: 11400000, guid: 40e744ef1f8103c45bb36b17b826578c, type: 2}
+  - {fileID: 11400000, guid: c0930f589409b504aad59864a4bc1f33, type: 2}
+  - {fileID: 11400000, guid: ff6e7205fb5313c46bdb2ccd17a93467, type: 2}
+  - {fileID: 11400000, guid: 5d7a54d043ef7704396a9af0e22bf765, type: 2}
+  - {fileID: 11400000, guid: d7e269db26edbb14da7ca295461a6ea0, type: 2}
+  - {fileID: 11400000, guid: b999a5dc34d7e284aa486fbb6f0687a6, type: 2}
+  - {fileID: 11400000, guid: 05bd62ead78aaf8479272de5098a874c, type: 2}
+  - {fileID: 11400000, guid: e191dd7201fa4d94398f562d40365cde, type: 2}
+  - {fileID: 11400000, guid: daf1dfdeb83ee5c419c131a3cf0ef7dd, type: 2}
+  - {fileID: 11400000, guid: 75ec9b7e55864444388e7172240686ed, type: 2}
+  - {fileID: 11400000, guid: 401b5e7abd7df6e41ba2d4c263763f12, type: 2}
+  - {fileID: 11400000, guid: c7625fbfc24c6144c94ef5d7af2485bb, type: 2}
+  - {fileID: 11400000, guid: 9ef8c73a4c486b548873c6874d70c758, type: 2}
+  - {fileID: 11400000, guid: 32810556f9f714c4d9dc5bbbc8cd0a64, type: 2}
+  DeckSizeMin: 12
+  DeckSizeCap: 15

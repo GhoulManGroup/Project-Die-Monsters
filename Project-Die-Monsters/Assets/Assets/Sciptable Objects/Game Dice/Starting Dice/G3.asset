@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 442d4f4127b13e345b0d2df6a7e5c597, type: 3}
+  m_Name: G3
+  m_EditorClassIdentifier: 
+  dieColor: 3
+  dieCreatureLevel: 1
+  diceContents: 0
+  firstCrest: 0
+  secondCrest: 1
+  thirdCrest: 0
+  forthCrest: 2
+  fifthCrest: 0
+  sixthCrest: 3
+  dieCreature: {fileID: 11400000, guid: 6e1980e31b6d7a340bdf992cb3a50619, type: 2}
+  dieID: 6
+  dieInDeck: 0
+  Icon: {fileID: 0}

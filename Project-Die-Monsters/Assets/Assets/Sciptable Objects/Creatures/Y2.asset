@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24381e643d237d243a458a2acea94416, type: 3}
+  m_Name: Y2
+  m_EditorClassIdentifier: 
+  CardArt: {fileID: 21300000, guid: 2aadd19f999dae5479d5d3e8fb59d151, type: 3}
+  cardArt3D: {fileID: 2100000, guid: e5905b3d88d0d314092bf06c1882ec0e, type: 2}
+  TribeSprite: {fileID: 21300000, guid: 8260297b326814e4abacf1b7d66d4524, type: 3}
+  LevelSprite: {fileID: 21300000, guid: 0bf535b73586257428c6a3a4705eb7b5, type: 3}
+  TypeSprite: {fileID: 21300000, guid: 8260297b326814e4abacf1b7d66d4524, type: 3}
+  CreatureName: Hard Shell Y2
+  Health: 20
+  Attack: 15
+  Defence: 15
+  creatureType: 0
+  creatureColor: 2
+  creaturelevel: 0
