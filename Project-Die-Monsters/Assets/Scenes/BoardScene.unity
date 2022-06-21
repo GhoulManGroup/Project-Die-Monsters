@@ -11168,7 +11168,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cc7fe1593b645347adffd2ce47a83ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DungeonLordTile: []
+  DungeonLord:
+  - {fileID: 1919373821}
+  - {fileID: 349105848}
   BoardCamera: {fileID: 1939956120}
   FreeCamera: {fileID: 1793928403}
   playerFab: {fileID: 1640307794083697217, guid: f365061563cae5d409cb98399b77873a, type: 3}
@@ -12691,11 +12693,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3648128587198631215, guid: fd4cfba2f0ce02a46b121523ec02c816, type: 3}
       propertyPath: myOwner
-      value: Player0
+      value: None
       objectReference: {fileID: 0}
     - target: {fileID: 3648128587198631215, guid: fd4cfba2f0ce02a46b121523ec02c816, type: 3}
       propertyPath: myState
-      value: DungeonLord
+      value: Empty
       objectReference: {fileID: 0}
     - target: {fileID: 3800196390336350424, guid: fd4cfba2f0ce02a46b121523ec02c816, type: 3}
       propertyPath: myOwner
@@ -12999,11 +13001,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6442101468146466307, guid: fd4cfba2f0ce02a46b121523ec02c816, type: 3}
       propertyPath: myOwner
-      value: Player1
+      value: None
       objectReference: {fileID: 0}
     - target: {fileID: 6442101468146466307, guid: fd4cfba2f0ce02a46b121523ec02c816, type: 3}
       propertyPath: myState
-      value: DungeonLord
+      value: Empty
       objectReference: {fileID: 0}
     - target: {fileID: 6448909269070927912, guid: fd4cfba2f0ce02a46b121523ec02c816, type: 3}
       propertyPath: myOwner

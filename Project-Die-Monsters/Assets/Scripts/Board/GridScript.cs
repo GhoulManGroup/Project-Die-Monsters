@@ -26,9 +26,7 @@ public class GridScript : MonoBehaviour
     void Start()
     {
         LvlRef = GameObject.FindGameObjectWithTag("LevelController");
-        CheckForDungeonConnection();
         UpdateMaterial();
-        setUpDungeLordAdjacent();
     }
 
     // Update is called once per frame
@@ -68,7 +66,6 @@ public class GridScript : MonoBehaviour
         // If the tile that the dungeon spawner is above is empty and vaild for placement, check connecting tile states to determin connections.
         if (myState == "Empty")
         {
-            Debug.Log("Inside Grid");
             for (int i = 0; i < 4; i++)
             {
                 switch (i)
@@ -81,7 +78,15 @@ public class GridScript : MonoBehaviour
                             {                                
                                 if (Forward.collider.GetComponent<GridScript>().myOwner == LvlRef.GetComponent<LevelController>().whoseTurn) // tile is connected to our dungeon
                                 {
-                                    turnPlayerDungeonConnection = true;
+                                    if (Forward.collider.GetComponent<GridScript>().myState == "DungeonTile")
+                                    {
+                                        turnPlayerDungeonConnection = true;
+                                    }
+
+                                    if (Forward.collider.GetComponent<GridScript>().myState == "DungeonLord")
+                                    {
+                                        turnPlayerDungeonConnection = true;
+                                    }
                                 }                              
                             }
                         }
@@ -94,7 +99,15 @@ public class GridScript : MonoBehaviour
                             {
                                 if (Back.collider.GetComponent<GridScript>().myOwner == LvlRef.GetComponent<LevelController>().whoseTurn) // tile is connected to our dungeon
                                 {
-                                    turnPlayerDungeonConnection = true;
+                                    if (Back.collider.GetComponent<GridScript>().myState == "DungeonTile")
+                                    {
+                                        turnPlayerDungeonConnection = true;
+                                    }
+
+                                    if (Back.collider.GetComponent<GridScript>().myState == "DungeonLord")
+                                    {
+                                        turnPlayerDungeonConnection = true;
+                                    }
                                 }
                             }
                         }
@@ -130,7 +143,15 @@ public class GridScript : MonoBehaviour
                             {
                                 if (Right.collider.GetComponent<GridScript>().myOwner == LvlRef.GetComponent<LevelController>().whoseTurn) // tile is connected to our dungeon
                                 {
-                                    turnPlayerDungeonConnection = true;
+                                    if (Right.collider.GetComponent<GridScript>().myState == "DungeonTile")
+                                    {
+                                        turnPlayerDungeonConnection = true;
+                                    }
+
+                                    if (Right.collider.GetComponent<GridScript>().myState == "DungeonLord")
+                                    {
+                                        turnPlayerDungeonConnection = true;
+                                    }
                                 }
                             }
                         }
@@ -146,14 +167,6 @@ public class GridScript : MonoBehaviour
     public void SpawnCreatureAbove()
     {
         Instantiate(creatureSpawnFab, new Vector3(this.transform.position.x, 0.3f, this.transform.position.z), Quaternion.identity);
-    }
-
-    public void MoveCreaturetome()
-    {
-        // move creature to this board tile then have it declare us its current tile.
-        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreature.transform.position = new Vector3(this.transform.position.x, 0.3f, this.transform.position.z);
-        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreature.GetComponent<CreatureToken>().declareTile();
-        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().subtractCrest();
     }
 
     public void CheckIfMovePossible() // check if the desired movement is allowed.
@@ -186,7 +199,7 @@ public class GridScript : MonoBehaviour
                     }
 
                 }
-                    break;
+                break;
             case "Left":
                 RaycastHit Left;
                 if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.back), out Left, 1f))
@@ -199,7 +212,7 @@ public class GridScript : MonoBehaviour
                         }
                     }
                 }
-                    break;
+                break;
             case "Right":
                 RaycastHit Right;
                 if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out Right, 1f))
@@ -216,9 +229,15 @@ public class GridScript : MonoBehaviour
         }
     }
 
-    public void setUpDungeLordAdjacent()
+    public void MoveCreaturetome()
     {
-        // this function will turn the tiles next to the dungeon lord to be active and placeable.
+        // move creature to this board tile then have it declare us its current tile.
+        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreature.transform.position = new Vector3(this.transform.position.x, 0.3f, this.transform.position.z);
+        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreature.GetComponent<CreatureToken>().declareTile();
+        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().subtractCrest();
     }
+
+   
+
 
 }

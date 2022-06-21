@@ -45,6 +45,8 @@ public class DungeonSpawner : MonoBehaviour
             for (int i = 0; i < DungeonTiles.Count; i++)
             {
                 DungeonTiles[i].GetComponent<MeshRenderer>().enabled = true;
+                // Run check placement when set active so that the Tile isnt set to can place from the last use.
+                CheckPlacement();
             }
         }
 
@@ -182,9 +184,11 @@ public class DungeonSpawner : MonoBehaviour
 
     public void UpdateBoard()
     {
+        // Runs a for loop and tells every tile in the grid 
         for (int i = 0; i < BoardTiles.Count; i++)
         {
-            BoardTiles[i].GetComponent<GridScript>().CheckForDungeonConnection();
+            //BoardTiles[i].GetComponent<GridScript>().CheckForDungeonConnection();
+            BoardTiles[i].GetComponent<GridScript>().turnPlayerDungeonConnection = false;
         }
     }
 }
