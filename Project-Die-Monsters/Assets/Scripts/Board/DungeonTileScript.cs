@@ -53,11 +53,12 @@ public class DungeonTileScript : MonoBehaviour
             {
                 if (Bellow.collider.GetComponent<GridScript>().myState == "Empty") // check that the tile is empty.
                 {
-                    Debug.Log("Above Empty Space");
+                    // When tile is empty have it check its neighbours.
+                    Bellow.collider.GetComponent<GridScript>().CheckForDungeonConnection();
                     aboveEmptySpace = true;
+
                     if (Bellow.collider.GetComponent<GridScript>().turnPlayerDungeonConnection == true) // then check if that tile would connect us to the existing dungon.
                     {
-                        Debug.Log("CP TPDB True");
                         wouldConnectToDungon = true;
                     }
 

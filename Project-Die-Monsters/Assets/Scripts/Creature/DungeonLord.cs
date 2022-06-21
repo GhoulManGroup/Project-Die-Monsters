@@ -16,4 +16,18 @@ public class DungeonLord : MonoBehaviour
         }
     }
 
+    public void SetDungeonLordTile()
+    {
+        // Set the tile bellow the dungeon lord object 
+        RaycastHit Down;
+
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out Down, 3f))
+        {
+            Debug.Log("SDLT");
+            Down.collider.GetComponent<GridScript>().myOwner = myOwner;
+            Down.collider.GetComponent<GridScript>().myState = "DungeonLord";
+            Down.collider.GetComponent<GridScript>().UpdateMaterial();
+        }
+    }
+
 }

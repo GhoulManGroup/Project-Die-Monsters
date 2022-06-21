@@ -7,7 +7,7 @@ public class LevelController : MonoBehaviour
 {
     [Header("Refrences")]
     GameObject mRef;
-    public List<GameObject> DungeonLordTile = new List<GameObject>(); // the two grid tiles which 
+    public List<GameObject> DungeonLord = new List<GameObject>(); // the two grid tiles which 
 
 
     [Header("LevelCameras")]
@@ -65,7 +65,14 @@ public class LevelController : MonoBehaviour
                         participants.Add(player1);
                         GameObject player2 = Instantiate(playerFab);
                         participants.Add(player2);
-                        
+
+                        //Setup the Dungeon Lords
+                        DungeonLord[0].GetComponent<DungeonLord>().myOwner = "Player0";
+                        DungeonLord[1].GetComponent<DungeonLord>().myOwner = "Player1";
+
+                        DungeonLord[0].GetComponent<DungeonLord>().SetDungeonLordTile();
+                        DungeonLord[1].GetComponent<DungeonLord>().SetDungeonLordTile();
+
                         break;
 
                     case "AI":
@@ -75,8 +82,13 @@ public class LevelController : MonoBehaviour
                 break;
         }
 
+        //Set the player decks.
         setDeck();
+
+        //Setup turn player.
         SetTurnPlayer();
+
+        //Update starting players crest UI.
         this.GetComponent<ResourceUIManager>().updateCrests(); 
 
     }
@@ -84,6 +96,7 @@ public class LevelController : MonoBehaviour
 
     public void setDeck() 
     {
+        // Adds a copy of the two chosen decks stored in the deck manager to the player objects own die lists.
         for (int i = 0; i < participants.Count; i++)
         {
             if (participants[i].GetComponent<Player>() != null)
@@ -196,9 +209,16 @@ public class LevelController : MonoBehaviour
     
     public void ResetFunction()
     {
+        //Reset the board tile dungeon connection state.
+        GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().UpdateBoard();
 
+        //Set the player turn UI to next turn player.
         this.GetComponent<ResourceUIManager>().updateLifeText();
+
+        //Reset the states of all creature piece on the board (Move, Attack, ect)
         this.GetComponent<CreatureController>().ResetCreatureStates();
+
+        //Set the camera to the right board state.
         this.GetComponent<CameraController>().ActiveCam = "Board";
         this.GetComponent<CameraController>().switchCamera();
     }
