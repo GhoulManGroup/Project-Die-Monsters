@@ -151,6 +151,7 @@ public class DiceScript : MonoBehaviour
     {
         if (CanBeChosen == true)
         {
+            inspectWindow.GetComponent<InspectTabScript>().usedFor = "DieInspect";
             inspectWindow.GetComponent<InspectTabScript>().ShowFunction();
             inspectWindow.GetComponent<InspectTabScript>().CurrentCreature = drawnDice[0].dieCreature;
             inspectWindow.GetComponent<InspectTabScript>().setDetails();

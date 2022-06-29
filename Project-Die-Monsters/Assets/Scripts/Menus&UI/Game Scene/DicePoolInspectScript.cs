@@ -23,7 +23,6 @@ public class DicePoolInspectScript : MonoBehaviour, IPointerEnterHandler, IPoint
     {
         if (this.GetComponent<Button>().interactable == true)
         {
-            GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().ShowFunction();
             // Possibly combine this function with the creature pool switch statement so this funciton changes the creature int to the last hovered over not pressed.
             string NameToInt = this.gameObject.name.ToString();
 
@@ -45,6 +44,8 @@ public class DicePoolInspectScript : MonoBehaviour, IPointerEnterHandler, IPoint
                     IntFromName = 4;
                     break;
             }
+            GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().usedFor = "PoolInspect";
+            GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().ShowFunction();
             GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().CurrentCreature = GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreaturePoolController>().turnPlayer.GetComponent<Player>().CreaturePool[IntFromName];
             GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().setDetails();
             GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreaturePoolController>().creaturePick = IntFromName;

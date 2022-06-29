@@ -20,7 +20,7 @@ public class CreatureController : MonoBehaviour //  this script oversees piece m
 
     public bool PiecePicked = false;
     string PieceType = "None"; // creature // Dungeon Lord
-    public GameObject ChosenCreature;
+    public GameObject ChosenCreature; // the creature piece we have selected.
     public string ChosenAction = "None";
     public bool attackWindowOpen = false;
 
@@ -129,31 +129,36 @@ public class CreatureController : MonoBehaviour //  this script oversees piece m
 
             case "Attack":
                 ChosenAction = "Attack";
-                attackWindowOpen = true;
                 lVLRef.GetComponent<LevelController>().turnPlayerPerformingAction = true;
-                GameObject.FindGameObjectWithTag("CombatWindow").GetComponent<AttackUIScript>().showTargetPick();
+                GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().usedFor = "AttackTargetSelection";
+                GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().CurrentCreatureToken = ChosenCreature;
+                GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().ShowFunction();
                 CheckPossibleActions();
                 HideAndShowButtons();
-                // open Attack Window;
                 break;
 
             case "Ability":
                 ChosenAction = "Ability";
                 lVLRef.GetComponent<LevelController>().turnPlayerPerformingAction = true;
-
                 break;
 
             case "Cancle":
-                ChosenAction = "None";
-                PiecePicked = false;
-                attackWindowOpen = false;
-                ChosenCreature = null;
-                lVLRef.GetComponent<CameraController>().ActiveCam = "Alt";
-                lVLRef.GetComponent<CameraController>().switchCamera();
-                lVLRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;
+                CancleBTNFunction();
                 break;
         }
         HideAndShowButtons();
+    }
+
+    public void CancleBTNFunction()
+    {
+        ChosenAction = "None";
+        PiecePicked = false;
+        attackWindowOpen = false;
+        ChosenCreature = null;
+        HideAndShowButtons();
+        lVLRef.GetComponent<CameraController>().ActiveCam = "Alt";
+        lVLRef.GetComponent<CameraController>().switchCamera();
+        lVLRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;
     }
 
     public void MoveInput()
