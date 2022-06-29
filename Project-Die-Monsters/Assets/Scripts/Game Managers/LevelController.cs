@@ -209,6 +209,9 @@ public class LevelController : MonoBehaviour
     
     public void ResetFunction()
     {
+        //Run cancle on end turn to close the control UI if it is still open.
+        this.GetComponent<CreatureController>().CancleBTNFunction();
+
         //Reset the board tile dungeon connection state.
         GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().UpdateBoard();
 

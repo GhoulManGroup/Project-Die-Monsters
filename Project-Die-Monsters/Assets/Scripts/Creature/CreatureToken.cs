@@ -70,13 +70,13 @@ public class CreatureToken : MonoBehaviour
         {
             if (LvlRef.GetComponent<CreatureController>().PiecePicked == false)
             {
-                CheckForAttackTarget();
                 LvlRef.GetComponent<CameraController>().ActiveCam = "Board";
                 LvlRef.GetComponent<CameraController>().switchCamera();
                 LvlRef.GetComponent<CreatureController>().ChosenAction = "Choosing";
                 LvlRef.GetComponent<CreatureController>().ChosenCreature = this.gameObject;
                 LvlRef.GetComponent<CreatureController>().PiecePicked = true;
                 LvlRef.GetComponent<CreatureController>().HideAndShowButtons();
+                CheckForAttackTarget();
             }
         }
         
@@ -95,19 +95,20 @@ public class CreatureToken : MonoBehaviour
     {
         targets.Clear(); // empty the list of any existing targets then add new ones.
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 4; i++)
         {
             switch (i)
-            {
+            {                
                 case 0:
                     RaycastHit Forward;
                     if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out Forward, attackDistance))
                     {
+                        Debug.Log("Col Check");
                         if (Forward.collider != null) // check to see if we hit anything
                         {
                             if (Forward.collider.GetComponent<CreatureToken>() != null)
                             {
-                                if (Forward.collider.GetComponent<CreatureToken>().myOwner == "AI")
+                                if (Forward.collider.GetComponent<CreatureToken>().myOwner != myOwner)
                                 {
                                     targets.Add(Forward.collider.gameObject);
                                 }
@@ -115,7 +116,7 @@ public class CreatureToken : MonoBehaviour
 
                             if (Forward.collider.GetComponent<DungeonLord>() != null)
                             {
-                                if (Forward.collider.GetComponent<DungeonLord>().myOwner == "AI")
+                                if (Forward.collider.GetComponent<DungeonLord>().myOwner != myOwner)
                                 {
                                     targets.Add(Forward.collider.gameObject);
                                 }
@@ -128,11 +129,12 @@ public class CreatureToken : MonoBehaviour
                     RaycastHit Back;
                     if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.back), out Back, attackDistance))
                     {
+                        Debug.Log("Col Check");
                         if (Back.collider != null) // check to see if we hit anything
                         {
                             if (Back.collider.GetComponent<CreatureToken>() != null)
                             {
-                                if (Back.collider.GetComponent<CreatureToken>().myOwner == "AI")
+                                if (Back.collider.GetComponent<CreatureToken>().myOwner != myOwner)
                                 {
                                     targets.Add(Back.collider.gameObject);
                                 }
@@ -140,7 +142,7 @@ public class CreatureToken : MonoBehaviour
 
                             if (Back.collider.GetComponent<DungeonLord>() != null)
                             {
-                                if (Back.collider.GetComponent<DungeonLord>().myOwner == "AI")
+                                if (Back.collider.GetComponent<DungeonLord>().myOwner != myOwner)
                                 {
                                     targets.Add(Back.collider.gameObject);
                                 }
@@ -153,11 +155,12 @@ public class CreatureToken : MonoBehaviour
                     RaycastHit Up;
                     if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.right), out Up, attackDistance))
                     {
+                        Debug.Log("Col Check");
                         if (Up.collider != null) // check to see if we hit anything
                         {
                             if (Up.collider.GetComponent<CreatureToken>() != null)
                             {
-                                if (Up.collider.GetComponent<CreatureToken>().myOwner == "AI")
+                                if (Up.collider.GetComponent<CreatureToken>().myOwner != myOwner)
                                 {
                                     targets.Add(Up.collider.gameObject);
                                 }
@@ -165,7 +168,7 @@ public class CreatureToken : MonoBehaviour
 
                             if (Up.collider.GetComponent<DungeonLord>() != null)
                             {
-                                if (Up.collider.GetComponent<DungeonLord>().myOwner == "AI")
+                                if (Up.collider.GetComponent<DungeonLord>().myOwner != myOwner)
                                 {
                                     targets.Add(Up.collider.gameObject);
                                 }
@@ -177,11 +180,12 @@ public class CreatureToken : MonoBehaviour
                     RaycastHit Down;
                     if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.left), out Down, attackDistance))
                     {
+                        Debug.Log("Col Check");
                         if (Down.collider != null) // check to see if we hit anything
                         {
                             if (Down.collider.GetComponent<CreatureToken>() != null)
                             {
-                                if (Down.collider.GetComponent<CreatureToken>().myOwner == "AI")
+                                if (Down.collider.GetComponent<CreatureToken>().myOwner != myOwner)
                                 {
                                     targets.Add(Down.collider.gameObject);
                                 }
@@ -189,7 +193,7 @@ public class CreatureToken : MonoBehaviour
 
                             if (Down.collider.GetComponent<DungeonLord>() != null)
                             {
-                                if (Down.collider.GetComponent<DungeonLord>().myOwner == "AI")
+                                if (Down.collider.GetComponent<DungeonLord>().myOwner != myOwner)
                                 {
                                     targets.Add(Down.collider.gameObject);
                                 }
@@ -197,10 +201,10 @@ public class CreatureToken : MonoBehaviour
                         }
                     }
                     break;
-            }
+            }          
 
         }
-
+        Debug.Log(targets.Count);
         if (targets.Count != 0)
         {
             canReachTarget = true;
