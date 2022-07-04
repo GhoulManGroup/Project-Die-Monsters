@@ -84,7 +84,8 @@ public class CreatureController : MonoBehaviour //  this script oversees piece m
             OrderBTNS[i].GetComponent<Button>().interactable = false;
         }
 
-        if (turnPlayer.GetComponent<Player>().moveCrestPoints >= ChosenCreature.GetComponent<CreatureToken>().moveCost)// check if we can pay the move cost of the creature.
+        //If the player has enough move crests to pay the cost of moving this creature a tile then enable this button.
+        if (turnPlayer.GetComponent<Player>().moveCrestPoints >= ChosenCreature.GetComponent<CreatureToken>().moveCost)
         {
             if (attackWindowOpen == false)
             {
@@ -94,23 +95,30 @@ public class CreatureController : MonoBehaviour //  this script oversees piece m
                 }
             }
         }
-        if (turnPlayer.GetComponent<Player>().attackCrestPoints > 0 && ChosenCreature.GetComponent<CreatureToken>().targets.Count != 0) // check we can pay attack cost & targets are adjacent
+        // Enable the attack button if the player has enough attack crests to pay the cost of an attack, & the creature pieces target list.count isnt 0.
+        if (turnPlayer.GetComponent<Player>().attackCrestPoints >= ChosenCreature.GetComponent<CreatureToken>().attackCost)
         {
-            if (ChosenAction != "Attack")
+            if (ChosenCreature.GetComponent<CreatureToken>().targets.Count != 0)
             {
-                OrderBTNS[1].GetComponent<Button>().interactable = true;
+                if (ChosenAction != "Attack")
+                {
+                    OrderBTNS[1].GetComponent<Button>().interactable = true;
+                }
             }
-
         }
 
+        //Add a check for ability later when we get into that step of development.
         if (turnPlayer.GetComponent<Player>().abiltyPowerCrestPoints != 0)
         {
             OrderBTNS[2].GetComponent<Button>().interactable = true;
         }
 
+        // Enable the cancle button.
         OrderBTNS[3].GetComponent<Button>().interactable = true;
 
+        
     }
+
     
 
     public void DeclareAction()
@@ -128,6 +136,7 @@ public class CreatureController : MonoBehaviour //  this script oversees piece m
                 break;
 
             case "Attack":
+                //Declare attack action to be made open the inspect window for target selection.
                 ChosenAction = "Attack";
                 lVLRef.GetComponent<LevelController>().turnPlayerPerformingAction = true;
                 GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().usedFor = "AttackTargetSelection";
