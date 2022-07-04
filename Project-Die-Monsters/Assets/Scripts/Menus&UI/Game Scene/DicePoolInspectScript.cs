@@ -57,6 +57,7 @@ public class DicePoolInspectScript : MonoBehaviour, IPointerEnterHandler, IPoint
     {
         if (this.GetComponent<Button>().interactable == true)
         {
+            //Debug.Log("Test");
             GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().HideFunction();
         }
         //throw new System.NotImplementedException();      

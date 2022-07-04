@@ -14,14 +14,17 @@ public class CreatureToken : MonoBehaviour
     public int health;
     public int attack;
     public int defence;
-    public int moveCost = 1;
-    public int attackDistance = 1;
-    public int abilityCost;
-    public string myOwner;
+
+    public int moveCost = 1; // how many move crests per tile.
+    public int attackDistance = 1; // how far we can attack.
+    public int attackCost = 1; // how much to attack.
+    public int abilityCost; // how much does the ability of creature cost.
+    public string myOwner; // who owns this piece.
 
     [Header("Creature Action Checks")]
-    public bool HasMovedThisTurn; //creatures may only be moved once per turn. (With Exception to those with special rules)
-    public bool hasUsedAbilityThisTurn;
+    public bool HasAttackedThisTurn = false; //A creature may only attack once this turn unless an ability specifies otherwise.
+    public bool HasMovedThisTurn; //A creature may only move once per turn unless an abilty specfies otherwise.
+    public bool hasUsedAbilityThisTurn; // A creature may only use their ability once per turn unless an ability specfies otherwise.
     public bool canReachTarget = false;
 
     [Header("CreatureCombat")]
@@ -63,7 +66,6 @@ public class CreatureToken : MonoBehaviour
         defence = myCreature.Defence;
     }
 
-
     public void OnMouseDown() // assign this as active creature target. Switch Camera State to Board View. 
     {
         if (myOwner == LvlRef.GetComponent<LevelController>().whoseTurn)
@@ -103,7 +105,6 @@ public class CreatureToken : MonoBehaviour
                     RaycastHit Forward;
                     if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out Forward, attackDistance))
                     {
-                        Debug.Log("Col Check");
                         if (Forward.collider != null) // check to see if we hit anything
                         {
                             if (Forward.collider.GetComponent<CreatureToken>() != null)
@@ -129,7 +130,6 @@ public class CreatureToken : MonoBehaviour
                     RaycastHit Back;
                     if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.back), out Back, attackDistance))
                     {
-                        Debug.Log("Col Check");
                         if (Back.collider != null) // check to see if we hit anything
                         {
                             if (Back.collider.GetComponent<CreatureToken>() != null)
@@ -155,7 +155,6 @@ public class CreatureToken : MonoBehaviour
                     RaycastHit Up;
                     if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.right), out Up, attackDistance))
                     {
-                        Debug.Log("Col Check");
                         if (Up.collider != null) // check to see if we hit anything
                         {
                             if (Up.collider.GetComponent<CreatureToken>() != null)
@@ -180,7 +179,6 @@ public class CreatureToken : MonoBehaviour
                     RaycastHit Down;
                     if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.left), out Down, attackDistance))
                     {
-                        Debug.Log("Col Check");
                         if (Down.collider != null) // check to see if we hit anything
                         {
                             if (Down.collider.GetComponent<CreatureToken>() != null)
@@ -204,10 +202,19 @@ public class CreatureToken : MonoBehaviour
             }          
 
         }
-        Debug.Log(targets.Count);
+
         if (targets.Count != 0)
         {
             canReachTarget = true;
+        }
+    } // raycast adjacent tiles for enemy creature pieces,
+
+    public void CheckState()
+    {
+        if (health <= 0)
+        {
+            Destroy(this.gameObject);
+            Debug.Log("Creature Dead");
         }
     }
     

@@ -145,7 +145,6 @@ public class DungeonSpawner : MonoBehaviour
 
         if (placeableTiles == 6 && spawnableCubeWouldConnectToDungeon == true)
         {
-            Debug.Log("Conditions of placement Met");
             canPlaceDie = true;
             placeableTiles = 0;
             spawnableCubeWouldConnectToDungeon = false;

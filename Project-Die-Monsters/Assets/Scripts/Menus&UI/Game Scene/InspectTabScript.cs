@@ -46,8 +46,12 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
             case "SelectCreatureBTN":
                 if (usedFor == "DieInspect")
                 {
-                    Debug.Log("Test");
                     AddCreatureToPool();
+                }
+
+                if (usedFor == "PoolInspect")
+                {
+
                 }
 
                 if (usedFor == "AttackTargetSelection")
@@ -73,6 +77,13 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
                     Debug.Log(targetShown);
                 }
                 break;
+            case "CloseBTN":
+                // go back to previous step.
+                lvlRef.GetComponent<CreatureController>().ChosenAction = "Choosing";
+                lvlRef.GetComponent<CreatureController>().CheckPossibleActions();
+                lvlRef.GetComponent<CreatureController>().HideAndShowButtons();
+                HideFunction();
+                break;
         }
     }
     public void HideFunction()
@@ -93,20 +104,23 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
 
     public void ShowFunction()
     {
+        int componentsToDisplay = 0;
+
         switch (usedFor)
         {
             case "DieInspect":
-
+                componentsToDisplay = 11;
                 break;
             case "PoolInspect":
-
+                componentsToDisplay = 10;
                 break;
             case "AttackTargetSelection":
                 DisplayCurrentTarget();
+                componentsToDisplay = myComponents.Count;
                 break;
         }
         // add check for state to choosecreature  button if not in dice window;
-        for (int i = 0; i < myComponents.Count; i++)
+        for (int i = 0; i < componentsToDisplay; i++)
         {
             if (myComponents[i].GetComponent<Image>() != null)
             {
@@ -184,5 +198,7 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
         CW.GetComponent<AttackUIScript>().attacker = CurrentCreatureToken;
         CW.GetComponent<AttackUIScript>().defender = CurrentCreatureToken.GetComponent<CreatureToken>().targets[targetShown].gameObject;
         CW.GetComponent<AttackUIScript>().displayAttackWindow();
+        //Hide this Window for now
+        HideFunction();
     }
 }
