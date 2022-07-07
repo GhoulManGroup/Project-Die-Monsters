@@ -23,7 +23,7 @@ public class AttackUIScript : MonoBehaviour
     public GameObject attackingPlayer;
     public GameObject defendingPlayer;
 
-    // The componenst of both objects.
+    // The components of both objects.
     public List<GameObject> AttackerDisplay = new List<GameObject>();
     public List<GameObject> DefenderDisplay = new List<GameObject>();
 
@@ -93,6 +93,8 @@ public class AttackUIScript : MonoBehaviour
             case "AttackBTN":
                 //Subtract the cost of the attack from the player attack crests pool.
                 attackingPlayer.GetComponent<Player>().attackCrestPoints -= attacker.GetComponent<CreatureToken>().attackCost;
+                //First check if creature is dungeon lord or other monster.
+
                 //Check if other player has enough points to cover their defence cost. if so offer choice if not skip to damage calc.
                 if (defendingPlayer.GetComponent<Player>().defenceCrestPoints > 0)
                 {
@@ -250,6 +252,9 @@ public class AttackUIScript : MonoBehaviour
         {
            UIElements[13].GetComponent<Image>().enabled = true;
         }
+
+        // tell each piece in the fight to update their states.
+        attacker.GetComponent<CreatureToken>().CheckForAttackTarget();
         defender.GetComponent<CreatureToken>().CheckState();
         attacker.GetComponent<CreatureToken>().HasAttackedThisTurn = true;
     }

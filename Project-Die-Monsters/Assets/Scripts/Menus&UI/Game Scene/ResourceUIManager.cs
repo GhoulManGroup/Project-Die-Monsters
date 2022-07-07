@@ -30,11 +30,6 @@ public class ResourceUIManager : MonoBehaviour // This Script now tracks player 
 
     }
 
-    public void Update()
-    {
-        endTurnBtnControll();
-    }
-
     public void bugFix()
     {
         DieMang[1].GetComponent<Button>().interactable = true;
@@ -87,8 +82,16 @@ public class ResourceUIManager : MonoBehaviour // This Script now tracks player 
                 break;
 
             case "CloseDiceWindowBTN":
+                //Player not performing an action.
                 this.GetComponent<LevelController>().turnPlayerPerformingAction = false;
-                this.GetComponent<DiceHandManager>().returnToPool(); // returns the remaning dice back to the dice pool.
+
+                //Player can now interact with their pieces on the board.
+                this.GetComponent<CreatureController>().canPickPiece = true;
+
+                // returns the remaning dice back to the dice pool.
+                this.GetComponent<DiceHandManager>().returnToPool(); 
+
+                //Hide this interface and switch camera view.
                 whatUItoShow = "Board";
                 this.GetComponent<DiceHandManager>().desiredDiceState = "Hidden";
                 this.GetComponent<DiceHandManager>().diceShow();
@@ -160,25 +163,4 @@ public class ResourceUIManager : MonoBehaviour // This Script now tracks player 
         BoardMang[1].GetComponent<Text>().text = this.GetComponent<LevelController>().whoseTurn;
     }
 
-    public void endTurnBtnControll()
-    {
-      /*  if (this.GetComponent<LevelController>().whoseTurn != "Player")
-        {
-            BoardMang[2].GetComponent<Button>().interactable = false;
-        }
-
-        else if (this.GetComponent<LevelController>().whoseTurn == "Player")
-        {
-            if (this.GetComponent<LevelController>().turnPlayerPerformingAction == true)
-            {
-                BoardMang[2].GetComponent<Button>().interactable = false;
-            }
-
-            else if (this.GetComponent<LevelController>().turnPlayerPerformingAction == false)
-            {
-                BoardMang[2].GetComponent<Button>().interactable = true;
-            }
-        }
-        */
-    }
 }

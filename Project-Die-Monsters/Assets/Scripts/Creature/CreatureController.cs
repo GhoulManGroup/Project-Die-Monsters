@@ -17,12 +17,17 @@ public class CreatureController : MonoBehaviour //  this script oversees piece m
     [Header("Order UI")]
     public List <GameObject> OrderBTNS = new List<GameObject>();
 
+    // locks us from interacting with board piece when we aren't allowed.
+    public bool canPickPiece = false;
 
-    public bool PiecePicked = false;
+    //What type of piece has the player picked.
     string PieceType = "None"; // creature // Dungeon Lord
-    public GameObject ChosenCreature; // the creature piece we have selected.
+
+    // the gameobject of the creature piece we have selected.
+    public GameObject ChosenCreature; 
+
+    //What creature action BTN we have pressed.
     public string ChosenAction = "None";
-    public bool attackWindowOpen = false;
 
 
     public void Start()
@@ -39,7 +44,7 @@ public class CreatureController : MonoBehaviour //  this script oversees piece m
 
     public void HideAndShowButtons()
     {
-        if (PiecePicked == true) // if the player has picked a creature token to select hide and display creature control UI buttons.
+        if (canPickPiece == true) // if the player has picked a creature token to select hide and display creature control UI buttons.
         {
             switch (ChosenAction)
             {
@@ -67,7 +72,7 @@ public class CreatureController : MonoBehaviour //  this script oversees piece m
            CheckPossibleActions();
         }
 
-        else if (PiecePicked == false) // close the UI.
+        else if (canPickPiece == false) // close the UI.
         {
             for (int i = 0; i < OrderBTNS.Count; i++)
             {
@@ -87,18 +92,16 @@ public class CreatureController : MonoBehaviour //  this script oversees piece m
         //If the player has enough move crests to pay the cost of moving this creature a tile then enable this button.
         if (turnPlayer.GetComponent<Player>().moveCrestPoints >= ChosenCreature.GetComponent<CreatureToken>().moveCost)
         {
-            if (attackWindowOpen == false)
+            if (ChosenCreature.GetComponent<CreatureToken>().HasMovedThisTurn == false)
             {
-                if (ChosenCreature.GetComponent<CreatureToken>().HasMovedThisTurn == false)
-                {
-                    OrderBTNS[0].GetComponent<Button>().interactable = true;
-                }
+                OrderBTNS[0].GetComponent<Button>().interactable = true;
             }
         }
-        // Enable the attack button if the player has enough attack crests to pay the cost of an attack, & the creature pieces target list.count isnt 0.
+        // Enable the attack button if the player has enough attack crests to pay the cost of an attack
         if (turnPlayer.GetComponent<Player>().attackCrestPoints >= ChosenCreature.GetComponent<CreatureToken>().attackCost)
         {
-            if (ChosenCreature.GetComponent<CreatureToken>().targets.Count != 0)
+            //Check if the target creature has any nearby targets and hasn't already attacked this turn.
+            if (ChosenCreature.GetComponent<CreatureToken>().targets.Count != 0 && ChosenCreature.GetComponent<CreatureToken>().HasAttackedThisTurn == false)
             {
                 if (ChosenAction != "Attack")
                 {
@@ -138,6 +141,7 @@ public class CreatureController : MonoBehaviour //  this script oversees piece m
             case "Attack":
                 //Declare attack action to be made open the inspect window for target selection.
                 ChosenAction = "Attack";
+
                 lVLRef.GetComponent<LevelController>().turnPlayerPerformingAction = true;
                 GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().usedFor = "AttackTargetSelection";
                 GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().CurrentCreatureToken = ChosenCreature;
@@ -161,8 +165,7 @@ public class CreatureController : MonoBehaviour //  this script oversees piece m
     public void CancleBTNFunction()
     {
         ChosenAction = "None";
-        PiecePicked = false;
-        attackWindowOpen = false;
+        canPickPiece = true;
         ChosenCreature = null;
         HideAndShowButtons();
         lVLRef.GetComponent<CameraController>().ActiveCam = "Alt";
@@ -223,9 +226,6 @@ public class CreatureController : MonoBehaviour //  this script oversees piece m
                 ChosenCreature.GetComponent<CreatureToken>().CheckForAttackTarget();
                 CheckPossibleActions();
                 break;
-            case "Attack":
-
-                break;
         }
     }
 
@@ -234,6 +234,9 @@ public class CreatureController : MonoBehaviour //  this script oversees piece m
         for (int i = 0; i < CreaturesOnBoard.Count; i++)
         {
             CreaturesOnBoard[i].GetComponent<CreatureToken>().HasMovedThisTurn = false;
+            CreaturesOnBoard[i].GetComponent<CreatureToken>().HasAttackedThisTurn = false;
+            CreaturesOnBoard[i].GetComponent<CreatureToken>().hasUsedAbilityThisTurn = false;
+            canPickPiece = false;
         }
     }
 

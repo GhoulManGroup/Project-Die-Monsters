@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DiceScript : MonoBehaviour
+public class DiceScript : MonoBehaviour //This script handles the UI Dice in the Dice management window.
 {
     [Header("Die Components")]
     public List<Die> drawnDice = new List<Die>();

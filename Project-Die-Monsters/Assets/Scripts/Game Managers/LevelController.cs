@@ -34,7 +34,7 @@ public class LevelController : MonoBehaviour
     public int turnPlayer = 0;
 
     public bool turnPlayerPerformingAction = false; // this bool will be what we check before being able to perform certain action.
-                                                
+    
     public void Awake()
     {
         mRef = GameObject.FindGameObjectWithTag("GameController");
@@ -124,7 +124,7 @@ public class LevelController : MonoBehaviour
          // check if the player has any dice in the list 
          if (participants[turnPlayer].GetComponent<Player>().diceDeck.Count != 0)
          {
-            // open the
+            // open the dice interaction interface
             this.GetComponent<LevelController>().turnPlayerPerformingAction = true; // Player is in dice window, action being performed.
             this.GetComponent<ResourceUIManager>().whatUItoShow = "Dice";
             this.GetComponent<ResourceUIManager>().DiceWindow(); // display dice window.
@@ -143,6 +143,7 @@ public class LevelController : MonoBehaviour
              this.GetComponent<ResourceUIManager>().whatUItoShow = "Board";
              this.GetComponent<CameraController>().ActiveCam = "Alt";
              this.GetComponent<CameraController>().switchCamera();
+             this.GetComponent<CreatureController>().canPickPiece = true;
          }
      }
 
