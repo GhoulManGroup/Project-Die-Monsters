@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public Camera BoardView;
+    public Camera DiceView;
     public Camera AltView;
     public string ActiveCam = "Board";
 
@@ -26,14 +27,24 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     public void switchCamera()
     {
-        if (ActiveCam == "Board")
+
+        switch (ActiveCam)
         {
-            BoardView.enabled = true;
-            AltView.enabled = false;
-        }else if (ActiveCam == "Alt")
-        {
-            BoardView.enabled = false;
-            AltView.enabled = true;
+            case "Board":
+                BoardView.enabled = true;
+                DiceView.enabled = false;
+                AltView.enabled = false;
+                break;
+            case "Dice":
+                BoardView.enabled = false;
+                DiceView.enabled = true;
+                AltView.enabled = false;
+                break;
+            case "Alt":
+                BoardView.enabled = true;
+                DiceView.enabled = false;
+                AltView.enabled = false;
+                break;
         }
     }
 

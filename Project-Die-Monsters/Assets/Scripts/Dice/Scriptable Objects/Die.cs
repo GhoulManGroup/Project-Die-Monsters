@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [CreateAssetMenu]
-public class Die : ScriptableObject
+public class Die : ScriptableObject // this script is the data conainer for every die.
 {
     [Header("Dice Properties")]
     public DieColor dieColor;

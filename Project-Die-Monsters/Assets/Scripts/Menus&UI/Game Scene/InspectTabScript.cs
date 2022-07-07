@@ -47,6 +47,8 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
                 if (usedFor == "DieInspect")
                 {
                     AddCreatureToPool();
+                    //When we end our dice management state change this boolean.
+                    lvlRef.GetComponent<CreatureController>().canPickPiece = true;
                 }
 
                 if (usedFor == "PoolInspect")
@@ -197,6 +199,7 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
         GameObject CW = GameObject.FindGameObjectWithTag("CombatWindow");
         CW.GetComponent<AttackUIScript>().attacker = CurrentCreatureToken;
         CW.GetComponent<AttackUIScript>().defender = CurrentCreatureToken.GetComponent<CreatureToken>().targets[targetShown].gameObject;
+        CW.GetComponent<AttackUIScript>().Action = "Decide";
         CW.GetComponent<AttackUIScript>().displayAttackWindow();
         //Hide this Window for now
         HideFunction();

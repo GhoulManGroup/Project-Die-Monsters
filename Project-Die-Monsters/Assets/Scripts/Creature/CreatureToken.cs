@@ -70,13 +70,13 @@ public class CreatureToken : MonoBehaviour
     {
         if (myOwner == LvlRef.GetComponent<LevelController>().whoseTurn)
         {
-            if (LvlRef.GetComponent<CreatureController>().PiecePicked == false)
+            if (LvlRef.GetComponent<CreatureController>().canPickPiece == true)
             {
                 LvlRef.GetComponent<CameraController>().ActiveCam = "Board";
                 LvlRef.GetComponent<CameraController>().switchCamera();
                 LvlRef.GetComponent<CreatureController>().ChosenAction = "Choosing";
                 LvlRef.GetComponent<CreatureController>().ChosenCreature = this.gameObject;
-                LvlRef.GetComponent<CreatureController>().PiecePicked = true;
+                LvlRef.GetComponent<CreatureController>().canPickPiece = false;
                 LvlRef.GetComponent<CreatureController>().HideAndShowButtons();
                 CheckForAttackTarget();
             }
@@ -213,6 +213,7 @@ public class CreatureToken : MonoBehaviour
     {
         if (health <= 0)
         {
+            LvlRef.GetComponent<CreatureController>().CreaturesOnBoard.Remove(this.gameObject);
             Destroy(this.gameObject);
             Debug.Log("Creature Dead");
         }
