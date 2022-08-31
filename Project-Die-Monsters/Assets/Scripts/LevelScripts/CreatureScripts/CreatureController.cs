@@ -48,7 +48,6 @@ public class CreatureController : MonoBehaviour //  this script oversees piece m
     {
         if (ChosenCreature != null) // if the player has picked a creature token to select hide and display creature control UI buttons.
         {
-            Debug.Log("Display BTNS");
             for (int i = 0; i < OrderBTNS.Count; i++)
             {
                 OrderBTNS[i].GetComponent<Image>().enabled = true;
@@ -128,7 +127,7 @@ public class CreatureController : MonoBehaviour //  this script oversees piece m
 
                 lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = true;
                 GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().usedFor = "AttackTargetSelection";
-                GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().CurrentCreatureToken = ChosenCreature;
+                GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().currentCreatureToken = ChosenCreature;
                 GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().ShowFunction();
                 CheckPossibleActions();
                 HideAndShowButtons();

@@ -13,11 +13,16 @@ public class DungeonSpawner : MonoBehaviour
     [Header("SpawnStuff")]
     public bool canPlaceDie = false;
 
+    [Header("ResetPosition")]
+    Vector3 resetPoint;
+    public Vector3 lastPos;
+
     GameObject lvlRef;
 
     // Start is called before the first frame update
     void Start()
     {
+        resetPoint = this.transform.position;
         UpdateBoard();
         HideandShow();
         lvlRef = GameObject.FindGameObjectWithTag("LevelController");
@@ -72,24 +77,28 @@ public class DungeonSpawner : MonoBehaviour
         {
             this.transform.position += transform.position = new Vector3(-1f, 0f, 0f);
             CheckPlacement();
+            lastPos = this.transform.position;
         }
 
         if (Input.GetKeyDown("s"))
         {
             this.transform.position += transform.position = new Vector3(1f, 0f, 0f);
             CheckPlacement();
+            lastPos = this.transform.position;
         }
 
         if (Input.GetKeyDown("a"))
         {
             this.transform.position += transform.position = new Vector3(0f, 0f, -1f);
             CheckPlacement();
+            lastPos = this.transform.position;
         }
 
         if (Input.GetKeyDown("d"))
         {
             this.transform.position += transform.position = new Vector3(0f, 0f, 1f);
             CheckPlacement();
+            lastPos = this.transform.position;
         }
         // rotate object
         if (Input.GetKeyDown("e"))
@@ -168,6 +177,7 @@ public class DungeonSpawner : MonoBehaviour
                 GameObject.FindGameObjectWithTag("LevelController").GetComponent<CameraController>().switchCamera();
                 HideandShow();
                 UpdateBoard();
+                this.transform.position = resetPoint;
             }
         }
 

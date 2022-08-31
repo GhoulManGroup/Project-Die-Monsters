@@ -277,7 +277,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 060eab8494546aa439339394015a90bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myDie: {fileID: 11400000, guid: b999a5dc34d7e284aa486fbb6f0687a6, type: 2}
+  diceSetUp: 0
+  rollResult: 
+  canBeChosen: 0
+  myDie: {fileID: 0}
   myParts:
   - {fileID: 1252430122848364707}
   - {fileID: 1252430122755217542}
