@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DungeonLord : MonoBehaviour
+public class DungeonLordPiece : MonoBehaviour
 {
     public string myOwner;
     public int Health = 3;

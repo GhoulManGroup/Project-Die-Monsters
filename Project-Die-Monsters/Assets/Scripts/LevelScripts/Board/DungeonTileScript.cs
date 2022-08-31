@@ -46,7 +46,10 @@ public class DungeonTileScript : MonoBehaviour
 
     public void CheckPlacement()
     {
+        aboveEmptySpace = false;
+
         RaycastHit Bellow;
+
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out Bellow, 5f))
         {
             if (Bellow.collider != null) // if we collide with somthing
@@ -80,6 +83,12 @@ public class DungeonTileScript : MonoBehaviour
                     wouldConnectToDungon = false;
                 }
             }
+
+      
+        }else
+        {
+            GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().transform.position = GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().lastPos;
+            CheckPlacement();
         }
     }
 

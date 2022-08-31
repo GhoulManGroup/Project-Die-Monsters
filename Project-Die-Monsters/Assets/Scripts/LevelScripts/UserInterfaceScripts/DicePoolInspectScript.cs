@@ -46,8 +46,8 @@ public class DicePoolInspectScript : MonoBehaviour, IPointerEnterHandler, IPoint
             }
             GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().usedFor = "PoolInspect";
             GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().ShowFunction();
-            GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().CurrentCreature = GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreaturePoolController>().turnPlayer.GetComponent<Player>().CreaturePool[IntFromName];
-            GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().setDetails();
+            GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().currentCreature = GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreaturePoolController>().turnPlayer.GetComponent<Player>().CreaturePool[IntFromName];
+            GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().DisplayCreatureDetails();
             GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreaturePoolController>().creaturePick = IntFromName;
         }
         //throw new System.NotImplementedException();      

@@ -11,8 +11,12 @@ public class UIDiceController : MonoBehaviour //This class is replacing the old 
     public int readyDice = 0;
     public bool hasRolledDice = false;
 
+    public int dicechecked; // how many dice have stopped rolling and resolved thier results.
+    bool canCloseUI = false; // stop the player from closing the UI early.
+
     [Header("Object Refrences")]
     GameObject lvlRef;
+    GameObject inspectWindow;
     public GameObject turnPlayer;
     Player player;
 
@@ -35,14 +39,13 @@ public class UIDiceController : MonoBehaviour //This class is replacing the old 
     public void Start()
     {
         lvlRef = GameObject.FindGameObjectWithTag("LevelController");
+        inspectWindow = GameObject.FindGameObjectWithTag("InspectWindow");
         UIElements[0].SetActive(false);
         UIElements[1].SetActive(false);
     }
 
-    //Set up the games code
     public void SetUp()
     {
-        Debug.Log("Setup Reached");
         player = turnPlayer.GetComponent<Player>();
 
         //Enable our UI BTNS.
@@ -58,7 +61,6 @@ public class UIDiceController : MonoBehaviour //This class is replacing the old 
                 spawnDice();
             }
         }
-        //Proceed to dice allocation step.
     }
 
     public void spawnDice()
@@ -116,6 +118,13 @@ public class UIDiceController : MonoBehaviour //This class is replacing the old 
                 }
             }
         }
+
+        if (dicechecked == 3)
+        {
+            canCloseUI = true;
+        }
+
+        lvlRef.GetComponent<LevelController>().updateTurnPlayerCrestDisplay();
     }
 
     public void resetFunction()
@@ -133,10 +142,16 @@ public class UIDiceController : MonoBehaviour //This class is replacing the old 
         //Empty list of missing objects.
         dieToRoll.Clear();
 
+        //Reset States
+        dicechecked = 0;
+        canCloseUI = false;
+        hasRolledDice = false;
+        readyDice = 0;
+
         //Then hide the UI elements as the camera has changed view.
         UIElements[0].SetActive(false);
         UIElements[1].SetActive(false);
-        hasRolledDice = false;
+
 
         //Reset dice results.
         lvl1Crest = 0;
@@ -152,30 +167,45 @@ public class UIDiceController : MonoBehaviour //This class is replacing the old 
         switch (BTNPressed)
         {
             case "RollDiceBTN":
-                //If all 3 die are set up then tell all die to spin
+                //Check if dice are set up;
+                for (int i = 0; i < dieToRoll.Count; i++)
+                {
+                    if (dieToRoll[i].GetComponent<SceneDieScript>().diceSetUp == true && hasRolledDice == false)
+                    {
+                        readyDice += 1;
+                    }
+                }
+
                 if (readyDice == 3 && hasRolledDice == false)
                 {
-                    Debug.Log("3 Dice Set Up");
                     for (int i = 0; i <dieToRoll.Count; i++)
                     {
                         dieToRoll[i].GetComponent<SceneDieScript>().spinDie();
                     }
                     hasRolledDice = true;
+
+                }else if (readyDice != 3 && hasRolledDice == false)
+                {
+                    readyDice = 0;
                 }
                 break;
 
             case "CloseBTN":
-                //Close window and delete the die.
-                resetFunction();              
-                readyDice = 0;
-                hasRolledDice = false;
+                if (canCloseUI == true)
+                {
+                    //Close window and delete the die.
+                    resetFunction();
 
-                lvlRef.GetComponent<CameraController>().ActiveCam = "Board";
-                lvlRef.GetComponent<CameraController>().switchCamera();
+                    lvlRef.GetComponent<CameraController>().ActiveCam = "Alt";
+                    lvlRef.GetComponent<CameraController>().switchCamera();
 
-                //Player not performing action can press end turn BTN.
-                lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;
+                    //Player not performing action can press end turn BTN.
+                    lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;
+                    lvlRef.GetComponent<LevelController>().ableToInteractWithBoard = true;
+                    inspectWindow.GetComponent<InspectTabScript>().HideFunction();
+                }
                 break;
+                
         }
     }
 

@@ -32,9 +32,11 @@ public class LevelController : MonoBehaviour //This class controls everything at
     public string whoseTurn = "P1";
     public int turnPlayer = 0;
 
-    [Header("Turn Player Constraints")]
+    [Header("Turn Player Constraints & Resources")]
     public bool turnPlayerPerformingAction = false; // this bool will be what we check before being able to perform certain action.
     public bool ableToInteractWithBoard = false; // Player is allowed to interact with the board.
+
+    public List<Text> turnPlayerUIDisplay = new List<Text>();
 
     public void Awake()
     {
@@ -49,9 +51,11 @@ public class LevelController : MonoBehaviour //This class controls everything at
 
     public void setUpGame() // this function is run first thing in order to control the rest of the scene.
     {
+        QualitySettings.vSyncCount = 1;
         // Check what Game Mode.
         switch (gameManager.GetComponent<GameManagerScript>().gameMode)
         {
+
             case "Freeplay":
                 switch (gameManager.GetComponent<GameManagerScript>().desiredOpponent)
                 {
@@ -63,11 +67,11 @@ public class LevelController : MonoBehaviour //This class controls everything at
                         participants.Add(player2);
 
                         //Setup the Dungeon Lords
-                        DungeonLord[0].GetComponent<DungeonLord>().myOwner = "Player0";
-                        DungeonLord[1].GetComponent<DungeonLord>().myOwner = "Player1";
+                        DungeonLord[0].GetComponent<DungeonLordPiece>().myOwner = "Player0";
+                        DungeonLord[1].GetComponent<DungeonLordPiece>().myOwner = "Player1";
 
-                        DungeonLord[0].GetComponent<DungeonLord>().SetDungeonLordTile();
-                        DungeonLord[1].GetComponent<DungeonLord>().SetDungeonLordTile();
+                        DungeonLord[0].GetComponent<DungeonLordPiece>().SetDungeonLordTile();
+                        DungeonLord[1].GetComponent<DungeonLordPiece>().SetDungeonLordTile();
 
                         break;
 
@@ -89,7 +93,6 @@ public class LevelController : MonoBehaviour //This class controls everything at
 
     }
 
-
     public void setDeck() 
     {
         // Adds a copy of the two chosen decks stored in the deck manager to the player objects own die lists.
@@ -107,12 +110,10 @@ public class LevelController : MonoBehaviour //This class controls everything at
 
     }
 
-
     public void checkLevelState()
     {
         whoseTurn = "Player" + turnPlayer.ToString();
     }
-
 
      public void BeginTurnFunction() // this function is only called when it is a Human Players turn not the ai,
      {
@@ -135,8 +136,8 @@ public class LevelController : MonoBehaviour //This class controls everything at
          }
 
         startTurnBTN.GetComponent<Image>().enabled = false;
+        updateTurnPlayerCrestDisplay();
      }
-
 
     public void SetTurnPlayer() // call this function after turn player changes to update each script.
     {
@@ -146,6 +147,15 @@ public class LevelController : MonoBehaviour //This class controls everything at
         GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().turnPlayer = participants[turnPlayer].gameObject;
         whoseTurn = "Player" + turnPlayer.ToString();
 
+    }
+
+    public void updateTurnPlayerCrestDisplay()
+    {
+        turnPlayerUIDisplay[0].text = "Turn Player = " + turnPlayer.ToString();
+        turnPlayerUIDisplay[1].text = participants[turnPlayer].GetComponent<Player>().attackCrestPoints.ToString();
+        turnPlayerUIDisplay[2].text = participants[turnPlayer].GetComponent<Player>().abiltyPowerCrestPoints.ToString();
+        turnPlayerUIDisplay[3].text = participants[turnPlayer].GetComponent<Player>().defenceCrestPoints.ToString();
+        turnPlayerUIDisplay[4].text = participants[turnPlayer].GetComponent<Player>().moveCrestPoints.ToString();
     }
 
 
@@ -187,7 +197,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
         GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().UpdateBoard();
 
         //Set the player turn UI to next turn player.
-       // this.GetComponent<ResourceUIManager>().updateLifeText();
+        updateTurnPlayerCrestDisplay();
 
         //Reset the states of all creature piece on the board (Move, Attack, ect)
         this.GetComponent<CreatureController>().ResetCreatureStates();

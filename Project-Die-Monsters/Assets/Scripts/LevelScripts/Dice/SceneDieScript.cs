@@ -8,6 +8,7 @@ public class SceneDieScript : MonoBehaviour
     UIDiceController myController;
     InspectTabScript inspectTab;
 
+    public bool diceSetUp; // If the dice has a creature inside.
     public string rollResult; // What the dice has rolled.
     public bool canBeChosen = false; //If the dice can be picked to add to the creature pool.
 
@@ -129,11 +130,10 @@ public class SceneDieScript : MonoBehaviour
                 break;
         }
 
-        if (myController.GetComponent<UIDiceController>().readyDice <= 2)
+        if(diceSetUp == false)
         {
-            myController.GetComponent<UIDiceController>().readyDice += 1;
+            diceSetUp = true;
         }
-
     }
 
     public void spinDie()
@@ -225,7 +225,7 @@ public class SceneDieScript : MonoBehaviour
                 myController.turnPlayer.GetComponent<Player>().moveCrestPoints += 1;
                 break;
         }
-        print(rollResult);
+        myController.dicechecked += 1;
         myController.matchingSummonCrestCheck();
     }
 
