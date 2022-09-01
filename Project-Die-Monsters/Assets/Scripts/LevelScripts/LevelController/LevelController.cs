@@ -41,7 +41,6 @@ public class LevelController : MonoBehaviour //This class controls everything at
     public void Awake()
     {
         gameManager = GameObject.FindGameObjectWithTag("GameController");
-
     }
 
     public void Start()
@@ -59,6 +58,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
             case "Freeplay":
                 switch (gameManager.GetComponent<GameManagerScript>().desiredOpponent)
                 {
+                    
                     case "Player":
                         // instanciate two playable objects
                         GameObject player1 = Instantiate(playerFab);
@@ -87,9 +87,6 @@ public class LevelController : MonoBehaviour //This class controls everything at
 
         //Setup turn player.
         SetTurnPlayer();
-
-        //Update starting players crest UI.
-        //this.GetComponent<ResourceUIManager>().updateCrests(); 
 
     }
 
@@ -136,6 +133,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
          }
 
         startTurnBTN.GetComponent<Image>().enabled = false;
+        participants[turnPlayer].GetComponent<Player>().moveCrestPoints += 1;
         updateTurnPlayerCrestDisplay();
      }
 
