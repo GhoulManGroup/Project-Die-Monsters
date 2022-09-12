@@ -33,7 +33,7 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
     int diceShown = 0;
 
     public Creature currentCreature; // the creature scriptableobject stored inside the die or creature pool.
-
+    public DungeonLord currentDungeonLord;
     public GameObject currentCreatureToken; // the board piece that is being used for a combat action.
     
     int targetShown = 0; //Which of the creature chosens possible attack targets are being displayed.
@@ -88,12 +88,19 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
 
                 if (usedFor == "PoolInspect")
                 {
-
+                     
                 }
 
                 if (usedFor == "AttackTargetSelection")
                 {
-                    CreatureIsAttackTarget();
+                    if (currentCreatureToken.GetComponent<CreatureToken>().targets[targetShown].GetComponent<DungeonLordPiece>() != null)
+                    {
+                        DisplayDungeonLord();
+                    }
+                    else if (currentCreatureToken.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>() != null)
+                    {
+                        CreatureIsAttackTarget();
+                    }
                 }
                 break;
 
@@ -140,8 +147,14 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
                     if (targetShown > 0)
                     {
                         targetShown -= 1;
-                        DisplayCreatureDetails();
-                        Debug.Log(targetShown);
+                        if (currentCreatureToken.GetComponent<CreatureToken>().targets[targetShown].GetComponent<DungeonLordPiece>() != null)
+                        {
+                            DisplayDungeonLord();
+                        }
+                        else if (currentCreatureToken.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>() != null)
+                        {
+                            DisplayCreatureDetails();
+                        }
                     }
                 }
                 break;
@@ -248,7 +261,7 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
 
     public void DisplayDungeonLord()
     {
-
+         
     }
   
     public void AddCreatureToPool() //Selected dice is discarded to add the creature inside to the player creature pool.
