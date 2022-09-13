@@ -125,7 +125,6 @@ public class AttackUIScript : MonoBehaviour
                 break;
 
             case "CancleBTN":
-                Debug.Log("Cancle");
                 switch (Action)
                 {
                     case "Defend":
@@ -135,7 +134,7 @@ public class AttackUIScript : MonoBehaviour
                     case "Decide":
                         // go back to target list.
                         hideAttackWindow();
-                        GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().ShowFunction();
+                        GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().OpenInspectWindow("AttackTargetSelection");
                         break;
                     case "Over":
                         //Combat over contiune turn.

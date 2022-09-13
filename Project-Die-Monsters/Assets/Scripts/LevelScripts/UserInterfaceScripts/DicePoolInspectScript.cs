@@ -44,10 +44,9 @@ public class DicePoolInspectScript : MonoBehaviour, IPointerEnterHandler, IPoint
                     IntFromName = 4;
                     break;
             }
-            GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().usedFor = "PoolInspect";
-            GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().ShowFunction();
+            GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().OpenInspectWindow("PoolInspect");
             GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().currentCreature = GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreaturePoolController>().turnPlayer.GetComponent<Player>().CreaturePool[IntFromName];
-            GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().DisplayCreatureDetails();
+            GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().DisplayCreatureDetails("PoolInspect");
             GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreaturePoolController>().creaturePick = IntFromName;
         }
         //throw new System.NotImplementedException();      
@@ -58,7 +57,7 @@ public class DicePoolInspectScript : MonoBehaviour, IPointerEnterHandler, IPoint
         if (this.GetComponent<Button>().interactable == true)
         {
             //Debug.Log("Test");
-            GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().HideFunction();
+            GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().CloseInspectWindow();
         }
         //throw new System.NotImplementedException();      
     }

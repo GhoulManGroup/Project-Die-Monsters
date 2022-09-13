@@ -6,8 +6,19 @@ using UnityEngine.EventSystems;
 
 public class InspectTabScript : MonoBehaviour // A UI display of a creature card used for checking what object is inside a die and picking a attack target.
 {
-    [Header("Window Components")]
-    public List<GameObject> myComponents = new List<GameObject>();
+    //The used for string(usedFor) within some functions is where we store why the inspect interface was opened and how we know what parts of the UI to enable / disable ect at any point.
+    // "DrawDice", added a creature scriptable object to the dice to be rolled in the dice phase.
+    // "Die Inspect, view what creature is inside of clicked dice that has been rolled.
+    // "Pool Inspect", View what creature is currently stored within the creature pool UI we are hovering over.
+    // "PieceInspect", view the details of the board piece the player is hovering over
+    //AttackTargetSelection, display the details of the possible attack targets of chosen piece
+
+    [Header("ScriptComponenets")]
+    public GameObject CreatureInspectUI;
+    public GameObject DungeonLordInspectUI;
+
+
+
 
     public GameObject creatureArt;
     public GameObject creatureLevel;
@@ -21,8 +32,7 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
     GameObject lvlRef;
 
     [Header("Window States")]
-    public string usedFor; // this tracks what we are opening the window four which will then control what it displays & what components are enabled.
-    // DrawDice // DieInspect // Pool Inspect // AttackTargetSelection
+
 
     [Header("WindowContents")]
     //These two public objects are for assigning a die object to a 3D dice in the scene.
@@ -42,11 +52,103 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
     // Start is called before the first frame update
     void Start()
     {
-        HideFunction();
+        CloseInspectWindow();
         lvlRef = GameObject.FindGameObjectWithTag("LevelController");
     }
 
-    public void ButtonPressed()
+    #region displayAndHideUI
+    public void CloseInspectWindow()
+    {
+        DungeonLordInspectUI.gameObject.SetActive(false);
+        CreatureInspectUI.gameObject.SetActive(false);
+    }
+
+    public void OpenInspectWindow(string usedFor)
+    {
+        switch (usedFor)
+        {
+            case "DrawDice":
+               // showCreatureDetails(myComponents.Count);
+                DisplayCreatureDetails(usedFor);
+                break;
+            case "DieInspect":
+                //componentsToDisplay = 11;
+                DisplayCreatureDetails(usedFor);
+                break;
+            case "PoolInspect":
+                //componentsToDisplay = 10;
+                break;
+            case "AttackTargetSelection":
+
+                if (currentCreatureToken.GetComponent<CreatureToken>().targets[targetShown].GetComponent<DungeonLordPiece>() != null)
+                {
+                    //if  current target is dungeon lord then display dungeon lord.
+                    DisplayDungeonLord();
+                }else if (currentCreatureToken.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>() != null)
+                {
+                    //If current target is creature then display creature
+                    currentCreature = currentCreatureToken.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>().myCreature;
+                   //showCreatureDetails(myComponents.Count);
+                    DisplayCreatureDetails(usedFor);
+
+                }
+                break;
+        }
+        // add check for state to choosecreature  button if not in dice window;
+       
+    }
+
+    public void showCreatureDetails (int componentsToDisplay)
+    {
+        for (int i = 0; i < componentsToDisplay; i++)
+        {
+           // if (myComponents[i].GetComponent<Image>() != null)
+            //{
+           //     myComponents[i].GetComponent<Image>().enabled = true;
+          //  }
+
+          //  if (myComponents[i].GetComponent<Text>() != null)
+           // {
+          //      myComponents[i].GetComponent<Text>().enabled = true;
+          //  }
+        }
+    }
+
+
+
+    public void DisplayCreatureDetails(string usedFor) // sets the inspect window when displaying die contents either in manager or creature pool.
+    {
+        switch (usedFor)
+        {
+            case "DrawDice":
+                //Set current creature to creature contained within the dice we are currently showing the player from the player deck.
+                currentCreature = turnPlayer.GetComponent<Player>().diceDeck[diceShown].dieCreature;              
+                break;
+
+            case "DieInspect":
+                // show the creature currently in the 3D dice object clicked on.
+                currentCreature = sceneDice.GetComponent<SceneDieScript>().myDie.dieCreature;
+                break;
+        }
+        creatureArt.GetComponent<Image>().sprite = currentCreature.CardArt;
+        creatureLevel.GetComponent<Image>().sprite = currentCreature.LevelSprite;
+        creatureTribe.GetComponent<Image>().sprite = currentCreature.TribeSprite;
+        creatureType.GetComponent<Image>().sprite = currentCreature.TypeSprite;
+        creatureName.GetComponent<Text>().text = currentCreature.creatureType.ToString();
+        attackValue.GetComponent<Text>().text = "ATK" + currentCreature.Attack.ToString();
+        defenceValue.GetComponent<Text>().text = "DEF" + currentCreature.Defence.ToString();
+        healthValue.GetComponent<Text>().text = "HP" + currentCreature.Health.ToString();
+    }
+
+    public void DisplayDungeonLord()
+    {
+         
+    }
+    #endregion
+
+    #region inspectBTNInput
+
+    public void ButtonPressed(string usedFor)
     {
         string inspectBTNPressed = EventSystem.current.currentSelectedGameObject.name.ToString();
 
@@ -76,7 +178,7 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
                     diceShown = 0;
 
                     //Close Window
-                    HideFunction();
+                    CloseInspectWindow();
                 }
 
                 if (usedFor == "DieInspect")
@@ -88,7 +190,7 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
 
                 if (usedFor == "PoolInspect")
                 {
-                     
+                    Debug.Log("Cant Be Possible");
                 }
 
                 if (usedFor == "AttackTargetSelection")
@@ -111,7 +213,7 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
                     if (diceShown < turnPlayer.GetComponent<Player>().diceDeck.Count)
                     {
                         diceShown += 1;
-                        DisplayCreatureDetails();
+                        DisplayCreatureDetails(usedFor);
                     }
                 }
 
@@ -125,7 +227,7 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
                             DisplayDungeonLord();
                         }else if (currentCreatureToken.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>() != null)
                         {
-                            DisplayCreatureDetails();
+                            DisplayCreatureDetails(usedFor);
                         }
 
                     }
@@ -138,7 +240,7 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
                     if (diceShown > 0)
                     {
                         diceShown -= 1;
-                        DisplayCreatureDetails();
+                        DisplayCreatureDetails(usedFor);
                     }
                 }
 
@@ -153,7 +255,7 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
                         }
                         else if (currentCreatureToken.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>() != null)
                         {
-                            DisplayCreatureDetails();
+                            DisplayCreatureDetails(usedFor);
                         }
                     }
                 }
@@ -164,105 +266,13 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
                 lvlRef.GetComponent<CreatureController>().ChosenAction = "Choosing";
                 lvlRef.GetComponent<CreatureController>().CheckPossibleActions();
                 lvlRef.GetComponent<CreatureController>().HideAndShowButtons();
-                HideFunction();
+                CloseInspectWindow();
                 break;
         }
     }
 
-    public void HideFunction()
-    {
-        for (int i = 0; i < myComponents.Count; i++)
-        {
-            if (myComponents[i].GetComponent<Image>() != null)
-            {
-                myComponents[i].GetComponent<Image>().enabled = false;
-            }
-
-            if (myComponents[i].GetComponent<Text>() != null)
-            {
-                myComponents[i].GetComponent<Text>().enabled = false;
-            }
-        }
-    }
 
     //This function is called when we want to show the inspect tab UI Object
-    public void ShowFunction()
-    {
-        int componentsToDisplay = 0;
-
-        switch (usedFor)
-        {
-            case "DrawDice":
-                componentsToDisplay = myComponents.Count;
-                DisplayCreatureDetails();
-                break;
-            case "DieInspect":
-                componentsToDisplay = 11;
-                DisplayCreatureDetails();
-                break;
-            case "PoolInspect":
-                componentsToDisplay = 10;
-                break;
-            case "AttackTargetSelection":
-
-                if (currentCreatureToken.GetComponent<CreatureToken>().targets[targetShown].GetComponent<DungeonLordPiece>() != null)
-                {
-                    //if  current target is dungeon lord then display dungeon lord.
-                    DisplayDungeonLord();
-                }else if (currentCreatureToken.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>() != null)
-                {
-                    //If current target is creature then display creature
-                    currentCreature = currentCreatureToken.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>().myCreature;
-                    DisplayCreatureDetails();
-                    componentsToDisplay = myComponents.Count;
-                }
-                break;
-        }
-        // add check for state to choosecreature  button if not in dice window;
-        for (int i = 0; i < componentsToDisplay; i++)
-        {
-            if (myComponents[i].GetComponent<Image>() != null)
-            {
-                myComponents[i].GetComponent<Image>().enabled = true;
-            }
-
-            if (myComponents[i].GetComponent<Text>() != null)
-            {
-                myComponents[i].GetComponent<Text>().enabled = true;
-            }
-        }
-    }
-
-
-
-    public void DisplayCreatureDetails() // sets the inspect window when displaying die contents either in manager or creature pool.
-    {
-        switch (usedFor)
-        {
-            case "DrawDice":
-                //Set current creature to creature contained within the dice we are currently showing the player from the player deck.
-                currentCreature = turnPlayer.GetComponent<Player>().diceDeck[diceShown].dieCreature;              
-                break;
-
-            case "DieInspect":
-                // show the creature currently in the 3D dice object clicked on.
-                currentCreature = sceneDice.GetComponent<SceneDieScript>().myDie.dieCreature;
-                break;
-        }
-        creatureArt.GetComponent<Image>().sprite = currentCreature.CardArt;
-        creatureLevel.GetComponent<Image>().sprite = currentCreature.LevelSprite;
-        creatureTribe.GetComponent<Image>().sprite = currentCreature.TribeSprite;
-        creatureType.GetComponent<Image>().sprite = currentCreature.TypeSprite;
-        creatureName.GetComponent<Text>().text = currentCreature.creatureType.ToString();
-        attackValue.GetComponent<Text>().text = "ATK" + currentCreature.Attack.ToString();
-        defenceValue.GetComponent<Text>().text = "DEF" + currentCreature.Defence.ToString();
-        healthValue.GetComponent<Text>().text = "HP" + currentCreature.Health.ToString();
-    }
-
-    public void DisplayDungeonLord()
-    {
-         
-    }
   
     public void AddCreatureToPool() //Selected dice is discarded to add the creature inside to the player creature pool.
     {
@@ -277,7 +287,7 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
         lvlRef.GetComponent<UIDiceController>().resetFunction();
 
         // hide the inspect tab
-        HideFunction();
+        CloseInspectWindow();
 
         // switch to the board view.
         lvlRef.GetComponent<CameraController>().ActiveCam = "Alt";
@@ -287,16 +297,24 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
         lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;
 
     }
+    #endregion
+
     
+    //These two scripts go to the next step of combat if either a creature or dungeon lord is chosen
     public void CreatureIsAttackTarget()
     {
-        //Check if dungeon lord or monster if dungeon lord do damage else go to attack window()
+        //Declare creature in target list as attack target then send that information to creature vs creature combat script.
         GameObject CW = GameObject.FindGameObjectWithTag("CombatWindow");
         CW.GetComponent<AttackUIScript>().attacker = currentCreatureToken;
         CW.GetComponent<AttackUIScript>().defender = currentCreatureToken.GetComponent<CreatureToken>().targets[targetShown].gameObject;
         CW.GetComponent<AttackUIScript>().Action = "Decide";
         CW.GetComponent<AttackUIScript>().displayAttackWindow();
         //Hide this Window for now
-        HideFunction();
+        CloseInspectWindow();
+    }
+
+    public void DungeonLordIsAttackTarget()
+    {
+
     }
 }

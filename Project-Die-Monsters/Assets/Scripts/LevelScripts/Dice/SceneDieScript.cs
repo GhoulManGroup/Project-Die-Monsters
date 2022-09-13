@@ -41,8 +41,7 @@ public class SceneDieScript : MonoBehaviour
         {
             //declare this as first dice pick then open window.
             inspectTab.sceneDice = gameObject;
-            inspectTab.usedFor = "DrawDice";
-            inspectTab.ShowFunction();
+            inspectTab.OpenInspectWindow("DrawDice");
         }
 
         if (myController.hasRolledDice == true)
@@ -51,8 +50,7 @@ public class SceneDieScript : MonoBehaviour
             {
                 //Check if dice already done.
                 inspectTab.sceneDice = gameObject;
-                inspectTab.usedFor = "DieInspect";
-                inspectTab.ShowFunction();
+                inspectTab.OpenInspectWindow("DieInspect");
             }
         }
     }

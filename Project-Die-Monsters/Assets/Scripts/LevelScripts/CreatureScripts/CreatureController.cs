@@ -126,9 +126,8 @@ public class CreatureController : MonoBehaviour //  this script oversees piece m
                 ChosenAction = "Attack";
 
                 lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = true;
-                GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().usedFor = "AttackTargetSelection";
                 GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().currentCreatureToken = ChosenCreature;
-                GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().ShowFunction();
+                GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().OpenInspectWindow("AttackTargetSelection");
                 CheckPossibleActions();
                 HideAndShowButtons();
                 break;
@@ -221,6 +220,4 @@ public class CreatureController : MonoBehaviour //  this script oversees piece m
             lcScript.ableToInteractWithBoard = false;
         }
     }
-
-
 }

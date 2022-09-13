@@ -202,7 +202,7 @@ public class UIDiceController : MonoBehaviour //This class is replacing the old 
                     //Player not performing action can press end turn BTN.
                     lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;
                     lvlRef.GetComponent<LevelController>().ableToInteractWithBoard = true;
-                    inspectWindow.GetComponent<InspectTabScript>().HideFunction();
+                    inspectWindow.GetComponent<InspectTabScript>().CloseInspectWindow();
                 }
                 break;
                 
