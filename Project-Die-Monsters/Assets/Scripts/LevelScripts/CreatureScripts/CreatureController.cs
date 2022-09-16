@@ -126,7 +126,7 @@ public class CreatureController : MonoBehaviour //  this script oversees piece m
                 ChosenAction = "Attack";
 
                 lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = true;
-                GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().currentCreatureToken = ChosenCreature;
+                GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().currentCreaturePiece = ChosenCreature;
                 GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().OpenInspectWindow("AttackTargetSelection");
                 CheckPossibleActions();
                 HideAndShowButtons();

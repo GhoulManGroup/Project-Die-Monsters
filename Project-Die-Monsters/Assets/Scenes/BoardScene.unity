@@ -1052,10 +1052,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 168468968}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8a4654bac6ed204d903c14a07bd3aff, type: 3}
+  m_Script: {fileID: 11500000, guid: 55e7c7a5908d53549a4c05399b73e8ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IntFromName: 0
+  CreatureInspectUI: {fileID: 0}
+  DungeonLordInspectUI: {fileID: 0}
+  UIButtonList: []
+  creatureArt: {fileID: 0}
+  creatureLevel: {fileID: 0}
+  creatureTribe: {fileID: 0}
+  creatureType: {fileID: 0}
+  creatureName: {fileID: 0}
+  attackValue: {fileID: 0}
+  defenceValue: {fileID: 0}
+  healthValue: {fileID: 0}
+  sceneDice: {fileID: 0}
+  turnPlayer: {fileID: 0}
+  currentCreature: {fileID: 0}
+  currentCreaturePiece: {fileID: 0}
+  currentDungeonLord: {fileID: 0}
+  currentDungeonLordPiece: {fileID: 0}
 --- !u!1 &170851061
 GameObject:
   m_ObjectHideFlags: 0
@@ -2033,10 +2049,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 283538086}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8a4654bac6ed204d903c14a07bd3aff, type: 3}
+  m_Script: {fileID: 11500000, guid: 55e7c7a5908d53549a4c05399b73e8ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IntFromName: 0
+  CreatureInspectUI: {fileID: 0}
+  DungeonLordInspectUI: {fileID: 0}
+  UIButtonList: []
+  creatureArt: {fileID: 0}
+  creatureLevel: {fileID: 0}
+  creatureTribe: {fileID: 0}
+  creatureType: {fileID: 0}
+  creatureName: {fileID: 0}
+  attackValue: {fileID: 0}
+  defenceValue: {fileID: 0}
+  healthValue: {fileID: 0}
+  sceneDice: {fileID: 0}
+  turnPlayer: {fileID: 0}
+  currentCreature: {fileID: 0}
+  currentCreaturePiece: {fileID: 0}
+  currentDungeonLord: {fileID: 0}
+  currentDungeonLordPiece: {fileID: 0}
 --- !u!1 &293650871 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5124580583115980533, guid: fd4cfba2f0ce02a46b121523ec02c816, type: 3}
@@ -2422,6 +2454,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myOwner: 
+  myDungeonLord: {fileID: 0}
   Health: 3
 --- !u!1 &349136845
 GameObject:
@@ -3061,10 +3094,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 456901653}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8a4654bac6ed204d903c14a07bd3aff, type: 3}
+  m_Script: {fileID: 11500000, guid: 55e7c7a5908d53549a4c05399b73e8ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IntFromName: 0
+  CreatureInspectUI: {fileID: 0}
+  DungeonLordInspectUI: {fileID: 0}
+  UIButtonList: []
+  creatureArt: {fileID: 0}
+  creatureLevel: {fileID: 0}
+  creatureTribe: {fileID: 0}
+  creatureType: {fileID: 0}
+  creatureName: {fileID: 0}
+  attackValue: {fileID: 0}
+  defenceValue: {fileID: 0}
+  healthValue: {fileID: 0}
+  sceneDice: {fileID: 0}
+  turnPlayer: {fileID: 0}
+  currentCreature: {fileID: 0}
+  currentCreaturePiece: {fileID: 0}
+  currentDungeonLord: {fileID: 0}
+  currentDungeonLordPiece: {fileID: 0}
 --- !u!1 &462531826
 GameObject:
   m_ObjectHideFlags: 0
@@ -3077,7 +3126,7 @@ GameObject:
   - component: {fileID: 462531828}
   m_Layer: 5
   m_Name: InspectUI
-  m_TagString: Untagged
+  m_TagString: InspectWindow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3121,6 +3170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CreatureInspectUI: {fileID: 1467789004}
   DungeonLordInspectUI: {fileID: 1197436118}
+  UIButtonList: []
   creatureArt: {fileID: 0}
   creatureLevel: {fileID: 0}
   creatureTribe: {fileID: 0}
@@ -3129,12 +3179,12 @@ MonoBehaviour:
   attackValue: {fileID: 0}
   defenceValue: {fileID: 0}
   healthValue: {fileID: 0}
-  usedFor: 
   sceneDice: {fileID: 0}
   turnPlayer: {fileID: 0}
   currentCreature: {fileID: 0}
+  currentCreaturePiece: {fileID: 0}
   currentDungeonLord: {fileID: 0}
-  currentCreatureToken: {fileID: 0}
+  currentDungeonLordPiece: {fileID: 0}
 --- !u!1 &463027381 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 318313657457493812, guid: fd4cfba2f0ce02a46b121523ec02c816, type: 3}
@@ -8865,10 +8915,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1533462720}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8a4654bac6ed204d903c14a07bd3aff, type: 3}
+  m_Script: {fileID: 11500000, guid: 55e7c7a5908d53549a4c05399b73e8ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IntFromName: 0
+  CreatureInspectUI: {fileID: 0}
+  DungeonLordInspectUI: {fileID: 0}
+  UIButtonList: []
+  creatureArt: {fileID: 0}
+  creatureLevel: {fileID: 0}
+  creatureTribe: {fileID: 0}
+  creatureType: {fileID: 0}
+  creatureName: {fileID: 0}
+  attackValue: {fileID: 0}
+  defenceValue: {fileID: 0}
+  healthValue: {fileID: 0}
+  sceneDice: {fileID: 0}
+  turnPlayer: {fileID: 0}
+  currentCreature: {fileID: 0}
+  currentCreaturePiece: {fileID: 0}
+  currentDungeonLord: {fileID: 0}
+  currentDungeonLordPiece: {fileID: 0}
 --- !u!1 &1542702357 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1782674098746297727, guid: fd4cfba2f0ce02a46b121523ec02c816, type: 3}
@@ -10201,10 +10267,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 1727859509}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8a4654bac6ed204d903c14a07bd3aff, type: 3}
+  m_Script: {fileID: 11500000, guid: 55e7c7a5908d53549a4c05399b73e8ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  IntFromName: 0
+  CreatureInspectUI: {fileID: 0}
+  DungeonLordInspectUI: {fileID: 0}
+  UIButtonList: []
+  creatureArt: {fileID: 0}
+  creatureLevel: {fileID: 0}
+  creatureTribe: {fileID: 0}
+  creatureType: {fileID: 0}
+  creatureName: {fileID: 0}
+  attackValue: {fileID: 0}
+  defenceValue: {fileID: 0}
+  healthValue: {fileID: 0}
+  sceneDice: {fileID: 0}
+  turnPlayer: {fileID: 0}
+  currentCreature: {fileID: 0}
+  currentCreaturePiece: {fileID: 0}
+  currentDungeonLord: {fileID: 0}
+  currentDungeonLordPiece: {fileID: 0}
 --- !u!1 &1759376382
 GameObject:
   m_ObjectHideFlags: 0
@@ -10911,6 +10993,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myOwner: 
+  myDungeonLord: {fileID: 0}
   Health: 3
 --- !u!1 &1928537136
 GameObject:

@@ -5,6 +5,7 @@ using UnityEngine;
 public class DungeonLordPiece : MonoBehaviour
 {
     public string myOwner;
+    public DungeonLord myDungeonLord;
     public int Health = 3;
 
     public void TakeDamage()

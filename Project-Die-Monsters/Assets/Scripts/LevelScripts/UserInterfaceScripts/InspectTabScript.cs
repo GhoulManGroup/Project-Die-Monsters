@@ -8,17 +8,15 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
 {
     //The used for string(usedFor) within some functions is where we store why the inspect interface was opened and how we know what parts of the UI to enable / disable ect at any point.
     // "DrawDice", added a creature scriptable object to the dice to be rolled in the dice phase.
-    // "Die Inspect, view what creature is inside of clicked dice that has been rolled.
-    // "Pool Inspect", View what creature is currently stored within the creature pool UI we are hovering over.
+    // "DieInspect, view what creature is inside of clicked dice that has been rolled.
+    // "PoolInspect", View what creature is currently stored within the creature pool UI we are hovering over.
     // "PieceInspect", view the details of the board piece the player is hovering over
     //AttackTargetSelection, display the details of the possible attack targets of chosen piece
 
-    [Header("ScriptComponenets")]
+    [Header("Interface Elements")]
     public GameObject CreatureInspectUI;
     public GameObject DungeonLordInspectUI;
-
-
-
+    public List<GameObject> UIButtonList = new List<GameObject>();
 
     public GameObject creatureArt;
     public GameObject creatureLevel;
@@ -42,9 +40,10 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
     //What dice out of the player dice deck is currently displayed.
     int diceShown = 0;
 
-    public Creature currentCreature; // the creature scriptableobject stored inside the die or creature pool.
+    public Creature currentCreature; //The creature scriptable object contained with a game object, eg dice or board piece.
+    public GameObject currentCreaturePiece; //The board piece game object.
     public DungeonLord currentDungeonLord;
-    public GameObject currentCreatureToken; // the board piece that is being used for a combat action.
+    public GameObject currentDungeonLordPiece;
     
     int targetShown = 0; //Which of the creature chosens possible attack targets are being displayed.
 
@@ -80,14 +79,14 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
                 break;
             case "AttackTargetSelection":
 
-                if (currentCreatureToken.GetComponent<CreatureToken>().targets[targetShown].GetComponent<DungeonLordPiece>() != null)
+                if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<DungeonLordPiece>() != null)
                 {
                     //if  current target is dungeon lord then display dungeon lord.
                     DisplayDungeonLord();
-                }else if (currentCreatureToken.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>() != null)
+                }else if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>() != null)
                 {
                     //If current target is creature then display creature
-                    currentCreature = currentCreatureToken.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>().myCreature;
+                    currentCreature = currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>().myCreature;
                    //showCreatureDetails(myComponents.Count);
                     DisplayCreatureDetails(usedFor);
 
@@ -195,11 +194,11 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
 
                 if (usedFor == "AttackTargetSelection")
                 {
-                    if (currentCreatureToken.GetComponent<CreatureToken>().targets[targetShown].GetComponent<DungeonLordPiece>() != null)
+                    if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<DungeonLordPiece>() != null)
                     {
                         DisplayDungeonLord();
                     }
-                    else if (currentCreatureToken.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>() != null)
+                    else if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>() != null)
                     {
                         CreatureIsAttackTarget();
                     }
@@ -219,13 +218,13 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
 
                 if (usedFor == "AttackTargetSelection")
                 {
-                    if (targetShown < currentCreatureToken.GetComponent<CreatureToken>().targets.Count - 1)
+                    if (targetShown < currentCreaturePiece.GetComponent<CreatureToken>().targets.Count - 1)
                     {
                         targetShown += 1;
-                        if (currentCreatureToken.GetComponent<CreatureToken>().targets[targetShown].GetComponent<DungeonLordPiece>() != null)
+                        if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<DungeonLordPiece>() != null)
                         {
                             DisplayDungeonLord();
-                        }else if (currentCreatureToken.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>() != null)
+                        }else if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>() != null)
                         {
                             DisplayCreatureDetails(usedFor);
                         }
@@ -249,11 +248,11 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
                     if (targetShown > 0)
                     {
                         targetShown -= 1;
-                        if (currentCreatureToken.GetComponent<CreatureToken>().targets[targetShown].GetComponent<DungeonLordPiece>() != null)
+                        if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<DungeonLordPiece>() != null)
                         {
                             DisplayDungeonLord();
                         }
-                        else if (currentCreatureToken.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>() != null)
+                        else if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>() != null)
                         {
                             DisplayCreatureDetails(usedFor);
                         }
@@ -305,8 +304,8 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
     {
         //Declare creature in target list as attack target then send that information to creature vs creature combat script.
         GameObject CW = GameObject.FindGameObjectWithTag("CombatWindow");
-        CW.GetComponent<AttackUIScript>().attacker = currentCreatureToken;
-        CW.GetComponent<AttackUIScript>().defender = currentCreatureToken.GetComponent<CreatureToken>().targets[targetShown].gameObject;
+        CW.GetComponent<AttackUIScript>().attacker = currentCreaturePiece;
+        CW.GetComponent<AttackUIScript>().defender = currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].gameObject;
         CW.GetComponent<AttackUIScript>().Action = "Decide";
         CW.GetComponent<AttackUIScript>().displayAttackWindow();
         //Hide this Window for now
