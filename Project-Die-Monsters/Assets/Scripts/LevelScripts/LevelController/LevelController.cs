@@ -57,8 +57,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
 
             case "Freeplay":
                 switch (gameManager.GetComponent<GameManagerScript>().desiredOpponent)
-                {
-                    
+                {                
                     case "Player":
                         // instanciate two playable objects
                         GameObject player1 = Instantiate(playerFab);
@@ -92,7 +91,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
 
     public void setDeck() 
     {
-        // Adds a copy of the two chosen decks stored in the deck manager to the player objects own die lists.
+        // Adds a copy of the two chosen decks stored in the deck manager to the player objects own die lists to play with this match.
         for (int i = 0; i < participants.Count; i++)
         {
             if (participants[i].GetComponent<Player>() != null)
@@ -119,16 +118,13 @@ public class LevelController : MonoBehaviour //This class controls everything at
          if (participants[turnPlayer].GetComponent<Player>().diceDeck.Count != 0)
          {           
             this.GetComponent<LevelController>().turnPlayerPerformingAction = true; // Player is in dice window, action being performed.
-            GetComponent<CameraController>().ActiveCam = "Dice";
-            GetComponent<CameraController>().switchCamera();
-            GetComponent<UIDiceController>().SetUp();
-            
+            GetComponent<CameraController>().switchCamera("Dice");
+            GetComponent<UIDiceController>().SetUp();       
         }
                  
          else if (participants[turnPlayer].GetComponent<Player>().diceDeck.Count == 0) // if no dice in pool proceed to board phase.
          {
-             this.GetComponent<CameraController>().ActiveCam = "Alt";
-             this.GetComponent<CameraController>().switchCamera();
+             this.GetComponent<CameraController>().switchCamera("Alt");
              ableToInteractWithBoard = true;
          }
 
@@ -201,7 +197,6 @@ public class LevelController : MonoBehaviour //This class controls everything at
         this.GetComponent<CreatureController>().ResetCreatureStates();
 
         //Set the camera to the right board state.
-        this.GetComponent<CameraController>().ActiveCam = "Alt";
-        this.GetComponent<CameraController>().switchCamera();
+        this.GetComponent<CameraController>().switchCamera("Alt");
     }
 }

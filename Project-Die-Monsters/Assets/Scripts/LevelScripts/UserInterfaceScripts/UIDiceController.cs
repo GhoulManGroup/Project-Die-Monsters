@@ -195,9 +195,7 @@ public class UIDiceController : MonoBehaviour //This class is replacing the old 
                 {
                     //Close window and delete the die.
                     resetFunction();
-
-                    lvlRef.GetComponent<CameraController>().ActiveCam = "Alt";
-                    lvlRef.GetComponent<CameraController>().switchCamera();
+                    lvlRef.GetComponent<CameraController>().switchCamera("Alt");
 
                     //Player not performing action can press end turn BTN.
                     lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;
@@ -205,7 +203,29 @@ public class UIDiceController : MonoBehaviour //This class is replacing the old 
                     inspectWindow.GetComponent<InspectTabScript>().CloseInspectWindow();
                 }
                 break;
-                
+
+                case "SummonBTN":
+                Debug.Log("Test");
+                // play creature on board
+                if (lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction == false)
+                {
+                    Debug.Log("Test 2");
+                    lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = true;
+                    GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().HideandShow();
+                    lvlRef.GetComponent<CameraController>().switchCamera("Board");
+                    resetFunction();
+                }
+                break;
+
+                case "PoolBTN":
+                Debug.Log("Test");
+                // add dice to pool
+                inspectWindow.GetComponent<InspectTabScript>().AddCreatureToPool();
+                //When we end our dice management state change this boolean.
+                lvlRef.GetComponent<LevelController>().ableToInteractWithBoard = true;
+                resetFunction();
+                break;
+
         }
     }
 

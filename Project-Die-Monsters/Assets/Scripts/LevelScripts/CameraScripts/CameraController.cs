@@ -7,16 +7,14 @@ public class CameraController : MonoBehaviour
     public Camera BoardView;
     public Camera DiceView;
     public Camera AltView;
-    public string ActiveCam = "Board";
-
     public GameObject AltCamRotatePoint;
+    bool EnableCamMovement;
+    public string currentCam;
 
     // Start is called before the first frame update
     void Start()
     {
-        switchCamera();
-      
-
+        switchCamera("Board");
     }
 
     public void Update()
@@ -25,32 +23,33 @@ public class CameraController : MonoBehaviour
     }
 
     // Update is called once per frame
-    public void switchCamera()
+    public void switchCamera(string ActiveCam)
     {
 
         switch (ActiveCam)
         {
-            case "Board":
+            case "Board": // the top down birds eye view
                 BoardView.enabled = true;
                 DiceView.enabled = false;
                 AltView.enabled = false;
                 break;
-            case "Dice":
+            case "Dice": // the view of the dice rolling space.
                 BoardView.enabled = false;
                 DiceView.enabled = true;
                 AltView.enabled = false;
                 break;
-            case "Alt":
+            case "Alt": // the angled view of the board with limited movement < left , right >
                 BoardView.enabled = false;
                 DiceView.enabled = false;
                 AltView.enabled = true;
+                EnableCamMovement = true;
                 break;
         }
     }
 
     public void MoveCamera()
     {
-        if (ActiveCam == "Alt")
+        if (EnableCamMovement == true)
         {
             if (Input.GetKey("z"))
             {

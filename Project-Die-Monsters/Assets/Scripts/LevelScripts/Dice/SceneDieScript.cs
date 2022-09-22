@@ -238,6 +238,4 @@ public class SceneDieScript : MonoBehaviour
             myParts[i].GetComponent<MeshRenderer>().material = startingMat;
         }
     }
-
-
 }

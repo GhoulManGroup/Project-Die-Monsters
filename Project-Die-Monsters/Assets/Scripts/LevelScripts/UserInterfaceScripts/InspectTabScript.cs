@@ -153,7 +153,7 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
 
         switch (inspectBTNPressed)
         {
-            case "SelectCreatureBTN":
+            case "SelectCreatureBTN": // Only show this & toggle between BTN's when player has to select through the window and not other input.
 
                 if (usedFor == "DrawDice")
                 {
@@ -178,21 +178,9 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
 
                     //Close Window
                     CloseInspectWindow();
-                }
+                } //Display BTN
 
-                if (usedFor == "DieInspect")
-                {
-                    AddCreatureToPool();
-                    //When we end our dice management state change this boolean.
-                    lvlRef.GetComponent<LevelController>().ableToInteractWithBoard = true;
-                }
-
-                if (usedFor == "PoolInspect")
-                {
-                    Debug.Log("Cant Be Possible");
-                }
-
-                if (usedFor == "AttackTargetSelection")
+                if (usedFor == "AttackTargetSelection") //Display BTN
                 {
                     if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<DungeonLordPiece>() != null)
                     {
@@ -260,8 +248,8 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
                 }
                 break;
 
-            case "CloseBTN":
-                // go back to previous step.
+            case "CloseBTN": // Only for use in combat step.
+                // go back to previous step.s
                 lvlRef.GetComponent<CreatureController>().ChosenAction = "Choosing";
                 lvlRef.GetComponent<CreatureController>().CheckPossibleActions();
                 lvlRef.GetComponent<CreatureController>().HideAndShowButtons();
@@ -289,8 +277,7 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
         CloseInspectWindow();
 
         // switch to the board view.
-        lvlRef.GetComponent<CameraController>().ActiveCam = "Alt";
-        lvlRef.GetComponent<CameraController>().switchCamera();
+        lvlRef.GetComponent<CameraController>().switchCamera("Alt");
 
         //Player not performing action can press end turn BTN.
         lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;

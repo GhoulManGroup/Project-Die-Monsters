@@ -103,9 +103,7 @@ public class CreatureController : MonoBehaviour //  this script oversees piece m
         OrderBTNS[3].GetComponent<Button>().interactable = true;
 
         
-    }
-
-    
+    } 
 
     public void DeclareAction()
     {
@@ -150,8 +148,7 @@ public class CreatureController : MonoBehaviour //  this script oversees piece m
         lcScript.ableToInteractWithBoard = true;
         ChosenCreature = null;
         HideAndShowButtons();
-        lvlRef.GetComponent<CameraController>().ActiveCam = "Alt";
-        lvlRef.GetComponent<CameraController>().switchCamera();
+        lvlRef.GetComponent<CameraController>().switchCamera("Alt");
         lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;
     }
 
@@ -188,8 +185,7 @@ public class CreatureController : MonoBehaviour //  this script oversees piece m
 
     }
 
-
-  public void subtractCrest() // remove the cost of action from the pool.
+    public void subtractCrest() // remove the cost of action from the pool.
     {
         switch (ChosenAction)
         {

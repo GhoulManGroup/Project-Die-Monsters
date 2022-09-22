@@ -49,6 +49,7 @@ public class DungeonSpawner : MonoBehaviour
         {
             for (int i = 0; i < DungeonTiles.Count; i++)
             {
+                Debug.Log("Hi From Hide&Show");
                 DungeonTiles[i].GetComponent<MeshRenderer>().enabled = true;
                 // Run check placement when set active so that the Tile isnt set to can place from the last use.
                 CheckPlacement();
@@ -173,8 +174,7 @@ public class DungeonSpawner : MonoBehaviour
                     DungeonTiles[i].GetComponent<DungeonTileScript>().dungeonToBePlaced();
                 }
                 GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreaturePoolController>().placingCreature = false;
-                GameObject.FindGameObjectWithTag("LevelController").GetComponent<CameraController>().ActiveCam = "Alt";
-                GameObject.FindGameObjectWithTag("LevelController").GetComponent<CameraController>().switchCamera();
+                GameObject.FindGameObjectWithTag("LevelController").GetComponent<CameraController>().switchCamera("Alt");
                 HideandShow();
                 UpdateBoard();
                 this.transform.position = resetPoint;

@@ -19,12 +19,6 @@ public class CreaturePoolController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void enableButtons() // sets the buttons 
     {
         for (int i = 0; i < creatureDiceBTNS.Count; i++)
@@ -40,15 +34,14 @@ public class CreaturePoolController : MonoBehaviour
 
     public void SelectMe()
     {
-        if (this.GetComponent<CameraController>().ActiveCam == "Alt") // prevents the button from being pressed while in the wrong window.
+        if (this.GetComponent<LevelController>().ableToInteractWithBoard == true) // Can Only be pressed with player is in View.
         {
             if (this.GetComponent<LevelController>().turnPlayerPerformingAction == false)
             { 
                 this.GetComponent<LevelController>().turnPlayerPerformingAction = true;
                 placingCreature = true;
                 GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().HideandShow();
-                this.GetComponent<CameraController>().ActiveCam = "Board";
-                this.GetComponent<CameraController>().switchCamera();
+                this.GetComponent<CameraController>().switchCamera("Board");
             }
         }
     }
