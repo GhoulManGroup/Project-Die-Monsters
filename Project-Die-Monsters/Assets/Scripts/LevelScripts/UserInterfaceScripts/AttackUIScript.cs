@@ -134,7 +134,7 @@ public class AttackUIScript : MonoBehaviour
                     case "Decide":
                         // go back to target list.
                         hideAttackWindow();
-                        GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().OpenInspectWindow("AttackTargetSelection");
+                        GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectWindowController>().OpenInspectWindow("AttackTargetSelection");
                         break;
                     case "Over":
                         //Combat over contiune turn.

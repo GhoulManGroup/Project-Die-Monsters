@@ -4,20 +4,25 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class InspectTabScript : MonoBehaviour // A UI display of a creature card used for checking what object is inside a die and picking a attack target.
+public class InspectWindowController : MonoBehaviour //This script controls the various non combat in-Level UI windows that display the details of creatures, dungeonlords, items ect.
 {
-    //The used for string(usedFor) within some functions is where we store why the inspect interface was opened and how we know what parts of the UI to enable / disable ect at any point.
-    // "DrawDice", added a creature scriptable object to the dice to be rolled in the dice phase.
-    // "DieInspect, view what creature is inside of clicked dice that has been rolled.
-    // "PoolInspect", View what creature is currently stored within the creature pool UI we are hovering over.
+    //The used for string(usedFor) within some functions is where we store why the inspect interface was opened and how the script knows what parts of the UI to enable / disable ect at any point based on what is needed.
+    // "DrawDice", Display the current turn players dice pool to allow them to assign it to the 3DDice fab to roll.
+    // "DieInspect, view what creature is inside of clicked dice that has been rolled and can be summoned for choosing.
+    // "PoolInspect", View what creature is currently stored within the creature pool UI object we are hovering over.
     // "PieceInspect", view the details of the board piece the player is hovering over
-    //AttackTargetSelection, display the details of the possible attack targets of chosen piece
+    //AttackTargetSelection, display the details of the possible attack targets of chosen piece.
 
-    [Header("Interface Elements")]
-    public GameObject CreatureInspectUI;
-    public GameObject DungeonLordInspectUI;
-    public List<GameObject> UIButtonList = new List<GameObject>();
+    [Header("Interface UI Panels")] //The Game Objects that comprise the inspect UI.
+    public GameObject CreatureInspectUI; //Parent of CIUI
+    public GameObject DungeonLordInspectUI; //Parent of DLIUI
+    public List<GameObject> InspectBTNList = new List<GameObject>();
+    public GameObject CrestDisplay; //Shows what crests a dice in the pool has.
 
+    [Space(10)]
+
+    [Header("Interface UI Components")] //The Components that comprise the Inspect UI Elements eg BTN / Image / Text of the creature inspect window
+    public List<GameObject> CreatureInspectionPanel = new List<GameObject>();
     public GameObject creatureArt;
     public GameObject creatureLevel;
     public GameObject creatureTribe;
@@ -26,17 +31,18 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
     public Text attackValue;
     public Text defenceValue;
     public Text healthValue;
+    public List<GameObject> DungeonLordInspectionPanel = new List<GameObject>();
 
-    GameObject lvlRef;
+ 
 
     [Header("Window States")]
 
 
-    [Header("WindowContents")]
+    [Header("DiceWindowRefrence")]
     //These two public objects are for assigning a die object to a 3D dice in the scene.
     public GameObject sceneDice;
     public GameObject turnPlayer;
-
+    GameObject lvlRef;
     //What dice out of the player dice deck is currently displayed.
     int diceShown = 0;
 
@@ -89,7 +95,6 @@ public class InspectTabScript : MonoBehaviour // A UI display of a creature card
                     currentCreature = currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>().myCreature;
                    //showCreatureDetails(myComponents.Count);
                     DisplayCreatureDetails(usedFor);
-
                 }
                 break;
         }

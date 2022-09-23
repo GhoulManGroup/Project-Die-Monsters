@@ -17,18 +17,18 @@ public class OnHoverInspectScript : MonoBehaviour, IPointerEnterHandler, IPointe
     {
         if (this.GetComponent<CreatureToken>() != null)
         {
-            InspectWindow.GetComponent<InspectTabScript>().currentCreature = this.GetComponent<CreatureToken>().myCreature;
-            InspectWindow.GetComponent<InspectTabScript>().OpenInspectWindow("PieceInspect");
+            InspectWindow.GetComponent<InspectWindowController>().currentCreature = this.GetComponent<CreatureToken>().myCreature;
+            InspectWindow.GetComponent<InspectWindowController>().OpenInspectWindow("PieceInspect");
         }
 
         if (this.GetComponent<DungeonLordPiece>() != null)
         {
-            InspectWindow.GetComponent<InspectTabScript>().currentDungeonLord = this.GetComponent<DungeonLordPiece>().myDungeonLord;
-            InspectWindow.GetComponent<InspectTabScript>().OpenInspectWindow("PieceInspect");
+            InspectWindow.GetComponent<InspectWindowController>().currentDungeonLord = this.GetComponent<DungeonLordPiece>().myDungeonLord;
+            InspectWindow.GetComponent<InspectWindowController>().OpenInspectWindow("PieceInspect");
         }
         if (this.GetComponent<CreaturePoolUISlot>() != null)
         {
-            InspectWindow.GetComponent<InspectTabScript>().OpenInspectWindow("PoolInspect");
+            InspectWindow.GetComponent<InspectWindowController>().OpenInspectWindow("PoolInspect");
         }
 
         else if (this.GetComponent<CreaturePoolUISlot>() == null && this.GetComponent<DungeonLordPiece>() == null && this.GetComponent<CreatureToken>() == null)
@@ -43,7 +43,7 @@ public class OnHoverInspectScript : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        InspectWindow.GetComponent<InspectTabScript>().CloseInspectWindow();
+        InspectWindow.GetComponent<InspectWindowController>().CloseInspectWindow();
     }
 
 }

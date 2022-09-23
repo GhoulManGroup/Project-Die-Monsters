@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class UIManager : MonoBehaviour // This class will oversee the enabling and hiding of diffrent UI Elements
 {
-    public GameObject DiceSelectInteface;
-    public GameObject DiceRollInteractUI;
-    public GameObject InspectWindow;
-    public GameObject CreaturePoolUI;
-    public GameObject CreatureControlUI;
-    public GameObject AttackWindow;
+    public GameObject CoreUI;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +20,6 @@ public class UIManager : MonoBehaviour // This class will oversee the enabling a
 
     public void test()
     {
-        DiceSelectInteface.SetActive(false);
+        //DiceSelectInteface.SetActive(false);
     }
 }

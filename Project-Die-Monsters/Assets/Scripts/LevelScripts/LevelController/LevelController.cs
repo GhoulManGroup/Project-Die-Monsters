@@ -138,7 +138,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
         this.GetComponent<CreatureController>().turnPlayer = participants[turnPlayer].gameObject;
         this.GetComponent<CreaturePoolController>().turnPlayer = participants[turnPlayer].gameObject;
         this.GetComponent<UIDiceController>().turnPlayer = participants[turnPlayer].gameObject;
-        GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>().turnPlayer = participants[turnPlayer].gameObject;
+        GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectWindowController>().turnPlayer = participants[turnPlayer].gameObject;
         whoseTurn = "Player" + turnPlayer.ToString();
 
     }

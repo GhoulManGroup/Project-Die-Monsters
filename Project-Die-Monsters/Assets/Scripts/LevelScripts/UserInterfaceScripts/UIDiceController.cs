@@ -42,6 +42,7 @@ public class UIDiceController : MonoBehaviour //This class is replacing the old 
         inspectWindow = GameObject.FindGameObjectWithTag("InspectWindow");
         UIElements[0].SetActive(false);
         UIElements[1].SetActive(false);
+        UIElements[2].SetActive(false);
     }
 
     public void SetUp()
@@ -151,6 +152,7 @@ public class UIDiceController : MonoBehaviour //This class is replacing the old 
         //Then hide the UI elements as the camera has changed view.
         UIElements[0].SetActive(false);
         UIElements[1].SetActive(false);
+        UIElements[2].SetActive(false);
 
 
         //Reset dice results.
@@ -200,13 +202,11 @@ public class UIDiceController : MonoBehaviour //This class is replacing the old 
                     //Player not performing action can press end turn BTN.
                     lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;
                     lvlRef.GetComponent<LevelController>().ableToInteractWithBoard = true;
-                    inspectWindow.GetComponent<InspectTabScript>().CloseInspectWindow();
+                    inspectWindow.GetComponent<InspectWindowController>().CloseInspectWindow();
                 }
                 break;
 
                 case "SummonBTN":
-                Debug.Log("Test");
-                // play creature on board
                 if (lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction == false)
                 {
                     Debug.Log("Test 2");
@@ -218,10 +218,7 @@ public class UIDiceController : MonoBehaviour //This class is replacing the old 
                 break;
 
                 case "PoolBTN":
-                Debug.Log("Test");
-                // add dice to pool
-                inspectWindow.GetComponent<InspectTabScript>().AddCreatureToPool();
-                //When we end our dice management state change this boolean.
+                inspectWindow.GetComponent<InspectWindowController>().AddCreatureToPool();
                 lvlRef.GetComponent<LevelController>().ableToInteractWithBoard = true;
                 resetFunction();
                 break;

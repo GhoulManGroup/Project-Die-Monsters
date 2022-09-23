@@ -6,7 +6,7 @@ public class SceneDieScript : MonoBehaviour
 {
     [Header("Refrence Objects")]
     UIDiceController myController;
-    InspectTabScript inspectTab;
+    InspectWindowController inspectTab;
 
     public bool diceSetUp; // If the dice has a creature inside.
     public string rollResult; // What the dice has rolled.
@@ -29,7 +29,7 @@ public class SceneDieScript : MonoBehaviour
     void Start()
     {
         myController = GameObject.FindGameObjectWithTag("LevelController").GetComponent<UIDiceController>();
-        inspectTab = GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectTabScript>();
+        inspectTab = GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectWindowController>();
         myBody = GetComponent<Rigidbody>();
         startingPosition = this.transform.position;
         resetDie();
@@ -51,6 +51,7 @@ public class SceneDieScript : MonoBehaviour
                 //Check if dice already done.
                 inspectTab.sceneDice = gameObject;
                 inspectTab.OpenInspectWindow("DieInspect");
+                myController.UIElements[2].SetActive(true);
             }
         }
     }
