@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 
 public class InspectWindowController : MonoBehaviour //This script controls the various non combat in-Level UI windows that display the details of creatures, dungeonlords, items ect.
 {
@@ -13,27 +14,37 @@ public class InspectWindowController : MonoBehaviour //This script controls the 
     // "PieceInspect", view the details of the board piece the player is hovering over
     //AttackTargetSelection, display the details of the possible attack targets of chosen piece.
 
+    #region VariblesEct
     [Header("Interface UI Panels")] //The Game Objects that comprise the inspect UI.
     public GameObject CreatureInspectUI; //Parent of CIUI
     public GameObject DungeonLordInspectUI; //Parent of DLIUI
     public List<GameObject> InspectBTNList = new List<GameObject>();
     public GameObject CrestDisplay; //Shows what crests a dice in the pool has.
+    [SerializeField] CreatureInspectElements  creatureWindow = default;
+    [SerializeField] DungeonLordInspectElements dungeonLordWindow = default;
 
-    [Space(10)]
+    #region SeralizedFields
+    [Serializable]
+    struct CreatureInspectElements
+    {
+        public GameObject creatureArt;
+        public GameObject creatureLevel;
+        public GameObject creatureTribe;
+        public GameObject creatureType;
+        public Text creatureName;
+        public Text attackValue;
+        public Text defenceValue;
+        public Text healthValue;
+    }
+    [Serializable]
+    struct DungeonLordInspectElements
+    {
+        public GameObject dungeonLordArt;
+        public GameObject lifeIcon;
+        public Text lifeText;
+    }
 
-    [Header("Interface UI Components")] //The Components that comprise the Inspect UI Elements eg BTN / Image / Text of the creature inspect window
-    public List<GameObject> CreatureInspectionPanel = new List<GameObject>();
-    public GameObject creatureArt;
-    public GameObject creatureLevel;
-    public GameObject creatureTribe;
-    public GameObject creatureType;
-    public Text creatureName;
-    public Text attackValue;
-    public Text defenceValue;
-    public Text healthValue;
-    public List<GameObject> DungeonLordInspectionPanel = new List<GameObject>();
-
- 
+    #endregion
 
     [Header("Window States")]
 
@@ -53,6 +64,7 @@ public class InspectWindowController : MonoBehaviour //This script controls the 
     
     int targetShown = 0; //Which of the creature chosens possible attack targets are being displayed.
 
+    #endregion
 
     // Start is called before the first frame update
     void Start()
@@ -73,8 +85,10 @@ public class InspectWindowController : MonoBehaviour //This script controls the 
         switch (usedFor)
         {
             case "DrawDice":
-               // showCreatureDetails(myComponents.Count);
+                // showCreatureDetails(myComponents.Count);
+                Debug.Log("HiOpen");
                 DisplayCreatureDetails(usedFor);
+                CreatureInspectUI.SetActive(true);
                 break;
             case "DieInspect":
                 //componentsToDisplay = 11;
@@ -126,7 +140,8 @@ public class InspectWindowController : MonoBehaviour //This script controls the 
         {
             case "DrawDice":
                 //Set current creature to creature contained within the dice we are currently showing the player from the player deck.
-                currentCreature = turnPlayer.GetComponent<Player>().diceDeck[diceShown].dieCreature;              
+                currentCreature = turnPlayer.GetComponent<Player>().diceDeck[diceShown].dieCreature;
+                Debug.Log("Hi");
                 break;
 
             case "DieInspect":
@@ -134,14 +149,14 @@ public class InspectWindowController : MonoBehaviour //This script controls the 
                 currentCreature = sceneDice.GetComponent<SceneDieScript>().myDie.dieCreature;
                 break;
         }
-        creatureArt.GetComponent<Image>().sprite = currentCreature.CardArt;
-        creatureLevel.GetComponent<Image>().sprite = currentCreature.LevelSprite;
-        creatureTribe.GetComponent<Image>().sprite = currentCreature.TribeSprite;
-        creatureType.GetComponent<Image>().sprite = currentCreature.TypeSprite;
-        creatureName.GetComponent<Text>().text = currentCreature.creatureType.ToString();
-        attackValue.GetComponent<Text>().text = "ATK" + currentCreature.Attack.ToString();
-        defenceValue.GetComponent<Text>().text = "DEF" + currentCreature.Defence.ToString();
-        healthValue.GetComponent<Text>().text = "HP" + currentCreature.Health.ToString();
+        creatureWindow.creatureArt.GetComponent<Image>().sprite = currentCreature.CardArt;
+        creatureWindow.creatureLevel.GetComponent<Image>().sprite = currentCreature.LevelSprite;
+        creatureWindow.creatureTribe.GetComponent<Image>().sprite = currentCreature.TribeSprite;
+        creatureWindow.creatureType.GetComponent<Image>().sprite = currentCreature.TypeSprite;
+        creatureWindow.creatureName.GetComponent<Text>().text = currentCreature.creatureType.ToString();
+        creatureWindow.attackValue.GetComponent<Text>().text = "ATK" + currentCreature.Attack.ToString();
+        creatureWindow.defenceValue.GetComponent<Text>().text = "DEF" + currentCreature.Defence.ToString();
+        creatureWindow.healthValue.GetComponent<Text>().text = "HP" + currentCreature.Health.ToString();
     }
 
     public void DisplayDungeonLord()

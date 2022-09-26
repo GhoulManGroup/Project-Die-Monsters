@@ -3122,14 +3122,20 @@ MonoBehaviour:
   - {fileID: 1307574107}
   - {fileID: 1196444996}
   - {fileID: 1347717515}
-  creatureArt: {fileID: 0}
-  creatureLevel: {fileID: 0}
-  creatureTribe: {fileID: 0}
-  creatureType: {fileID: 0}
-  creatureName: {fileID: 0}
-  attackValue: {fileID: 0}
-  defenceValue: {fileID: 0}
-  healthValue: {fileID: 0}
+  CrestDisplay: {fileID: 0}
+  creatureWindow:
+    creatureArt: {fileID: 796411063}
+    creatureLevel: {fileID: 756823198}
+    creatureTribe: {fileID: 1636709855}
+    creatureType: {fileID: 161551330}
+    creatureName: {fileID: 1725859064}
+    attackValue: {fileID: 1839136092}
+    defenceValue: {fileID: 1306513285}
+    healthValue: {fileID: 128250721}
+  dungeonLordWindow:
+    dungeonLordArt: {fileID: 0}
+    lifeIcon: {fileID: 0}
+    lifeText: {fileID: 0}
   sceneDice: {fileID: 0}
   turnPlayer: {fileID: 0}
   currentCreature: {fileID: 0}
