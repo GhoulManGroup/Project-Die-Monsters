@@ -37,11 +37,8 @@ public class SceneDieScript : MonoBehaviour
 
     public void OnMouseDown()
     {
-        Debug.Log("TestOMD");
-
         if (myController.hasRolledDice == false)
         {
-            Debug.Log("Test");
             //declare this as first dice pick then open window.
             inspectTab.sceneDice = gameObject;
             inspectTab.OpenInspectWindow("DrawDice");

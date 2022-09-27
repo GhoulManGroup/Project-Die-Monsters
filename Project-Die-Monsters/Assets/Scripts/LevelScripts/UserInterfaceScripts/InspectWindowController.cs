@@ -16,12 +16,12 @@ public class InspectWindowController : MonoBehaviour //This script controls the 
 
     #region VariblesEct
     [Header("Interface UI Panels")] //The Game Objects that comprise the inspect UI.
-    public GameObject CreatureInspectUI; //Parent of CIUI
-    public GameObject DungeonLordInspectUI; //Parent of DLIUI
-    public List<GameObject> InspectBTNList = new List<GameObject>();
-    public GameObject CrestDisplay; //Shows what crests a dice in the pool has.
+    public GameObject creatureInspectUI; //Parent of CIUI
+    public GameObject dungeonLordInspectUI; //Parent of DLIUI
+    public GameObject crestDisplay; //Shows what crests a dice in the pool has.
     [SerializeField] CreatureInspectElements  creatureWindow = default;
     [SerializeField] DungeonLordInspectElements dungeonLordWindow = default;
+    [SerializeField] InspectionWindowButtons inspectWindowButtons = default;
 
     #region SeralizedFields
     [Serializable]
@@ -43,60 +43,81 @@ public class InspectWindowController : MonoBehaviour //This script controls the 
         public GameObject lifeIcon;
         public Text lifeText;
     }
+    [Serializable]
+    struct InspectionWindowButtons 
+    {
+        public GameObject declareBTN;
+        public GameObject nextBTN;
+        public GameObject backBTN;
+    }
 
     #endregion
-
-    [Header("Window States")]
-
 
     [Header("DiceWindowRefrence")]
     //These two public objects are for assigning a die object to a 3D dice in the scene.
     public GameObject sceneDice;
     public GameObject turnPlayer;
-    GameObject lvlRef;
     //What dice out of the player dice deck is currently displayed.
     int diceShown = 0;
 
+    //Refrence to levelManager
+    GameObject levelManager;
+
+    //Refrence to game objects / scriptables
     public Creature currentCreature; //The creature scriptable object contained with a game object, eg dice or board piece.
     public GameObject currentCreaturePiece; //The board piece game object.
     public DungeonLord currentDungeonLord;
     public GameObject currentDungeonLordPiece;
     
+    // what target out of what ever list is being accesssed is shown.
     int targetShown = 0; //Which of the creature chosens possible attack targets are being displayed.
 
+    //Used to store the string value of openedFor, to tell the buttons what they need to do based on why the UI is open.
+    string pressedFor;
     #endregion
 
     // Start is called before the first frame update
     void Start()
     {
         CloseInspectWindow();
-        lvlRef = GameObject.FindGameObjectWithTag("LevelController");
+        levelManager = GameObject.FindGameObjectWithTag("LevelController");
     }
 
     #region displayAndHideUI
     public void CloseInspectWindow()
     {
-        DungeonLordInspectUI.gameObject.SetActive(false);
-        CreatureInspectUI.gameObject.SetActive(false);
+        dungeonLordInspectUI.gameObject.SetActive(false);
+        creatureInspectUI.gameObject.SetActive(false);
+        inspectWindowButtons.declareBTN.SetActive(false);
+        inspectWindowButtons.nextBTN.SetActive(false);
+        inspectWindowButtons.backBTN.SetActive(false);
     }
 
-    public void OpenInspectWindow(string usedFor)
+    public void OpenInspectWindow(string openedFor)
     {
-        switch (usedFor)
+        pressedFor = openedFor;
+        switch (openedFor)
         {
             case "DrawDice":
-                // showCreatureDetails(myComponents.Count);
-                Debug.Log("HiOpen");
-                DisplayCreatureDetails(usedFor);
-                CreatureInspectUI.SetActive(true);
+                DisplayCreatureDetails(openedFor);
+                creatureInspectUI.SetActive(true);
+                inspectWindowButtons.declareBTN.SetActive(true);
+                inspectWindowButtons.nextBTN.SetActive(true);
+                inspectWindowButtons.backBTN.SetActive(true);
                 break;
+
             case "DieInspect":
-                //componentsToDisplay = 11;
-                DisplayCreatureDetails(usedFor);
+                DisplayCreatureDetails(openedFor);
+                creatureInspectUI.SetActive(true);
+                inspectWindowButtons.declareBTN.SetActive(true);
+                inspectWindowButtons.nextBTN.SetActive(true);
+                inspectWindowButtons.backBTN.SetActive(true);
                 break;
+
             case "PoolInspect":
-                //componentsToDisplay = 10;
+                DisplayCreatureDetails(openedFor);
                 break;
+
             case "AttackTargetSelection":
 
                 if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<DungeonLordPiece>() != null)
@@ -107,41 +128,22 @@ public class InspectWindowController : MonoBehaviour //This script controls the 
                 {
                     //If current target is creature then display creature
                     currentCreature = currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>().myCreature;
-                   //showCreatureDetails(myComponents.Count);
-                    DisplayCreatureDetails(usedFor);
+                    DisplayCreatureDetails(openedFor);
                 }
+                inspectWindowButtons.declareBTN.SetActive(true);
+                inspectWindowButtons.nextBTN.SetActive(true);
+                inspectWindowButtons.backBTN.SetActive(true);
                 break;
-        }
-        // add check for state to choosecreature  button if not in dice window;
-       
+        }  
     }
 
-    public void showCreatureDetails (int componentsToDisplay)
-    {
-        for (int i = 0; i < componentsToDisplay; i++)
-        {
-           // if (myComponents[i].GetComponent<Image>() != null)
-            //{
-           //     myComponents[i].GetComponent<Image>().enabled = true;
-          //  }
-
-          //  if (myComponents[i].GetComponent<Text>() != null)
-           // {
-          //      myComponents[i].GetComponent<Text>().enabled = true;
-          //  }
-        }
-    }
-
-
-
-    public void DisplayCreatureDetails(string usedFor) // sets the inspect window when displaying die contents either in manager or creature pool.
-    {
+    public void DisplayCreatureDetails(string usedFor) //Set the inspect window components to display the details of current creatures
+    { 
         switch (usedFor)
         {
             case "DrawDice":
                 //Set current creature to creature contained within the dice we are currently showing the player from the player deck.
                 currentCreature = turnPlayer.GetComponent<Player>().diceDeck[diceShown].dieCreature;
-                Debug.Log("Hi");
                 break;
 
             case "DieInspect":
@@ -167,7 +169,7 @@ public class InspectWindowController : MonoBehaviour //This script controls the 
 
     #region inspectBTNInput
 
-    public void ButtonPressed(string usedFor)
+    public void ButtonPressed()
     {
         string inspectBTNPressed = EventSystem.current.currentSelectedGameObject.name.ToString();
 
@@ -175,7 +177,7 @@ public class InspectWindowController : MonoBehaviour //This script controls the 
         {
             case "SelectCreatureBTN": // Only show this & toggle between BTN's when player has to select through the window and not other input.
 
-                if (usedFor == "DrawDice")
+                if (pressedFor == "DrawDice")
                 {
                     //Check if a dice is already in the object inside.
                     if (sceneDice.GetComponent<SceneDieScript>().myDie != null)
@@ -200,7 +202,7 @@ public class InspectWindowController : MonoBehaviour //This script controls the 
                     CloseInspectWindow();
                 } //Display BTN
 
-                if (usedFor == "AttackTargetSelection") //Display BTN
+                if (pressedFor == "AttackTargetSelection") //Display BTN
                 {
                     if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<DungeonLordPiece>() != null)
                     {
@@ -215,16 +217,16 @@ public class InspectWindowController : MonoBehaviour //This script controls the 
 
             case "ForwardBTN":
 
-                if (usedFor == "DrawDice")
+                if (pressedFor == "DrawDice")
                 {
                     if (diceShown < turnPlayer.GetComponent<Player>().diceDeck.Count)
                     {
                         diceShown += 1;
-                        DisplayCreatureDetails(usedFor);
+                        DisplayCreatureDetails(pressedFor);
                     }
                 }
 
-                if (usedFor == "AttackTargetSelection")
+                if (pressedFor == "AttackTargetSelection")
                 {
                     if (targetShown < currentCreaturePiece.GetComponent<CreatureToken>().targets.Count - 1)
                     {
@@ -234,24 +236,23 @@ public class InspectWindowController : MonoBehaviour //This script controls the 
                             DisplayDungeonLord();
                         }else if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>() != null)
                         {
-                            DisplayCreatureDetails(usedFor);
+                            DisplayCreatureDetails(pressedFor);
                         }
-
                     }
                 }
                 break;
 
             case "BackBTN":
-                if (usedFor == "DrawDice")
+                if (pressedFor == "DrawDice")
                 {
                     if (diceShown > 0)
                     {
                         diceShown -= 1;
-                        DisplayCreatureDetails(usedFor);
+                        DisplayCreatureDetails(pressedFor);
                     }
                 }
 
-                if (usedFor == "AttackTargetSelection")
+                if (pressedFor == "AttackTargetSelection")
                 {
                     if (targetShown > 0)
                     {
@@ -270,9 +271,9 @@ public class InspectWindowController : MonoBehaviour //This script controls the 
 
             case "CloseBTN": // Only for use in combat step.
                 // go back to previous step.s
-                lvlRef.GetComponent<CreatureController>().ChosenAction = "Choosing";
-                lvlRef.GetComponent<CreatureController>().CheckPossibleActions();
-                lvlRef.GetComponent<CreatureController>().HideAndShowButtons();
+                levelManager.GetComponent<CreatureController>().ChosenAction = "Choosing";
+                levelManager.GetComponent<CreatureController>().CheckPossibleActions();
+                levelManager.GetComponent<CreatureController>().HideAndShowButtons();
                 CloseInspectWindow();
                 break;
         }
@@ -284,23 +285,23 @@ public class InspectWindowController : MonoBehaviour //This script controls the 
     public void AddCreatureToPool() //Selected dice is discarded to add the creature inside to the player creature pool.
     {
         //add creature to pool
-        lvlRef.GetComponent<CreaturePoolController>().turnPlayer.GetComponent<Player>().CreaturePool.Add(currentCreature);
-        lvlRef.GetComponent<CreaturePoolController>().enableButtons();
+        levelManager.GetComponent<CreaturePoolController>().turnPlayer.GetComponent<Player>().CreaturePool.Add(currentCreature);
+        levelManager.GetComponent<CreaturePoolController>().enableButtons();
 
         // remove the die object from the dice we are currently showing the contents of.
         sceneDice.GetComponent<SceneDieScript>().myDie = null;
 
         //Call the UIDICEController and run the reset function.
-        lvlRef.GetComponent<UIDiceController>().resetFunction();
+        levelManager.GetComponent<UIDiceController>().resetFunction();
 
         // hide the inspect tab
         CloseInspectWindow();
 
         // switch to the board view.
-        lvlRef.GetComponent<CameraController>().switchCamera("Alt");
+        levelManager.GetComponent<CameraController>().switchCamera("Alt");
 
         //Player not performing action can press end turn BTN.
-        lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;
+        levelManager.GetComponent<LevelController>().turnPlayerPerformingAction = false;
 
     }
     #endregion
