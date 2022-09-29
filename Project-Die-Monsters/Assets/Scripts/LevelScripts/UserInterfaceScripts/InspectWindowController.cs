@@ -109,9 +109,6 @@ public class InspectWindowController : MonoBehaviour //This script controls the 
             case "DieInspect":
                 DisplayCreatureDetails(openedFor);
                 creatureInspectUI.SetActive(true);
-                inspectWindowButtons.declareBTN.SetActive(true);
-                inspectWindowButtons.nextBTN.SetActive(true);
-                inspectWindowButtons.backBTN.SetActive(true);
                 break;
 
             case "PoolInspect":
@@ -263,7 +260,7 @@ public class InspectWindowController : MonoBehaviour //This script controls the 
                         }
                         else if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>() != null)
                         {
-                            DisplayCreatureDetails(usedFor);
+                            DisplayCreatureDetails(pressedFor);
                         }
                     }
                 }

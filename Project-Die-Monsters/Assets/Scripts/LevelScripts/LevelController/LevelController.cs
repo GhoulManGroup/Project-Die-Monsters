@@ -34,7 +34,8 @@ public class LevelController : MonoBehaviour //This class controls everything at
 
     [Header("Turn Player Constraints & Resources")]
     public bool turnPlayerPerformingAction = false; // this bool will be what we check before being able to perform certain action.
-    public bool ableToInteractWithBoard = false; // Player is allowed to interact with the board.
+    public bool ableToInteractWithBoard = false; // Player is allowed to interact with the pieces on the board, checked before raycast on piece ect.
+    public bool placingCreature = false; // The player is placing a creature on the board.
 
     public List<Text> turnPlayerUIDisplay = new List<Text>();
 

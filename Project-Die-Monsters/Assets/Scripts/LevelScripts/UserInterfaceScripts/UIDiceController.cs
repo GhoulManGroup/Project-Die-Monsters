@@ -207,13 +207,10 @@ public class UIDiceController : MonoBehaviour //This class is replacing the old 
                 break;
 
                 case "SummonBTN":
-                if (lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction == false)
-                {
-                    Debug.Log("Test 2");
-                    lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = true;
-                    GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().HideandShow();
-                    lvlRef.GetComponent<CameraController>().switchCamera("Board");
-                    resetFunction();
+                { 
+                GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().HideandShow();
+                lvlRef.GetComponent<CameraController>().switchCamera("Board");
+                resetFunction();
                 }
                 break;
 

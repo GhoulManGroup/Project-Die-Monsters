@@ -45,7 +45,7 @@ public class DungeonSpawner : MonoBehaviour
 
     public void HideandShow()
     {
-        if (GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreaturePoolController>().placingCreature == true)
+        if (GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreaturePoolController>().placingCreature == true) // Next Condition to Change.
         {
             for (int i = 0; i < DungeonTiles.Count; i++)
             {

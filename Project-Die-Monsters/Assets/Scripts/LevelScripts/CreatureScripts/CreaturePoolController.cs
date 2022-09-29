@@ -9,7 +9,7 @@ public class CreaturePoolController : MonoBehaviour
     public GameObject turnPlayer;
     public List<GameObject> creatureDiceBTNS = new List<GameObject>();
     public int creaturePick;
-    public bool placingCreature = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,9 +34,9 @@ public class CreaturePoolController : MonoBehaviour
 
     public void SelectMe()
     {
-        if (this.GetComponent<LevelController>().ableToInteractWithBoard == true) // Can Only be pressed with player is in View.
+        if (this.GetComponent<LevelController>().ableToInteractWithBoard == true) //Player isn't currently doing somthing else.
         {
-            if (this.GetComponent<LevelController>().turnPlayerPerformingAction == false)
+            if (this.GetComponent<LevelController>().turnPlayerPerformingAction == false) //Player isnt already doing an action that prevents placing a creature.
             { 
                 this.GetComponent<LevelController>().turnPlayerPerformingAction = true;
                 placingCreature = true;
