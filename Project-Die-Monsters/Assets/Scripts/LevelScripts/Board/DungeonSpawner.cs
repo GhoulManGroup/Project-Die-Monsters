@@ -17,7 +17,8 @@ public class DungeonSpawner : MonoBehaviour
     Vector3 resetPoint;
     public Vector3 lastPos;
 
-    GameObject lvlRef;
+    GameObject levelController;
+    LevelController levelScript;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +26,9 @@ public class DungeonSpawner : MonoBehaviour
         resetPoint = this.transform.position;
         UpdateBoard();
         HideandShow();
-        lvlRef = GameObject.FindGameObjectWithTag("LevelController");
+
+        levelController = GameObject.FindGameObjectWithTag("LevelController");
+        levelScript = levelController.GetComponent<LevelController>();
     }
 
     // Update is called once per frame
@@ -36,7 +39,7 @@ public class DungeonSpawner : MonoBehaviour
 
     public void checkPlayerAction()
     {
-        if (GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreaturePoolController>().placingCreature == true)
+        if (levelScript.placingCreature == true)
         {
             MoveDungeonSpawner();
             PlaceDungeonPath();
@@ -45,7 +48,7 @@ public class DungeonSpawner : MonoBehaviour
 
     public void HideandShow()
     {
-        if (GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreaturePoolController>().placingCreature == true) // Next Condition to Change.
+        if (levelScript.placingCreature == true) // Next Condition to Change.
         {
             for (int i = 0; i < DungeonTiles.Count; i++)
             {
@@ -56,7 +59,7 @@ public class DungeonSpawner : MonoBehaviour
             }
         }
 
-        if (GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreaturePoolController>().placingCreature == false)
+        if (levelScript.placingCreature == false)
         {
             for (int i = 0; i < DungeonTiles.Count; i++)
             {
@@ -173,7 +176,7 @@ public class DungeonSpawner : MonoBehaviour
                 {
                     DungeonTiles[i].GetComponent<DungeonTileScript>().dungeonToBePlaced();
                 }
-                GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreaturePoolController>().placingCreature = false;
+                levelScript.placingCreature = false;
                 GameObject.FindGameObjectWithTag("LevelController").GetComponent<CameraController>().switchCamera("Alt");
                 HideandShow();
                 UpdateBoard();

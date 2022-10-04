@@ -9,10 +9,12 @@ public class CreaturePoolController : MonoBehaviour
     public GameObject turnPlayer;
     public List<GameObject> creatureDiceBTNS = new List<GameObject>();
     public int creaturePick;
+    LevelController levelControllerScript;
 
     // Start is called before the first frame update
     void Start()
     {
+        levelControllerScript = GameObjec
         for (int i = 0; i < creatureDiceBTNS.Count; i++)
         {
             creatureDiceBTNS[i].GetComponent<Button>().interactable = false;
@@ -39,7 +41,7 @@ public class CreaturePoolController : MonoBehaviour
             if (this.GetComponent<LevelController>().turnPlayerPerformingAction == false) //Player isnt already doing an action that prevents placing a creature.
             { 
                 this.GetComponent<LevelController>().turnPlayerPerformingAction = true;
-                placingCreature = true;
+                levelControllerScript.placingCreature = true;
                 GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().HideandShow();
                 this.GetComponent<CameraController>().switchCamera("Board");
             }
