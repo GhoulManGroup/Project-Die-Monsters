@@ -207,17 +207,18 @@ public class UIDiceController : MonoBehaviour //This class is replacing the old 
                 break;
 
                 case "SummonBTN":
-                { 
-                GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().HideandShow();
-                lvlRef.GetComponent<CameraController>().switchCamera("Board");
-                resetFunction();
+                {
+                    lvlRef.GetComponent<LevelController>().placingCreature = true;
+                    GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().HideandShow();
+                    lvlRef.GetComponent<CameraController>().switchCamera("Board");
+                    resetFunction();
                 }
                 break;
 
                 case "PoolBTN":
-                inspectWindow.GetComponent<InspectWindowController>().AddCreatureToPool();
-                lvlRef.GetComponent<LevelController>().ableToInteractWithBoard = true;
-                resetFunction();
+                    inspectWindow.GetComponent<InspectWindowController>().AddCreatureToPool();
+                    lvlRef.GetComponent<LevelController>().ableToInteractWithBoard = true;
+                    resetFunction();
                 break;
 
         }

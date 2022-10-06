@@ -18,17 +18,15 @@ public class DungeonSpawner : MonoBehaviour
     public Vector3 lastPos;
 
     GameObject levelController;
-    LevelController levelScript;
 
     // Start is called before the first frame update
     void Start()
     {
+        levelController = GameObject.FindGameObjectWithTag("LevelController");
         resetPoint = this.transform.position;
         UpdateBoard();
         HideandShow();
 
-        levelController = GameObject.FindGameObjectWithTag("LevelController");
-        levelScript = levelController.GetComponent<LevelController>();
     }
 
     // Update is called once per frame
@@ -39,7 +37,7 @@ public class DungeonSpawner : MonoBehaviour
 
     public void checkPlayerAction()
     {
-        if (levelScript.placingCreature == true)
+        if (levelController.GetComponent<LevelController>().placingCreature == true)
         {
             MoveDungeonSpawner();
             PlaceDungeonPath();
@@ -48,18 +46,17 @@ public class DungeonSpawner : MonoBehaviour
 
     public void HideandShow()
     {
-        if (levelScript.placingCreature == true) // Next Condition to Change.
+        if (levelController.GetComponent<LevelController>().placingCreature == true) // Next Condition to Change.
         {
             for (int i = 0; i < DungeonTiles.Count; i++)
             {
-                Debug.Log("Hi From Hide&Show");
                 DungeonTiles[i].GetComponent<MeshRenderer>().enabled = true;
                 // Run check placement when set active so that the Tile isnt set to can place from the last use.
                 CheckPlacement();
             }
         }
 
-        if (levelScript.placingCreature == false)
+        if (levelController.GetComponent<LevelController>().placingCreature == false)
         {
             for (int i = 0; i < DungeonTiles.Count; i++)
             {
@@ -176,7 +173,7 @@ public class DungeonSpawner : MonoBehaviour
                 {
                     DungeonTiles[i].GetComponent<DungeonTileScript>().dungeonToBePlaced();
                 }
-                levelScript.placingCreature = false;
+                levelController.GetComponent<LevelController>().placingCreature = false;
                 GameObject.FindGameObjectWithTag("LevelController").GetComponent<CameraController>().switchCamera("Alt");
                 HideandShow();
                 UpdateBoard();

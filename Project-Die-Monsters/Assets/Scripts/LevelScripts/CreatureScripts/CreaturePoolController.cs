@@ -14,7 +14,7 @@ public class CreaturePoolController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        levelControllerScript = GameObjec
+        levelControllerScript = GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>();
         for (int i = 0; i < creatureDiceBTNS.Count; i++)
         {
             creatureDiceBTNS[i].GetComponent<Button>().interactable = false;

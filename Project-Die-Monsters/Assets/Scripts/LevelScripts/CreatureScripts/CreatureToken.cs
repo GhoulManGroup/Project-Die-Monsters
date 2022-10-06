@@ -39,9 +39,11 @@ public class CreatureToken : MonoBehaviour
         lcScript = lvlRef.GetComponent<LevelController>();
 
         //set my owner to either player+ playerslotnumber or AI.
-        myOwner = lvlRef.GetComponent<LevelController>().whoseTurn;
+        myOwner = lcScript.whoseTurn;
 
-        //Check for either a player script or opponent script then pull the desired creature from the correct objects creaturelist and assign it to the creature piece.
+        //Add Check here for summoning from Pool vs dice menu. ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------(Too Do Next)-------------------
+
+        //Check for either a player script or opponent script then pull the desired creature from the correct objects creaturelist and assign it to the creature piece. 
         if (lcScript.participants[lcScript.turnPlayer].GetComponent<Player>() != null) 
         {
             // set my creature to be the same scriptble object that was chosen from the creaturePoolControllerList, then run the creature played fuciton to remove that creature from said list.
