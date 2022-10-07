@@ -211,6 +211,7 @@ public class UIDiceController : MonoBehaviour //This class is replacing the old 
                     lvlRef.GetComponent<LevelController>().placingCreature = true;
                     GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().HideandShow();
                     lvlRef.GetComponent<CameraController>().switchCamera("Board");
+                    lvlRef.GetComponent<LevelController>().creaturePlacedFrom = "DiceBoard";
                     resetFunction();
                 }
                 break;

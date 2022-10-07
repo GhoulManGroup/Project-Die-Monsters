@@ -36,21 +36,25 @@ public class CreatureToken : MonoBehaviour
     {
         //Set level ref to level controler object.
         lvlRef = GameObject.FindGameObjectWithTag("LevelController");
-        lcScript = lvlRef.GetComponent<LevelController>();
-
-        //set my owner to either player+ playerslotnumber or AI.
-        myOwner = lcScript.whoseTurn;
-
-        //Add Check here for summoning from Pool vs dice menu. ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------(Too Do Next)-------------------
+        lcScript = lvlRef.GetComponent<LevelController>();  
+        myOwner = lcScript.whoseTurn;  //set my owner to either player+ playerslotnumber or AI.
 
         //Check for either a player script or opponent script then pull the desired creature from the correct objects creaturelist and assign it to the creature piece. 
-        if (lcScript.participants[lcScript.turnPlayer].GetComponent<Player>() != null) 
+        if (lcScript.participants[lcScript.turnPlayer].GetComponent<Player>() != null)
         {
-            // set my creature to be the same scriptble object that was chosen from the creaturePoolControllerList, then run the creature played fuciton to remove that creature from said list.
-            myCreature = lvlRef.GetComponent<CreaturePoolController>().turnPlayer.GetComponent<Player>().CreaturePool[lvlRef.GetComponent<CreaturePoolController>().creaturePick];
-
-            lvlRef.GetComponent<CreaturePoolController>().creaturePlayed();
-            lvlRef.GetComponent<CreatureController>().CreaturesOnBoard.Add(this.gameObject);
+            if (lcScript.creaturePlacedFrom == "CreaturePool") 
+            { 
+                // set my creature to be the same scriptble object that was chosen from the creaturePoolControllerList, then run the creature played fuciton to remove that creature from said list.
+                myCreature = lvlRef.GetComponent<CreaturePoolController>().turnPlayer.GetComponent<Player>().CreaturePool[lvlRef.GetComponent<CreaturePoolController>().creaturePick];
+                lvlRef.GetComponent<CreaturePoolController>().creaturePlayed();
+                lvlRef.GetComponent<CreatureController>().CreaturesOnBoard.Add(this.gameObject);
+            }
+            
+            else if (lcScript.creaturePlacedFrom == "DiceBoard")
+            {
+                //If played directly from dice board area instead creature is current creature stored in inspect tab, 
+                myCreature = GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectWindowController>().currentCreature;
+            }
         }
 
         if (myOwner == "AI") // change to opponent

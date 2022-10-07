@@ -40,6 +40,8 @@ public class LevelController : MonoBehaviour //This class controls everything at
 
     public bool placingCreature = false; // The player is placing a creature on the board.
 
+    public string creaturePlacedFrom = "None"; // DiceZone, Creature Pool, Other?
+
     public List<Text> turnPlayerUIDisplay = new List<Text>();
 
     public void Awake()
@@ -198,7 +200,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
         updateTurnPlayerCrestDisplay();
 
         //Reset the states of all creature piece on the board (Move, Attack, ect)
-        this.GetComponent<CreatureController>().ResetCreatureStates();
+        this.GetComponent<CreatureController>().ResetCreatureStates(); //---- Need to Add Creatures we spawn to creature controller creature list in order to reset their states,.
 
         //Set the camera to the right board state.
         this.GetComponent<CameraController>().switchCamera("Alt");
