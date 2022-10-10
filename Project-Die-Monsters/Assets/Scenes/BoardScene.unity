@@ -12031,7 +12031,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1990539381
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12207,7 +12207,6 @@ MonoBehaviour:
   - {fileID: 1533462720}
   - {fileID: 283538086}
   creaturePick: 0
-  placingCreature: 0
 --- !u!114 &1996620192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12264,6 +12263,8 @@ MonoBehaviour:
   turnPlayer: 0
   turnPlayerPerformingAction: 0
   ableToInteractWithBoard: 0
+  placingCreature: 0
+  creaturePlacedFrom: None
   turnPlayerUIDisplay:
   - {fileID: 1904025850}
   - {fileID: 64159171}
