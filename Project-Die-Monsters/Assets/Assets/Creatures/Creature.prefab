@@ -94,6 +94,7 @@ GameObject:
   - component: {fileID: 1520335839070375855}
   - component: {fileID: 1520335839070375842}
   - component: {fileID: 1449270305}
+  - component: {fileID: 342285540849623483}
   m_Layer: 0
   m_Name: Creature
   m_TagString: Untagged
@@ -184,9 +185,15 @@ MonoBehaviour:
   attack: 0
   defence: 0
   moveCost: 1
+  attackDistance: 1
+  attackCost: 1
   abilityCost: 0
+  myOwner: 
+  HasAttackedThisTurn: 0
   HasMovedThisTurn: 0
   hasUsedAbilityThisTurn: 0
+  canReachTarget: 0
+  targets: []
 --- !u!65 &1449270305
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -200,3 +207,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.8, y: 12, z: 0.6}
   m_Center: {x: 0.000000059604645, y: 6, z: -0.00000008940697}
+--- !u!114 &342285540849623483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520335839070375853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55e7c7a5908d53549a4c05399b73e8ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

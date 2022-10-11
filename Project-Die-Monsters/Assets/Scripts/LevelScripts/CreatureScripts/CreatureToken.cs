@@ -47,7 +47,6 @@ public class CreatureToken : MonoBehaviour
                 // set my creature to be the same scriptble object that was chosen from the creaturePoolControllerList, then run the creature played fuciton to remove that creature from said list.
                 myCreature = lvlRef.GetComponent<CreaturePoolController>().turnPlayer.GetComponent<Player>().CreaturePool[lvlRef.GetComponent<CreaturePoolController>().creaturePick];
                 lvlRef.GetComponent<CreaturePoolController>().creaturePlayed();
-                lvlRef.GetComponent<CreatureController>().CreaturesOnBoard.Add(this.gameObject);
             }
             
             else if (lcScript.creaturePlacedFrom == "DiceBoard")
@@ -55,6 +54,10 @@ public class CreatureToken : MonoBehaviour
                 //If played directly from dice board area instead creature is current creature stored in inspect tab, 
                 myCreature = GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectWindowController>().currentCreature;
             }
+
+            lvlRef.GetComponent<CreatureController>().CreaturesOnBoard.Add(this.gameObject); // add this piece to the creature controller script.
+            lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false; // piece placed player no longer performing action.
+            lvlRef.GetComponent<LevelController>().ableToInteractWithBoard = true; // Player can now interact with the board.
         }
 
         if (myOwner == "AI") // change to opponent

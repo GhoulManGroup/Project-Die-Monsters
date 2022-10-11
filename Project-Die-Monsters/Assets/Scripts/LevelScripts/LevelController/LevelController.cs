@@ -146,7 +146,6 @@ public class LevelController : MonoBehaviour //This class controls everything at
         this.GetComponent<UIDiceController>().turnPlayer = participants[turnPlayer].gameObject;
         GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectWindowController>().turnPlayer = participants[turnPlayer].gameObject;
         whoseTurn = "Player" + turnPlayer.ToString();
-
     }
 
     public void updateTurnPlayerCrestDisplay()

@@ -52,7 +52,6 @@ public class CreaturePoolController : MonoBehaviour
     public void creaturePlayed()
     {
         turnPlayer.GetComponent<Player>().CreaturePool.RemoveAt(creaturePick);
-        this.GetComponent<LevelController>().turnPlayerPerformingAction = false;
         enableButtons();
     }
 }

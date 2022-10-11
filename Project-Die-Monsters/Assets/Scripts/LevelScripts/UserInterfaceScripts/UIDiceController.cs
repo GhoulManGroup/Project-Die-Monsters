@@ -209,6 +209,7 @@ public class UIDiceController : MonoBehaviour //This class is replacing the old 
                 case "SummonBTN":
                 {
                     lvlRef.GetComponent<LevelController>().placingCreature = true;
+                    inspectWindow.GetComponent<InspectWindowController>().CloseInspectWindow();
                     GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().HideandShow();
                     lvlRef.GetComponent<CameraController>().switchCamera("Board");
                     lvlRef.GetComponent<LevelController>().creaturePlacedFrom = "DiceBoard";

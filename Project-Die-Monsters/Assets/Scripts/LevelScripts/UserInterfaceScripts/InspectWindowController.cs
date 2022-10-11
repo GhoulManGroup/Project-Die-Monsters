@@ -113,6 +113,13 @@ public class InspectWindowController : MonoBehaviour //This script controls the 
 
             case "PoolInspect":
                 DisplayCreatureDetails(openedFor);
+                creatureInspectUI.SetActive(true);
+                break;
+
+            case "PieceInspect":
+                Debug.Log("Piece Inspect");
+                DisplayCreatureDetails(openedFor);
+                creatureInspectUI.SetActive(true);
                 break;
 
             case "AttackTargetSelection":
