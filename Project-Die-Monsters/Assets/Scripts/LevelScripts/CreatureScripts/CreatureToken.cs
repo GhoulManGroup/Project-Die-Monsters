@@ -70,7 +70,8 @@ public class CreatureToken : MonoBehaviour
     }
 
     public void setDetails()
-    {       
+    { // This function sets all the details of the piece token on the board, once it has had its creature sciptable object assigned from where ever it is being summoned from.
+        this.gameObject.name = myCreature.name;
         myArtSlot.GetComponent<MeshRenderer>().material = myCreature.cardArt3D;
         health = myCreature.Health;
         attack = myCreature.Attack;

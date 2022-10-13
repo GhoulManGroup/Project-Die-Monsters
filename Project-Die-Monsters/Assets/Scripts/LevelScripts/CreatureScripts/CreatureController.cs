@@ -136,6 +136,7 @@ public class CreatureController : MonoBehaviour //  this script oversees piece m
                 break;
 
             case "Cancle":
+                ChosenAction = "None";
                 CancleBTNFunction();
                 break;
         }
