@@ -167,7 +167,7 @@ public class InspectWindowController : MonoBehaviour //This script controls the 
 
     public void DisplayDungeonLord()
     {
-         
+         //dungeonLordWindow.dungeonLordArt = currentDungeonLordPiece
     }
     #endregion
 
@@ -282,9 +282,6 @@ public class InspectWindowController : MonoBehaviour //This script controls the 
                 break;
         }
     }
-
-
-    //This function is called when we want to show the inspect tab UI Object
   
     public void AddCreatureToPool() //Selected dice is discarded to add the creature inside to the player creature pool.
     {
@@ -310,7 +307,6 @@ public class InspectWindowController : MonoBehaviour //This script controls the 
     }
     #endregion
 
-    
     //These two scripts go to the next step of combat if either a creature or dungeon lord is chosen
     public void CreatureIsAttackTarget()
     {
