@@ -2420,7 +2420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myOwner: 
-  myDungeonLord: {fileID: 11400000, guid: f5e88731240b6cc4a9aa1a4ee05183c6, type: 2}
+  myDungeonLord: {fileID: 0}
   Health: 3
 --- !u!1 &349136845
 GameObject:
@@ -11497,7 +11497,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myOwner: 
-  myDungeonLord: {fileID: 11400000, guid: f5e88731240b6cc4a9aa1a4ee05183c6, type: 2}
+  myDungeonLord: {fileID: 0}
   Health: 3
 --- !u!1 &1928537136
 GameObject:
