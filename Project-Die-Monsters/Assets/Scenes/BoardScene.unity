@@ -2420,8 +2420,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcfcd246a8205344da94c12a1cbb94b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myOwner: 
   myDungeonLord: {fileID: 11400000, guid: eeedc62ed7f062a4cad1da36ae24754e, type: 2}
+  myOwner: 
+  myName: 
   Health: 3
 --- !u!114 &349105854
 MonoBehaviour:
@@ -3178,8 +3179,12 @@ MonoBehaviour:
     defenceValue: {fileID: 1306513285}
     healthValue: {fileID: 128250721}
   dungeonLordWindow:
-    dungeonLordArt: {fileID: 0}
-    lifeIcon: {fileID: 0}
+    dungeonLordArt: {fileID: 839454973}
+    lifeIconOne: {fileID: 282774252}
+    lifeIconTwo: {fileID: 337840392}
+    lifeIconThree: {fileID: 577279217}
+    dungeonLordName: {fileID: 0}
+    dungeonLordOwner: {fileID: 0}
     lifeText: {fileID: 0}
   inspectWindowButtons:
     declareBTN: {fileID: 1307574107}
@@ -5130,7 +5135,7 @@ GameObject:
   - component: {fileID: 847400564}
   - component: {fileID: 847400563}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Lord Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11510,8 +11515,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcfcd246a8205344da94c12a1cbb94b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myOwner: 
   myDungeonLord: {fileID: 11400000, guid: eeedc62ed7f062a4cad1da36ae24754e, type: 2}
+  myOwner: 
+  myName: 
   Health: 3
 --- !u!114 &1919373827
 MonoBehaviour:
@@ -12285,7 +12291,7 @@ GameObject:
   - component: {fileID: 2005873438}
   - component: {fileID: 2005873437}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: Owner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
