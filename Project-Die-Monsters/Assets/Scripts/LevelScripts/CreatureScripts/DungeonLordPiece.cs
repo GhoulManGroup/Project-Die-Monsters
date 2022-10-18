@@ -4,18 +4,10 @@ using UnityEngine;
 
 public class DungeonLordPiece : MonoBehaviour
 {
-    public string myOwner;
     public DungeonLord myDungeonLord;
-    public int Health = 3;
-
-    public void TakeDamage()
-    {
-        Health -= 1;
-        if (Health <= 0)
-        {
-            // game state over dead.
-        }
-    }
+    public string myOwner;
+    public string myName;
+    public int Health = 0;
 
     public void SetDungeonLordTile()
     {
@@ -28,6 +20,9 @@ public class DungeonLordPiece : MonoBehaviour
             Down.collider.GetComponent<GridScript>().myState = "DungeonLord";
             Down.collider.GetComponent<GridScript>().UpdateMaterial();
         }
+
+        Health = myDungeonLord.dungeonLordHealth;
+        myName = myDungeonLord.dungeonLordName;
     }
 
 }

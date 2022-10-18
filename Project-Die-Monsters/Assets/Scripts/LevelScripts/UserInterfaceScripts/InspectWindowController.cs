@@ -5,13 +5,14 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 
-public class InspectWindowController : MonoBehaviour //This script controls the various non combat in-Level UI windows that display the details of creatures, dungeonlords, items ect.
+public class InspectWindowController : MonoBehaviour //This script will control the various non combat in-Level UI windows that display the details of creatures, dungeonlords, items ect.
 {
     //The used for string(usedFor) within some functions is where we store why the inspect interface was opened and how the script knows what parts of the UI to enable / disable ect at any point based on what is needed.
     // "DrawDice", Display the current turn players dice pool to allow them to assign it to the 3DDice fab to roll.
     // "DieInspect, view what creature is inside of clicked dice that has been rolled and can be summoned for choosing.
     // "PoolInspect", View what creature is currently stored within the creature pool UI object we are hovering over.
-    // "PieceInspect", view the details of the board piece the player is hovering over
+    // "PieceInspect", view the details of the creature board piece the player is hovering over.
+    //DungeonLordInspect, view the details of the dungeon lord board piece the player is hovering over.
     //AttackTargetSelection, display the details of the possible attack targets of chosen piece.
 
     #region VariblesEct
@@ -40,7 +41,11 @@ public class InspectWindowController : MonoBehaviour //This script controls the 
     struct DungeonLordInspectElements
     {
         public GameObject dungeonLordArt;
-        public GameObject lifeIcon;
+        public GameObject lifeIconOne;
+        public GameObject lifeIconTwo;
+        public GameObject lifeIconThree;
+        public Text dungeonLordName;
+        public Text dungeonLordOwner;
         public Text lifeText;
     }
     [Serializable]
@@ -66,7 +71,7 @@ public class InspectWindowController : MonoBehaviour //This script controls the 
     //Refrence to game objects / scriptables
     public Creature currentCreature; //The creature scriptable object contained with a game object, eg dice or board piece.
     public GameObject currentCreaturePiece; //The board piece game object.
-    public DungeonLord currentDungeonLord;
+    public DungeonLord currentDungeonLord; 
     public GameObject currentDungeonLordPiece;
     
     // what target out of what ever list is being accesssed is shown.
@@ -95,6 +100,8 @@ public class InspectWindowController : MonoBehaviour //This script controls the 
 
     public void OpenInspectWindow(string openedFor)
     {
+        //Opens the inspection window UI element and stores the purpose for why it was opened so that I can activate diffrent UI componenets like buttons ect using this string only when needed.
+        //Is actually used for now so DO NOT Merge! Inspects into one.
         pressedFor = openedFor;
         switch (openedFor)
         {
@@ -104,11 +111,13 @@ public class InspectWindowController : MonoBehaviour //This script controls the 
                 inspectWindowButtons.declareBTN.SetActive(true);
                 inspectWindowButtons.nextBTN.SetActive(true);
                 inspectWindowButtons.backBTN.SetActive(true);
+                currentCreature = turnPlayer.GetComponent<Player>().diceDeck[diceShown].dieCreature;
                 break;
 
             case "DieInspect":
                 DisplayCreatureDetails(openedFor);
                 creatureInspectUI.SetActive(true);
+                currentCreature = sceneDice.GetComponent<SceneDieScript>().myDie.dieCreature;
                 break;
 
             case "PoolInspect":
@@ -117,20 +126,24 @@ public class InspectWindowController : MonoBehaviour //This script controls the 
                 break;
 
             case "PieceInspect":
-                Debug.Log("Piece Inspect");
                 DisplayCreatureDetails(openedFor);
                 creatureInspectUI.SetActive(true);
+                break;
+
+            case "DungeonLordInspect":
+                dungeonLordInspectUI.SetActive(true);
+                DisplayDungeonLord();
                 break;
 
             case "AttackTargetSelection":
 
                 if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<DungeonLordPiece>() != null)
                 {
-                    //if  current target is dungeon lord then display dungeon lord.
+                    //if  current target is dungeon lord then display dungeon lord window rather than the default creature display
                     DisplayDungeonLord();
                 }else if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>() != null)
                 {
-                    //If current target is creature then display creature
+                    //Else display the useall creature window with the current creature object scored in the list.
                     currentCreature = currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>().myCreature;
                     DisplayCreatureDetails(openedFor);
                 }
@@ -141,18 +154,22 @@ public class InspectWindowController : MonoBehaviour //This script controls the 
         }  
     }
 
-    public void DisplayCreatureDetails(string usedFor) //Set the inspect window components to display the details of current creatures
+    public void DisplayCreatureDetails(string usedFor)
     { 
+        //Change this system to diffrenciate between piece stats & scriptable object stats eg health of current creature health 
         switch (usedFor)
         {
             case "DrawDice":
                 //Set current creature to creature contained within the dice we are currently showing the player from the player deck.
-                currentCreature = turnPlayer.GetComponent<Player>().diceDeck[diceShown].dieCreature;
+                
                 break;
 
             case "DieInspect":
                 // show the creature currently in the 3D dice object clicked on.
-                currentCreature = sceneDice.GetComponent<SceneDieScript>().myDie.dieCreature;
+                
+                break;
+            case "PieceInspect":
+
                 break;
         }
         creatureWindow.creatureArt.GetComponent<Image>().sprite = currentCreature.CardArt;
@@ -167,7 +184,9 @@ public class InspectWindowController : MonoBehaviour //This script controls the 
 
     public void DisplayDungeonLord()
     {
-         //dungeonLordWindow.dungeonLordArt = currentDungeonLordPiece
+        //dungeonLordWindow.dungeonLordArt.GetComponent<Image>().sprite = currentDungeonLordPiece.GetComponent<DungeonLordPiece>().
+        dungeonLordWindow.dungeonLordName.GetComponent<Text>().text = currentDungeonLordPiece.GetComponent<DungeonLordPiece>().myName;
+        //dungeonLordWindow.dungeonLordOwner.GetComponent<Text>().text = currentDungeonLord.
     }
     #endregion
 

@@ -53,12 +53,14 @@ public class OnHoverInspectScript : MonoBehaviour, IPointerEnterHandler, IPointe
             else if (this.GetComponent<DungeonLordPiece>() != null)
             {
                 InspectWindow.GetComponent<InspectWindowController>().currentDungeonLord = this.GetComponent<DungeonLordPiece>().myDungeonLord;
-                InspectWindow.GetComponent<InspectWindowController>().OpenInspectWindow("PieceInspect");
+                InspectWindow.GetComponent<InspectWindowController>().OpenInspectWindow("DungeonLordInspect");
             }
             else if (this.GetComponent<CreatureToken>() == null && this.GetComponent<DungeonLordPiece>() == null)
             {
                 Debug.Log("Why Am i Here " + gameObject.name);
             }
+
+            // Add Item eventually
         }
 
     }

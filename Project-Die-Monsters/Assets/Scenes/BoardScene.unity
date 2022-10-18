@@ -2324,6 +2324,7 @@ GameObject:
   - component: {fileID: 349105851}
   - component: {fileID: 349105850}
   - component: {fileID: 349105853}
+  - component: {fileID: 349105854}
   m_Layer: 0
   m_Name: DungeonLord
   m_TagString: Untagged
@@ -2420,8 +2421,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myOwner: 
-  myDungeonLord: {fileID: 0}
+  myDungeonLord: {fileID: 11400000, guid: eeedc62ed7f062a4cad1da36ae24754e, type: 2}
   Health: 3
+--- !u!114 &349105854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349105848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55e7c7a5908d53549a4c05399b73e8ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &349136845
 GameObject:
   m_ObjectHideFlags: 0
@@ -11401,6 +11414,7 @@ GameObject:
   - component: {fileID: 1919373824}
   - component: {fileID: 1919373823}
   - component: {fileID: 1919373826}
+  - component: {fileID: 1919373827}
   m_Layer: 0
   m_Name: DungeonLord
   m_TagString: Untagged
@@ -11497,8 +11511,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myOwner: 
-  myDungeonLord: {fileID: 0}
+  myDungeonLord: {fileID: 11400000, guid: eeedc62ed7f062a4cad1da36ae24754e, type: 2}
   Health: 3
+--- !u!114 &1919373827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919373821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55e7c7a5908d53549a4c05399b73e8ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1928537136
 GameObject:
   m_ObjectHideFlags: 0
