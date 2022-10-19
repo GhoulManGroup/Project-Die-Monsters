@@ -156,30 +156,24 @@ public class InspectWindowController : MonoBehaviour //This script will control 
 
     public void DisplayCreatureDetails(string usedFor)
     { 
-        //Change this system to diffrenciate between piece stats & scriptable object stats eg health of current creature health 
-        switch (usedFor)
+        //Check if we are displaying a creature in the scriptable object store in a dice for example or a creature piece on the board then set the details of the UI Panel.
+        if (usedFor == "DrawDice" || usedFor == "DieInspect")
         {
-            case "DrawDice":
-                //Set current creature to creature contained within the dice we are currently showing the player from the player deck.
-                
-                break;
-
-            case "DieInspect":
-                // show the creature currently in the 3D dice object clicked on.
-                
-                break;
-            case "PieceInspect":
-
-                break;
+            creatureWindow.creatureName.GetComponent<Text>().text = currentCreature.creatureType.ToString();
+            creatureWindow.attackValue.GetComponent<Text>().text = "ATK" + currentCreature.Attack.ToString();
+            creatureWindow.defenceValue.GetComponent<Text>().text = "DEF" + currentCreature.Defence.ToString();
+            creatureWindow.healthValue.GetComponent<Text>().text = "HP" + currentCreature.Health.ToString();
+        }else if (usedFor == "PieceInspect")
+        {
+            creatureWindow.creatureName.GetComponent<Text>().text = currentCreature.creatureType.ToString();
+            creatureWindow.attackValue.GetComponent<Text>().text = "ATK" + currentCreaturePiece.GetComponent<CreatureToken>().attack;
+            creatureWindow.defenceValue.GetComponent<Text>().text = "DEF" + currentCreaturePiece.GetComponent<CreatureToken>().defence;
+            creatureWindow.healthValue.GetComponent<Text>().text = "HP" + currentCreaturePiece.GetComponent<CreatureToken>().health;
         }
         creatureWindow.creatureArt.GetComponent<Image>().sprite = currentCreature.CardArt;
         creatureWindow.creatureLevel.GetComponent<Image>().sprite = currentCreature.LevelSprite;
         creatureWindow.creatureTribe.GetComponent<Image>().sprite = currentCreature.TribeSprite;
         creatureWindow.creatureType.GetComponent<Image>().sprite = currentCreature.TypeSprite;
-        creatureWindow.creatureName.GetComponent<Text>().text = currentCreature.creatureType.ToString();
-        creatureWindow.attackValue.GetComponent<Text>().text = "ATK" + currentCreature.Attack.ToString();
-        creatureWindow.defenceValue.GetComponent<Text>().text = "DEF" + currentCreature.Defence.ToString();
-        creatureWindow.healthValue.GetComponent<Text>().text = "HP" + currentCreature.Health.ToString();
     }
 
     public void DisplayDungeonLord()
@@ -190,8 +184,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
     }
     #endregion
 
-    #region inspectBTNInput
-
+    #region inspectBTNInputControls
     public void ButtonPressed()
     {
         string inspectBTNPressed = EventSystem.current.currentSelectedGameObject.name.ToString();
@@ -302,7 +295,10 @@ public class InspectWindowController : MonoBehaviour //This script will control 
         }
     }
   
-    public void AddCreatureToPool() //Selected dice is discarded to add the creature inside to the player creature pool.
+    /// <summary>
+    /// Adds the chosen creature stored within the dice to the current turn players creature pool.
+    /// </summary>
+    public void AddCreatureToPool()
     {
         //add creature to pool
         levelManager.GetComponent<CreaturePoolController>().turnPlayer.GetComponent<Player>().CreaturePool.Add(currentCreature);

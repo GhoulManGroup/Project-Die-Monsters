@@ -48,6 +48,7 @@ public class OnHoverInspectScript : MonoBehaviour, IPointerEnterHandler, IPointe
             if (this.GetComponent<CreatureToken>() != null)
             {
                 InspectWindow.GetComponent<InspectWindowController>().currentCreature = this.GetComponent<CreatureToken>().myCreature;
+                InspectWindow.GetComponent<InspectWindowController>().currentCreaturePiece = this.gameObject;
                 InspectWindow.GetComponent<InspectWindowController>().OpenInspectWindow("PieceInspect");
             }
             else if (this.GetComponent<DungeonLordPiece>() != null)
