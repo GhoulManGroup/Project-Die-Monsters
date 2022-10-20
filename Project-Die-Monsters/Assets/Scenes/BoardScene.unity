@@ -3194,7 +3194,6 @@ MonoBehaviour:
   turnPlayer: {fileID: 0}
   currentCreature: {fileID: 0}
   currentCreaturePiece: {fileID: 0}
-  currentDungeonLord: {fileID: 0}
   currentDungeonLordPiece: {fileID: 0}
 --- !u!1 &463027381 stripped
 GameObject:
@@ -5649,7 +5648,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &918877993
 RectTransform:
   m_ObjectHideFlags: 0
