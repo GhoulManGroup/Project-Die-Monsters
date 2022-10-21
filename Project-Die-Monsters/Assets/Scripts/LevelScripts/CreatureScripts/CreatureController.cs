@@ -181,9 +181,7 @@ public class CreatureController : MonoBehaviour //  this script oversees piece m
                 ChosenCreature.GetComponent<CreatureToken>().myBoardLocation.GetComponent<GridScript>().desiredDir = "Right";
                 ChosenCreature.GetComponent<CreatureToken>().myBoardLocation.GetComponent<GridScript>().CheckIfMovePossible();
             }
-
         }
-
     }
 
     public void subtractCrest() // remove the cost of action from the pool.

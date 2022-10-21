@@ -184,7 +184,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
     public void DisplayDungeonLord()
     {
         //dungeonLordWindow.dungeonLordArt.GetComponent<Image>().sprite = currentDungeonLordPiece.GetComponent<DungeonLordPiece>().
-        dungeonLordWindow.dungeonLordName.GetComponent<Text>().text = currentDungeonLordPiece.GetComponent<DungeonLordPiece>().myName;
+        //dungeonLordWindow.dungeonLordName.GetComponent<Text>().text = currentDungeonLordPiece.GetComponent<DungeonLordPiece>().myName;
         //dungeonLordWindow.dungeonLordOwner.GetComponent<Text>().text = currentDungeonLord.
     }
     #endregion
@@ -338,6 +338,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
         CW.GetComponent<AttackUIScript>().defender = currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].gameObject;
         CW.GetComponent<AttackUIScript>().Action = "Decide";
         CW.GetComponent<AttackUIScript>().displayAttackWindow();
+        Debug.Log("Creature is Attack tARGET");
         //Hide this Window for now
         CloseInspectWindow();
     }

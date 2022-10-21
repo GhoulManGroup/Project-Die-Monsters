@@ -182,6 +182,7 @@ public class GridScript : MonoBehaviour
                         if (Forward.collider.GetComponent<GridScript>().TileContents == "Empty")
                         {
                             Forward.collider.GetComponent<GridScript>().MoveCreaturetome();
+                            TileContents = "Empty";
                         }
                     }
                 }
@@ -195,6 +196,7 @@ public class GridScript : MonoBehaviour
                         if (Back.collider.GetComponent<GridScript>().TileContents == "Empty")
                         {
                             Back.collider.GetComponent<GridScript>().MoveCreaturetome();
+                            TileContents = "Empty";
                         }
                     }
 
@@ -209,6 +211,7 @@ public class GridScript : MonoBehaviour
                         if (Left.collider.GetComponent<GridScript>().TileContents == "Empty")
                         {
                             Left.collider.GetComponent<GridScript>().MoveCreaturetome();
+                            TileContents = "Empty";
                         }
                     }
                 }
@@ -222,6 +225,7 @@ public class GridScript : MonoBehaviour
                         if (Right.collider.GetComponent<GridScript>().TileContents == "Empty")
                         {
                             Right.collider.GetComponent<GridScript>().MoveCreaturetome();
+                            TileContents = "Empty";
                         }
                     }
                 }
@@ -235,6 +239,7 @@ public class GridScript : MonoBehaviour
         GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreature.transform.position = new Vector3(this.transform.position.x, 0.3f, this.transform.position.z);
         GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreature.GetComponent<CreatureToken>().declareTile();
         GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().subtractCrest();
+        TileContents = "Creature";
     }
 
    

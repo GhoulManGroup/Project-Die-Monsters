@@ -44,6 +44,7 @@ public class AttackUIScript : MonoBehaviour
 
     public void hideAttackWindow()
     {
+        Debug.Log("HAW");
         for (int i = 0; i < UIElements.Count; i++)
         {
             if (UIElements[i].GetComponent<Image>() != null)
@@ -65,9 +66,11 @@ public class AttackUIScript : MonoBehaviour
 
     public void displayAttackWindow()
     {
+        Debug.Log("DAW");
         // show the attack window UI
         for (int i = 0; i < 13; i++)
         {
+            Debug.Log("Inside Loop");
             if (UIElements[i].GetComponent<Image>() != null)
             {
                 UIElements[i].GetComponent<Image>().enabled = true;

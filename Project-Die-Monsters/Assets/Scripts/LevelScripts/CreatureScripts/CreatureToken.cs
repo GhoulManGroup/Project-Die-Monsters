@@ -101,6 +101,7 @@ public class CreatureToken : MonoBehaviour
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out Down, 1f))
         {
             myBoardLocation = Down.collider.gameObject;
+            Down.collider.GetComponent<GridScript>().TileContents = "Creature";
         }
     }
 
