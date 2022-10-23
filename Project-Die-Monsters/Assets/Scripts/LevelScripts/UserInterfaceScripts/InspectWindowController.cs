@@ -183,9 +183,29 @@ public class InspectWindowController : MonoBehaviour //This script will control 
 
     public void DisplayDungeonLord()
     {
-        //dungeonLordWindow.dungeonLordArt.GetComponent<Image>().sprite = currentDungeonLordPiece.GetComponent<DungeonLordPiece>().
-        //dungeonLordWindow.dungeonLordName.GetComponent<Text>().text = currentDungeonLordPiece.GetComponent<DungeonLordPiece>().myName;
-        //dungeonLordWindow.dungeonLordOwner.GetComponent<Text>().text = currentDungeonLord.
+        switch (currentDungeonLordPiece.GetComponent<DungeonLordPiece>().Health)
+        {
+            case 0:
+                Debug.Log("Why Open game should be over");
+                break;
+            case 1:
+                dungeonLordWindow.lifeIconOne.SetActive(true);
+                dungeonLordWindow.lifeIconTwo.SetActive(false);
+                dungeonLordWindow.lifeIconThree.SetActive(false);
+                break;
+            case 2:
+                dungeonLordWindow.lifeIconOne.SetActive(true);
+                dungeonLordWindow.lifeIconTwo.SetActive(true);
+                dungeonLordWindow.lifeIconThree.SetActive(false);
+                break;
+            case 3:
+                dungeonLordWindow.lifeIconOne.SetActive(true);
+                dungeonLordWindow.lifeIconTwo.SetActive(true);
+                dungeonLordWindow.lifeIconThree.SetActive(true);
+                break;
+        }
+        dungeonLordWindow.dungeonLordName.text = currentDungeonLordPiece.GetComponent<DungeonLordPiece>().myName;
+        //dungeonLordWindow.dungeonLordArt.GetComponent<Image>().sprite = currentDungeonLordPiece.GetComponent<DungeonLordPiece>
     }
     #endregion
 
