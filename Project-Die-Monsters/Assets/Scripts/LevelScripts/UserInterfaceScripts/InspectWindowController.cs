@@ -47,6 +47,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
         public Text dungeonLordName;
         public Text dungeonLordOwner;
         public Text lifeText;
+        public Text attackText;
     }
     [Serializable]
     struct InspectionWindowButtons 
@@ -130,8 +131,8 @@ public class InspectWindowController : MonoBehaviour //This script will control 
                 break;
 
             case "DungeonLordInspect":
-                dungeonLordInspectUI.SetActive(true);
                 DisplayDungeonLord();
+                dungeonLordInspectUI.SetActive(true);
                 break;
 
             case "AttackTargetSelection":
@@ -139,6 +140,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
                 {
                     //if  current target is dungeon lord then display dungeon lord window rather than the default creature display
                     DisplayDungeonLord();
+                    dungeonLordInspectUI.SetActive(true);
                 }else if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>() != null)
                 {
                     //Else display the useall creature window with the current creature object scored in the list.
@@ -205,7 +207,9 @@ public class InspectWindowController : MonoBehaviour //This script will control 
                 break;
         }
         dungeonLordWindow.dungeonLordName.text = currentDungeonLordPiece.GetComponent<DungeonLordPiece>().myName;
-        //dungeonLordWindow.dungeonLordArt.GetComponent<Image>().sprite = currentDungeonLordPiece.GetComponent<DungeonLordPiece>
+        dungeonLordWindow.dungeonLordOwner.text = currentDungeonLordPiece.GetComponent<DungeonLordPiece>().myOwner;
+        dungeonLordWindow.lifeText.text = currentDungeonLordPiece.GetComponent<DungeonLordPiece>().Health.ToString();
+        
     }
     #endregion
 
@@ -247,7 +251,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
                 {
                     if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<DungeonLordPiece>() != null)
                     {
-                        DisplayDungeonLord();
+                        DungeonLordIsAttackTarget();
                     }
                     else if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>() != null)
                     {
