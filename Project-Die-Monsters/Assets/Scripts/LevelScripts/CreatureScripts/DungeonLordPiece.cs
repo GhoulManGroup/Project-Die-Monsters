@@ -25,4 +25,13 @@ public class DungeonLordPiece : MonoBehaviour
         myName = myDungeonLord.dungeonLordName;
     }
 
+    public void takeDamage()
+    {
+        Health -= 1;
+        if (Health <= 0)
+        {
+            Debug.Log("Game State Over!");
+        }
+    }
+
 }

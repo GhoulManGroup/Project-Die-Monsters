@@ -180,6 +180,7 @@ public class UIDiceController : MonoBehaviour //This class is replacing the old 
 
                 if (readyDice == 3 && hasRolledDice == false)
                 {
+                    inspectWindow.GetComponent<InspectWindowController>().CloseInspectWindow();
                     for (int i = 0; i <dieToRoll.Count; i++)
                     {
                         dieToRoll[i].GetComponent<SceneDieScript>().spinDie();

@@ -96,7 +96,6 @@ public class AttackUIScript : MonoBehaviour
             case "AttackBTN":
                 //Subtract the cost of the attack from the player attack crests pool.
                 attackingPlayer.GetComponent<Player>().attackCrestPoints -= attacker.GetComponent<CreatureToken>().attackCost;
-                //First check if creature is dungeon lord or other monster.
 
                 //Check if other player has enough points to cover their defence cost. if so offer choice if not skip to damage calc.
                 if (defendingPlayer.GetComponent<Player>().defenceCrestPoints > 0)
