@@ -68,7 +68,7 @@ public class DungeonSpawner : MonoBehaviour
     public void SetPattern() // sets the unfolded dice pattern to use and apply.
     {
         DungeonDicePatterns[currentPattern].GetComponent<DungeonPatternScript>().ApplyPattern();
-        CheckPlacement();
+        CheckPlacement("Null");
     }
 
     public void MoveDungeonSpawner()
@@ -129,7 +129,7 @@ public class DungeonSpawner : MonoBehaviour
         }
     }
 
-    public void CheckPlacement()
+    public void CheckPlacement(string lastInput)
     {
         int placeableTiles = 0;
         bool spawnableCubeWouldConnectToDungeon = false;
@@ -137,7 +137,7 @@ public class DungeonSpawner : MonoBehaviour
 
         for (int i = 0; i < DungeonTiles.Count; i++)
         {
-            DungeonTiles[i].GetComponent<DungeonTileScript>().CheckPlacement();
+            DungeonTiles[i].GetComponent<DungeonTileScript>().CheckPlacement(lastInput);
         }
 
         for (int i = 0; i < DungeonTiles.Count; i++)

@@ -370,7 +370,6 @@ public class InspectWindowController : MonoBehaviour //This script will control 
     public void DungeonLordIsAttackTarget()
     {
         //tell the dungeon lord to take damage and set the state of the attacking piece.
-        currentDungeonLordPiece.GetComponent<DungeonLordPiece>().takeDamage();
         currentCreaturePiece.GetComponent<CreatureToken>().HasAttackedThisTurn = true;
         if (currentCreaturePiece.GetComponent<CreatureToken>().myOwner == "Player0")
         {
@@ -381,6 +380,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
             levelManager.GetComponent<LevelController>().participants[1].gameObject.GetComponent<Player>().attackCrestPoints -= currentCreaturePiece.GetComponent<CreatureToken>().attackCost;
         }
         Debug.Log("DungeonLordHasTakenDamage");
+        currentDungeonLordPiece.GetComponent<DungeonLordPiece>().takeDamage();
         CloseInspectWindow();
     }
 }

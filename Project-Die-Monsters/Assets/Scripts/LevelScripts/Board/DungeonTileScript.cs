@@ -35,7 +35,6 @@ public class DungeonTileScript : MonoBehaviour
             {
                 this.GetComponent<MeshRenderer>().material = myMat[1];
             }
-
             if (GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().canPlaceDie == true)
             {
                 this.GetComponent<MeshRenderer>().material = myMat[2];
@@ -44,7 +43,7 @@ public class DungeonTileScript : MonoBehaviour
         }
     }
 
-    public void CheckPlacement()
+    public void CheckPlacement(string lastInput)
     {
         aboveEmptySpace = false;
 
@@ -88,7 +87,7 @@ public class DungeonTileScript : MonoBehaviour
         }else
         {
             GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().transform.position = GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().lastPos;
-            CheckPlacement();
+            CheckPlacement(lastInput);
         }
     }
 

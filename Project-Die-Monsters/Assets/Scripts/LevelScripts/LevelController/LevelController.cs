@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class LevelController : MonoBehaviour //This class controls everything at the board scene level of the project.
 {
@@ -10,6 +11,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
     GameObject gameManager;
     public GameObject startTurnBTN;
     public GameObject endTurnBTN;
+    public GameObject currentGameEndScreen;
 
     // The two grid tiles which are the dungeon lord starting positions.
     public List<GameObject> DungeonLord = new List<GameObject>();
@@ -44,12 +46,12 @@ public class LevelController : MonoBehaviour //This class controls everything at
 
     public List<Text> turnPlayerUIDisplay = new List<Text>();
 
-    public void Awake()
+    private void Awake()
     {
         gameManager = GameObject.FindGameObjectWithTag("GameController");
     }
 
-    public void Start()
+    private void Start()
     {
         setUpGame();        
     }
@@ -95,7 +97,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
 
     }
 
-    public void setDeck() 
+    private void setDeck()
     {
         // Adds a copy of the two chosen decks stored in the deck manager to the player objects own die lists to play with this match.
         for (int i = 0; i < participants.Count; i++)
@@ -112,16 +114,10 @@ public class LevelController : MonoBehaviour //This class controls everything at
 
     }
 
-    public void checkLevelState()
-    {
-        whoseTurn = "Player" + turnPlayer.ToString();
-    }
-
      public void BeginTurnFunction() // this function is only called when it is a Human Players turn not the ai,
      {
-         checkLevelState();
-         // check if the player has any dice in the list 
-         if (participants[turnPlayer].GetComponent<Player>().diceDeck.Count != 0)
+        // check if the player has any dice in the list 
+        if (participants[turnPlayer].GetComponent<Player>().diceDeck.Count != 0)
          {           
             this.GetComponent<LevelController>().turnPlayerPerformingAction = true; // Player is in dice window, action being performed.
             GetComponent<CameraController>().switchCamera("Dice");
@@ -203,5 +199,16 @@ public class LevelController : MonoBehaviour //This class controls everything at
 
         //Set the camera to the right board state.
         this.GetComponent<CameraController>().switchCamera("Alt");
+    }
+
+    public void GameOverFunction()
+    {
+        //Load Main Menu Scene & Apply Locks.
+        currentGameEndScreen.SetActive(true);
+        ableToInteractWithBoard = false;
+    }
+    public void ReturnToMain()
+    {
+        SceneManager.LoadScene("MainMenuScene");
     }
 }

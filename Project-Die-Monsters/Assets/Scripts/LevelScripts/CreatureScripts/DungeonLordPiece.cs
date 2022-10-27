@@ -30,7 +30,7 @@ public class DungeonLordPiece : MonoBehaviour
         Health -= 1;
         if (Health <= 0)
         {
-            Debug.Log("Game State Over!");
+            GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>().EndTurnFunction();
         }
     }
 
