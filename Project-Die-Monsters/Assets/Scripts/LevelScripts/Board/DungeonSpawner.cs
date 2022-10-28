@@ -15,7 +15,9 @@ public class DungeonSpawner : MonoBehaviour
 
     [Header("ResetPosition")]
     Vector3 resetPoint;
+    Quaternion resetRotation;
     public Vector3 lastPos;
+    public Quaternion lastRotation;
 
     GameObject levelController;
 
@@ -52,7 +54,7 @@ public class DungeonSpawner : MonoBehaviour
             {
                 DungeonTiles[i].GetComponent<MeshRenderer>().enabled = true;
                 // Run check placement when set active so that the Tile isnt set to can place from the last use.
-                CheckPlacement();
+                CheckPlacement("Move");
             }
         }
 
@@ -77,41 +79,42 @@ public class DungeonSpawner : MonoBehaviour
         if (Input.GetKeyDown("w"))
         {
             this.transform.position += transform.position = new Vector3(-1f, 0f, 0f);
-            CheckPlacement();
+            CheckPlacement("Move");
             lastPos = this.transform.position;
         }
 
         if (Input.GetKeyDown("s"))
         {
             this.transform.position += transform.position = new Vector3(1f, 0f, 0f);
-            CheckPlacement();
+            CheckPlacement("Move");
             lastPos = this.transform.position;
         }
 
         if (Input.GetKeyDown("a"))
         {
             this.transform.position += transform.position = new Vector3(0f, 0f, -1f);
-            CheckPlacement();
+            CheckPlacement("Move");
             lastPos = this.transform.position;
         }
 
         if (Input.GetKeyDown("d"))
         {
             this.transform.position += transform.position = new Vector3(0f, 0f, 1f);
-            CheckPlacement();
+            CheckPlacement("Move");
             lastPos = this.transform.position;
         }
         // rotate object
         if (Input.GetKeyDown("e"))
         {
             this.transform.Rotate(0f, 90, 0f);
-            CheckPlacement();
+            CheckPlacement("Rotate");
+            lastRotation = this.transform.rotation;
         }
 
         if (Input.GetKeyDown("q"))
         {
             this.transform.Rotate(0f, -90, 0f);
-            CheckPlacement();
+            CheckPlacement("Rotate");
         }
 
         if (Input.GetKeyDown("f")) // change pattern of dungeon piece

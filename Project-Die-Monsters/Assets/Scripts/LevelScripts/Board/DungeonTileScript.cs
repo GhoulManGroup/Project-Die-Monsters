@@ -86,8 +86,14 @@ public class DungeonTileScript : MonoBehaviour
       
         }else
         {
-            GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().transform.position = GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().lastPos;
-            CheckPlacement(lastInput);
+            if (lastInput == "Move")
+            {
+                GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().transform.position = GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().lastPos;
+                CheckPlacement(lastInput);
+            }else if (lastInput == "Rotate")
+            {
+
+            }
         }
     }
 
