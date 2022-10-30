@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DungeonTileScript : MonoBehaviour
+public class SpawnerTileScript : MonoBehaviour
 {
     public bool amActive = true;
     public bool aboveEmptySpace = true;
@@ -10,17 +10,15 @@ public class DungeonTileScript : MonoBehaviour
     public bool amSpawnTile; // this bool simply identifies which of the six dungeon tiles needs to tell the bellow board tile to spawn a creature rather than adding in calls ect.
 
     public List<Material> myMat = new List<Material>();
+    DungeonSpawner DungeonSpawner;
+
     // Start is called before the first frame update
     void Start()
     {
+        DungeonSpawner = GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>();
         UpdateMaterial();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void UpdateMaterial()
     {
@@ -82,18 +80,21 @@ public class DungeonTileScript : MonoBehaviour
                     wouldConnectToDungon = false;
                 }
             }
-
-      
+    
         }else
         {
+            // reset dungeonSpawner position rotation / pattern to last acceptable one to prevent the infinte loop.
             if (lastInput == "Move")
             {
-                GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().transform.position = GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().lastPos;
-                CheckPlacement(lastInput);
+                DungeonSpawner.transform.position = DungeonSpawner.lastPos;
             }else if (lastInput == "Rotate")
             {
-
+            DungeonSpawner.transform.rotation = DungeonSpawner.lastRotation;
+            }else if (lastInput == "PatternChange")
+            {
+            DungeonSpawner.DungeonDicePatterns[DungeonSpawner.lastPattern].GetComponent<DungeonPatternScript>().ApplyPattern();
             }
+            DungeonSpawner.CheckPlacement(lastInput);
         }
     }
 
@@ -115,7 +116,7 @@ public class DungeonTileScript : MonoBehaviour
             }
 
             Bellow.collider.GetComponent<GridScript>().UpdateMaterial();
-
+            // If this tile out of the 6 which is the designated spawn tile instanciate a creature token object above the board position bellow this tile.
             if (amSpawnTile == true)
             {
                 Bellow.collider.GetComponent<GridScript>().SpawnCreatureAbove();

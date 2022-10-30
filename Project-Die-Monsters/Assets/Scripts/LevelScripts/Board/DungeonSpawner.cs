@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The dungeon spawner is the parent object & manager of our dungeon spawner system and all assosiated game objects.
+/// </summary>
 public class DungeonSpawner : MonoBehaviour
 {
     [Header("BoardLists")]
@@ -14,24 +17,21 @@ public class DungeonSpawner : MonoBehaviour
     public bool canPlaceDie = false;
 
     [Header("ResetPosition")]
-    Vector3 resetPoint;
-    Quaternion resetRotation;
-    public Vector3 lastPos;
-    public Quaternion lastRotation;
+    Vector3 resetPoint; // This the board position the spawner moves to everytime the player would move summon a creature.
+    public Vector3 lastPos; // The last position the spawner occupied without being out of bounds.
+    public Quaternion lastRotation; // The last the spawner had without being out of bounds.
+    public int lastPattern; // The last pattern that was not out of bounds.
 
     GameObject levelController;
 
-    // Start is called before the first frame update
     void Start()
     {
         levelController = GameObject.FindGameObjectWithTag("LevelController");
         resetPoint = this.transform.position;
         UpdateBoard();
         HideandShow();
-
     }
 
-    // Update is called once per frame
     void Update()
     {
         checkPlayerAction();  
@@ -53,8 +53,7 @@ public class DungeonSpawner : MonoBehaviour
             for (int i = 0; i < DungeonTiles.Count; i++)
             {
                 DungeonTiles[i].GetComponent<MeshRenderer>().enabled = true;
-                // Run check placement when set active so that the Tile isnt set to can place from the last use.
-                CheckPlacement("Move");
+                CheckPlacement("None");
             }
         }
 
@@ -67,15 +66,10 @@ public class DungeonSpawner : MonoBehaviour
         }
     }
 
-    public void SetPattern() // sets the unfolded dice pattern to use and apply.
-    {
-        DungeonDicePatterns[currentPattern].GetComponent<DungeonPatternScript>().ApplyPattern();
-        CheckPlacement("Null");
-    }
-
     public void MoveDungeonSpawner()
     {
-        // Need to Hide ect.
+        string lastInput;
+
         if (Input.GetKeyDown("w"))
         {
             this.transform.position += transform.position = new Vector3(-1f, 0f, 0f);
@@ -103,7 +97,7 @@ public class DungeonSpawner : MonoBehaviour
             CheckPlacement("Move");
             lastPos = this.transform.position;
         }
-        // rotate object
+
         if (Input.GetKeyDown("e"))
         {
             this.transform.Rotate(0f, 90, 0f);
@@ -115,10 +109,13 @@ public class DungeonSpawner : MonoBehaviour
         {
             this.transform.Rotate(0f, -90, 0f);
             CheckPlacement("Rotate");
+            lastRotation = this.transform.rotation;
         }
 
-        if (Input.GetKeyDown("f")) // change pattern of dungeon piece
+        if (Input.GetKeyDown("f"))
         {
+            lastPattern = currentPattern;
+
             if (currentPattern < DungeonDicePatterns.Count)
             {
                 currentPattern += 1;
@@ -128,7 +125,10 @@ public class DungeonSpawner : MonoBehaviour
             {
                 currentPattern = 0;
             }
-            SetPattern();
+
+            //Tell the spawner tiles to arrange themselves in the next pattern stored in the list then check if it is valid.
+            DungeonDicePatterns[currentPattern].GetComponent<DungeonPatternScript>().ApplyPattern();
+            CheckPlacement("PatternChange");
         }
     }
 
@@ -140,17 +140,17 @@ public class DungeonSpawner : MonoBehaviour
 
         for (int i = 0; i < DungeonTiles.Count; i++)
         {
-            DungeonTiles[i].GetComponent<DungeonTileScript>().CheckPlacement(lastInput);
+            DungeonTiles[i].GetComponent<SpawnerTileScript>().CheckPlacement(lastInput);
         }
 
         for (int i = 0; i < DungeonTiles.Count; i++)
         {
-            if (DungeonTiles[i].GetComponent<DungeonTileScript>().aboveEmptySpace == true)
+            if (DungeonTiles[i].GetComponent<SpawnerTileScript>().aboveEmptySpace == true)
             {
                 placeableTiles += 1;
             }
 
-            if (DungeonTiles[i].GetComponent<DungeonTileScript>().wouldConnectToDungon == true)
+            if (DungeonTiles[i].GetComponent<SpawnerTileScript>().wouldConnectToDungon == true)
             {
                 spawnableCubeWouldConnectToDungeon = true;
             }
@@ -167,14 +167,14 @@ public class DungeonSpawner : MonoBehaviour
     }
 
     public void PlaceDungeonPath()
-    {
-        if (Input.GetKeyDown("r")) // press place button. // check tiles are all okay to place // Check that any have connection if so spawn. // Else do not.
+    { // Press (R) in order to place the current dungeon path displayed by the dungeon spawner onto the board.
+        if (Input.GetKeyDown("r")) 
         {
             if (canPlaceDie == true)
             {
                 for (int i = 0; i < DungeonTiles.Count; i++)
                 {
-                    DungeonTiles[i].GetComponent<DungeonTileScript>().dungeonToBePlaced();
+                    DungeonTiles[i].GetComponent<SpawnerTileScript>().dungeonToBePlaced();
                 }
                 levelController.GetComponent<LevelController>().placingCreature = false;
                 GameObject.FindGameObjectWithTag("LevelController").GetComponent<CameraController>().switchCamera("Alt");
@@ -190,7 +190,7 @@ public class DungeonSpawner : MonoBehaviour
     {
         for (int i = 0; i < DungeonTiles.Count; i++)
         {
-            DungeonTiles[i].GetComponent<DungeonTileScript>().UpdateMaterial();
+            DungeonTiles[i].GetComponent<SpawnerTileScript>().UpdateMaterial();
         }
     }
 
