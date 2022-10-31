@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 public class OnHoverInspectScript : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     //This script will now display the contents of any object that contains a creature in the inspect UI;
-    //Used to hover over dungeon lord to see their health, creature stats on the board, what creature is in the dice pool, what creature is in a dice.?
+    //Used to hover over dungeon lord to see their health, creature stats on the board, what creature is in the dice/Creature pool , what creature is in a dice.?
     private GameObject InspectWindow;
     private GameObject LevelController;
 
@@ -23,6 +23,7 @@ public class OnHoverInspectScript : MonoBehaviour, IPointerEnterHandler, IPointe
         {
             if (this.GetComponent<CreaturePoolUISlot>() != null)
             {
+                Debug.Log("Hello");
                 InspectWindow.GetComponent<InspectWindowController>().OpenInspectWindow("PoolInspect");
             }
 
