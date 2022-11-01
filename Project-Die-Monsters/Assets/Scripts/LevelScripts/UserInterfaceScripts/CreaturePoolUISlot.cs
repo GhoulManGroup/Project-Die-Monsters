@@ -6,5 +6,5 @@ using UnityEngine.EventSystems;
 
 public class CreaturePoolUISlot : MonoBehaviour
 {
-
+    // Does Nothing but exist to be identified.
 }

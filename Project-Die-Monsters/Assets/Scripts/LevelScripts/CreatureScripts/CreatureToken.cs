@@ -43,9 +43,9 @@ public class CreatureToken : MonoBehaviour
         if (lcScript.participants[lcScript.turnPlayer].GetComponent<Player>() != null)
         {
             if (lcScript.creaturePlacedFrom == "CreaturePool") 
-            { 
+            {
                 // set my creature to be the same scriptble object that was chosen from the creaturePoolControllerList, then run the creature played fuciton to remove that creature from said list.
-                myCreature = lvlRef.GetComponent<CreaturePoolController>().turnPlayer.GetComponent<Player>().CreaturePool[lvlRef.GetComponent<CreaturePoolController>().creaturePick];
+                myCreature = lvlRef.GetComponent<CreaturePoolController>().currentCreature;
                 lvlRef.GetComponent<CreaturePoolController>().creaturePlayed();
             }
             
@@ -230,5 +230,6 @@ public class CreatureToken : MonoBehaviour
             Debug.Log("Creature Dead");
         }
     }
-    
+
+
 }

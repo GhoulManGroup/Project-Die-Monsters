@@ -22,8 +22,7 @@ public class OnHoverInspectScript : MonoBehaviour, IPointerEnterHandler, IPointe
         if (LevelController.GetComponent<CreatureController>().ChosenAction == "None")
         {
             if (this.GetComponent<CreaturePoolUISlot>() != null)
-            {
-                Debug.Log("Hello");
+            {            
                 InspectWindow.GetComponent<InspectWindowController>().OpenInspectWindow("PoolInspect");
             }
 

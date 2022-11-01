@@ -121,6 +121,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
                 break;
 
             case "PoolInspect":
+                currentCreature = levelManager.GetComponent<CreaturePoolController>().currentCreature;
                 DisplayCreatureDetails(openedFor);
                 creatureInspectUI.SetActive(true);
                 break;
@@ -157,7 +158,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
     public void DisplayCreatureDetails(string usedFor)
     { 
         //Check if we are displaying a creature in the scriptable object store in a dice for example or a creature piece on the board then set the details of the UI Panel.
-        if (usedFor == "DrawDice" || usedFor == "DieInspect")
+        if (usedFor == "DrawDice" || usedFor == "DieInspect" || usedFor == "PoolInspect")
         {
             creatureWindow.creatureName.GetComponent<Text>().text = currentCreature.CreatureName;
             creatureWindow.attackValue.GetComponent<Text>().text = "ATK" + currentCreature.Attack;

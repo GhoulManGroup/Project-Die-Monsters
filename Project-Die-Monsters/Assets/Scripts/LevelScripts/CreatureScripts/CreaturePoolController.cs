@@ -8,10 +8,10 @@ public class CreaturePoolController : MonoBehaviour
 {
     public GameObject turnPlayer;
     public List<GameObject> creatureDiceBTNS = new List<GameObject>();
-    public int creaturePick;
+    public int creaturePick; // the entry in the list this creature is stored in.
+    public Creature currentCreature; // what creature in the pool we want to do stuff with.
     LevelController levelControllerScript;
 
-    // Start is called before the first frame update
     void Start()
     {
         levelControllerScript = GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>();
@@ -21,7 +21,7 @@ public class CreaturePoolController : MonoBehaviour
         }
     }
 
-    public void enableButtons() // sets the buttons 
+    public void enableButtons() // sets the buttons off then on depending on the length of the creature pool.
     {
         for (int i = 0; i < creatureDiceBTNS.Count; i++)
         {
@@ -34,8 +34,34 @@ public class CreaturePoolController : MonoBehaviour
         }
     }
 
+    public void DeclareCreature()
+    {
+        string chosenCreature = EventSystem.current.currentSelectedGameObject.name.ToString();
+        switch (chosenCreature)
+        {
+            case "0":
+                creaturePick = 0;
+                break;
+            case "1":
+                creaturePick = 1;
+                break;
+            case "2":
+                creaturePick = 2;
+                break;
+            case "3":
+                creaturePick = 3;
+                break;
+            case "4":
+                creaturePick = 4;
+                break;
+        }
+
+        currentCreature = turnPlayer.GetComponent<Player>().CreaturePool[creaturePick];
+    }
+
     public void SelectMe()
     {
+        DeclareCreature();
         if (this.GetComponent<LevelController>().ableToInteractWithBoard == true) //Player isn't currently doing which prevents board piece interaction.
         {
             if (this.GetComponent<LevelController>().turnPlayerPerformingAction == false) //Player isnt already doing an action that prevents placing a creature.
@@ -52,6 +78,7 @@ public class CreaturePoolController : MonoBehaviour
     public void creaturePlayed()
     {
         turnPlayer.GetComponent<Player>().CreaturePool.RemoveAt(creaturePick);
+        currentCreature = null;
         enableButtons();
     }
 }
