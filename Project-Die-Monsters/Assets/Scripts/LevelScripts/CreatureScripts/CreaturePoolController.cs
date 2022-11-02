@@ -34,9 +34,8 @@ public class CreaturePoolController : MonoBehaviour
         }
     }
 
-    public void DeclareCreature()
+    public void DeclareCreature(string chosenCreature)
     {
-        string chosenCreature = EventSystem.current.currentSelectedGameObject.name.ToString();
         switch (chosenCreature)
         {
             case "0":
@@ -61,7 +60,8 @@ public class CreaturePoolController : MonoBehaviour
 
     public void SelectMe()
     {
-        DeclareCreature();
+        string whatCreaturePoolPressed = EventSystem.current.currentSelectedGameObject.name.ToString();
+        DeclareCreature(whatCreaturePoolPressed);
         if (this.GetComponent<LevelController>().ableToInteractWithBoard == true) //Player isn't currently doing which prevents board piece interaction.
         {
             if (this.GetComponent<LevelController>().turnPlayerPerformingAction == false) //Player isnt already doing an action that prevents placing a creature.
