@@ -40,9 +40,6 @@ public class UIDiceController : MonoBehaviour //This class is replacing the old 
     {
         lvlRef = GameObject.FindGameObjectWithTag("LevelController");
         inspectWindow = GameObject.FindGameObjectWithTag("InspectWindow");
-        UIElements[0].SetActive(false);
-        UIElements[1].SetActive(false);
-        UIElements[2].SetActive(false);
     }
 
     public void SetUp()

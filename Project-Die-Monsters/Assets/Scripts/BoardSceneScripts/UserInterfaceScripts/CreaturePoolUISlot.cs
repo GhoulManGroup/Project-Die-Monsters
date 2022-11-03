@@ -18,7 +18,10 @@ public class CreaturePoolUISlot : MonoBehaviour
     // Does Nothing but exist to be identified.
     public void displayMyContents()
     {
-        LevelController.GetComponent<CreaturePoolController>().DeclareCreature(this.gameObject.name.ToString());
-        InspectWindow.GetComponent<InspectWindowController>().OpenInspectWindow("PoolInspect");
+        if (GetComponent<Button>().interactable == true)
+        {
+            LevelController.GetComponent<CreaturePoolController>().DeclareCreature(this.gameObject.name.ToString());
+            InspectWindow.GetComponent<InspectWindowController>().OpenInspectWindow("PoolInspect");
+        }
     }
 }

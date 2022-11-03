@@ -36,6 +36,7 @@ public class CreatureController : MonoBehaviour //  this script oversees piece m
         mRef = GameObject.FindGameObjectWithTag("GameController");
         lvlRef = GameObject.FindGameObjectWithTag("LevelController");
         lcScript = lvlRef.GetComponent<LevelController>();
+        ChosenAction = "None";
         HideAndShowButtons();
     }
     // Update is called once per frame
