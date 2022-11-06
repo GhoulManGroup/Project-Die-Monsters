@@ -44,7 +44,6 @@ public class AttackUIScript : MonoBehaviour
 
     public void hideAttackWindow()
     {
-        Debug.Log("HAW");
         for (int i = 0; i < UIElements.Count; i++)
         {
             if (UIElements[i].GetComponent<Image>() != null)

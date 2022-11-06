@@ -28,10 +28,10 @@ public class OnHoverInspectScript : MonoBehaviour, IPointerEnterHandler, IPointe
 
             else if (this.GetComponent<DicePoolInspectScript>() != null)
             {
-
+                this.GetComponent<DicePoolInspectScript>().displayMyContents();
             }
 
-            else if (this.GetComponent<CreaturePoolUISlot>() == null)
+            else if (this.GetComponent<CreaturePoolUISlot>() == null && this.GetComponent<DicePoolInspectScript>() != null)
             {
                 Debug.Log("Why is this script on this object" + this.gameObject.name);
             }

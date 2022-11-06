@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UIDiceController : MonoBehaviour //This class is replacing the old resource UI Manager script 
+public class UIDiceController : MonoBehaviour // This class controls the In game dice selection and roll system and its UI elements involved in that process.
 {
     [Header ("States & Checks")]
     //How many objects are set up to roll
@@ -24,6 +24,7 @@ public class UIDiceController : MonoBehaviour //This class is replacing the old 
     public List<GameObject> UIElements = new List<GameObject>();
     public List<GameObject> spawnPoints = new List<GameObject>();
     public List<GameObject> dieToRoll = new List<GameObject>();
+    public List<GameObject> UIDice = new List<GameObject>(); // The UI objects representing the dice choices
 
 
     [Header("Objects to Spawn")]
@@ -207,6 +208,7 @@ public class UIDiceController : MonoBehaviour //This class is replacing the old 
                 case "SummonBTN":
                 {
                     lvlRef.GetComponent<LevelController>().placingCreature = true;
+                    inspectWindow.GetComponent<InspectWindowController>().sceneDice.GetComponent<SceneDieScript>().myDie = null;
                     inspectWindow.GetComponent<InspectWindowController>().CloseInspectWindow();
                     GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().HideandShow();
                     lvlRef.GetComponent<CameraController>().switchCamera("Board");
@@ -221,6 +223,26 @@ public class UIDiceController : MonoBehaviour //This class is replacing the old 
                     resetFunction();
                 break;
 
+        }
+    }
+
+    public void diceSelectWindow()
+    {
+        UIElements[3].SetActive(true);
+        // For each dice in the player dice pool activate and assign a dice object in the UI 1 dice then have it display a sprite to represent its contents.
+        for (int i = 0; i < player.GetComponent<Player>().dicePool; i++)
+        {
+            if (i < player.GetComponent<Player>().diceDeck.Count)
+            {
+                UIDice[i].gameObject.SetActive(true);
+                UIDice[i].GetComponent<DicePoolInspectScript>().diceNumber = i;
+                UIDice[i].GetComponent<DicePoolInspectScript>().myDie = player.GetComponent<Player>().diceDeck[i];
+                UIDice[i].GetComponent<DicePoolInspectScript>().setUp();
+            }
+            else
+            {
+                UIDice[i].gameObject.SetActive(false);
+            }
         }
     }
 

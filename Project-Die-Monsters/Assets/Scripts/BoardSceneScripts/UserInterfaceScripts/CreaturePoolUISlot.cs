@@ -22,6 +22,9 @@ public class CreaturePoolUISlot : MonoBehaviour
         {
             LevelController.GetComponent<CreaturePoolController>().DeclareCreature(this.gameObject.name.ToString());
             InspectWindow.GetComponent<InspectWindowController>().OpenInspectWindow("PoolInspect");
+        } else if (GetComponent<Button>().interactable == false)
+        {
+            // Do nothing
         }
     }
 }

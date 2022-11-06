@@ -60,11 +60,10 @@ public class InspectWindowController : MonoBehaviour //This script will control 
     #endregion
 
     [Header("DiceWindowRefrence")]
-    //These two public objects are for assigning a die object to a 3D dice in the scene.
     public GameObject sceneDice;
     public GameObject turnPlayer;
     //What dice out of the player dice deck is currently displayed.
-    int diceShown = 0;
+    public int diceShown = 0;
 
     //Refrence to levelManager
     GameObject levelManager;
@@ -215,6 +214,29 @@ public class InspectWindowController : MonoBehaviour //This script will control 
     #endregion
 
     #region inspectBTNInputControls
+    
+    public void AssignDice() // Add the chosen dice from our pool to the 3D Dice Object to be rolled.
+    {
+        //Check if a dice is already in the object inside.
+        if (sceneDice.GetComponent<SceneDieScript>().myDie != null)
+        {
+            // if true then return that die object back to the player dice deck before we accidently remove it when we add the new dice to the object.
+            turnPlayer.GetComponent<Player>().diceDeck.Add(sceneDice.GetComponent<SceneDieScript>().myDie);
+        }
+
+        //Add that current dice from the deck to the dice object.
+        sceneDice.GetComponent<SceneDieScript>().myDie = turnPlayer.GetComponent<Player>().diceDeck[diceShown];
+
+        //Add this die scriptable object to our die object.
+        sceneDice.GetComponent<SceneDieScript>().setUpDie();
+
+        //Remove that dice from the dice deck list
+        turnPlayer.GetComponent<Player>().diceDeck.RemoveAt(diceShown);
+
+        diceShown = 0;
+        CloseInspectWindow();
+    }
+
     public void ButtonPressed()
     {
         string inspectBTNPressed = EventSystem.current.currentSelectedGameObject.name.ToString();
@@ -222,31 +244,6 @@ public class InspectWindowController : MonoBehaviour //This script will control 
         switch (inspectBTNPressed)
         {
             case "SelectCreatureBTN": // Only show this & toggle between BTN's when player has to select through the window and not other input.
-
-                if (pressedFor == "DrawDice")
-                {
-                    //Check if a dice is already in the object inside.
-                    if (sceneDice.GetComponent<SceneDieScript>().myDie != null)
-                    {
-                        // if true then return that die object back to the player dice deck before we accidently remove it when we add the new dice to the object.
-                        turnPlayer.GetComponent<Player>().diceDeck.Add(sceneDice.GetComponent<SceneDieScript>().myDie);
-                    }
-
-                    //Add that current dice from the deck to the dice object.
-                    sceneDice.GetComponent<SceneDieScript>().myDie = turnPlayer.GetComponent<Player>().diceDeck[diceShown];
-
-                    //Add this die scriptable object to our die object.
-                    sceneDice.GetComponent<SceneDieScript>().setUpDie();
-
-                    //Remove that dice from the dice deck list
-                    turnPlayer.GetComponent<Player>().diceDeck.RemoveAt(diceShown);
-
-                    //reset dice shown to 0
-                    diceShown = 0;
-
-                    //Close Window
-                    CloseInspectWindow();
-                } //Display BTN
 
                 if (pressedFor == "AttackTargetSelection") //Display BTN
                 {
@@ -336,7 +333,8 @@ public class InspectWindowController : MonoBehaviour //This script will control 
         levelManager.GetComponent<CreaturePoolController>().turnPlayer.GetComponent<Player>().CreaturePool.Add(currentCreature);
         levelManager.GetComponent<CreaturePoolController>().enableButtons();
 
-        // remove the die object from the dice we are currently showing the contents of.
+        //The reset function in UIDiceController returns the unpicked dice back to the pool on the coniditon that myDie isnt null so we remove the chosen dice from the 3D die object.
+        //So that the die the creature summoned or added to the pool was in is removed from the game.
         sceneDice.GetComponent<SceneDieScript>().myDie = null;
 
         //Call the UIDICEController and run the reset function.
@@ -363,7 +361,6 @@ public class InspectWindowController : MonoBehaviour //This script will control 
         CW.GetComponent<AttackUIScript>().defender = currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].gameObject;
         CW.GetComponent<AttackUIScript>().Action = "Decide";
         CW.GetComponent<AttackUIScript>().displayAttackWindow();
-        Debug.Log("Creature is Attack tARGET");
         //Hide this Window for now
         CloseInspectWindow();
     }
