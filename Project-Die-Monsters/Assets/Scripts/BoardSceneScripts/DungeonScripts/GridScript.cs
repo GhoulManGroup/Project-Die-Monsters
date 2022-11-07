@@ -22,17 +22,10 @@ public class GridScript : MonoBehaviour
     [Header("PieceManagement")]
     public string desiredDir;
 
-    // Start is called before the first frame update
     void Start()
     {
         LvlRef = GameObject.FindGameObjectWithTag("LevelController");
         UpdateMaterial();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void UpdateMaterial()
@@ -61,6 +54,8 @@ public class GridScript : MonoBehaviour
                 break;
         }
     }
+
+    #region dungeonPlacement
     public void CheckForDungeonConnection()
     {
         // If the tile that the dungeon spawner is above is empty and vaild for placement, check connecting tile states to determin connections.
@@ -168,7 +163,11 @@ public class GridScript : MonoBehaviour
     {
         Instantiate(creatureSpawnFab, new Vector3(this.transform.position.x, 0.3f, this.transform.position.z), Quaternion.identity);
     }
+    #endregion
 
+    //Old movement code
+    /*
+    #region movementSystem
     public void CheckIfMovePossible() // check if the desired movement is allowed.
     {
         switch (desiredDir) // raycast in desired direciton, check if that object is allowed.
@@ -241,8 +240,9 @@ public class GridScript : MonoBehaviour
         GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().subtractCrest();
         TileContents = "Creature";
     }
+    #endregion
+    */
 
-   
 
 
 }

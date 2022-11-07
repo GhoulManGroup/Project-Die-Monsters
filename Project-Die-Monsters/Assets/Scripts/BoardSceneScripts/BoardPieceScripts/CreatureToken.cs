@@ -86,7 +86,7 @@ public class CreatureToken : MonoBehaviour
             {
                 lvlRef.GetComponent<CameraController>().switchCamera("Board");
                 lvlRef.GetComponent<CreatureController>().ChosenAction = "Choosing";
-                lvlRef.GetComponent<CreatureController>().ChosenCreature = this.gameObject;
+                lvlRef.GetComponent<CreatureController>().ChosenCreatureToken = this.gameObject;
                 lcScript.ableToInteractWithBoard = false;
                 lvlRef.GetComponent<CreatureController>().HideAndShowButtons();
                 CheckForAttackTarget();
