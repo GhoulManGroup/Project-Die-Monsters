@@ -6,14 +6,21 @@ public class PathController : MonoBehaviour
 { // This class is our controller script for player related use of pathfinding in our project.
 
     GameObject levelController;
+    LevelController LCScript;
     GameObject chosenPiece;
+
+    [Header("Movement Varibles")]
     public string desiredAction = "Move";
-    public GameObject startPosition; // The grid tile we start our calculation at.
+    public GameObject startPosition;
     public GameObject desiredPosition;
 
+    List<GameObject> tilesToCheck = new List<GameObject>();
+    List<GameObject> checkedTiles = new List<GameObject>();
+    List<GameObject> reachableTiles = new List<GameObject>();
     public void Awake()
     {
         levelController = GameObject.FindGameObjectWithTag("LevelController");
+        LCScript = levelController.GetComponent<LevelController>();
     }
 
     // Move logic, declare a start position then > check movement crest pool & move cost of creature to determine how many tiles we can move.
@@ -38,7 +45,8 @@ public class PathController : MonoBehaviour
     {
         int possibleMoveDistance;
         // do Maths.
-        
+        possibleMoveDistance = LCScript.participants[LCScript.turnPlayer].GetComponent<Player>().moveCrestPoints / chosenPiece.GetComponent<CreatureToken>().moveCost;
+        Debug.Log(possibleMoveDistance);       
     }
 
 }

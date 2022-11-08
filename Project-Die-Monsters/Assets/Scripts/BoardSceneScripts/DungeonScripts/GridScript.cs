@@ -13,10 +13,13 @@ public class GridScript : MonoBehaviour
     public bool turnPlayerDungeonConnection = false; // the tile is next to a tile owned by the turn player to check if it is a valid placement.
     public string TileContents = "Empty"; // Does the tile have a creature piece above it.
 
+    [Header("PathFinding")]
+    public int distanceFromStartTile;
+
     [Header("Tile Visuals")]
     public List<Material> myMat = new List<Material>();
 
-    [Header("CreatureSpawnFabs")]
+    [Header("PrefabsToSpawn")]
     public GameObject creatureSpawnFab;
 
     [Header("PieceManagement")]
@@ -165,6 +168,13 @@ public class GridScript : MonoBehaviour
     }
     #endregion
 
+    #region pathFinding
+    public void somthing()
+    {
+
+    }
+    #endregion
+
     //Old movement code
     /*
     #region movementSystem
@@ -242,7 +252,5 @@ public class GridScript : MonoBehaviour
     }
     #endregion
     */
-
-
 
 }
