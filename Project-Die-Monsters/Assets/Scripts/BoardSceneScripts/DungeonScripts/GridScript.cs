@@ -14,7 +14,7 @@ public class GridScript : MonoBehaviour
     public string TileContents = "Empty"; // Does the tile have a creature piece above it.
 
     [Header("PathFinding")]
-    public int distanceFromStartTile;
+    public int distanceFromStartTile = 0;
 
     [Header("Tile Visuals")]
     public List<Material> myMat = new List<Material>();
@@ -24,12 +24,77 @@ public class GridScript : MonoBehaviour
 
     [Header("PieceManagement")]
     public string desiredDir;
+    public List<GameObject> Neighbours = new List<GameObject>();
+
 
     void Start()
     {
         LvlRef = GameObject.FindGameObjectWithTag("LevelController");
+        DeclareNeighbours();
         UpdateMaterial();
     }
+
+
+    public void DeclareNeighbours()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            switch (i)
+            {
+                case 0:
+                    RaycastHit Forward;
+                    if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out Forward, 1f))
+                    {
+                        if (Forward.collider.GetComponent<GridScript>() != null)
+                        {
+                            Neighbours.Add(Forward.collider.gameObject);
+                        }
+                    }
+                    break;
+                case 1:
+                    RaycastHit Back;
+                    if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.back), out Back, 1f))
+                    {
+                        if (Back.collider != null)
+                        {
+                            if (Back.collider.GetComponent<GridScript>() != null)
+                            {
+                                Neighbours.Add(Back.collider.gameObject);
+                            }
+                        }
+                    }
+                    break;
+                case 2:
+                    RaycastHit Left;
+                    if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.left), out Left, 1f))
+                    {
+                        if (Left.collider != null)
+                        {
+                            if (Left.collider.GetComponent<GridScript>() != null)
+                            {
+                                Neighbours.Add(Left.collider.gameObject);
+                            }
+                        }
+                    }
+                    break;
+                case 3:
+                    RaycastHit Right;
+                    if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.right), out Right, 1f))
+                    {
+                        if (Right.collider != null)
+                        {
+                            if (Right.collider.GetComponent<GridScript>() != null)
+                            {
+                                Neighbours.Add(Right.collider.gameObject);
+                            }
+                        }
+                    }
+                    break;
+            }
+
+        }
+    }
+    
 
     public void UpdateMaterial()
     {
@@ -58,122 +123,66 @@ public class GridScript : MonoBehaviour
         }
     }
 
-    #region dungeonPlacement
+
     public void CheckForDungeonConnection()
     {
         // If the tile that the dungeon spawner is above is empty and vaild for placement, check connecting tile states to determin connections.
         if (myState == "Empty")
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < Neighbours.Count; i++)
             {
-                switch (i)
+                if (Neighbours[i].GetComponent<GridScript>().myOwner == LvlRef.GetComponent<LevelController>().whoseTurn) // tile is connected to our dungeon
                 {
-                    case 0:
-                        RaycastHit Forward;
-                        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out Forward, 1f))
-                        {
-                            if (Forward.collider != null)
-                            {                                
-                                if (Forward.collider.GetComponent<GridScript>().myOwner == LvlRef.GetComponent<LevelController>().whoseTurn) // tile is connected to our dungeon
-                                {
-                                    if (Forward.collider.GetComponent<GridScript>().myState == "DungeonTile")
-                                    {
-                                        turnPlayerDungeonConnection = true;
-                                    }
+                    if (Neighbours[i].GetComponent<GridScript>().myState == "DungeonTile")
+                    {
+                        turnPlayerDungeonConnection = true;
+                    }
 
-                                    if (Forward.collider.GetComponent<GridScript>().myState == "DungeonLord")
-                                    {
-                                        turnPlayerDungeonConnection = true;
-                                    }
-                                }                              
-                            }
-                        }
-                        break;
-                    case 1:
-                        RaycastHit Back;
-                        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.back), out Back, 1f))
-                        {
-                            if (Back.collider != null)
-                            {
-                                if (Back.collider.GetComponent<GridScript>().myOwner == LvlRef.GetComponent<LevelController>().whoseTurn) // tile is connected to our dungeon
-                                {
-                                    if (Back.collider.GetComponent<GridScript>().myState == "DungeonTile")
-                                    {
-                                        turnPlayerDungeonConnection = true;
-                                    }
-
-                                    if (Back.collider.GetComponent<GridScript>().myState == "DungeonLord")
-                                    {
-                                        turnPlayerDungeonConnection = true;
-                                    }
-                                }
-                            }
-                        }
-                        break;
-                    case 2:
-                        RaycastHit Left;
-                        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.left), out Left, 1f))
-                        {
-                            if (Left.collider != null)
-                            {
-                                if (Left.collider.GetComponent<GridScript>().myOwner == LvlRef.GetComponent<LevelController>().whoseTurn) // Check that tile belongs to our turn player.
-                                {
-                                    // check what piece we are connected to.
-                                    if (Left.collider.GetComponent<GridScript>().myState == "DungeonTile")
-                                    {
-                                        turnPlayerDungeonConnection = true;
-                                    }
-
-                                    if (Left.collider.GetComponent<GridScript>().myState == "DungeonLord")
-                                    {
-                                        turnPlayerDungeonConnection = true;
-                                    }
-
-                                }
-                            }
-                        }
-                        break;
-                    case 3:
-                        RaycastHit Right;
-                        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.right), out Right, 1f))
-                        {
-                            if (Right.collider != null)
-                            {
-                                if (Right.collider.GetComponent<GridScript>().myOwner == LvlRef.GetComponent<LevelController>().whoseTurn) // tile is connected to our dungeon
-                                {
-                                    if (Right.collider.GetComponent<GridScript>().myState == "DungeonTile")
-                                    {
-                                        turnPlayerDungeonConnection = true;
-                                    }
-
-                                    if (Right.collider.GetComponent<GridScript>().myState == "DungeonLord")
-                                    {
-                                        turnPlayerDungeonConnection = true;
-                                    }
-                                }
-                            }
-                        }
-                        break;
+                    if (Neighbours[i].GetComponent<GridScript>().myState == "DungeonLord")
+                    {
+                        turnPlayerDungeonConnection = true;
+                    }
                 }
-
             }
-
         }
-
     }
+
 
     public void SpawnCreatureAbove()
     {
         Instantiate(creatureSpawnFab, new Vector3(this.transform.position.x, 0.3f, this.transform.position.z), Quaternion.identity);
     }
-    #endregion
 
-    #region pathFinding
-    public void somthing()
+
+    public void SearchForMoveSpots()
     {
-
+        Debug.Log("SFMS");
+        // We know how many tiles from start pos we could move now we check if there is anywhere we can move.
+        for (int i = 0; i < Neighbours.Count; i++)
+        {// If our neighbour is currently not is a list in path controller beacuse otherwise its already been checked by another tile in the grid.
+            Debug.Log("Inside For Loop");
+            if (LvlRef.GetComponent<PathController>().tilesToCheck.Contains(Neighbours[i].gameObject) != true && LvlRef.GetComponent<PathController>().checkedTiles.Contains(Neighbours[i].gameObject) != true)
+            {// Add 1 to distance from  its current distance from start tile value then if that value is within our possible move distance that neighbour is in reach of our board piece.
+                Debug.Log("Inside For Loop2");
+                int Dist = Neighbours[i].GetComponent<GridScript>().distanceFromStartTile += 1;
+                if (Dist <= LvlRef.GetComponent<PathController>().possibleMoveDistance)
+                {//Check then if that tile is a dungeon tile and is currently not containing any other board piece.
+                    Debug.Log("Inside For Loop3");
+                    if (Neighbours[i].GetComponent<GridScript>().myState == "DungeonTile" && Neighbours[i].GetComponent<GridScript>().TileContents == "Empty")
+                    {//Then if all these conditions are met we add the tile to the list to check and increase that tiles distancefromstart by 1 space to indicate its 1 away from this tile.
+                        LvlRef.GetComponent<PathController>().tilesToCheck.Add(Neighbours[i].gameObject);
+                        Neighbours[i].gameObject.GetComponent<GridScript>().distanceFromStartTile += 1;
+                        Debug.Log("Inisde End of Loop4");
+                    }  
+                }
+            }
+        }
+        //Remove this checked tile from the list of tiles to check add it to the checked list.
+        LvlRef.GetComponent<PathController>().tilesToCheck.Remove(this.gameObject);
+        LvlRef.GetComponent<PathController>().checkedTiles.Add(this.gameObject);
+        LvlRef.GetComponent<PathController>().establishPossibleMoves();
     }
-    #endregion
+
 
     //Old movement code
     /*

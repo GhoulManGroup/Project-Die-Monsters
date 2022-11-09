@@ -7,16 +7,19 @@ public class PathController : MonoBehaviour
 
     GameObject levelController;
     LevelController LCScript;
-    GameObject chosenPiece;
+    GameObject chosenPiece; // the board piece we are moving or doing other things ect.
 
     [Header("Movement Varibles")]
     public string desiredAction = "Move";
     public GameObject startPosition;
     public GameObject desiredPosition;
 
-    List<GameObject> tilesToCheck = new List<GameObject>();
-    List<GameObject> checkedTiles = new List<GameObject>();
-    List<GameObject> reachableTiles = new List<GameObject>();
+    public List<GameObject> tilesToCheck = new List<GameObject>();
+    public List<GameObject> checkedTiles = new List<GameObject>();
+    public List<GameObject> reachableTiles = new List<GameObject>();
+
+    public int possibleMoveDistance;
+
     public void Awake()
     {
         levelController = GameObject.FindGameObjectWithTag("LevelController");
@@ -34,19 +37,28 @@ public class PathController : MonoBehaviour
         switch (wantedAction)
         {
             case "Move":
+                //To get here we have the crests to move but we need to find if there is anywhere we can move.
                 chosenPiece = creatureTokenPicked;
                 startPosition = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
+                tilesToCheck.Add(startPosition);
+                possibleMoveDistance = LCScript.participants[LCScript.turnPlayer].GetComponent<Player>().moveCrestPoints / chosenPiece.GetComponent<CreatureToken>().moveCost;        
                 establishPossibleMoves();
                 break;
         }
     }
 
-    void establishPossibleMoves()
+    public void establishPossibleMoves()
     {
-        int possibleMoveDistance;
-        // do Maths.
-        possibleMoveDistance = LCScript.participants[LCScript.turnPlayer].GetComponent<Player>().moveCrestPoints / chosenPiece.GetComponent<CreatureToken>().moveCost;
-        Debug.Log(possibleMoveDistance);       
+        Debug.Log("EPM");
+        if (tilesToCheck.Count != 0)
+        {
+            Debug.Log("TTC");
+            tilesToCheck[0].GetComponent<GridScript>().SearchForMoveSpots();
+            
+        }else if (tilesToCheck.Count == 0)
+        {
+            Debug.Log("Done");
+        }
     }
 
 }

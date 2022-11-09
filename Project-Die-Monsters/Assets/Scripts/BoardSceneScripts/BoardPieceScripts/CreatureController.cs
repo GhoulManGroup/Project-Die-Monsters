@@ -73,7 +73,7 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
         {
             OrderBTNS[i].GetComponent<Button>().interactable = false;
         }
-
+        //Add a condition first to see if there is even a vaild tile to move into before giving this options.
         //If the player has enough move crests to pay the cost of moving this creature a tile then enable this button.
         if (turnPlayer.GetComponent<Player>().moveCrestPoints >= ChosenCreatureToken.GetComponent<CreatureToken>().moveCost)
         {
