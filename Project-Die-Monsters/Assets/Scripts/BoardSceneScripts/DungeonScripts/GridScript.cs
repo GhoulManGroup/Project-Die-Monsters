@@ -159,17 +159,17 @@ public class GridScript : MonoBehaviour
         // We know how many tiles from start pos we could move now we check if there is anywhere we can move.
         for (int i = 0; i < Neighbours.Count; i++)
         {
-            // If our neighbour is currently not is a list in path controller beacuse otherwise its already been checked by another tile in the grid.
             if (LvlRef.GetComponent<PathController>().tilesToCheck.Contains(Neighbours[i].gameObject) || LvlRef.GetComponent<PathController>().checkedTiles.Contains(Neighbours[i].gameObject))
             {
-                Debug.Log("Found Already");
+                //Already Checked don't do anything more with it.
             }
             else
             {
+                Debug.Log(Neighbours[i].GetComponent<GridScript>().distanceFromStartTile + 1);
+                int Dist = distanceFromStartTile + 1;
                 // Add 1 to distance from  its current distance from start tile value then if that value is within our possible move distance that neighbour is in reach of our board piece.
-                int Dist = Neighbours[i].GetComponent<GridScript>().distanceFromStartTile + 1;
-                if (Dist <= LvlRef.GetComponent<PathController>().possibleMoveDistance)
-                {
+                if (Neighbours[i].GetComponent<GridScript>().distanceFromStartTile + Dist <= LvlRef.GetComponent<PathController>().possibleMoveDistance)
+                {//The above statement can't be more than 1 beacuse when it is checked it will always be 0
                     //Check then if that tile is a dungeon tile and is currently not containing any other board piece.
                     if (Neighbours[i].GetComponent<GridScript>().myState == "DungeonTile" && Neighbours[i].GetComponent<GridScript>().TileContents == "Empty")
                     {
@@ -188,83 +188,30 @@ public class GridScript : MonoBehaviour
         LvlRef.GetComponent<PathController>().establishPossibleMoves();
     }
 
-
-    //Old movement code
-    /*
-    #region movementSystem
-    public void CheckIfMovePossible() // check if the desired movement is allowed.
+    public void OnMouseDown()
     {
-        switch (desiredDir) // raycast in desired direciton, check if that object is allowed.
+        if (LvlRef.GetComponent<PathController>().reachableTiles.Contains(this.gameObject))
         {
-            case "Up":
-                RaycastHit Forward;
-                if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.left), out Forward, 1f))
-                {
-                    if (Forward.collider.GetComponent<GridScript>().myState == "DungeonTile")
-                    {
-                        if (Forward.collider.GetComponent<GridScript>().TileContents == "Empty")
-                        {
-                            Forward.collider.GetComponent<GridScript>().MoveCreaturetome();
-                            TileContents = "Empty";
-                        }
-                    }
-                }
-                break;
-            case "Down":
-                RaycastHit Back;
-                if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.right), out Back, 1f))
-                {
-                    if (Back.collider.GetComponent<GridScript>().myState == "DungeonTile")
-                    {
-                        if (Back.collider.GetComponent<GridScript>().TileContents == "Empty")
-                        {
-                            Back.collider.GetComponent<GridScript>().MoveCreaturetome();
-                            TileContents = "Empty";
-                        }
-                    }
+            if (LvlRef.GetComponent<PathController>().quickMove == false)
+            {
 
-                }
-                break;
-            case "Left":
-                RaycastHit Left;
-                if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.back), out Left, 1f))
-                {
-                    if (Left.collider.GetComponent<GridScript>().myState == "DungeonTile")
-                    {
-                        if (Left.collider.GetComponent<GridScript>().TileContents == "Empty")
-                        {
-                            Left.collider.GetComponent<GridScript>().MoveCreaturetome();
-                            TileContents = "Empty";
-                        }
-                    }
-                }
-                break;
-            case "Right":
-                RaycastHit Right;
-                if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out Right, 1f))
-                {
-                    if (Right.collider.GetComponent<GridScript>().myState == "DungeonTile")
-                    {
-                        if (Right.collider.GetComponent<GridScript>().TileContents == "Empty")
-                        {
-                            Right.collider.GetComponent<GridScript>().MoveCreaturetome();
-                            TileContents = "Empty";
-                        }
-                    }
-                }
-                break;
+            }else if(LvlRef.GetComponent<PathController>().quickMove == true)
+            {
+                MoveCreaturetome();
+            }
         }
+        //Declare This as our desired move position.
     }
 
     public void MoveCreaturetome()
     {
-        // move creature to this board tile then have it declare us its current tile.
-        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreature.transform.position = new Vector3(this.transform.position.x, 0.3f, this.transform.position.z);
-        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreature.GetComponent<CreatureToken>().declareTile();
-        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().subtractCrest();
+        // Quick Hashed Together Quick Move no Anim system :??
+        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.transform.position = new Vector3(this.transform.position.x, 0.3f, this.transform.position.z);
+        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.GetComponent<CreatureToken>().declareTile();
+        LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().turnPlayer].GetComponent<Player>().moveCrestPoints -= distanceFromStartTile;
+        Debug.Log(LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().turnPlayer].GetComponent<Player>().moveCrestPoints);
+        LvlRef.GetComponent<PathController>().startPosition.GetComponent<GridScript>().myState = "Empty";
         TileContents = "Creature";
     }
-    #endregion
-    */
 
 }

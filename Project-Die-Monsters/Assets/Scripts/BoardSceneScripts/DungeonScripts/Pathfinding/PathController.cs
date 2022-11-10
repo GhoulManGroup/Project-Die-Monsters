@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class PathController : MonoBehaviour
 { // This class is our controller script for player related use of pathfinding in our project.
+    [Header("PlaceHolder Constraints")]
+    public bool quickMove = false;
 
+    [Header("Declerations")]
     GameObject levelController;
     LevelController LCScript;
     GameObject chosenPiece; // the board piece we are moving or doing other things ect.
@@ -41,7 +44,8 @@ public class PathController : MonoBehaviour
                 chosenPiece = creatureTokenPicked;
                 startPosition = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
                 tilesToCheck.Add(startPosition);
-                possibleMoveDistance = LCScript.participants[LCScript.turnPlayer].GetComponent<Player>().moveCrestPoints / chosenPiece.GetComponent<CreatureToken>().moveCost;        
+                possibleMoveDistance = LCScript.participants[LCScript.turnPlayer].GetComponent<Player>().moveCrestPoints / chosenPiece.GetComponent<CreatureToken>().moveCost;
+                Debug.Log(possibleMoveDistance);
                 establishPossibleMoves();
                 break;
         }
@@ -59,6 +63,11 @@ public class PathController : MonoBehaviour
             //Display possible moves to the player.
             //Then wait for input to declare move position.
         }
+    }
+
+    public void HasMoved()
+    {
+
     }
 
 }
