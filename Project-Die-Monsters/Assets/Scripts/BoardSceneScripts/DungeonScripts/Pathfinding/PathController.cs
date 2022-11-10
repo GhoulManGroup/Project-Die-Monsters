@@ -26,8 +26,8 @@ public class PathController : MonoBehaviour
         LCScript = levelController.GetComponent<LevelController>();
     }
 
-    // Move logic, declare a start position then > check movement crest pool & move cost of creature to determine how many tiles we can move.
-    // Store all valid tiles that can be reached in that distance in a list?
+    // Move logic, declare a start position then > check movement crest pool & move cost of creature to determine how many tiles we can move. (Done)
+    // Store all valid tiles that can be reached in that distance in a list? (Done)
     //Display that to the player.
     //Then allow on mouse down on the tile scripts to desginate a position to move to.
     //Have the piece on the board follow the optimal path between both points.
@@ -49,15 +49,15 @@ public class PathController : MonoBehaviour
 
     public void establishPossibleMoves()
     {
-        Debug.Log("EPM");
         if (tilesToCheck.Count != 0)
         {
-            Debug.Log("TTC");
             tilesToCheck[0].GetComponent<GridScript>().SearchForMoveSpots();
             
         }else if (tilesToCheck.Count == 0)
         {
             Debug.Log("Done");
+            //Display possible moves to the player.
+            //Then wait for input to declare move position.
         }
     }
 

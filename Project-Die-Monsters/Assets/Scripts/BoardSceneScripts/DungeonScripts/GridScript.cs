@@ -156,23 +156,28 @@ public class GridScript : MonoBehaviour
 
     public void SearchForMoveSpots()
     {
-        Debug.Log("SFMS");
         // We know how many tiles from start pos we could move now we check if there is anywhere we can move.
         for (int i = 0; i < Neighbours.Count; i++)
-        {// If our neighbour is currently not is a list in path controller beacuse otherwise its already been checked by another tile in the grid.
-            Debug.Log("Inside For Loop");
-            if (LvlRef.GetComponent<PathController>().tilesToCheck.Contains(Neighbours[i].gameObject) != true && LvlRef.GetComponent<PathController>().checkedTiles.Contains(Neighbours[i].gameObject) != true)
-            {// Add 1 to distance from  its current distance from start tile value then if that value is within our possible move distance that neighbour is in reach of our board piece.
-                Debug.Log("Inside For Loop2");
-                int Dist = Neighbours[i].GetComponent<GridScript>().distanceFromStartTile += 1;
+        {
+            // If our neighbour is currently not is a list in path controller beacuse otherwise its already been checked by another tile in the grid.
+            if (LvlRef.GetComponent<PathController>().tilesToCheck.Contains(Neighbours[i].gameObject) || LvlRef.GetComponent<PathController>().checkedTiles.Contains(Neighbours[i].gameObject))
+            {
+                Debug.Log("Found Already");
+            }
+            else
+            {
+                // Add 1 to distance from  its current distance from start tile value then if that value is within our possible move distance that neighbour is in reach of our board piece.
+                int Dist = Neighbours[i].GetComponent<GridScript>().distanceFromStartTile + 1;
                 if (Dist <= LvlRef.GetComponent<PathController>().possibleMoveDistance)
-                {//Check then if that tile is a dungeon tile and is currently not containing any other board piece.
-                    Debug.Log("Inside For Loop3");
+                {
+                    //Check then if that tile is a dungeon tile and is currently not containing any other board piece.
                     if (Neighbours[i].GetComponent<GridScript>().myState == "DungeonTile" && Neighbours[i].GetComponent<GridScript>().TileContents == "Empty")
-                    {//Then if all these conditions are met we add the tile to the list to check and increase that tiles distancefromstart by 1 space to indicate its 1 away from this tile.
+                    {
+                        //Then if all these conditions are met we add the tile to the list to check and increase that tiles distancefromstart by 1 space to indicate its 1 away from this tile.
                         LvlRef.GetComponent<PathController>().tilesToCheck.Add(Neighbours[i].gameObject);
-                        Neighbours[i].gameObject.GetComponent<GridScript>().distanceFromStartTile += 1;
-                        Debug.Log("Inisde End of Loop4");
+                        Neighbours[i].gameObject.GetComponent<GridScript>().distanceFromStartTile = distanceFromStartTile + 1;
+                        //Add the neighbour to the list of possible tiles to move to.
+                        LvlRef.GetComponent<PathController>().reachableTiles.Add(Neighbours[i].gameObject);                   
                     }  
                 }
             }
