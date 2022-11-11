@@ -6,6 +6,7 @@ public class PathController : MonoBehaviour
 { // This class is our controller script for player related use of pathfinding in our project.
     [Header("PlaceHolder Constraints")]
     public bool quickMove = false;
+    public bool allowedToMove = false;
 
     [Header("Declerations")]
     GameObject levelController;
@@ -31,8 +32,8 @@ public class PathController : MonoBehaviour
 
     // Move logic, declare a start position then > check movement crest pool & move cost of creature to determine how many tiles we can move. (Done)
     // Store all valid tiles that can be reached in that distance in a list? (Done)
-    //Display that to the player.
-    //Then allow on mouse down on the tile scripts to desginate a position to move to.
+    //Display that to the player.(Half Done)
+    //Then allow on mouse down on the tile scripts to desginate a position to move to.(Half Done)
     //Have the piece on the board follow the optimal path between both points.
 
     public void DeclareConditions(GameObject creatureTokenPicked, string wantedAction)
@@ -59,15 +60,29 @@ public class PathController : MonoBehaviour
             
         }else if (tilesToCheck.Count == 0)
         {
-            Debug.Log("Done");
+            allowedToMove = true;
             //Display possible moves to the player.
             //Then wait for input to declare move position.
         }
     }
 
-    public void HasMoved()
+    public void DisplayPossibleMoves()
     {
 
+    }
+
+    public void MovePieceToDesiredPosition()
+    {
+
+    }
+
+    public void HasMoved()
+    {// Reset all lists and reassign the start position & end the movement phase.
+        tilesToCheck.Clear();
+        checkedTiles.Clear();
+        reachableTiles.Clear();
+        startPosition.GetComponent<GridScript>().myState = "Empty";
+        startPosition = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
     }
 
 }

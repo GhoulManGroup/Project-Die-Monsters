@@ -40,12 +40,6 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
         HideAndShowButtons();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        //MoveInput();
-    }
-
     public void HideAndShowButtons()
     {
         if (ChosenCreatureToken != null) // if the player has picked a creature token to select hide and display creature control UI buttons.
@@ -159,40 +153,6 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
         lvlRef.GetComponent<CameraController>().switchCamera("Alt");
         lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;
     }
-
-    //Old movement input system
-    /*
-    public void MoveInput()
-    {
-        
-        if (ChosenAction == "Move")
-        {
-            if (Input.GetKeyDown("w"))
-            {
-                ChosenCreature.GetComponent<CreatureToken>().myBoardLocation.GetComponent<GridScript>().desiredDir = "Up";
-                ChosenCreature.GetComponent<CreatureToken>().myBoardLocation.GetComponent<GridScript>().CheckIfMovePossible();
-            }
-
-            if (Input.GetKeyDown("s"))
-            {
-                ChosenCreature.GetComponent<CreatureToken>().myBoardLocation.GetComponent<GridScript>().desiredDir = "Down";
-                ChosenCreature.GetComponent<CreatureToken>().myBoardLocation.GetComponent<GridScript>().CheckIfMovePossible();
-            }
-
-            if (Input.GetKeyDown("a"))
-            {
-                ChosenCreature.GetComponent<CreatureToken>().myBoardLocation.GetComponent<GridScript>().desiredDir = "Left";
-                ChosenCreature.GetComponent<CreatureToken>().myBoardLocation.GetComponent<GridScript>().CheckIfMovePossible();
-            }
-
-            if (Input.GetKeyDown("d"))
-            {
-                ChosenCreature.GetComponent<CreatureToken>().myBoardLocation.GetComponent<GridScript>().desiredDir = "Right";
-                ChosenCreature.GetComponent<CreatureToken>().myBoardLocation.GetComponent<GridScript>().CheckIfMovePossible();
-            }
-        }
-    }
-    */
 
     public void subtractCrest() // remove the cost of action from the pool.
     {

@@ -7737,11 +7737,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1689526756951008578, guid: fd4cfba2f0ce02a46b121523ec02c816, type: 3}
   m_PrefabInstance: {fileID: 5818628057575896021}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1095174927 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5818628056480856282, guid: fd4cfba2f0ce02a46b121523ec02c816, type: 3}
-  m_PrefabInstance: {fileID: 5818628057575896021}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1105424682
 GameObject:
   m_ObjectHideFlags: 0
@@ -11970,6 +11965,11 @@ RectTransform:
   m_AnchoredPosition: {x: 38.3, y: 25.3}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1643121119 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5818628056480856282, guid: fd4cfba2f0ce02a46b121523ec02c816, type: 3}
+  m_PrefabInstance: {fileID: 5818628057575896021}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1644236085
 GameObject:
   m_ObjectHideFlags: 0
@@ -12012,7 +12012,7 @@ MonoBehaviour:
   - {fileID: 2069543198}
   - {fileID: 1390721405}
   BoardTiles:
-  - {fileID: 1095174927}
+  - {fileID: 1643121119}
   - {fileID: 246662521}
   - {fileID: 686843536}
   - {fileID: 567476551}
@@ -14565,7 +14565,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9989cf02e017e241b05c0c253adde41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  quickMove: 1
+  allowedToMove: 0
   desiredAction: Move
+  startPosition: {fileID: 0}
+  desiredPosition: {fileID: 0}
+  tilesToCheck: []
+  checkedTiles: []
+  reachableTiles: []
+  possibleMoveDistance: 0
 --- !u!114 &1996620191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14719,7 +14727,7 @@ MonoBehaviour:
   - {fileID: 1277266907}
   - {fileID: 246790532}
   - {fileID: 1314758027}
-  ChosenCreature: {fileID: 0}
+  ChosenCreatureToken: {fileID: 0}
   ChosenAction: None
 --- !u!1 &2005873435
 GameObject:
@@ -16718,6 +16726,10 @@ PrefabInstance:
     - target: {fileID: 3352733992259385289, guid: fd4cfba2f0ce02a46b121523ec02c816, type: 3}
       propertyPath: myOwner
       value: None
+      objectReference: {fileID: 0}
+    - target: {fileID: 3375284288467772581, guid: fd4cfba2f0ce02a46b121523ec02c816, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3426678200942812451, guid: fd4cfba2f0ce02a46b121523ec02c816, type: 3}
       propertyPath: myOwner

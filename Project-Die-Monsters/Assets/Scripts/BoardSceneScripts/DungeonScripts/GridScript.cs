@@ -1,16 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GridScript : MonoBehaviour
 {
     [Header("refrences")]
     GameObject LvlRef;
+    [SerializeField]
+    GameObject myTextObject;
 
     [Header("Tile States")]
+    public bool turnPlayerDungeonConnection = false; // the tile is next to a tile owned by the turn player to check if it is a valid placement.
     public string myState = "Empty"; // Dungeon // DungeonLord. Tracks the current form of the tile.
     public string myOwner = "None"; // tracks which participant owns the tile either no one 1 player or an AI.
-    public bool turnPlayerDungeonConnection = false; // the tile is next to a tile owned by the turn player to check if it is a valid placement.
     public string TileContents = "Empty"; // Does the tile have a creature piece above it.
 
     [Header("PathFinding")]
@@ -29,9 +32,38 @@ public class GridScript : MonoBehaviour
 
     void Start()
     {
+        myTextObject.GetComponent<TextMeshPro>().text = " ";
         LvlRef = GameObject.FindGameObjectWithTag("LevelController");
         DeclareNeighbours();
         UpdateMaterial();
+    }
+
+
+    public void UpdateMaterial()
+    {
+        switch (myState)
+        {
+            case "Empty":
+                this.GetComponent<MeshRenderer>().material = myMat[0];
+                break;
+
+            case "DungeonTile":
+                if (myOwner == "Player0")
+                {
+                    this.GetComponent<MeshRenderer>().material = myMat[1];
+                }
+
+                if (myOwner == "Player1")
+                {
+                    this.GetComponent<MeshRenderer>().material = myMat[3];
+                }
+
+                break;
+
+            case "DungeonLord":
+                this.GetComponent<MeshRenderer>().material = myMat[2];
+                break;
+        }
     }
 
 
@@ -94,34 +126,6 @@ public class GridScript : MonoBehaviour
 
         }
     }
-    
-
-    public void UpdateMaterial()
-    {
-        switch (myState)
-        {
-            case "Empty":
-                this.GetComponent<MeshRenderer>().material = myMat[0];
-                break;
-
-            case "DungeonTile":
-                if(myOwner == "Player0")
-                {
-                    this.GetComponent<MeshRenderer>().material = myMat[1];
-                }
-
-                if (myOwner == "Player1")
-                {
-                    this.GetComponent<MeshRenderer>().material = myMat[3];
-                }
-
-                break;
-
-            case "DungeonLord":
-                this.GetComponent<MeshRenderer>().material = myMat[2];
-                break;
-        }
-    }
 
 
     public void CheckForDungeonConnection()
@@ -165,7 +169,6 @@ public class GridScript : MonoBehaviour
             }
             else
             {
-                Debug.Log(Neighbours[i].GetComponent<GridScript>().distanceFromStartTile + 1);
                 int Dist = distanceFromStartTile + 1;
                 // Add 1 to distance from  its current distance from start tile value then if that value is within our possible move distance that neighbour is in reach of our board piece.
                 if (Neighbours[i].GetComponent<GridScript>().distanceFromStartTile + Dist <= LvlRef.GetComponent<PathController>().possibleMoveDistance)
@@ -176,9 +179,10 @@ public class GridScript : MonoBehaviour
                         //Then if all these conditions are met we add the tile to the list to check and increase that tiles distancefromstart by 1 space to indicate its 1 away from this tile.
                         LvlRef.GetComponent<PathController>().tilesToCheck.Add(Neighbours[i].gameObject);
                         Neighbours[i].gameObject.GetComponent<GridScript>().distanceFromStartTile = distanceFromStartTile + 1;
+                        Neighbours[i].gameObject.GetComponent<GridScript>().updateTMPRO();
                         //Add the neighbour to the list of possible tiles to move to.
-                        LvlRef.GetComponent<PathController>().reachableTiles.Add(Neighbours[i].gameObject);                   
-                    }  
+                        LvlRef.GetComponent<PathController>().reachableTiles.Add(Neighbours[i].gameObject);
+                    }
                 }
             }
         }
@@ -188,30 +192,41 @@ public class GridScript : MonoBehaviour
         LvlRef.GetComponent<PathController>().establishPossibleMoves();
     }
 
+    public void updateTMPRO()
+    {
+        myTextObject.GetComponent<TextMeshPro>().text = distanceFromStartTile.ToString();
+    }
     public void OnMouseDown()
     {
         if (LvlRef.GetComponent<PathController>().reachableTiles.Contains(this.gameObject))
         {
             if (LvlRef.GetComponent<PathController>().quickMove == false)
             {
-
-            }else if(LvlRef.GetComponent<PathController>().quickMove == true)
+                LvlRef.GetComponent<PathController>().desiredPosition = this.gameObject;
+                LvlRef.GetComponent<PathController>().MovePieceToDesiredPosition();
+            }
+            else if(LvlRef.GetComponent<PathController>().quickMove == true)
             {
                 MoveCreaturetome();
             }
         }
-        //Declare This as our desired move position.
     }
 
     public void MoveCreaturetome()
     {
         // Quick Hashed Together Quick Move no Anim system :??
-        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.transform.position = new Vector3(this.transform.position.x, 0.3f, this.transform.position.z);
-        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.GetComponent<CreatureToken>().declareTile();
-        LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().turnPlayer].GetComponent<Player>().moveCrestPoints -= distanceFromStartTile;
-        Debug.Log(LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().turnPlayer].GetComponent<Player>().moveCrestPoints);
-        LvlRef.GetComponent<PathController>().startPosition.GetComponent<GridScript>().myState = "Empty";
-        TileContents = "Creature";
+        if (LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().turnPlayer].GetComponent<Player>().moveCrestPoints != 0)
+        {
+            GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.transform.position = new Vector3(this.transform.position.x, 0.3f, this.transform.position.z);
+            GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.GetComponent<CreatureToken>().declareTile();
+            LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().turnPlayer].GetComponent<Player>().moveCrestPoints -= distanceFromStartTile;
+            Debug.Log(LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().turnPlayer].GetComponent<Player>().moveCrestPoints);
+            TileContents = "Creature";
+            LvlRef.GetComponent<PathController>().HasMoved();
+        }else
+        {
+            Debug.Log("NoMoney");
+        }
     }
 
 }
