@@ -37,12 +37,12 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
         lvlRef = GameObject.FindGameObjectWithTag("LevelController");
         lcScript = lvlRef.GetComponent<LevelController>();
         ChosenAction = "None";
-        HideAndShowButtons();
+        OpenAndCloseControllerUI();
     }
 
-    public void HideAndShowButtons()
-    {
-        if (ChosenCreatureToken != null) // if the player has picked a creature token to select hide and display creature control UI buttons.
+    public void OpenAndCloseControllerUI()
+    {//Hide and Display this interface depending on if there is a creature selected.
+        if (ChosenCreatureToken != null) 
         {
             for (int i = 0; i < OrderBTNS.Count; i++)
             {
@@ -105,43 +105,58 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
     {
         string actionBTNPressed = EventSystem.current.currentSelectedGameObject.name.ToString();
 
-        if (lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction == false)
+        switch (actionBTNPressed)
         {
-
-            switch (actionBTNPressed)
-            {
-                case "Move":
-                    if (ChosenCreatureToken.GetComponent<CreatureToken>().HasMovedThisTurn == false)
-                    {
-                        lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = true;
-                        ChosenAction = "Move";
-                        lvlRef.GetComponent<PathController>().DeclareConditions(ChosenCreatureToken, "Move");
-                    }
-                    break;
-
-                case "Attack":
-                    //Declare attack action to be made open the inspect window for target selection.
-                    ChosenAction = "Attack";
-
+            case "Move":
+                if (ChosenCreatureToken.GetComponent<CreatureToken>().HasMovedThisTurn == false)
+                {
                     lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = true;
-                    GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectWindowController>().currentCreaturePiece = ChosenCreatureToken;
-                    GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectWindowController>().OpenInspectWindow("AttackTargetSelection");
-                    CheckPossibleActions();
-                    HideAndShowButtons();
-                    break;
+                    ChosenAction = "Move";
+                    lvlRef.GetComponent<PathController>().DeclareConditions(ChosenCreatureToken, "Move");
+                }
+                break;
 
-                case "Ability":
-                    ChosenAction = "Ability";
-                    lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = true;
-                    break;
+            case "Attack":
+                //Declare attack action to be made open the inspect window for target selection.
+                ChosenAction = "Attack";
 
-                case "Cancle":
-                    ChosenAction = "None";
-                    CancleBTNFunction();
-                    break;
-            }
+                lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = true;
+                GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectWindowController>().currentCreaturePiece = ChosenCreatureToken;
+                GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectWindowController>().OpenInspectWindow("AttackTargetSelection");
+                CheckPossibleActions();
+                OpenAndCloseControllerUI();
+                break;
+
+            case "Ability":
+                ChosenAction = "Ability";
+                lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = true;
+                break;
+
+            case "Back":
+                switch (ChosenAction)
+                {
+                    case "None":
+                        //Close Creature Order UI.
+                        Debug.Log("None");
+                        CancleBTNFunction();
+                        break;
+                    case "Ability":
+                        //Close ability UI?
+                        break;
+                    case "Attack":
+                        //Go back from select attack target in inspect window.
+                        break;
+                    case "Move":
+                        //Cancle Move
+                        Debug.Log("MoveCancle");
+                        lvlRef.GetComponent<PathController>().ResetBoard();
+                        ChosenAction = "None";
+                        break;
+                }
+                break;
         }
-        HideAndShowButtons();
+
+        OpenAndCloseControllerUI();
     }
 
     public void CancleBTNFunction()
@@ -149,7 +164,7 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
         ChosenAction = "None";
         lcScript.ableToInteractWithBoard = true;
         ChosenCreatureToken = null;
-        HideAndShowButtons();
+        OpenAndCloseControllerUI();
         lvlRef.GetComponent<CameraController>().switchCamera("Alt");
         lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;
     }

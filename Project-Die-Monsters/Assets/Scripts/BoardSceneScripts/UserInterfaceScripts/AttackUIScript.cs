@@ -143,7 +143,7 @@ public class AttackUIScript : MonoBehaviour
                         //Call creature controller and set us back to controling the piece.
                         lvlRef.GetComponent<CreatureController>().ChosenAction = "Choosing";
                         lvlRef.GetComponent<CreatureController>().CheckPossibleActions();
-                        lvlRef.GetComponent<CreatureController>().HideAndShowButtons();
+                        lvlRef.GetComponent<CreatureController>().OpenAndCloseControllerUI();
                         break;
                 }           
                 break;

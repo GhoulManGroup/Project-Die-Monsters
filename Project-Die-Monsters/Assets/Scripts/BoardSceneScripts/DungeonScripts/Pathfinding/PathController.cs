@@ -32,7 +32,7 @@ public class PathController : MonoBehaviour
 
     // Move logic, declare a start position then > check movement crest pool & move cost of creature to determine how many tiles we can move. (Done)
     // Store all valid tiles that can be reached in that distance in a list? (Done)
-    //Display that to the player.(Half Done)
+    //Display that to the player.(Done)
     //Then allow on mouse down on the tile scripts to desginate a position to move to.(Half Done)
     //Have the piece on the board follow the optimal path between both points.
 
@@ -78,11 +78,24 @@ public class PathController : MonoBehaviour
 
     public void HasMoved()
     {// Reset all lists and reassign the start position & end the movement phase.
+        chosenPiece.GetComponent<CreatureToken>().HasMovedThisTurn = true;
+        ResetBoard();
+        startPosition.GetComponent<GridScript>().myState = "Empty";
+        startPosition = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
+        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenAction = "None";
+        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().OpenAndCloseControllerUI();
+    }
+
+    public void ResetBoard()
+    {// Go through every grid tile that has been interacted with and reset it to its default state.
+        Debug.Log("Reset the Board");
+        for (int i = 0; i < checkedTiles.Count; i++)
+        {
+            checkedTiles[i].GetComponent<GridScript>().ResetGridTile();
+        }
         tilesToCheck.Clear();
         checkedTiles.Clear();
         reachableTiles.Clear();
-        startPosition.GetComponent<GridScript>().myState = "Empty";
-        startPosition = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
     }
 
 }

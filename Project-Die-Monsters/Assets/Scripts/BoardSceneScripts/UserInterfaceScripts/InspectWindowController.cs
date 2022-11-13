@@ -318,7 +318,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
                 // go back to previous step.s
                 levelManager.GetComponent<CreatureController>().ChosenAction = "Choosing";
                 levelManager.GetComponent<CreatureController>().CheckPossibleActions();
-                levelManager.GetComponent<CreatureController>().HideAndShowButtons();
+                levelManager.GetComponent<CreatureController>().OpenAndCloseControllerUI();
                 CloseInspectWindow();
                 break;
         }

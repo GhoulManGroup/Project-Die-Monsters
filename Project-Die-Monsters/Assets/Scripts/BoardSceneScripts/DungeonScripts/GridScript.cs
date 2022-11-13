@@ -9,6 +9,8 @@ public class GridScript : MonoBehaviour
     GameObject LvlRef;
     [SerializeField]
     GameObject myTextObject;
+    [SerializeField]
+    GameObject myIndicator;
 
     [Header("Tile States")]
     public bool turnPlayerDungeonConnection = false; // the tile is next to a tile owned by the turn player to check if it is a valid placement.
@@ -179,6 +181,7 @@ public class GridScript : MonoBehaviour
                         //Then if all these conditions are met we add the tile to the list to check and increase that tiles distancefromstart by 1 space to indicate its 1 away from this tile.
                         LvlRef.GetComponent<PathController>().tilesToCheck.Add(Neighbours[i].gameObject);
                         Neighbours[i].gameObject.GetComponent<GridScript>().distanceFromStartTile = distanceFromStartTile + 1;
+                        Neighbours[i].gameObject.GetComponent<GridScript>().myIndicator.gameObject.SetActive(true);
                         Neighbours[i].gameObject.GetComponent<GridScript>().updateTMPRO();
                         //Add the neighbour to the list of possible tiles to move to.
                         LvlRef.GetComponent<PathController>().reachableTiles.Add(Neighbours[i].gameObject);
@@ -196,9 +199,10 @@ public class GridScript : MonoBehaviour
     {
         myTextObject.GetComponent<TextMeshPro>().text = distanceFromStartTile.ToString();
     }
+
     public void OnMouseDown()
     {
-        if (LvlRef.GetComponent<PathController>().reachableTiles.Contains(this.gameObject))
+        if (LvlRef.GetComponent<PathController>().reachableTiles.Contains(this.gameObject) && LvlRef.GetComponent<PathController>().allowedToMove == true)
         {
             if (LvlRef.GetComponent<PathController>().quickMove == false)
             {
@@ -214,19 +218,28 @@ public class GridScript : MonoBehaviour
 
     public void MoveCreaturetome()
     {
-        // Quick Hashed Together Quick Move no Anim system :??
-        if (LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().turnPlayer].GetComponent<Player>().moveCrestPoints != 0)
+        if (LvlRef.GetComponent<PathController>().quickMove == false)
         {
+            //Make creature move to this space :? have its x and z pos move gradualy till its the same over duration.
+        }
+        else if (LvlRef.GetComponent<PathController>().quickMove == true)
+        {
+            // Quick Hashed Together Quick Move no Anim system :??
             GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.transform.position = new Vector3(this.transform.position.x, 0.3f, this.transform.position.z);
             GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.GetComponent<CreatureToken>().declareTile();
             LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().turnPlayer].GetComponent<Player>().moveCrestPoints -= distanceFromStartTile;
             Debug.Log(LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().turnPlayer].GetComponent<Player>().moveCrestPoints);
             TileContents = "Creature";
             LvlRef.GetComponent<PathController>().HasMoved();
-        }else
-        {
-            Debug.Log("NoMoney");
         }
+
+    }
+
+    public void ResetGridTile()
+    {
+        distanceFromStartTile = 0;
+        myTextObject.GetComponent<TextMeshPro>().text = " ";
+        myIndicator.gameObject.SetActive(false);
     }
 
 }
