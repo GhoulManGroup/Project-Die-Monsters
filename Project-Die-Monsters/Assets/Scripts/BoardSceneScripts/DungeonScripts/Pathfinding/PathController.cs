@@ -79,6 +79,7 @@ public class PathController : MonoBehaviour
     public void HasMoved()
     {// Reset all lists and reassign the start position & end the movement phase.
         chosenPiece.GetComponent<CreatureToken>().HasMovedThisTurn = true;
+        chosenPiece.GetComponent<CreatureToken>().CheckForAttackTarget();
         ResetBoard();
         startPosition.GetComponent<GridScript>().myState = "Empty";
         startPosition = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;

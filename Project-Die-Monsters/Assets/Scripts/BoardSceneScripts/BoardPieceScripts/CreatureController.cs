@@ -47,6 +47,7 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
             for (int i = 0; i < OrderBTNS.Count; i++)
             {
                 OrderBTNS[i].GetComponent<Image>().enabled = true;
+                OrderBTNS[i].GetComponent<Button>().interactable = false;
             }
             CheckPossibleActions();
         }
@@ -57,48 +58,56 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
             {
                 OrderBTNS[i].GetComponent<Image>().enabled = false;
             }
-        }
-        
+        }       
     }
 
-    public void CheckPossibleActions() // check what UI Buttons to enable;
+    public void CheckPossibleActions() 
     {
-        for (int i = 0; i < OrderBTNS.Count; i++)
+        if (ChosenAction == "None")
         {
-            OrderBTNS[i].GetComponent<Button>().interactable = false;
-        }
-        //Add a condition first to see if there is even a vaild tile to move into before giving this options.
-        //If the player has enough move crests to pay the cost of moving this creature a tile then enable this button.
-        if (turnPlayer.GetComponent<Player>().moveCrestPoints >= ChosenCreatureToken.GetComponent<CreatureToken>().moveCost)
-        {
+            //Check if the creature can be moved & if the player can pay its cost.
             if (ChosenCreatureToken.GetComponent<CreatureToken>().HasMovedThisTurn == false)
             {
-                OrderBTNS[0].GetComponent<Button>().interactable = true;
-            }
-        }
-        // Enable the attack button if the player has enough attack crests to pay the cost of an attack
-        if (turnPlayer.GetComponent<Player>().attackCrestPoints >= ChosenCreatureToken.GetComponent<CreatureToken>().attackCost)
-        {
-            //Check if the target creature has any nearby targets and hasn't already attacked this turn.
-            if (ChosenCreatureToken.GetComponent<CreatureToken>().targets.Count != 0 && ChosenCreatureToken.GetComponent<CreatureToken>().HasAttackedThisTurn == false)
-            {
-                if (ChosenAction != "Attack")
+                if (turnPlayer.GetComponent<Player>().moveCrestPoints >= ChosenCreatureToken.GetComponent<CreatureToken>().moveCost)
                 {
+                    OrderBTNS[0].GetComponent<Button>().interactable = true;
+                }
+            }
+            else if (ChosenCreatureToken.GetComponent<CreatureToken>().HasMovedThisTurn == true)
+            {
+                OrderBTNS[0].GetComponent<Button>().interactable = false;
+            }
+
+            if (ChosenCreatureToken.GetComponent<CreatureToken>().targets.Count != null && ChosenCreatureToken.GetComponent<CreatureToken>().HasAttackedThisTurn == false)
+            {
+                Debug.Log("Has Target");
+                if (turnPlayer.GetComponent<Player>().attackCrestPoints >= ChosenCreatureToken.GetComponent<CreatureToken>().attackCost)
+                {
+                    Debug.Log("Has Attack Crests");
                     OrderBTNS[1].GetComponent<Button>().interactable = true;
                 }
             }
-        }
+            else
+            {
+                OrderBTNS[1].GetComponent<Button>().interactable = false;
+            }
 
-        //Add a check for ability later when we get into that step of development.
-        if (turnPlayer.GetComponent<Player>().abiltyPowerCrestPoints != 0)
+            //Add a check for ability later when we get into that step of development.
+            if (turnPlayer.GetComponent<Player>().abiltyPowerCrestPoints != 0)
+            {
+                //OrderBTNS[2].GetComponent<Button>().interactable = true;
+            }
+
+            // Enable the cancle button.
+            OrderBTNS[3].GetComponent<Button>().interactable = true;
+        }
+        else
         {
-            OrderBTNS[2].GetComponent<Button>().interactable = true;
+            OrderBTNS[0].GetComponent<Button>().interactable = false;
+            OrderBTNS[1].GetComponent<Button>().interactable = false;
+            OrderBTNS[2].GetComponent<Button>().interactable = false;
+            OrderBTNS[3].GetComponent<Button>().interactable = true;
         }
-
-        // Enable the cancle button.
-        OrderBTNS[3].GetComponent<Button>().interactable = true;
-
-        
     } 
 
     public void DeclareAction()
@@ -141,7 +150,7 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
                         CancleBTNFunction();
                         break;
                     case "Ability":
-                        //Close ability UI?
+                        ChosenAction = "None";
                         break;
                     case "Attack":
                         //Go back from select attack target in inspect window.
@@ -169,25 +178,9 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
         lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;
     }
 
-    public void subtractCrest() // remove the cost of action from the pool.
+    public void ActionComplete()
     {
-        switch (ChosenAction)
-        {
-            case "Move":
-                turnPlayer.GetComponent<Player>().moveCrestPoints -= ChosenCreatureToken.GetComponent<CreatureToken>().moveCost;
-                ChosenCreatureToken.GetComponent<CreatureToken>().HasMovedThisTurn = true;
 
-                // Check if player can afford to move creature again after this movement.
-                if (turnPlayer.GetComponent<Player>().moveCrestPoints < ChosenCreatureToken.GetComponent<CreatureToken>().moveCost)
-                {
-                    //Creature can't be moved again end the move state, and disable the move action button.
-                    ChosenAction = "None";
-                }
-
-                ChosenCreatureToken.GetComponent<CreatureToken>().CheckForAttackTarget();
-                CheckPossibleActions();
-                break;
-        }
     }
 
     public void ResetCreatureStates()
