@@ -136,15 +136,17 @@ public class InspectWindowController : MonoBehaviour //This script will control 
                 break;
 
             case "AttackTargetSelection":
+                Debug.Log(currentCreaturePiece.name);
                 if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<DungeonLordPiece>() != null)
                 {
                     //if  current target is dungeon lord then display dungeon lord window rather than the default creature display
-                    DisplayDungeonLord();
                     dungeonLordInspectUI.SetActive(true);
+                    DisplayDungeonLord();
                 }else if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>() != null)
                 {
                     //Else display the useall creature window with the current creature object scored in the list.
                     currentCreature = currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>().myCreature;
+                    creatureInspectUI.gameObject.SetActive(true);
                     DisplayCreatureDetails(openedFor);
                 }
                 inspectWindowButtons.declareBTN.SetActive(true);

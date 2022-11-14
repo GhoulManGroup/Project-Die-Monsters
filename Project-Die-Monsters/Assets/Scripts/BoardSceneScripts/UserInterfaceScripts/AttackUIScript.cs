@@ -65,11 +65,9 @@ public class AttackUIScript : MonoBehaviour
 
     public void displayAttackWindow()
     {
-        Debug.Log("DAW");
         // show the attack window UI
         for (int i = 0; i < 13; i++)
         {
-            Debug.Log("Inside Loop");
             if (UIElements[i].GetComponent<Image>() != null)
             {
                 UIElements[i].GetComponent<Image>().enabled = true;
@@ -141,7 +139,7 @@ public class AttackUIScript : MonoBehaviour
                         //Combat over contiune turn.
                         hideAttackWindow();
                         //Call creature controller and set us back to controling the piece.
-                        lvlRef.GetComponent<CreatureController>().ChosenAction = "Choosing";
+                        lvlRef.GetComponent<CreatureController>().ChosenAction = "None";
                         lvlRef.GetComponent<CreatureController>().CheckPossibleActions();
                         lvlRef.GetComponent<CreatureController>().OpenAndCloseControllerUI();
                         break;
@@ -254,8 +252,8 @@ public class AttackUIScript : MonoBehaviour
         }
 
         // tell each piece in the fight to update their states.
-        attacker.GetComponent<CreatureToken>().CheckForAttackTarget();
         defender.GetComponent<CreatureToken>().CheckState();
+        attacker.GetComponent<CreatureToken>().CheckForAttackTarget();
         attacker.GetComponent<CreatureToken>().HasAttackedThisTurn = true;
     }
 

@@ -78,7 +78,7 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
                 OrderBTNS[0].GetComponent<Button>().interactable = false;
             }
 
-            if (ChosenCreatureToken.GetComponent<CreatureToken>().targets.Count != null && ChosenCreatureToken.GetComponent<CreatureToken>().HasAttackedThisTurn == false)
+            if (ChosenCreatureToken.GetComponent<CreatureToken>().targets.Count != 0 && ChosenCreatureToken.GetComponent<CreatureToken>().HasAttackedThisTurn == false)
             {
                 Debug.Log("Has Target");
                 if (turnPlayer.GetComponent<Player>().attackCrestPoints >= ChosenCreatureToken.GetComponent<CreatureToken>().attackCost)
@@ -87,7 +87,7 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
                     OrderBTNS[1].GetComponent<Button>().interactable = true;
                 }
             }
-            else
+            else if (ChosenCreatureToken.GetComponent<CreatureToken>().targets.Count == 0 || ChosenCreatureToken.GetComponent<CreatureToken>().HasAttackedThisTurn == true)
             {
                 OrderBTNS[1].GetComponent<Button>().interactable = false;
             }
@@ -146,7 +146,6 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
                 {
                     case "None":
                         //Close Creature Order UI.
-                        Debug.Log("None");
                         CancleBTNFunction();
                         break;
                     case "Ability":
@@ -157,7 +156,6 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
                         break;
                     case "Move":
                         //Cancle Move
-                        Debug.Log("MoveCancle");
                         lvlRef.GetComponent<PathController>().ResetBoard();
                         ChosenAction = "None";
                         break;

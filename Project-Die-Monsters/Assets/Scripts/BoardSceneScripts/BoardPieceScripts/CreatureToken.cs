@@ -215,7 +215,7 @@ public class CreatureToken : MonoBehaviour
 
         }
 
-        Debug.Log("Targets Found " + targets.Count);
+        //Debug.Log("Targets Found " + targets.Count);
 
         if (targets.Count != 0)
         {

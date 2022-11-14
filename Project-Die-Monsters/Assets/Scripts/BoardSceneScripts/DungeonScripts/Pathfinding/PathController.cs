@@ -46,7 +46,6 @@ public class PathController : MonoBehaviour
                 startPosition = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
                 tilesToCheck.Add(startPosition);
                 possibleMoveDistance = LCScript.participants[LCScript.turnPlayer].GetComponent<Player>().moveCrestPoints / chosenPiece.GetComponent<CreatureToken>().moveCost;
-                Debug.Log(possibleMoveDistance);
                 establishPossibleMoves();
                 break;
         }
@@ -81,7 +80,8 @@ public class PathController : MonoBehaviour
         chosenPiece.GetComponent<CreatureToken>().HasMovedThisTurn = true;
         chosenPiece.GetComponent<CreatureToken>().CheckForAttackTarget();
         ResetBoard();
-        startPosition.GetComponent<GridScript>().myState = "Empty";
+        startPosition.GetComponent<GridScript>().myState = "DungeonTile";
+        startPosition.GetComponent<GridScript>().TileContents = "Empty";
         startPosition = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
         GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenAction = "None";
         GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().OpenAndCloseControllerUI();
@@ -89,7 +89,6 @@ public class PathController : MonoBehaviour
 
     public void ResetBoard()
     {// Go through every grid tile that has been interacted with and reset it to its default state.
-        Debug.Log("Reset the Board");
         for (int i = 0; i < checkedTiles.Count; i++)
         {
             checkedTiles[i].GetComponent<GridScript>().ResetGridTile();

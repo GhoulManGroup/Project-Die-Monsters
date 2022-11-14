@@ -14,9 +14,9 @@ public class GridScript : MonoBehaviour
 
     [Header("Tile States")]
     public bool turnPlayerDungeonConnection = false; // the tile is next to a tile owned by the turn player to check if it is a valid placement.
-    public string myState = "Empty"; // Dungeon // DungeonLord. Tracks the current form of the tile.
+    public string myState = "Empty"; //Empty // DungeonTile // DungeonLord. Tracks the current form of the tile.
     public string myOwner = "None"; // tracks which participant owns the tile either no one 1 player or an AI.
-    public string TileContents = "Empty"; // Does the tile have a creature piece above it.
+    public string TileContents = "Empty"; // Empty // Creature. Does the tile have a creature piece above it.
 
     [Header("PathFinding")]
     public int distanceFromStartTile = 0;
