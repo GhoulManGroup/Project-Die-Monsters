@@ -160,10 +160,30 @@ public class GridScript : MonoBehaviour
     }
 
 
+    public void updateTMPRO()
+    {
+        myTextObject.GetComponent<TextMeshPro>().text = distanceFromStartTile.ToString();
+    }
+
+    public void IsAnyMovementPossible()
+    {
+        bool canMoveAtAll = false;
+        //This function checks if we can move at all before allowing the player to click the move button on the creature controller UI.
+        for (int i = 0; i < Neighbours.Count; i++)
+        {
+            if (Neighbours[i].GetComponent<GridScript>().myState == "DungeonTile" && Neighbours[i].GetComponent<GridScript>().TileContents == "Empty")
+            {
+                canMoveAtAll = true;
+            }
+        }
+
+        //Pass back to creature controller with results to see if we should let the player press move.
+    }
+
     public void SearchForMoveSpots()
     {
         // We know how many tiles from start pos we could move now we check if there is anywhere we can move.
-        for (int i = 0; i < Neighbours.Count; i++)
+        for (int i = 0; i < Neighbours.Count; i++) 
         {
             if (LvlRef.GetComponent<PathController>().tilesToCheck.Contains(Neighbours[i].gameObject) || LvlRef.GetComponent<PathController>().checkedTiles.Contains(Neighbours[i].gameObject))
             {
@@ -192,13 +212,51 @@ public class GridScript : MonoBehaviour
         //Remove this checked tile from the list of tiles to check add it to the checked list.
         LvlRef.GetComponent<PathController>().tilesToCheck.Remove(this.gameObject);
         LvlRef.GetComponent<PathController>().checkedTiles.Add(this.gameObject);
-        LvlRef.GetComponent<PathController>().establishPossibleMoves();
+        LvlRef.GetComponent<PathController>().establishPossibleMoves("CheckPossibleMoves");
     }
 
-    public void updateTMPRO()
+
+    public void SearchForPath()
     {
-        myTextObject.GetComponent<TextMeshPro>().text = distanceFromStartTile.ToString();
+        List<GameObject> dupliacteProtect = new List<GameObject>();
+        for (int i = 0; i < Neighbours.Count; i++)
+        {//If the tile we are checking has already been declared a valid move position.
+            if (LvlRef.GetComponent<PathController>().reachableTiles.Contains(Neighbours[i]))
+            {
+                if (Neighbours[i].GetComponent<GridScript>().distanceFromStartTile == distanceFromStartTile - 1)
+                {
+                    Debug.Log("Found possible path");
+                    dupliacteProtect.Add(Neighbours[i]);
+                }
+            }
+            else if (Neighbours[i] == LvlRef.GetComponent<PathController>().startPosition)
+            {
+                LvlRef.GetComponent<PathController>().tilesToCheck.Remove(this.gameObject);
+                LvlRef.GetComponent<PathController>().chosenPathTiles.Add(Neighbours[i]);
+                Debug.Log("Found Start");
+                LvlRef.GetComponent<PathController>().establishPossibleMoves("FindPath");
+                break;
+            }
+        }
+
+        while (dupliacteProtect.Count > 1)
+        {
+            Debug.Log(dupliacteProtect.Count + "How many Left to choose");
+            int removeMe = Random.RandomRange(0, dupliacteProtect.Count);
+            dupliacteProtect.RemoveAt(removeMe);
+        }
+        
+        if (dupliacteProtect.Count == 1)
+        {
+            Debug.Log("No Duplicates");
+            LvlRef.GetComponent<PathController>().chosenPathTiles.Add(dupliacteProtect[0]);
+            LvlRef.GetComponent<PathController>().tilesToCheck.Add(dupliacteProtect[0]);
+            LvlRef.GetComponent<PathController>().tilesToCheck.Remove(this.gameObject);
+            LvlRef.GetComponent<PathController>().establishPossibleMoves("FindPath");
+        }
+ 
     }
+
 
     public void OnMouseDown()
     {
@@ -206,8 +264,11 @@ public class GridScript : MonoBehaviour
         {
             if (LvlRef.GetComponent<PathController>().quickMove == false)
             {
+                LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().turnPlayer].GetComponent<Player>().moveCrestPoints -= distanceFromStartTile;
                 LvlRef.GetComponent<PathController>().desiredPosition = this.gameObject;
-                LvlRef.GetComponent<PathController>().MovePieceToDesiredPosition();
+                LvlRef.GetComponent<PathController>().tilesToCheck.Clear();
+                LvlRef.GetComponent<PathController>().tilesToCheck.Add(LvlRef.GetComponent<PathController>().desiredPosition);
+                LvlRef.GetComponent<PathController>().establishPossibleMoves("FindPath");
             }
             else if(LvlRef.GetComponent<PathController>().quickMove == true)
             {
@@ -215,6 +276,7 @@ public class GridScript : MonoBehaviour
             }
         }
     }
+
 
     public void MoveCreaturetome()
     {
@@ -224,16 +286,14 @@ public class GridScript : MonoBehaviour
         }
         else if (LvlRef.GetComponent<PathController>().quickMove == true)
         {
-            // Quick Hashed Together Quick Move no Anim system :??
             GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.transform.position = new Vector3(this.transform.position.x, 0.3f, this.transform.position.z);
             GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.GetComponent<CreatureToken>().declareTile();
-            LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().turnPlayer].GetComponent<Player>().moveCrestPoints -= distanceFromStartTile;
-            Debug.Log(LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().turnPlayer].GetComponent<Player>().moveCrestPoints);
+            LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().turnPlayer].GetComponent<Player>().moveCrestPoints -= distanceFromStartTile;            
             TileContents = "Creature";
             LvlRef.GetComponent<PathController>().HasMoved();
         }
-
     }
+
 
     public void ResetGridTile()
     {

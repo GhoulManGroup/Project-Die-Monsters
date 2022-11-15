@@ -21,6 +21,7 @@ public class PathController : MonoBehaviour
     public List<GameObject> tilesToCheck = new List<GameObject>();
     public List<GameObject> checkedTiles = new List<GameObject>();
     public List<GameObject> reachableTiles = new List<GameObject>();
+    public List<GameObject> chosenPathTiles = new List<GameObject>();
 
     public int possibleMoveDistance;
 
@@ -46,33 +47,50 @@ public class PathController : MonoBehaviour
                 startPosition = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
                 tilesToCheck.Add(startPosition);
                 possibleMoveDistance = LCScript.participants[LCScript.turnPlayer].GetComponent<Player>().moveCrestPoints / chosenPiece.GetComponent<CreatureToken>().moveCost;
-                establishPossibleMoves();
+                establishPossibleMoves("CheckPossibleMoves");
                 break;
         }
     }
 
-    public void establishPossibleMoves()
+    public void establishPossibleMoves(string checkWhat)
     {
-        if (tilesToCheck.Count != 0)
+
+        if (checkWhat == "CheckPossibleMoves")
         {
-            tilesToCheck[0].GetComponent<GridScript>().SearchForMoveSpots();
-            
-        }else if (tilesToCheck.Count == 0)
-        {
-            allowedToMove = true;
-            //Display possible moves to the player.
-            //Then wait for input to declare move position.
+            if (tilesToCheck.Count != 0)
+            {
+                tilesToCheck[0].GetComponent<GridScript>().SearchForMoveSpots();
+
+            }
+            else if (tilesToCheck.Count == 0)
+            {
+                if (reachableTiles.Count != 0)
+                {
+                    allowedToMove = true;                
+                }
+                //Display possible moves to the player.
+                //Then wait for input to declare move position.
+            }
         }
+        else if (checkWhat == "FindPath")
+        {
+            if (tilesToCheck.Count != 0)
+            {
+                Debug.Log("Finding Path" + tilesToCheck[0].gameObject.name);
+                tilesToCheck[0].GetComponent<GridScript>().SearchForPath();
+            }
+            else if (tilesToCheck.Count == 0)
+            {
+                //Move Piece through path
+                Debug.Log("Path Done");
+            }
+        }
+       
     }
-
-    public void DisplayPossibleMoves()
+    
+    IEnumerator MovePieceThroughPath()
     {
-
-    }
-
-    public void MovePieceToDesiredPosition()
-    {
-
+        yield return null;
     }
 
     public void HasMoved()
@@ -97,5 +115,4 @@ public class PathController : MonoBehaviour
         checkedTiles.Clear();
         reachableTiles.Clear();
     }
-
 }

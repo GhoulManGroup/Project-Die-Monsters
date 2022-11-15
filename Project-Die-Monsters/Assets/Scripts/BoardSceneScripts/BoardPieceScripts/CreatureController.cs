@@ -176,11 +176,6 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
         lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;
     }
 
-    public void ActionComplete()
-    {
-
-    }
-
     public void ResetCreatureStates()
     {
         for (int i = 0; i < CreaturesOnBoard.Count; i++)

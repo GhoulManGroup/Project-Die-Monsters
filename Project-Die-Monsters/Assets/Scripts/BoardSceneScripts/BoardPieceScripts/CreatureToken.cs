@@ -227,6 +227,7 @@ public class CreatureToken : MonoBehaviour
     {
         if (health <= 0)
         {
+            myBoardLocation.GetComponent<GridScript>().TileContents = "Empty";
             lvlRef.GetComponent<CreatureController>().CreaturesOnBoard.Remove(this.gameObject);
             Destroy(this.gameObject);
             Debug.Log("Creature Dead");
