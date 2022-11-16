@@ -165,6 +165,7 @@ public class GridScript : MonoBehaviour
         myTextObject.GetComponent<TextMeshPro>().text = distanceFromStartTile.ToString();
     }
 
+
     public void IsAnyMovementPossible()
     {
         bool canMoveAtAll = false;
@@ -179,6 +180,7 @@ public class GridScript : MonoBehaviour
 
         //Pass back to creature controller with results to see if we should let the player press move.
     }
+
 
     public void SearchForMoveSpots()
     {
@@ -232,7 +234,7 @@ public class GridScript : MonoBehaviour
             else if (Neighbours[i] == LvlRef.GetComponent<PathController>().startPosition)
             {
                 LvlRef.GetComponent<PathController>().tilesToCheck.Remove(this.gameObject);
-                LvlRef.GetComponent<PathController>().chosenPathTiles.Add(Neighbours[i]);
+               // LvlRef.GetComponent<PathController>().chosenPathTiles.Add(Neighbours[i]);
                 Debug.Log("Found Start");
                 LvlRef.GetComponent<PathController>().establishPossibleMoves("FindPath");
                 break;

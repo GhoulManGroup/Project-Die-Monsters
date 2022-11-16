@@ -35,7 +35,7 @@ public class PathController : MonoBehaviour
     // Store all valid tiles that can be reached in that distance in a list? (Done)
     //Display that to the player.(Done)
     //Then allow on mouse down on the tile scripts to desginate a position to move to.(Half Done)
-    //Have the piece on the board follow the optimal path between both points.
+    //Have the piece on the board follow the optimal path between both points.(Half Done)
 
     public void DeclareConditions(GameObject creatureTokenPicked, string wantedAction)
     {
@@ -83,6 +83,7 @@ public class PathController : MonoBehaviour
             {
                 //Move Piece through path
                 Debug.Log("Path Done");
+                StartCoroutine("MovePieceThroughPath");
             }
         }
        
@@ -90,6 +91,42 @@ public class PathController : MonoBehaviour
     
     IEnumerator MovePieceThroughPath()
     {
+        //Pick first tile in list going from count down < to move piece towards.----------------------------------------------------------------
+        GameObject desiredPos = chosenPathTiles[chosenPathTiles.Count];
+        GameObject currentPos = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
+        string direction;
+
+
+        //Determine the direction we need to face 
+        if (desiredPos.transform.position.x > currentPos.transform.position.x)
+        {
+            direction = "Up";
+        }
+
+        if (desiredPos.transform.position.x < currentPos.transform.position.x)
+        {
+            direction = "Down";
+        }
+
+        if (desiredPos.transform.position.z > currentPos.transform.position.z)
+        {
+            direction = "Right";
+        }
+
+        if (desiredPos.transform.position.z < currentPos.transform.position.z)
+        {
+            direction = "Left";
+        }
+
+        //rotate piece depending on , direction then once you have rotated "Begin to Walk".
+ 
+
+        //When x & y pos & rotation are right proceed to next in list and remove current target.
+
+
+        //When piece has reached the last tile end.
+
+
         yield return null;
     }
 
