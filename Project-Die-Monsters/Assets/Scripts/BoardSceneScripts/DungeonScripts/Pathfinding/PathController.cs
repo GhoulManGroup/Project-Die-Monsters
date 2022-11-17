@@ -11,7 +11,7 @@ public class PathController : MonoBehaviour
     [Header("Declerations")]
     GameObject levelController;
     LevelController LCScript;
-    GameObject chosenPiece; // the board piece we are moving or doing other things ect.
+    public GameObject chosenPiece; // the board piece we are moving or doing other things ect.
 
     [Header("Movement Varibles")]
     public string desiredAction = "Move";
@@ -76,14 +76,12 @@ public class PathController : MonoBehaviour
         {
             if (tilesToCheck.Count != 0)
             {
-                Debug.Log("Finding Path" + tilesToCheck[0].gameObject.name);
                 tilesToCheck[0].GetComponent<GridScript>().SearchForPath();
             }
             else if (tilesToCheck.Count == 0)
             {
                 //Move Piece through path
-                Debug.Log("Path Done");
-                StartCoroutine("MovePieceThroughPath");
+               StartCoroutine("MovePieceThroughPath");
             }
         }
        
@@ -91,42 +89,42 @@ public class PathController : MonoBehaviour
     
     IEnumerator MovePieceThroughPath()
     {
+        GameObject desiredPos = null; 
         //Pick first tile in list going from count down < to move piece towards.----------------------------------------------------------------
-        GameObject desiredPos = chosenPathTiles[chosenPathTiles.Count];
+        if (chosenPathTiles[chosenPathTiles.Count].gameObject != startPosition)
+        {
+            desiredPos = chosenPathTiles[chosenPathTiles.Count +1];
+        }
+        else if (chosenPathTiles[chosenPathTiles.Count].gameObject == startPosition)
+        {
+            desiredPos = startPosition;
+        }
         GameObject currentPos = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
-        string direction;
 
 
         //Determine the direction we need to face 
+        string directionToFace = "Dir";
         if (desiredPos.transform.position.x > currentPos.transform.position.x)
         {
-            direction = "Up";
+            directionToFace = "Up";
         }
 
         if (desiredPos.transform.position.x < currentPos.transform.position.x)
         {
-            direction = "Down";
+            directionToFace = "Down";
         }
 
         if (desiredPos.transform.position.z > currentPos.transform.position.z)
         {
-            direction = "Right";
+            directionToFace = "Right";
         }
 
         if (desiredPos.transform.position.z < currentPos.transform.position.z)
         {
-            direction = "Left";
+            directionToFace = "Left";
         }
 
-        //rotate piece depending on , direction then once you have rotated "Begin to Walk".
- 
-
-        //When x & y pos & rotation are right proceed to next in list and remove current target.
-
-
-        //When piece has reached the last tile end.
-
-
+        Debug.Log(directionToFace);
         yield return null;
     }
 

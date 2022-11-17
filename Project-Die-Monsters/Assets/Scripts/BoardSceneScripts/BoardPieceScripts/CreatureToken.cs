@@ -22,6 +22,8 @@ public class CreatureToken : MonoBehaviour
     public int abilityCost; // how much does the ability of creature cost.
     public string myOwner; // who owns this piece.
 
+    public string facingDirection = "Right";
+
     [Header("Creature Action Checks")]
     public bool HasAttackedThisTurn = false; //A creature may only attack once this turn unless an ability specifies otherwise.
     public bool HasMovedThisTurn; //A creature may only move once per turn unless an abilty specfies otherwise.
@@ -225,6 +227,24 @@ public class CreatureToken : MonoBehaviour
 
     public void CheckState()
     {
+        //What direction am I facing
+        switch(this.transform.rotation.y)
+        {
+            case 0:
+                facingDirection = "Right";
+                break;
+            case 90:
+                facingDirection = "Down";
+                break;
+            case 180:
+                facingDirection = "Left";
+                break;
+            case 270:
+                facingDirection = "Up";
+                break;    
+        }
+        Debug.Log(facingDirection);
+        //Am I dead?
         if (health <= 0)
         {
             myBoardLocation.GetComponent<GridScript>().TileContents = "Empty";
@@ -233,6 +253,5 @@ public class CreatureToken : MonoBehaviour
             Debug.Log("Creature Dead");
         }
     }
-
 
 }

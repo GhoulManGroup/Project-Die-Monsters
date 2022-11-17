@@ -227,15 +227,13 @@ public class GridScript : MonoBehaviour
             {
                 if (Neighbours[i].GetComponent<GridScript>().distanceFromStartTile == distanceFromStartTile - 1)
                 {
-                    Debug.Log("Found possible path");
                     dupliacteProtect.Add(Neighbours[i]);
                 }
             }
             else if (Neighbours[i] == LvlRef.GetComponent<PathController>().startPosition)
             {
                 LvlRef.GetComponent<PathController>().tilesToCheck.Remove(this.gameObject);
-               // LvlRef.GetComponent<PathController>().chosenPathTiles.Add(Neighbours[i]);
-                Debug.Log("Found Start");
+                LvlRef.GetComponent<PathController>().chosenPathTiles.Add(Neighbours[i]);
                 LvlRef.GetComponent<PathController>().establishPossibleMoves("FindPath");
                 break;
             }
@@ -250,7 +248,6 @@ public class GridScript : MonoBehaviour
         
         if (dupliacteProtect.Count == 1)
         {
-            Debug.Log("No Duplicates");
             LvlRef.GetComponent<PathController>().chosenPathTiles.Add(dupliacteProtect[0]);
             LvlRef.GetComponent<PathController>().tilesToCheck.Add(dupliacteProtect[0]);
             LvlRef.GetComponent<PathController>().tilesToCheck.Remove(this.gameObject);
