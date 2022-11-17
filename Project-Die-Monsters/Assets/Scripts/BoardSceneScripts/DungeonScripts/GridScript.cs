@@ -225,18 +225,21 @@ public class GridScript : MonoBehaviour
         {//If the tile we are checking has already been declared a valid move position.
             if (LvlRef.GetComponent<PathController>().reachableTiles.Contains(Neighbours[i]))
             {
-                if (Neighbours[i].GetComponent<GridScript>().distanceFromStartTile == distanceFromStartTile - 1)
+                if (Neighbours[i] != LvlRef.GetComponent<PathController>().startPosition)
                 {
-                    dupliacteProtect.Add(Neighbours[i]);
+                    if (Neighbours[i].GetComponent<GridScript>().distanceFromStartTile == distanceFromStartTile - 1)
+                    {
+                        dupliacteProtect.Add(Neighbours[i]);
+                    }
                 }
-            }
-            else if (Neighbours[i] == LvlRef.GetComponent<PathController>().startPosition)
-            {
-                LvlRef.GetComponent<PathController>().tilesToCheck.Remove(this.gameObject);
-                LvlRef.GetComponent<PathController>().chosenPathTiles.Add(Neighbours[i]);
-                LvlRef.GetComponent<PathController>().establishPossibleMoves("FindPath");
-                break;
-            }
+                else if (Neighbours[i] == LvlRef.GetComponent<PathController>().startPosition)
+                {
+                    LvlRef.GetComponent<PathController>().tilesToCheck.Remove(this.gameObject);
+                    LvlRef.GetComponent<PathController>().chosenPathTiles.Add(Neighbours[i]);
+                    LvlRef.GetComponent<PathController>().establishPossibleMoves("FindPath");
+                    break;
+                }
+            }          
         }
 
         while (dupliacteProtect.Count > 1)

@@ -89,21 +89,23 @@ public class PathController : MonoBehaviour
     
     IEnumerator MovePieceThroughPath()
     {
-        GameObject desiredPos = null; 
         //Pick first tile in list going from count down < to move piece towards.----------------------------------------------------------------
-        if (chosenPathTiles[chosenPathTiles.Count].gameObject != startPosition)
-        {
-            desiredPos = chosenPathTiles[chosenPathTiles.Count +1];
-        }
-        else if (chosenPathTiles[chosenPathTiles.Count].gameObject == startPosition)
-        {
-            desiredPos = startPosition;
-        }
+        int currentMoveTarget = tilesToCheck.Count - 1;
+        GameObject desiredPos = tilesToCheck[currentMoveTarget];
         GameObject currentPos = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
+        chosenPiece.transform.LookAt(desiredPos.transform.position);
+        //chosenPiece.transform.Rotate
+        //DetermineRotation(desiredPos, currentPos);
 
+        yield return null;
+    }
 
-        //Determine the direction we need to face 
+    void DetermineRotation(GameObject desiredPos, GameObject currentPos)
+    {
+        chosenPiece.GetComponent<CreatureToken>().CheckState();
+        string currentDir = chosenPiece.GetComponent<CreatureToken>().facingDirection;
         string directionToFace = "Dir";
+
         if (desiredPos.transform.position.x > currentPos.transform.position.x)
         {
             directionToFace = "Up";
@@ -124,8 +126,7 @@ public class PathController : MonoBehaviour
             directionToFace = "Left";
         }
 
-        Debug.Log(directionToFace);
-        yield return null;
+
     }
 
     public void HasMoved()
@@ -139,6 +140,7 @@ public class PathController : MonoBehaviour
         GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenAction = "None";
         GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().OpenAndCloseControllerUI();
     }
+
 
     public void ResetBoard()
     {// Go through every grid tile that has been interacted with and reset it to its default state.
