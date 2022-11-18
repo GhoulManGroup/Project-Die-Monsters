@@ -68,24 +68,25 @@ public class PathController : MonoBehaviour
                 {
                     allowedToMove = true;                
                 }
-                //Display possible moves to the player.
-                //Then wait for input to declare move position.
             }
         }
         else if (checkWhat == "FindPath")
-        {
+        { //Rework movement
+                       
             if (tilesToCheck.Count != 0)
             {
-                tilesToCheck[0].GetComponent<GridScript>().SearchForPath();
+                Debug.Log("Tile To Check");
+               
             }
             else if (tilesToCheck.Count == 0)
             {
-                //Move Piece through path
+                Debug.Log("No More Tiles to Check");
                StartCoroutine("MovePieceThroughPath");
             }
         }
        
     }
+
     
     IEnumerator MovePieceThroughPath()
     {
@@ -93,15 +94,29 @@ public class PathController : MonoBehaviour
         int currentMoveTarget = tilesToCheck.Count - 1;
         GameObject desiredPos = tilesToCheck[currentMoveTarget];
         GameObject currentPos = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
-        chosenPiece.transform.LookAt(desiredPos.transform.position);
-        //chosenPiece.transform.Rotate
+
         //DetermineRotation(desiredPos, currentPos);
+        Debug.Log("Before");
+        yield return StartCoroutine(FaceTowards(2f, 180f));
 
         yield return null;
     }
 
+    IEnumerator FaceTowards(float direction , float desiredDirection)
+    {
+        Debug.Log("Hello");
+       Vector3 directionToTurn = new Vector3 (0f, direction, 0f);
+       while (chosenPiece.transform.rotation.y != chosenPiece.transform.rotation.y)
+       {
+            yield return new WaitForSeconds(0.1f);
+            chosenPiece.transform.Rotate(directionToTurn);
+       }
+       Debug.Log("Done");
+    }
+
     void DetermineRotation(GameObject desiredPos, GameObject currentPos)
     {
+        //Replace with a simple yvalue check on chosenpiece vs the y rotation needed based on the positon of our next tile. eg up = 270.
         chosenPiece.GetComponent<CreatureToken>().CheckState();
         string currentDir = chosenPiece.GetComponent<CreatureToken>().facingDirection;
         string directionToFace = "Dir";
@@ -125,7 +140,6 @@ public class PathController : MonoBehaviour
         {
             directionToFace = "Left";
         }
-
 
     }
 

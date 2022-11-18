@@ -230,6 +230,7 @@ public class GridScript : MonoBehaviour
                     if (Neighbours[i].GetComponent<GridScript>().distanceFromStartTile == distanceFromStartTile - 1)
                     {
                         dupliacteProtect.Add(Neighbours[i]);
+                        Debug.Log("test");
                     }
                 }
                 else if (Neighbours[i] == LvlRef.GetComponent<PathController>().startPosition)
@@ -251,6 +252,7 @@ public class GridScript : MonoBehaviour
         
         if (dupliacteProtect.Count == 1)
         {
+            Debug.Log("End Step");
             LvlRef.GetComponent<PathController>().chosenPathTiles.Add(dupliacteProtect[0]);
             LvlRef.GetComponent<PathController>().tilesToCheck.Add(dupliacteProtect[0]);
             LvlRef.GetComponent<PathController>().tilesToCheck.Remove(this.gameObject);
