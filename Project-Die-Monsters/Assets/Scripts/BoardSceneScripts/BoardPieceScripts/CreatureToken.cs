@@ -227,7 +227,7 @@ public class CreatureToken : MonoBehaviour
 
     public void CheckState()
     {
-        //What direction am I facing
+        /*
         switch(this.transform.rotation.y)
         {
             case 0:
@@ -244,6 +244,7 @@ public class CreatureToken : MonoBehaviour
                 break;    
         }
         Debug.Log(facingDirection);
+        */
         //Am I dead?
         if (health <= 0)
         {

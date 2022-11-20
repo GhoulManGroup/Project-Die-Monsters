@@ -217,42 +217,46 @@ public class GridScript : MonoBehaviour
         LvlRef.GetComponent<PathController>().establishPossibleMoves("CheckPossibleMoves");
     }
 
-
     public void SearchForPath()
     {
+        //This list exists to pick a path if there are branching valid choices back.
         List<GameObject> dupliacteProtect = new List<GameObject>();
+
         for (int i = 0; i < Neighbours.Count; i++)
-        {//If the tile we are checking has already been declared a valid move position.
-            if (LvlRef.GetComponent<PathController>().reachableTiles.Contains(Neighbours[i]))
+        {//If the current one isn't start then check if its one of the grid tiles we already established as a valid move then check its closer to start than we already are.      
+            if (Neighbours[i] != LvlRef.GetComponent<PathController>().startPosition)
             {
-                if (Neighbours[i] != LvlRef.GetComponent<PathController>().startPosition)
+                if (LvlRef.GetComponent<PathController>().reachableTiles.Contains(Neighbours[i]))
                 {
                     if (Neighbours[i].GetComponent<GridScript>().distanceFromStartTile == distanceFromStartTile - 1)
-                    {
+                    {//Then encase there are multiple vaild routes back to start we add it to duplicates so we can randomly pick one of those neighbour tiles once we found them all.
                         dupliacteProtect.Add(Neighbours[i]);
-                        Debug.Log("test");
+                       // Debug.Log("Not Start Check for duplicates");
                     }
-                }
-                else if (Neighbours[i] == LvlRef.GetComponent<PathController>().startPosition)
-                {
-                    LvlRef.GetComponent<PathController>().tilesToCheck.Remove(this.gameObject);
-                    LvlRef.GetComponent<PathController>().chosenPathTiles.Add(Neighbours[i]);
-                    LvlRef.GetComponent<PathController>().establishPossibleMoves("FindPath");
-                    break;
-                }
-            }          
+                }            
+            }//Else if it is start we found our intended move spot so stop the function.
+            else if (Neighbours[i] == LvlRef.GetComponent<PathController>().startPosition)
+            {
+               // Debug.Log("Start Pos Found");
+                LvlRef.GetComponent<PathController>().tilesToCheck.Remove(this.gameObject);
+                //LvlRef.GetComponent<PathController>().chosenPathTiles.Add(Neighbours[i]); Cant add start since we don't want to move into that spot just end the search for it.
+                LvlRef.GetComponent<PathController>().establishPossibleMoves("FindPath");
+                return;
+            }
+
         }
 
         while (dupliacteProtect.Count > 1)
         {
-            Debug.Log(dupliacteProtect.Count + "How many Left to choose");
+           // Debug.Log(dupliacteProtect.Count + "How many Left to choose");
             int removeMe = Random.RandomRange(0, dupliacteProtect.Count);
+            Debug.Log(removeMe);
             dupliacteProtect.RemoveAt(removeMe);
         }
         
         if (dupliacteProtect.Count == 1)
         {
-            Debug.Log("End Step");
+            //Debug.Log("End Step");
             LvlRef.GetComponent<PathController>().chosenPathTiles.Add(dupliacteProtect[0]);
             LvlRef.GetComponent<PathController>().tilesToCheck.Add(dupliacteProtect[0]);
             LvlRef.GetComponent<PathController>().tilesToCheck.Remove(this.gameObject);

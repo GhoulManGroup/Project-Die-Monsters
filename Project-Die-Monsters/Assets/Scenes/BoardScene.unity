@@ -14565,14 +14565,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9989cf02e017e241b05c0c253adde41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quickMove: 1
+  quickMove: 0
   allowedToMove: 0
+  chosenPiece: {fileID: 0}
   desiredAction: Move
   startPosition: {fileID: 0}
   desiredPosition: {fileID: 0}
   tilesToCheck: []
   checkedTiles: []
   reachableTiles: []
+  chosenPathTiles: []
   possibleMoveDistance: 0
 --- !u!114 &1996620191
 MonoBehaviour:

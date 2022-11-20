@@ -13,7 +13,7 @@ public class PathController : MonoBehaviour
     LevelController LCScript;
     public GameObject chosenPiece; // the board piece we are moving or doing other things ect.
 
-    [Header("Movement Varibles")]
+    [Header("Pathfinding Varibles")]
     public string desiredAction = "Move";
     public GameObject startPosition;
     public GameObject desiredPosition;
@@ -25,10 +25,20 @@ public class PathController : MonoBehaviour
 
     public int possibleMoveDistance;
 
+    [Header("Rotation Varibles")]
+    bool needToRotate = false;
+    public float currentRotation;
+    public float desiredRotation;
+
     public void Awake()
     {
         levelController = GameObject.FindGameObjectWithTag("LevelController");
         LCScript = levelController.GetComponent<LevelController>();
+    }
+
+    public void Update()
+    {
+        RotateToFaceTile();
     }
 
     // Move logic, declare a start position then > check movement crest pool & move cost of creature to determine how many tiles we can move. (Done)
@@ -76,6 +86,8 @@ public class PathController : MonoBehaviour
             if (tilesToCheck.Count != 0)
             {
                 Debug.Log("Tile To Check");
+                //We will always have 1 gameobject in this list untill our desired tile has found its path back to start position.
+                tilesToCheck[0].GetComponent<GridScript>().SearchForPath();
                
             }
             else if (tilesToCheck.Count == 0)
@@ -90,28 +102,52 @@ public class PathController : MonoBehaviour
     
     IEnumerator MovePieceThroughPath()
     {
-        //Pick first tile in list going from count down < to move piece towards.----------------------------------------------------------------
-        int currentMoveTarget = tilesToCheck.Count - 1;
-        GameObject desiredPos = tilesToCheck[currentMoveTarget];
+        // Check the size of chosenPath, if its 0 then we are next to desired position else  we pick the tile closest to start being the last one added so listName.count
         GameObject currentPos = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
+        GameObject desiredPos = null;
+        if (chosenPathTiles.Count == 0)
+        {
+            desiredPos = desiredPosition;
+
+        }else if (chosenPathTiles.Count > 0)
+        {
+            desiredPos = chosenPathTiles[chosenPathTiles.Count - 1];
+        }
+
+        float playerRotation = chosenPiece.transform.rotation.y;
+
+        currentRotation = chosenPiece.transform.rotation.y;
+        desiredRotation = 90f;
+        StartCoroutine("finalTest");
 
         //DetermineRotation(desiredPos, currentPos);
+
+        //Current Pos // Desired Rotation
         Debug.Log("Before");
-        yield return StartCoroutine(FaceTowards(2f, 180f));
 
         yield return null;
     }
 
-    IEnumerator FaceTowards(float direction , float desiredDirection)
+    IEnumerator finalTest()
     {
-        Debug.Log("Hello");
-       Vector3 directionToTurn = new Vector3 (0f, direction, 0f);
-       while (chosenPiece.transform.rotation.y != chosenPiece.transform.rotation.y)
-       {
-            yield return new WaitForSeconds(0.1f);
-            chosenPiece.transform.Rotate(directionToTurn);
-       }
-       Debug.Log("Done");
+        yield return null;
+
+        if (currentRotation != desiredRotation)
+        {
+            chosenPiece.transform.Rotate(0f, 1f, 0f, Space.Self);
+            currentRotation += 1;
+            StartCoroutine("finalTest");
+        }
+    }
+
+    public void RotateToFaceTile()
+    {
+        if (needToRotate == true)
+        {
+            chosenPiece.transform.Rotate(0f, 1f, 0f, Space.Self);
+            Debug.Log("Hellow");
+
+        }
     }
 
     void DetermineRotation(GameObject desiredPos, GameObject currentPos)
@@ -142,6 +178,7 @@ public class PathController : MonoBehaviour
         }
 
     }
+
 
     public void HasMoved()
     {// Reset all lists and reassign the start position & end the movement phase.
