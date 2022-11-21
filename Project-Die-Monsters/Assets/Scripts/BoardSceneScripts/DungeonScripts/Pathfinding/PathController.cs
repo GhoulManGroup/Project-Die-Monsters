@@ -92,6 +92,7 @@ public class PathController : MonoBehaviour
             }
             else if (tilesToCheck.Count == 0)
             {
+                //transform.LookAt();
                 Debug.Log("No More Tiles to Check");
                StartCoroutine("MovePieceThroughPath");
             }
@@ -118,7 +119,9 @@ public class PathController : MonoBehaviour
 
         currentRotation = chosenPiece.transform.rotation.y;
         desiredRotation = 90f;
-        StartCoroutine("finalTest");
+
+        chosenPiece.transform.LookAt(desiredPos.transform.position);
+       // StartCoroutine("finalTest");
 
         //DetermineRotation(desiredPos, currentPos);
 
@@ -131,7 +134,11 @@ public class PathController : MonoBehaviour
     IEnumerator finalTest()
     {
         yield return null;
-
+        if (currentRotation == -180)
+        {
+            currentRotation = 0;
+            chosenPiece.transform.eulerAngles = new Vector3(0f, currentRotation, 0f);
+        }
         if (currentRotation != desiredRotation)
         {
             chosenPiece.transform.Rotate(0f, 1f, 0f, Space.Self);
