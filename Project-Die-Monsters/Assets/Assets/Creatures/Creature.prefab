@@ -189,6 +189,7 @@ MonoBehaviour:
   attackCost: 1
   abilityCost: 0
   myOwner: 
+  facingDirection: Right
   HasAttackedThisTurn: 0
   HasMovedThisTurn: 0
   hasUsedAbilityThisTurn: 0

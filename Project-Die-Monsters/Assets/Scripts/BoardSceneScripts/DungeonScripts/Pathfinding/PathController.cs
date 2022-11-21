@@ -24,21 +24,12 @@ public class PathController : MonoBehaviour
     public List<GameObject> chosenPathTiles = new List<GameObject>();
 
     public int possibleMoveDistance;
-
-    [Header("Rotation Varibles")]
-    bool needToRotate = false;
-    public float currentRotation;
-    public float desiredRotation;
+    int wantedDir;
 
     public void Awake()
     {
         levelController = GameObject.FindGameObjectWithTag("LevelController");
         LCScript = levelController.GetComponent<LevelController>();
-    }
-
-    public void Update()
-    {
-        RotateToFaceTile();
     }
 
     // Move logic, declare a start position then > check movement crest pool & move cost of creature to determine how many tiles we can move. (Done)
@@ -115,46 +106,29 @@ public class PathController : MonoBehaviour
             desiredPos = chosenPathTiles[chosenPathTiles.Count - 1];
         }
 
-        float playerRotation = chosenPiece.transform.rotation.y;
-
-        currentRotation = chosenPiece.transform.rotation.y;
-        desiredRotation = 90f;
-
-        chosenPiece.transform.LookAt(desiredPos.transform.position);
-       // StartCoroutine("finalTest");
-
         //DetermineRotation(desiredPos, currentPos);
-
-        //Current Pos // Desired Rotation
+        wantedDir = 270;
+        StartCoroutine("Rotation");
         Debug.Log("Before");
 
         yield return null;
     }
 
-    IEnumerator finalTest()
+    IEnumerator Rotation()
     {
-        yield return null;
-        if (currentRotation == -180)
+        //chosenPiece += vector3(0,15,0);
+        chosenPiece.transform.Rotate(0f, 15f, 0f);
+        yield return new WaitForSeconds(0.5f);
+        Debug.Log(chosenPiece.transform.eulerAngles.y);
+        if (chosenPiece.transform.eulerAngles.y != wantedDir)
         {
-            currentRotation = 0;
-            chosenPiece.transform.eulerAngles = new Vector3(0f, currentRotation, 0f);
+            StartCoroutine("Rotation");
         }
-        if (currentRotation != desiredRotation)
+        else if (chosenPiece.transform.eulerAngles.y == wantedDir)
         {
-            chosenPiece.transform.Rotate(0f, 1f, 0f, Space.Self);
-            currentRotation += 1;
-            StartCoroutine("finalTest");
+            Debug.Log("EscaPE");
         }
-    }
 
-    public void RotateToFaceTile()
-    {
-        if (needToRotate == true)
-        {
-            chosenPiece.transform.Rotate(0f, 1f, 0f, Space.Self);
-            Debug.Log("Hellow");
-
-        }
     }
 
     void DetermineRotation(GameObject desiredPos, GameObject currentPos)
