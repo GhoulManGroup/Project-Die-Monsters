@@ -11,20 +11,20 @@ public class DeckBuilderUIManager : MonoBehaviour
     public string UIStage;
 
     [Header("UI Elements Containers Canvas")]
-    public new List<GameObject> DeckSelectUI = new List<GameObject>();
-    public new List<GameObject> DeckBuildUI = new List<GameObject>();
+    public List<GameObject> DeckSelectUI = new List<GameObject>();
+    public List<GameObject> DeckBuildUI = new List<GameObject>();
 
     [Header("Deck Display Varibles  ")]
     public Image DeckSizeTab;
     public Text DeckSizeText;
 
-    public new List<Die> tempDeck = new List<Die>(); // this list is a clone of the list in the chosen deckslot which will overwrite the list on the scriptbale object once I saved changes.
-    public new List<GameObject> Creaturelist = new List<GameObject>();
+    public List<Die> tempDeck = new List<Die>(); // this list is a clone of the list in the chosen deckslot which will overwrite the list on the scriptbale object once I saved changes.
+    public List<GameObject> Creaturelist = new List<GameObject>();
     public Deck chosenDeck;
     int chosenDeckNumber;
 
     [Header("Collection Dispaly Varibles")]
-    public new List<GameObject> DieBTN = new List<GameObject>();
+    public List<GameObject> DieBTN = new List<GameObject>();
     public string colorFilter = "None";
     public string levelFilter = "None";
     int dieRangeStart; // these two varible int  control where the list starts to check eg the value of i and what it is < than. just like my color game menu this will allow me to on btn press.

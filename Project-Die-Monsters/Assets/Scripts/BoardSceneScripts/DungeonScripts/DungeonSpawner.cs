@@ -68,7 +68,6 @@ public class DungeonSpawner : MonoBehaviour
 
     public void MoveDungeonSpawner()
     {
-        string lastInput;
 
         if (Input.GetKeyDown("w"))
         {

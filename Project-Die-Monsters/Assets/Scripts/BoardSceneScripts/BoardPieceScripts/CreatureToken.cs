@@ -227,25 +227,6 @@ public class CreatureToken : MonoBehaviour
 
     public void CheckState()
     {
-        /*
-        switch(this.transform.rotation.y)
-        {
-            case 0:
-                facingDirection = "Right";
-                break;
-            case 90:
-                facingDirection = "Down";
-                break;
-            case 180:
-                facingDirection = "Left";
-                break;
-            case 270:
-                facingDirection = "Up";
-                break;    
-        }
-        Debug.Log(facingDirection);
-        */
-        //Am I dead?
         if (health <= 0)
         {
             myBoardLocation.GetComponent<GridScript>().TileContents = "Empty";

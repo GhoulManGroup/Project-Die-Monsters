@@ -24,7 +24,8 @@ public class PathController : MonoBehaviour
     public List<GameObject> chosenPathTiles = new List<GameObject>();
 
     public int possibleMoveDistance;
-    int wantedDir;
+    float wantedDir;
+    float directionToTurn;
 
     public void Awake()
     {
@@ -106,8 +107,7 @@ public class PathController : MonoBehaviour
             desiredPos = chosenPathTiles[chosenPathTiles.Count - 1];
         }
 
-        //DetermineRotation(desiredPos, currentPos);
-        wantedDir = 270;
+        DetermineRotation(desiredPos, currentPos);
         StartCoroutine("Rotation");
         Debug.Log("Before");
 
@@ -116,46 +116,74 @@ public class PathController : MonoBehaviour
 
     IEnumerator Rotation()
     {
-        //chosenPiece += vector3(0,15,0);
-        chosenPiece.transform.Rotate(0f, 15f, 0f);
-        yield return new WaitForSeconds(0.5f);
-        Debug.Log(chosenPiece.transform.eulerAngles.y);
+        chosenPiece.transform.Rotate(0f, directionToTurn, 0f);
+        yield return new WaitForFixedUpdate();
+        //Debug.Log(chosenPiece.transform.eulerAngles.y);
+
         if (chosenPiece.transform.eulerAngles.y != wantedDir)
         {
             StartCoroutine("Rotation");
         }
         else if (chosenPiece.transform.eulerAngles.y == wantedDir)
         {
-            Debug.Log("EscaPE");
+            Debug.Log("EscaPEd");
+            
         }
-
     }
 
     void DetermineRotation(GameObject desiredPos, GameObject currentPos)
     {
-        //Replace with a simple yvalue check on chosenpiece vs the y rotation needed based on the positon of our next tile. eg up = 270.
-        chosenPiece.GetComponent<CreatureToken>().CheckState();
-        string currentDir = chosenPiece.GetComponent<CreatureToken>().facingDirection;
-        string directionToFace = "Dir";
-
+        //Where we want to face
         if (desiredPos.transform.position.x > currentPos.transform.position.x)
         {
-            directionToFace = "Up";
+            wantedDir = 90;
         }
 
         if (desiredPos.transform.position.x < currentPos.transform.position.x)
         {
-            directionToFace = "Down";
+            wantedDir = 270;
         }
 
         if (desiredPos.transform.position.z > currentPos.transform.position.z)
         {
-            directionToFace = "Right";
+            wantedDir = 0f;
         }
 
         if (desiredPos.transform.position.z < currentPos.transform.position.z)
         {
-            directionToFace = "Left";
+            wantedDir = 180;
+        }
+        //Where we currenly face & how we get to face wantedir;
+        string currentDir = "null";
+        switch (chosenPiece.transform.eulerAngles.y)
+        {
+            case 0:
+                currentDir = "Right";
+                switch (wantedDir)
+                {
+                    case 90:
+
+                        break;
+                    case 270:
+
+                        break;
+                    case 0:
+
+                        break;
+                    case 180:
+
+                        break;
+                }
+                break;
+            case 90:
+                currentDir = "Down";
+                break;
+            case 180:
+                currentDir = "Left";
+                break;
+            case 270:
+                currentDir = "Up";
+                break;
         }
 
     }
