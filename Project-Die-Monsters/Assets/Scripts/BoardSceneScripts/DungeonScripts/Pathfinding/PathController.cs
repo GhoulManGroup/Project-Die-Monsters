@@ -107,19 +107,32 @@ public class PathController : MonoBehaviour
             desiredPos = chosenPathTiles[chosenPathTiles.Count - 1];
         }
 
-        DetermineRotation(desiredPos, currentPos);
-        StartCoroutine("Rotation");
-        Debug.Log("Before");
+        //DetermineRotation(desiredPos, currentPos);
+        //StartCoroutine("Rotation");
+
+        //Write movement code for now.
 
         yield return null;
     }
 
     IEnumerator Rotation()
     {
-        chosenPiece.transform.Rotate(0f, directionToTurn, 0f);
-        yield return new WaitForFixedUpdate();
+        
+        //Find direciton to face. 
+        ///Find our rotation.y
+        ///Find the direction our tile is in.
+        //Find shortest rotation to get there
+        ///Determine which way 
+        //Rotate that way
+        while(chosenPiece.transform.eulerAngles.y != wantedDir)
+        {
+            chosenPiece.transform.Rotate(0f, directionToTurn, 0f);
+            yield return new WaitForSeconds(0.5f);
+        }
+        yield return new WaitUntil(() => chosenPiece.transform.eulerAngles.y == wantedDir);
         //Debug.Log(chosenPiece.transform.eulerAngles.y);
 
+        /*
         if (chosenPiece.transform.eulerAngles.y != wantedDir)
         {
             StartCoroutine("Rotation");
@@ -127,8 +140,11 @@ public class PathController : MonoBehaviour
         else if (chosenPiece.transform.eulerAngles.y == wantedDir)
         {
             Debug.Log("EscaPEd");
-            
+            //chosenPiece.transform.eulerAngles = Vector3 (0f, wantedDir, 0f);
+
+
         }
+        */
     }
 
     void DetermineRotation(GameObject desiredPos, GameObject currentPos)
@@ -162,27 +178,60 @@ public class PathController : MonoBehaviour
                 switch (wantedDir)
                 {
                     case 90:
-
+                        directionToTurn = 15;
                         break;
                     case 270:
-
-                        break;
-                    case 0:
-
+                        directionToTurn = -15;
                         break;
                     case 180:
-
+                        directionToTurn = 15;
                         break;
                 }
                 break;
             case 90:
                 currentDir = "Down";
+                switch (wantedDir)
+                {
+                    case 0:
+                        directionToTurn = -15;
+                        break;
+                    case 270:
+                        directionToTurn = -15;
+                        break;
+                    case 180:
+                        directionToTurn = 15;
+                        break;
+                }
                 break;
             case 180:
                 currentDir = "Left";
+                switch (wantedDir)
+                {
+                    case 90:
+                        directionToTurn = -15;
+                        break;
+                    case 270:
+                        directionToTurn = 15;
+                        break;
+                    case 0:
+                        directionToTurn = 15;
+                        break;
+                }
                 break;
             case 270:
                 currentDir = "Up";
+                switch (wantedDir)
+                {
+                    case 90:
+                        directionToTurn = 15;
+                        break;
+                    case 0:
+                        directionToTurn = -15;
+                        break;
+                    case 180:
+                        directionToTurn = 15;
+                        break;
+                }
                 break;
         }
 
