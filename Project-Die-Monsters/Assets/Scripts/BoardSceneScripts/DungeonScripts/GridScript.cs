@@ -236,7 +236,6 @@ public class GridScript : MonoBehaviour
             }//Else if it is start we found our intended move spot so stop the function.
             else if (Neighbours[i] == LvlRef.GetComponent<PathController>().startPosition)
             {
-               // Debug.Log("Start Pos Found");
                 LvlRef.GetComponent<PathController>().tilesToCheck.Remove(this.gameObject);
                 //LvlRef.GetComponent<PathController>().chosenPathTiles.Add(Neighbours[i]); Cant add start since we don't want to move into that spot just end the search for it.
                 LvlRef.GetComponent<PathController>().establishPossibleMoves("FindPath");
@@ -247,7 +246,6 @@ public class GridScript : MonoBehaviour
 
         while (dupliacteProtect.Count > 1)
         {
-           // Debug.Log(dupliacteProtect.Count + "How many Left to choose");
             int removeMe = Random.RandomRange(0, dupliacteProtect.Count);
             Debug.Log(removeMe);
             dupliacteProtect.RemoveAt(removeMe);
@@ -255,7 +253,6 @@ public class GridScript : MonoBehaviour
         
         if (dupliacteProtect.Count == 1)
         {
-            //Debug.Log("End Step");
             LvlRef.GetComponent<PathController>().chosenPathTiles.Add(dupliacteProtect[0]);
             LvlRef.GetComponent<PathController>().tilesToCheck.Add(dupliacteProtect[0]);
             LvlRef.GetComponent<PathController>().tilesToCheck.Remove(this.gameObject);

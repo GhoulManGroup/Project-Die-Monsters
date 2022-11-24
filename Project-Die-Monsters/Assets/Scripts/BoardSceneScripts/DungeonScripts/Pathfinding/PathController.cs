@@ -40,7 +40,8 @@ public class PathController : MonoBehaviour
     // Store all valid tiles that can be reached in that distance in a list? (Done)
     //Display that to the player.(Done)
     //Then allow on mouse down on the tile scripts to desginate a position to move to.(Done);
-    //Have the piece on the board follow the optimal path between both points.(Half Done)
+    //Rotate to face the direction we need to walk.
+    //Have the piece on the board follow the optimal path between both points.(Done)
 
     public void DeclareConditions(GameObject creatureTokenPicked, string wantedAction)
     {
@@ -114,15 +115,17 @@ public class PathController : MonoBehaviour
         //StartCoroutine("Rotation");
         //Move Towards It
         yield return StartCoroutine("WalkToTile");
-        Debug.Log("Reached End");
         //Then if we are in desired pos end coroutine.
-        if (currentPos == startPosition)
+        if (chosenPiece.GetComponent<CreatureToken>().myBoardLocation == desiredPosition)
         {
-
+            Debug.Log("Reached End");
+            HasMoved();
         }
         else
         {
-
+            Debug.Log("Hello");
+            chosenPathTiles.Remove(chosenPathTiles[chosenPathTiles.Count -1]);
+            StartCoroutine("MovePieceThroughPath");
         }
 
     }
@@ -255,13 +258,8 @@ public class PathController : MonoBehaviour
 
     IEnumerator WalkToTile()
     {
-        yield return null;
-        if (chosenPiece.transform.position == (positionToMove))
+        while (chosenPiece.transform.position != (positionToMove))
         {
-            Debug.Log("Arrived");
-        }else if (chosenPiece.transform.position != (positionToMove))
-        {
-            Debug.Log("Move");
             switch (WhereNextTile)
             {
                 case "Up":
@@ -277,27 +275,23 @@ public class PathController : MonoBehaviour
                     chosenPiece.transform.position += new Vector3(0f, 0f, 0.1f);
                     break;
             }
-            StartCoroutine("WalkToTile");           
         }
+        yield return new WaitForSeconds(1f);
+        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.GetComponent<CreatureToken>().declareTile("Move");
+        yield return null;
     }
 
     public void HasMoved()
     {
-        if (quickMove == true)
-        {
-            // Reset all lists and reassign the start position & end the movement phase.
-            chosenPiece.GetComponent<CreatureToken>().HasMovedThisTurn = true;
-            chosenPiece.GetComponent<CreatureToken>().CheckForAttackTarget();
-            ResetBoard();
-            startPosition.GetComponent<GridScript>().myState = "DungeonTile";
-            startPosition.GetComponent<GridScript>().TileContents = "Empty";
-            startPosition = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
-            GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenAction = "None";
-            GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().OpenAndCloseControllerUI();
-        }else if (quickMove == false)
-        {
-            GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.GetComponent<CreatureToken>().declareTile("Move");
-        }
+        Debug.Log("End of the movement reached desired position.");
+        chosenPiece.GetComponent<CreatureToken>().HasMovedThisTurn = true;
+        chosenPiece.GetComponent<CreatureToken>().CheckForAttackTarget();
+        ResetBoard();
+        startPosition.GetComponent<GridScript>().myState = "DungeonTile";
+        startPosition.GetComponent<GridScript>().TileContents = "Empty";
+        startPosition = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
+        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenAction = "None";
+        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().OpenAndCloseControllerUI();
     }
 
 
