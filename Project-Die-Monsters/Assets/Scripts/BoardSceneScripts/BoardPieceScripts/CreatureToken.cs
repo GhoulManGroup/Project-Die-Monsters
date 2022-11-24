@@ -68,7 +68,7 @@ public class CreatureToken : MonoBehaviour
         }
 
        setDetails();
-       declareTile();
+       declareTile("Start");
     }
 
     public void setDetails()
@@ -97,13 +97,16 @@ public class CreatureToken : MonoBehaviour
         
     }
 
-    public void declareTile() // declare where we are.
+    public void declareTile(string why) // declare where we are.
     {
         RaycastHit Down;
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out Down, 1f))
         {
             myBoardLocation = Down.collider.gameObject;
-            Down.collider.GetComponent<GridScript>().TileContents = "Creature";
+            if (why == "Start") // Added string so that if I want traps in future can make a check here to trigger effect while creature moves across the board.
+            {
+                Down.collider.GetComponent<GridScript>().TileContents = "Creature";
+            }
         }
     }
 

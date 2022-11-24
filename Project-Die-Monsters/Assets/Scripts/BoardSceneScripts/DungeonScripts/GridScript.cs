@@ -166,7 +166,7 @@ public class GridScript : MonoBehaviour
     }
 
 
-    public void IsAnyMovementPossible()
+    public void IsAnyMovementPossible() // Add Refrence to this ---------------------------------------------------------------------------------------------------------- CreatureController
     {
         bool canMoveAtAll = false;
         //This function checks if we can move at all before allowing the player to click the move button on the creature controller UI.
@@ -181,8 +181,7 @@ public class GridScript : MonoBehaviour
         //Pass back to creature controller with results to see if we should let the player press move.
     }
 
-
-    public void SearchForMoveSpots()
+    public void FindPossibleMovements()
     {
         // We know how many tiles from start pos we could move now we check if there is anywhere we can move.
         for (int i = 0; i < Neighbours.Count; i++) 
@@ -217,7 +216,7 @@ public class GridScript : MonoBehaviour
         LvlRef.GetComponent<PathController>().establishPossibleMoves("CheckPossibleMoves");
     }
 
-    public void SearchForPath()
+    public void FindPossiblePathToStart()
     {
         //This list exists to pick a path if there are branching valid choices back.
         List<GameObject> dupliacteProtect = new List<GameObject>();
@@ -287,15 +286,11 @@ public class GridScript : MonoBehaviour
 
 
     public void MoveCreaturetome()
-    {
-        if (LvlRef.GetComponent<PathController>().quickMove == false)
-        {
-            //Make creature move to this space :? have its x and z pos move gradualy till its the same over duration.
-        }
-        else if (LvlRef.GetComponent<PathController>().quickMove == true)
+    {// Use for Quick Move only.
+        if (LvlRef.GetComponent<PathController>().quickMove == true)
         {
             GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.transform.position = new Vector3(this.transform.position.x, 0.3f, this.transform.position.z);
-            GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.GetComponent<CreatureToken>().declareTile();
+            GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.GetComponent<CreatureToken>().declareTile("Move");
             LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().turnPlayer].GetComponent<Player>().moveCrestPoints -= distanceFromStartTile;            
             TileContents = "Creature";
             LvlRef.GetComponent<PathController>().HasMoved();

@@ -27,6 +27,9 @@ public class PathController : MonoBehaviour
     float wantedDir;
     float directionToTurn;
 
+    public Vector3 positionToMove;
+    string WhereNextTile = "null";
+
     public void Awake()
     {
         levelController = GameObject.FindGameObjectWithTag("LevelController");
@@ -36,7 +39,7 @@ public class PathController : MonoBehaviour
     // Move logic, declare a start position then > check movement crest pool & move cost of creature to determine how many tiles we can move. (Done)
     // Store all valid tiles that can be reached in that distance in a list? (Done)
     //Display that to the player.(Done)
-    //Then allow on mouse down on the tile scripts to desginate a position to move to.(Half Done)
+    //Then allow on mouse down on the tile scripts to desginate a position to move to.(Done);
     //Have the piece on the board follow the optimal path between both points.(Half Done)
 
     public void DeclareConditions(GameObject creatureTokenPicked, string wantedAction)
@@ -56,12 +59,11 @@ public class PathController : MonoBehaviour
 
     public void establishPossibleMoves(string checkWhat)
     {
-
         if (checkWhat == "CheckPossibleMoves")
         {
             if (tilesToCheck.Count != 0)
             {
-                tilesToCheck[0].GetComponent<GridScript>().SearchForMoveSpots();
+                tilesToCheck[0].GetComponent<GridScript>().FindPossibleMovements();
 
             }
             else if (tilesToCheck.Count == 0)
@@ -73,19 +75,14 @@ public class PathController : MonoBehaviour
             }
         }
         else if (checkWhat == "FindPath")
-        { //Rework movement
-                       
+        {                   
             if (tilesToCheck.Count != 0)
             {
-                Debug.Log("Tile To Check");
-                //We will always have 1 gameobject in this list untill our desired tile has found its path back to start position.
-                tilesToCheck[0].GetComponent<GridScript>().SearchForPath();
+                tilesToCheck[0].GetComponent<GridScript>().FindPossiblePathToStart();
                
             }
             else if (tilesToCheck.Count == 0)
             {
-                //transform.LookAt();
-                Debug.Log("No More Tiles to Check");
                StartCoroutine("MovePieceThroughPath");
             }
         }
@@ -101,18 +98,33 @@ public class PathController : MonoBehaviour
         if (chosenPathTiles.Count == 0)
         {
             desiredPos = desiredPosition;
+            positionToMove = new Vector3(desiredPos.transform.position.x, chosenPiece.transform.position.y, desiredPos.transform.position.z);
+            //StopCoroutine("MovePieceThroughPath");
 
-        }else if (chosenPathTiles.Count > 0)
+        }
+        else if (chosenPathTiles.Count > 0)
         {
             desiredPos = chosenPathTiles[chosenPathTiles.Count - 1];
+            positionToMove = new Vector3(desiredPos.transform.position.x , chosenPiece.transform.position.y, desiredPos.transform.position.z);
         }
 
-        //DetermineRotation(desiredPos, currentPos);
+        //Find where the next tile in the path is in relation to us.
+        NextTileLocation(desiredPos, currentPos);
+        //Rotate to Face it.
         //StartCoroutine("Rotation");
+        //Move Towards It
+        yield return StartCoroutine("WalkToTile");
+        Debug.Log("Reached End");
+        //Then if we are in desired pos end coroutine.
+        if (currentPos == startPosition)
+        {
 
-        //Write movement code for now.
+        }
+        else
+        {
 
-        yield return null;
+        }
+
     }
 
     IEnumerator Rotation()
@@ -147,34 +159,38 @@ public class PathController : MonoBehaviour
         */
     }
 
-    void DetermineRotation(GameObject desiredPos, GameObject currentPos)
+    void NextTileLocation(GameObject desiredPos, GameObject currentPos)
     {
         //Where we want to face
         if (desiredPos.transform.position.x > currentPos.transform.position.x)
         {
             wantedDir = 90;
+            WhereNextTile = "Down";
         }
 
         if (desiredPos.transform.position.x < currentPos.transform.position.x)
         {
             wantedDir = 270;
+            WhereNextTile = "Up";
         }
 
         if (desiredPos.transform.position.z > currentPos.transform.position.z)
         {
             wantedDir = 0f;
+            WhereNextTile = "Right";
         }
 
         if (desiredPos.transform.position.z < currentPos.transform.position.z)
         {
             wantedDir = 180;
+            WhereNextTile = "Left";
         }
         //Where we currenly face & how we get to face wantedir;
-        string currentDir = "null";
+       
         switch (chosenPiece.transform.eulerAngles.y)
         {
             case 0:
-                currentDir = "Right";
+                //WhereNextTile = "Right";
                 switch (wantedDir)
                 {
                     case 90:
@@ -189,7 +205,7 @@ public class PathController : MonoBehaviour
                 }
                 break;
             case 90:
-                currentDir = "Down";
+                //WhereNextTile = "Down";
                 switch (wantedDir)
                 {
                     case 0:
@@ -204,7 +220,7 @@ public class PathController : MonoBehaviour
                 }
                 break;
             case 180:
-                currentDir = "Left";
+               // WhereNextTile = "Left";
                 switch (wantedDir)
                 {
                     case 90:
@@ -219,7 +235,7 @@ public class PathController : MonoBehaviour
                 }
                 break;
             case 270:
-                currentDir = "Up";
+                //WhereNextTile = "Up";
                 switch (wantedDir)
                 {
                     case 90:
@@ -237,17 +253,51 @@ public class PathController : MonoBehaviour
 
     }
 
+    IEnumerator WalkToTile()
+    {
+        yield return null;
+        if (chosenPiece.transform.position == (positionToMove))
+        {
+            Debug.Log("Arrived");
+        }else if (chosenPiece.transform.position != (positionToMove))
+        {
+            Debug.Log("Move");
+            switch (WhereNextTile)
+            {
+                case "Up":
+                    chosenPiece.transform.position += new Vector3(-0.1f, 0f, 0f);
+                    break;
+                case "Down":
+                    chosenPiece.transform.position += new Vector3(0.1f, 0f, 0f);
+                    break;
+                case "Left":
+                    chosenPiece.transform.position += new Vector3(0f, 0f, -0.1f);
+                    break;
+                case "Right":
+                    chosenPiece.transform.position += new Vector3(0f, 0f, 0.1f);
+                    break;
+            }
+            StartCoroutine("WalkToTile");           
+        }
+    }
 
     public void HasMoved()
-    {// Reset all lists and reassign the start position & end the movement phase.
-        chosenPiece.GetComponent<CreatureToken>().HasMovedThisTurn = true;
-        chosenPiece.GetComponent<CreatureToken>().CheckForAttackTarget();
-        ResetBoard();
-        startPosition.GetComponent<GridScript>().myState = "DungeonTile";
-        startPosition.GetComponent<GridScript>().TileContents = "Empty";
-        startPosition = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
-        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenAction = "None";
-        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().OpenAndCloseControllerUI();
+    {
+        if (quickMove == true)
+        {
+            // Reset all lists and reassign the start position & end the movement phase.
+            chosenPiece.GetComponent<CreatureToken>().HasMovedThisTurn = true;
+            chosenPiece.GetComponent<CreatureToken>().CheckForAttackTarget();
+            ResetBoard();
+            startPosition.GetComponent<GridScript>().myState = "DungeonTile";
+            startPosition.GetComponent<GridScript>().TileContents = "Empty";
+            startPosition = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
+            GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenAction = "None";
+            GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().OpenAndCloseControllerUI();
+        }else if (quickMove == false)
+        {
+            GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.GetComponent<CreatureToken>().declareTile("Move");
+        }
     }
 
 
