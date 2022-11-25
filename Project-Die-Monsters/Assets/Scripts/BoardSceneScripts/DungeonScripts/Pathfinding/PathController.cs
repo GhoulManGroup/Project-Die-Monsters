@@ -287,9 +287,9 @@ public class PathController : MonoBehaviour
         chosenPiece.GetComponent<CreatureToken>().HasMovedThisTurn = true;
         chosenPiece.GetComponent<CreatureToken>().CheckForAttackTarget();
         ResetBoard();
-        startPosition.GetComponent<GridScript>().myState = "DungeonTile";
         startPosition.GetComponent<GridScript>().TileContents = "Empty";
         startPosition = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
+        startPosition.GetComponent<GridScript>().TileContents = "Creature";
         GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenAction = "None";
         GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().OpenAndCloseControllerUI();
     }

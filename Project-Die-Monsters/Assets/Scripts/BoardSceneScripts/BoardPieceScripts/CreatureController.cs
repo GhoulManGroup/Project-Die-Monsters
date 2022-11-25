@@ -29,6 +29,7 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
 
     //What creature action BTN we have pressed.
     public string ChosenAction = "None";
+    public bool ableToMove = false; //Checks if there is a possible tile to move into should we have the crests to afford to move.
 
 
     public void Start()
@@ -68,7 +69,7 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
             //Check if the creature can be moved & if the player can pay its cost.
             if (ChosenCreatureToken.GetComponent<CreatureToken>().HasMovedThisTurn == false)
             {
-                if (turnPlayer.GetComponent<Player>().moveCrestPoints >= ChosenCreatureToken.GetComponent<CreatureToken>().moveCost)
+                if (ableToMove == true && turnPlayer.GetComponent<Player>().moveCrestPoints >= ChosenCreatureToken.GetComponent<CreatureToken>().moveCost)
                 {
                     OrderBTNS[0].GetComponent<Button>().interactable = true;
                 }

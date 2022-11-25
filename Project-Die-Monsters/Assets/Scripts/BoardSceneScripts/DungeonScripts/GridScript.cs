@@ -168,17 +168,15 @@ public class GridScript : MonoBehaviour
 
     public void IsAnyMovementPossible() // Add Refrence to this ---------------------------------------------------------------------------------------------------------- CreatureController
     {
-        bool canMoveAtAll = false;
+        LvlRef.GetComponent<CreatureController>().ableToMove = false;
         //This function checks if we can move at all before allowing the player to click the move button on the creature controller UI.
         for (int i = 0; i < Neighbours.Count; i++)
         {
             if (Neighbours[i].GetComponent<GridScript>().myState == "DungeonTile" && Neighbours[i].GetComponent<GridScript>().TileContents == "Empty")
             {
-                canMoveAtAll = true;
+                LvlRef.GetComponent<CreatureController>().ableToMove = true;
             }
         }
-
-        //Pass back to creature controller with results to see if we should let the player press move.
     }
 
     public void FindPossibleMovements()
@@ -278,6 +276,8 @@ public class GridScript : MonoBehaviour
             {
                 MoveCreaturetome();
             }
+
+            LvlRef.GetComponent<PathController>().allowedToMove = false;
         }
     }
 
