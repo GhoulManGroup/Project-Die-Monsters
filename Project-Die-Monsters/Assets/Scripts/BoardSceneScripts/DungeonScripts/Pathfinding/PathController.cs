@@ -91,8 +91,9 @@ public class PathController : MonoBehaviour
     }
 
     
-    IEnumerator MovePieceThroughPath()
+    IEnumerator MovePieceThroughPath() //This is soruce of broken code?
     {
+        Debug.Log("Start of Move Function");
         // Check the size of chosenPath, if its 0 then we are next to desired position else  we pick the tile closest to start being the last one added so listName.count
         GameObject currentPos = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
         GameObject desiredPos = null;
@@ -100,8 +101,6 @@ public class PathController : MonoBehaviour
         {
             desiredPos = desiredPosition;
             positionToMove = new Vector3(desiredPos.transform.position.x, chosenPiece.transform.position.y, desiredPos.transform.position.z);
-            //StopCoroutine("MovePieceThroughPath");
-
         }
         else if (chosenPathTiles.Count > 0)
         {
@@ -113,17 +112,17 @@ public class PathController : MonoBehaviour
         NextTileLocation(desiredPos, currentPos);
         //Rotate to Face it.
         //StartCoroutine("Rotation");
+
         //Move Towards It
         yield return StartCoroutine("WalkToTile");
-        //Then if we are in desired pos end coroutine.
+  
         if (chosenPiece.GetComponent<CreatureToken>().myBoardLocation == desiredPosition)
         {
-            Debug.Log("Reached End");
             HasMoved();
         }
-        else
+        else if (chosenPiece.GetComponent<CreatureToken>().myBoardLocation != desiredPosition)
         {
-            Debug.Log("Hello");
+            //Debug.Log("Next Tile Up");
             chosenPathTiles.Remove(chosenPathTiles[chosenPathTiles.Count -1]);
             StartCoroutine("MovePieceThroughPath");
         }
@@ -258,6 +257,7 @@ public class PathController : MonoBehaviour
 
     IEnumerator WalkToTile()
     {
+        yield return new WaitForSeconds(1f);
         while (chosenPiece.transform.position != (positionToMove))
         {
             switch (WhereNextTile)
@@ -276,14 +276,13 @@ public class PathController : MonoBehaviour
                     break;
             }
         }
-        yield return new WaitForSeconds(1f);
         GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.GetComponent<CreatureToken>().declareTile("Move");
         yield return null;
     }
 
     public void HasMoved()
     {
-        Debug.Log("End of the movement reached desired position.");
+        //Debug.Log("End of the movement reached desired position.");
         chosenPiece.GetComponent<CreatureToken>().HasMovedThisTurn = true;
         chosenPiece.GetComponent<CreatureToken>().CheckForAttackTarget();
         ResetBoard();

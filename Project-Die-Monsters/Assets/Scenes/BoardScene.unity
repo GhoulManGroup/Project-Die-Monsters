@@ -6165,7 +6165,6 @@ GameObject:
   - component: {fileID: 876439935}
   - component: {fileID: 876439939}
   - component: {fileID: 876439938}
-  - component: {fileID: 876439937}
   - component: {fileID: 876439936}
   m_Layer: 0
   m_Name: Cube Drop Fab (3)
@@ -6208,19 +6207,6 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 459ba4f873a97f4408266a31eaa79199, type: 2}
   - {fileID: 2100000, guid: 09997926bae9ab8469af78f8fea5b71c, type: 2}
   - {fileID: 2100000, guid: 24d078586d3f1d64d8a53fe8ab696acc, type: 2}
---- !u!65 &876439937
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 876439934}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &876439938
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7105,7 +7091,6 @@ GameObject:
   - component: {fileID: 978509256}
   - component: {fileID: 978509255}
   - component: {fileID: 978509254}
-  - component: {fileID: 978509253}
   - component: {fileID: 978509257}
   m_Layer: 0
   m_Name: Create Spawn Tile
@@ -7114,19 +7099,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!65 &978509253
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 978509252}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &978509254
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8878,7 +8850,6 @@ GameObject:
   - component: {fileID: 1291637086}
   - component: {fileID: 1291637090}
   - component: {fileID: 1291637089}
-  - component: {fileID: 1291637088}
   - component: {fileID: 1291637087}
   m_Layer: 0
   m_Name: Cube Drop Fab (2)
@@ -8921,19 +8892,6 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 459ba4f873a97f4408266a31eaa79199, type: 2}
   - {fileID: 2100000, guid: 09997926bae9ab8469af78f8fea5b71c, type: 2}
   - {fileID: 2100000, guid: 24d078586d3f1d64d8a53fe8ab696acc, type: 2}
---- !u!65 &1291637088
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1291637085}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1291637089
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -10181,7 +10139,6 @@ GameObject:
   - component: {fileID: 1390721406}
   - component: {fileID: 1390721410}
   - component: {fileID: 1390721409}
-  - component: {fileID: 1390721408}
   - component: {fileID: 1390721407}
   m_Layer: 0
   m_Name: Cube Drop Fab (5)
@@ -10224,19 +10181,6 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 459ba4f873a97f4408266a31eaa79199, type: 2}
   - {fileID: 2100000, guid: 09997926bae9ab8469af78f8fea5b71c, type: 2}
   - {fileID: 2100000, guid: 24d078586d3f1d64d8a53fe8ab696acc, type: 2}
---- !u!65 &1390721408
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1390721405}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1390721409
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -14576,6 +14520,7 @@ MonoBehaviour:
   reachableTiles: []
   chosenPathTiles: []
   possibleMoveDistance: 0
+  positionToMove: {x: 0, y: 0, z: 0}
 --- !u!114 &1996620191
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14731,6 +14676,7 @@ MonoBehaviour:
   - {fileID: 1314758027}
   ChosenCreatureToken: {fileID: 0}
   ChosenAction: None
+  ableToMove: 0
 --- !u!1 &2005873435
 GameObject:
   m_ObjectHideFlags: 0
@@ -15018,7 +14964,6 @@ GameObject:
   - component: {fileID: 2015543302}
   - component: {fileID: 2015543306}
   - component: {fileID: 2015543305}
-  - component: {fileID: 2015543304}
   - component: {fileID: 2015543303}
   m_Layer: 0
   m_Name: Cube Drop Fab (1)
@@ -15061,19 +15006,6 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 459ba4f873a97f4408266a31eaa79199, type: 2}
   - {fileID: 2100000, guid: 09997926bae9ab8469af78f8fea5b71c, type: 2}
   - {fileID: 2100000, guid: 24d078586d3f1d64d8a53fe8ab696acc, type: 2}
---- !u!65 &2015543304
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2015543301}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &2015543305
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -15509,7 +15441,6 @@ GameObject:
   - component: {fileID: 2069543199}
   - component: {fileID: 2069543203}
   - component: {fileID: 2069543202}
-  - component: {fileID: 2069543201}
   - component: {fileID: 2069543200}
   m_Layer: 0
   m_Name: Cube Drop Fab (4)
@@ -15552,19 +15483,6 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 459ba4f873a97f4408266a31eaa79199, type: 2}
   - {fileID: 2100000, guid: 09997926bae9ab8469af78f8fea5b71c, type: 2}
   - {fileID: 2100000, guid: 24d078586d3f1d64d8a53fe8ab696acc, type: 2}
---- !u!65 &2069543201
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2069543198}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &2069543202
 MeshRenderer:
   m_ObjectHideFlags: 0

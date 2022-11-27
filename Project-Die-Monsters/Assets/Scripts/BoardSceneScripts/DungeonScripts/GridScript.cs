@@ -245,7 +245,6 @@ public class GridScript : MonoBehaviour
         while (dupliacteProtect.Count > 1)
         {
             int removeMe = Random.RandomRange(0, dupliacteProtect.Count);
-            Debug.Log(removeMe);
             dupliacteProtect.RemoveAt(removeMe);
         }
         
@@ -278,6 +277,9 @@ public class GridScript : MonoBehaviour
             }
 
             LvlRef.GetComponent<PathController>().allowedToMove = false;
+        }else
+        {
+            //Debug.Log("Not Allowed" + gameObject.name + myState + myOwner + TileContents);
         }
     }
 
