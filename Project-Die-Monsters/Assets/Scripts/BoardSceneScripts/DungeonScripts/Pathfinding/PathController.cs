@@ -24,6 +24,7 @@ public class PathController : MonoBehaviour
     public List<GameObject> chosenPathTiles = new List<GameObject>();
 
     public int possibleMoveDistance;
+    public float moveSpeed = 0.1f;
     float wantedDir;
     float directionToTurn;
 
@@ -84,6 +85,7 @@ public class PathController : MonoBehaviour
             }
             else if (tilesToCheck.Count == 0)
             {
+                ResetBoard("ShowOnlyPath");
                StartCoroutine("MovePieceThroughPath");
             }
         }
@@ -111,7 +113,7 @@ public class PathController : MonoBehaviour
         //Find where the next tile in the path is in relation to us.
         NextTileLocation(desiredPos, currentPos);
         //Rotate to Face it.
-        //StartCoroutine("Rotation");
+        //yield return StartCoroutine("Rotation");
 
         //Move Towards It
         yield return StartCoroutine("WalkToTile");
@@ -131,34 +133,12 @@ public class PathController : MonoBehaviour
 
     IEnumerator Rotation()
     {
-        
-        //Find direciton to face. 
-        ///Find our rotation.y
-        ///Find the direction our tile is in.
-        //Find shortest rotation to get there
-        ///Determine which way 
-        //Rotate that way
+       
         while(chosenPiece.transform.eulerAngles.y != wantedDir)
         {
-            chosenPiece.transform.Rotate(0f, directionToTurn, 0f);
-            yield return new WaitForSeconds(0.5f);
+            chosenPiece.transform.Rotate(new Vector3(0f, moveSpeed, 0f) * Time.deltaTime, Space.World);
+            yield return null;
         }
-        yield return new WaitUntil(() => chosenPiece.transform.eulerAngles.y == wantedDir);
-        //Debug.Log(chosenPiece.transform.eulerAngles.y);
-
-        /*
-        if (chosenPiece.transform.eulerAngles.y != wantedDir)
-        {
-            StartCoroutine("Rotation");
-        }
-        else if (chosenPiece.transform.eulerAngles.y == wantedDir)
-        {
-            Debug.Log("EscaPEd");
-            //chosenPiece.transform.eulerAngles = Vector3 (0f, wantedDir, 0f);
-
-
-        }
-        */
     }
 
     void NextTileLocation(GameObject desiredPos, GameObject currentPos)
@@ -257,35 +237,20 @@ public class PathController : MonoBehaviour
 
     IEnumerator WalkToTile()
     {
-        yield return new WaitForSeconds(1f);
         while (chosenPiece.transform.position != (positionToMove))
         {
-            switch (WhereNextTile)
-            {
-                case "Up":
-                    chosenPiece.transform.position += new Vector3(-0.1f, 0f, 0f);
-                    break;
-                case "Down":
-                    chosenPiece.transform.position += new Vector3(0.1f, 0f, 0f);
-                    break;
-                case "Left":
-                    chosenPiece.transform.position += new Vector3(0f, 0f, -0.1f);
-                    break;
-                case "Right":
-                    chosenPiece.transform.position += new Vector3(0f, 0f, 0.1f);
-                    break;
-            }
+            chosenPiece.transform.position = Vector3.MoveTowards(chosenPiece.transform.position, positionToMove, moveSpeed* Time.deltaTime);
+            yield return null;
         }
-        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.GetComponent<CreatureToken>().declareTile("Move");
-        yield return null;
+            GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.GetComponent<CreatureToken>().declareTile("Move");
+            yield return null;
     }
 
     public void HasMoved()
     {
-        //Debug.Log("End of the movement reached desired position.");
         chosenPiece.GetComponent<CreatureToken>().HasMovedThisTurn = true;
         chosenPiece.GetComponent<CreatureToken>().CheckForAttackTarget();
-        ResetBoard();
+        ResetBoard("Reset");
         startPosition.GetComponent<GridScript>().TileContents = "Empty";
         startPosition = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
         startPosition.GetComponent<GridScript>().TileContents = "Creature";
@@ -294,14 +259,30 @@ public class PathController : MonoBehaviour
     }
 
 
-    public void ResetBoard()
+    public void ResetBoard(string why)
     {// Go through every grid tile that has been interacted with and reset it to its default state.
-        for (int i = 0; i < checkedTiles.Count; i++)
+        if (why == "Reset")
         {
-            checkedTiles[i].GetComponent<GridScript>().ResetGridTile();
+            for (int i = 0; i < checkedTiles.Count; i++)
+            {
+                checkedTiles[i].GetComponent<GridScript>().ResetGridTile();
+            }
+            tilesToCheck.Clear();
+            checkedTiles.Clear();
+            reachableTiles.Clear();
         }
-        tilesToCheck.Clear();
-        checkedTiles.Clear();
-        reachableTiles.Clear();
+        else if (why == "ShowOnlyPath")
+        {
+            for (int i = 0; i < checkedTiles.Count; i++)
+            {
+                if (chosenPathTiles.Contains(chosenPathTiles[i].gameObject))
+                {
+                }else
+                {
+
+                    checkedTiles[i].GetComponent<GridScript>().ResetGridTile();
+                }
+            }
+        }
     }
 }

@@ -157,7 +157,7 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
                         break;
                     case "Move":
                         //Cancle Move
-                        lvlRef.GetComponent<PathController>().ResetBoard();
+                        lvlRef.GetComponent<PathController>().ResetBoard("Reset");
                         ChosenAction = "None";
                         break;
                 }
