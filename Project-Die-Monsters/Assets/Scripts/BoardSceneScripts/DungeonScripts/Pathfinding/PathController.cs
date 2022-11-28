@@ -275,12 +275,9 @@ public class PathController : MonoBehaviour
         {
             for (int i = 0; i < checkedTiles.Count; i++)
             {
-                if (chosenPathTiles.Contains(chosenPathTiles[i].gameObject))
+                if (checkedTiles[i] != startPosition && checkedTiles[i] != desiredPosition && !chosenPathTiles.Contains(checkedTiles[i]))
                 {
-                }else
-                {
-
-                    checkedTiles[i].GetComponent<GridScript>().ResetGridTile();
+                 checkedTiles[i].GetComponent<GridScript>().ResetGridTile();
                 }
             }
         }
