@@ -25,6 +25,7 @@ public class PathController : MonoBehaviour
 
     public int possibleMoveDistance;
     public float moveSpeed = 0.1f;
+    public float rotationSpeed = 30;
     float wantedDir;
     float directionToTurn;
 
@@ -37,12 +38,7 @@ public class PathController : MonoBehaviour
         LCScript = levelController.GetComponent<LevelController>();
     }
 
-    // Move logic, declare a start position then > check movement crest pool & move cost of creature to determine how many tiles we can move. (Done)
-    // Store all valid tiles that can be reached in that distance in a list? (Done)
-    //Display that to the player.(Done)
-    //Then allow on mouse down on the tile scripts to desginate a position to move to.(Done);
     //Rotate to face the direction we need to walk.
-    //Have the piece on the board follow the optimal path between both points.(Done)
 
     public void DeclareConditions(GameObject creatureTokenPicked, string wantedAction)
     {
@@ -55,6 +51,9 @@ public class PathController : MonoBehaviour
                 tilesToCheck.Add(startPosition);
                 possibleMoveDistance = LCScript.participants[LCScript.turnPlayer].GetComponent<Player>().moveCrestPoints / chosenPiece.GetComponent<CreatureToken>().moveCost;
                 establishPossibleMoves("CheckPossibleMoves");
+                break;
+            case "Ability":
+
                 break;
         }
     }
@@ -113,7 +112,7 @@ public class PathController : MonoBehaviour
         //Find where the next tile in the path is in relation to us.
         NextTileLocation(desiredPos, currentPos);
         //Rotate to Face it.
-        //yield return StartCoroutine("Rotation");
+        yield return StartCoroutine("Rotation");
 
         //Move Towards It
         yield return StartCoroutine("WalkToTile");
@@ -129,16 +128,6 @@ public class PathController : MonoBehaviour
             StartCoroutine("MovePieceThroughPath");
         }
 
-    }
-
-    IEnumerator Rotation()
-    {
-       
-        while(chosenPiece.transform.eulerAngles.y != wantedDir)
-        {
-            chosenPiece.transform.Rotate(new Vector3(0f, moveSpeed, 0f) * Time.deltaTime, Space.World);
-            yield return null;
-        }
     }
 
     void NextTileLocation(GameObject desiredPos, GameObject currentPos)
@@ -234,6 +223,19 @@ public class PathController : MonoBehaviour
         }
 
     }
+    IEnumerator Rotation()
+    {
+        float myDir = chosenPiece.transform.eulerAngles.y;
+
+        while (myDir != wantedDir)
+        {
+            myDir = Mathf.Round(chosenPiece.transform.eulerAngles.y);
+            print(myDir);
+            chosenPiece.transform.Rotate(new Vector3(0f, rotationSpeed, 0f) * Time.deltaTime, Space.World);
+            yield return null;
+        }
+    }
+
 
     IEnumerator WalkToTile()
     {

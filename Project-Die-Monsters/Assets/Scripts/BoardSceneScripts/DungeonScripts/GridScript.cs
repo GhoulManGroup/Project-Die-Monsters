@@ -13,6 +13,7 @@ public class GridScript : MonoBehaviour
     GameObject myIndicator;
 
     [Header("Tile States")]
+    public string currrentInteraction = "None"; // On mouse down filter varible to allow us to press tiles for diffrent reasons eg declare target tile our ability location for teleport ect?
     public bool turnPlayerDungeonConnection = false; // the tile is next to a tile owned by the turn player to check if it is a valid placement.
     public string myState = "Empty"; //Empty // DungeonTile // DungeonLord. Tracks the current form of the tile.
     public string myOwner = "None"; // tracks which participant owns the tile either no one 1 player or an AI.
@@ -31,7 +32,6 @@ public class GridScript : MonoBehaviour
     public string desiredDir;
     public List<GameObject> Neighbours = new List<GameObject>();
 
-
     void Start()
     {
         myTextObject.GetComponent<TextMeshPro>().text = " ";
@@ -39,7 +39,6 @@ public class GridScript : MonoBehaviour
         DeclareNeighbours();
         UpdateMaterial();
     }
-
 
     public void UpdateMaterial()
     {
@@ -67,7 +66,6 @@ public class GridScript : MonoBehaviour
                 break;
         }
     }
-
 
     public void DeclareNeighbours()
     {
@@ -129,7 +127,12 @@ public class GridScript : MonoBehaviour
         }
     }
 
+    public void updateTMPRO()
+    {
+        myTextObject.GetComponent<TextMeshPro>().text = distanceFromStartTile.ToString();
+    }
 
+    #region Dungeon & Creature Placement
     public void CheckForDungeonConnection()
     {
         // If the tile that the dungeon spawner is above is empty and vaild for placement, check connecting tile states to determin connections.
@@ -153,20 +156,14 @@ public class GridScript : MonoBehaviour
         }
     }
 
-
     public void SpawnCreatureAbove()
     {
         Instantiate(creatureSpawnFab, new Vector3(this.transform.position.x, 0.3f, this.transform.position.z), Quaternion.identity);
     }
+    #endregion
 
-
-    public void updateTMPRO()
-    {
-        myTextObject.GetComponent<TextMeshPro>().text = distanceFromStartTile.ToString();
-    }
-
-
-    public void IsAnyMovementPossible() // Add Refrence to this ---------------------------------------------------------------------------------------------------------- CreatureController
+    #region CreatureMovementCode
+    public void IsAnyMovementPossible() 
     {
         LvlRef.GetComponent<CreatureController>().ableToMove = false;
         //This function checks if we can move at all before allowing the player to click the move button on the creature controller UI.
@@ -258,7 +255,19 @@ public class GridScript : MonoBehaviour
  
     }
 
-
+    public void MoveCreaturetome()
+    {// Use for current quick (Instant move) only.
+        if (LvlRef.GetComponent<PathController>().quickMove == true)
+        {
+            GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.transform.position = new Vector3(this.transform.position.x, 0.3f, this.transform.position.z);
+            GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.GetComponent<CreatureToken>().declareTile("Move");
+            LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().turnPlayer].GetComponent<Player>().moveCrestPoints -= distanceFromStartTile;            
+            TileContents = "Creature";
+            LvlRef.GetComponent<PathController>().HasMoved();
+        }
+    }
+    #endregion
+    
     public void OnMouseDown()
     {
         if (LvlRef.GetComponent<PathController>().reachableTiles.Contains(this.gameObject) && LvlRef.GetComponent<PathController>().allowedToMove == true)
@@ -280,19 +289,6 @@ public class GridScript : MonoBehaviour
         }else
         {
             //Debug.Log("Not Allowed" + gameObject.name + myState + myOwner + TileContents);
-        }
-    }
-
-
-    public void MoveCreaturetome()
-    {// Use for Quick Move only.
-        if (LvlRef.GetComponent<PathController>().quickMove == true)
-        {
-            GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.transform.position = new Vector3(this.transform.position.x, 0.3f, this.transform.position.z);
-            GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.GetComponent<CreatureToken>().declareTile("Move");
-            LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().turnPlayer].GetComponent<Player>().moveCrestPoints -= distanceFromStartTile;            
-            TileContents = "Creature";
-            LvlRef.GetComponent<PathController>().HasMoved();
         }
     }
 
