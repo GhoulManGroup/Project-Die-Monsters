@@ -241,7 +241,7 @@ public class GridScript : MonoBehaviour
 
         while (dupliacteProtect.Count > 1)
         {
-            int removeMe = Random.RandomRange(0, dupliacteProtect.Count);
+            int removeMe = Random.Range(0, dupliacteProtect.Count);
             dupliacteProtect.RemoveAt(removeMe);
         }
         

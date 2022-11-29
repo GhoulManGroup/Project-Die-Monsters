@@ -8,7 +8,7 @@ public class MainMenuScript : MonoBehaviour
 {
     string ActiveUI = "MainMenu";
     string gameMode = "QuickPlay";
-    string opponentType;
+    string opponentType = null;
 
     GameObject MRef;
 
@@ -100,16 +100,16 @@ public class MainMenuScript : MonoBehaviour
 
     public void showWhichUI()
     {
-        MenuMain.active = false;
-        deckPick.active = false;
+        MenuMain.SetActive(false);
+        deckPick.SetActive(false);
 
         switch (ActiveUI)
         {
             case "MainMenu":
-                MenuMain.active = true;
+                MenuMain.SetActive(true);
                 break;
             case "DeckSelect":
-                deckPick.active = true;
+                deckPick.SetActive(true);
                 break;
         }
     }

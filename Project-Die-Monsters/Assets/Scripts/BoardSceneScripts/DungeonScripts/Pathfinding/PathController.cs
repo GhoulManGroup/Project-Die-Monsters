@@ -18,19 +18,18 @@ public class PathController : MonoBehaviour
     public GameObject startPosition;
     public GameObject desiredPosition;
 
-    public List<GameObject> tilesToCheck = new List<GameObject>();
+    public List<GameObject> tilesToCheck = new List<GameObject>(); // What tiles we want to check the state of its neighbours
     public List<GameObject> checkedTiles = new List<GameObject>();
     public List<GameObject> reachableTiles = new List<GameObject>();
     public List<GameObject> chosenPathTiles = new List<GameObject>();
 
     public int possibleMoveDistance;
-    public float moveSpeed = 0.1f;
-    public float rotationSpeed = 30;
+    public float moveSpeed = 2f;
+    public float rotationSpeed = 45;
     float wantedDir;
     float directionToTurn;
 
     public Vector3 positionToMove;
-    string WhereNextTile = "null";
 
     public void Awake()
     {
@@ -53,11 +52,13 @@ public class PathController : MonoBehaviour
                 establishPossibleMoves("CheckPossibleMoves");
                 break;
             case "Ability":
-
+                chosenPiece = creatureTokenPicked;
                 break;
         }
     }
+    
 
+    #region PathMovementCode
     public void establishPossibleMoves(string checkWhat)
     {
         if (checkWhat == "CheckPossibleMoves")
@@ -90,11 +91,9 @@ public class PathController : MonoBehaviour
         }
        
     }
-
-    
-    IEnumerator MovePieceThroughPath() //This is soruce of broken code?
+  
+    IEnumerator MovePieceThroughPath()
     {
-        Debug.Log("Start of Move Function");
         // Check the size of chosenPath, if its 0 then we are next to desired position else  we pick the tile closest to start being the last one added so listName.count
         GameObject currentPos = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
         GameObject desiredPos = null;
@@ -112,6 +111,7 @@ public class PathController : MonoBehaviour
         //Find where the next tile in the path is in relation to us.
         NextTileLocation(desiredPos, currentPos);
         //Rotate to Face it.
+
         yield return StartCoroutine("Rotation");
 
         //Move Towards It
@@ -123,7 +123,6 @@ public class PathController : MonoBehaviour
         }
         else if (chosenPiece.GetComponent<CreatureToken>().myBoardLocation != desiredPosition)
         {
-            //Debug.Log("Next Tile Up");
             chosenPathTiles.Remove(chosenPathTiles[chosenPathTiles.Count -1]);
             StartCoroutine("MovePieceThroughPath");
         }
@@ -136,87 +135,116 @@ public class PathController : MonoBehaviour
         if (desiredPos.transform.position.x > currentPos.transform.position.x)
         {
             wantedDir = 90;
-            WhereNextTile = "Down";
         }
 
         if (desiredPos.transform.position.x < currentPos.transform.position.x)
         {
             wantedDir = 270;
-            WhereNextTile = "Up";
         }
 
         if (desiredPos.transform.position.z > currentPos.transform.position.z)
         {
             wantedDir = 0f;
-            WhereNextTile = "Right";
         }
 
         if (desiredPos.transform.position.z < currentPos.transform.position.z)
         {
             wantedDir = 180;
-            WhereNextTile = "Left";
         }
+
         //Where we currenly face & how we get to face wantedir;
        
+        float value = rotationSpeed;
         switch (chosenPiece.transform.eulerAngles.y)
         {
             case 0:
-                //WhereNextTile = "Right";
                 switch (wantedDir)
                 {
                     case 90:
-                        directionToTurn = 15;
+                        rotationSpeed = value;
                         break;
                     case 270:
-                        directionToTurn = -15;
+                        rotationSpeed = -value;
                         break;
                     case 180:
-                        directionToTurn = 15;
+                        int dir = Random.Range(1, 2);
+                        if (dir == 1)
+                        {
+                            rotationSpeed = -value;
+                        }
+                        else
+                        {
+                            rotationSpeed = value;
+                        }
+                        print(dir);
                         break;
                 }
                 break;
             case 90:
-                //WhereNextTile = "Down";
                 switch (wantedDir)
                 {
                     case 0:
-                        directionToTurn = -15;
+                        rotationSpeed = -value;
                         break;
                     case 270:
-                        directionToTurn = -15;
+                        int dir = Random.Range(1, 2);
+                        if (dir == 1)
+                        {
+                            rotationSpeed = -value;
+                        }
+                        else
+                        {
+                            rotationSpeed = value;
+                        }
+                        
                         break;
                     case 180:
-                        directionToTurn = 15;
+                        rotationSpeed = value;
                         break;
                 }
                 break;
             case 180:
-               // WhereNextTile = "Left";
                 switch (wantedDir)
                 {
                     case 90:
-                        directionToTurn = -15;
+                        rotationSpeed = -value;
                         break;
                     case 270:
-                        directionToTurn = 15;
+                        rotationSpeed = value;
                         break;
                     case 0:
-                        directionToTurn = 15;
+                        int dir = Random.Range(1, 2);
+                        if (dir == 1)
+                        {
+                            rotationSpeed = value;
+                        }
+                        else
+                        {
+                            rotationSpeed = -value;
+                        }
+                        print(dir);
                         break;
                 }
                 break;
             case 270:
-                //WhereNextTile = "Up";
                 switch (wantedDir)
                 {
                     case 90:
-                        directionToTurn = 15;
+                        int dir = Random.Range(1, 2);
+                        if (dir == 1)
+                        {
+                            rotationSpeed = -value;
+                        }
+                        else
+                        {
+                            rotationSpeed = -value;
+                        }
                         break;
                     case 0:
-                        directionToTurn = -15;
+                        rotationSpeed = value;
                         break;
                     case 180:
-                        directionToTurn = 15;
+                        rotationSpeed = -value;
                         break;
                 }
                 break;
@@ -230,12 +258,10 @@ public class PathController : MonoBehaviour
         while (myDir != wantedDir)
         {
             myDir = Mathf.Round(chosenPiece.transform.eulerAngles.y);
-            print(myDir);
             chosenPiece.transform.Rotate(new Vector3(0f, rotationSpeed, 0f) * Time.deltaTime, Space.World);
             yield return null;
         }
     }
-
 
     IEnumerator WalkToTile()
     {
@@ -260,7 +286,11 @@ public class PathController : MonoBehaviour
         GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().OpenAndCloseControllerUI();
     }
 
+    #endregion
 
+    #region Abilties
+
+    #endregion
     public void ResetBoard(string why)
     {// Go through every grid tile that has been interacted with and reset it to its default state.
         if (why == "Reset")

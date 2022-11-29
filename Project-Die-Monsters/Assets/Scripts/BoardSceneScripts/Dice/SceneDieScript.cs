@@ -137,9 +137,9 @@ public class SceneDieScript : MonoBehaviour
 
     public void spinDie()
     {          
-        float dirX = Random.RandomRange(0, 65);
-        float dirY = Random.RandomRange(0, 65);
-        float dirZ = Random.RandomRange(0, 65);
+        float dirX = Random.Range(0, 65);
+        float dirY = Random.Range(0, 65);
+        float dirZ = Random.Range(0, 65);
         transform.rotation = Quaternion.identity;
         myBody.AddForce(transform.up * 500);
         myBody.AddTorque(dirX, dirY, dirZ);

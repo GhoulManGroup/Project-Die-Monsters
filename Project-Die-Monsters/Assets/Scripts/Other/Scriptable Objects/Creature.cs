@@ -23,7 +23,11 @@ public class Creature : ScriptableObject
 
     public CreatureColor creatureColor;
 
-    public CreatureLevel creaturelevel;
+    public CreatureLevel creatureLevel;
+
+    public AbilityType abilityType;
+
+    //https://www.youtube.com/watch?v=bvRKfLPqQ0Q&t=551s Use this as a basis for an abiltiy system 2BD
 
     public enum CreatureColor
     {

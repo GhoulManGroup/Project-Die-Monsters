@@ -20,10 +20,6 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
 
     // locks us from interacting with board piece when we aren't allowed.
 
-
-    //What type of piece has the player picked.
-    string PieceType = "None"; // creature // Dungeon Lord
-
     // the gameobject of the creature piece we have selected.
     public GameObject ChosenCreatureToken; 
 
