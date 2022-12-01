@@ -25,7 +25,7 @@ public class Creature : ScriptableObject
 
     public CreatureLevel creatureLevel;
 
-    public AbilityType abilityType;
+    public Ability creatureAbility;
 
     //https://www.youtube.com/watch?v=bvRKfLPqQ0Q&t=551s Use this as a basis for an abiltiy system 2BD
 
@@ -42,11 +42,5 @@ public class Creature : ScriptableObject
     public enum CreatureLevel
     {
         One, Two, Three, Four
-    }
-
-    public enum AbilityType
-    {
-        Activate, Combative, Passive, None
-            //Active is an ability which is used when the creature is selected on the board, Combat is one only avalible during the combat step , and passive is always in affect.
     }
 }

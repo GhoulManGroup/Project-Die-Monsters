@@ -19,7 +19,7 @@ public class CreatureToken : MonoBehaviour
     public int moveCost = 1; // how many move crests per tile.
     public int attackDistance = 1; // how far we can attack.
     public int attackCost = 1; // how much to attack.
-    public int abilityCost; // how much does the ability of creature cost.
+    public int abilityCost = 1; // how much does the ability of creature cost.
     public string myOwner; // who owns this piece.
 
     public string facingDirection = "Right";
