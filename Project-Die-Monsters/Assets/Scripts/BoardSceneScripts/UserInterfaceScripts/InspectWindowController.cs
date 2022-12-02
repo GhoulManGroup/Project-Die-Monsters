@@ -168,16 +168,16 @@ public class InspectWindowController : MonoBehaviour //This script will control 
         }else if (usedFor == "PieceInspect")
         {
             creatureWindow.creatureName.GetComponent<Text>().text = currentCreature.CreatureName;
-            creatureWindow.attackValue.GetComponent<Text>().text = "ATK" + currentCreaturePiece.GetComponent<CreatureToken>().attack;
-            creatureWindow.defenceValue.GetComponent<Text>().text = "DEF" + currentCreaturePiece.GetComponent<CreatureToken>().defence;
-            creatureWindow.healthValue.GetComponent<Text>().text = "HP" + currentCreaturePiece.GetComponent<CreatureToken>().health;
+            creatureWindow.attackValue.GetComponent<Text>().text = "ATK" + currentCreaturePiece.GetComponent<CreatureToken>().currentAttack;
+            creatureWindow.defenceValue.GetComponent<Text>().text = "DEF" + currentCreaturePiece.GetComponent<CreatureToken>().currentDefence;
+            creatureWindow.healthValue.GetComponent<Text>().text = "HP" + currentCreaturePiece.GetComponent<CreatureToken>().currentHealth;
         }else if (usedFor == "AttackTargetSelection")
         {
             CreatureToken target = currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>();
             creatureWindow.creatureName.GetComponent<Text>().text = target.myCreature.name;
-            creatureWindow.attackValue.GetComponent<Text>().text = "ATK" + target.attack;
-            creatureWindow.defenceValue.GetComponent<Text>().text = "DEF" + target.defence;
-            creatureWindow.healthValue.GetComponent<Text>().text = "HP" + target.health;
+            creatureWindow.attackValue.GetComponent<Text>().text = "ATK" + target.currentAttack;
+            creatureWindow.defenceValue.GetComponent<Text>().text = "DEF" + target.currentDefence;
+            creatureWindow.healthValue.GetComponent<Text>().text = "HP" + target.currentHealth;
         }
         creatureWindow.creatureArt.GetComponent<Image>().sprite = currentCreature.CardArt;
         creatureWindow.creatureLevel.GetComponent<Image>().sprite = currentCreature.LevelSprite;

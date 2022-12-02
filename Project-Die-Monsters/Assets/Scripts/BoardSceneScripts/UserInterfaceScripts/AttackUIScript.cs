@@ -164,13 +164,13 @@ public class AttackUIScript : MonoBehaviour
         }
 
         // set the stats of the creature pieces to the UI.
-        AttackerDisplay[1].GetComponent<Text>().text = attacker.GetComponent<CreatureToken>().attack.ToString();
-        AttackerDisplay[2].GetComponent<Text>().text = attacker.GetComponent<CreatureToken>().defence.ToString();
-        AttackerDisplay[3].GetComponent<Text>().text = attacker.GetComponent<CreatureToken>().health.ToString();
+        AttackerDisplay[1].GetComponent<Text>().text = attacker.GetComponent<CreatureToken>().currentAttack.ToString();
+        AttackerDisplay[2].GetComponent<Text>().text = attacker.GetComponent<CreatureToken>().currentDefence.ToString();
+        AttackerDisplay[3].GetComponent<Text>().text = attacker.GetComponent<CreatureToken>().currentHealth.ToString();
 
-        DefenderDisplay[1].GetComponent<Text>().text = defender.GetComponent<CreatureToken>().attack.ToString();
-        DefenderDisplay[2].GetComponent<Text>().text = defender.GetComponent<CreatureToken>().defence.ToString();
-        DefenderDisplay[3].GetComponent<Text>().text = defender.GetComponent<CreatureToken>().health.ToString();
+        DefenderDisplay[1].GetComponent<Text>().text = defender.GetComponent<CreatureToken>().currentAttack.ToString();
+        DefenderDisplay[2].GetComponent<Text>().text = defender.GetComponent<CreatureToken>().currentDefence.ToString();
+        DefenderDisplay[3].GetComponent<Text>().text = defender.GetComponent<CreatureToken>().currentHealth.ToString();
     }
 
     public void buttonState() //Update the button interactable state based on the action.
@@ -209,7 +209,7 @@ public class AttackUIScript : MonoBehaviour
     public void ResolveCombat()
     {
         // Set damage value.
-        int damage = attacker.GetComponent<CreatureToken>().attack;
+        int damage = attacker.GetComponent<CreatureToken>().currentAttack;
 
         //Check for defence.
         switch (applyDefence)
@@ -218,13 +218,13 @@ public class AttackUIScript : MonoBehaviour
             case true:
                 Debug.Log("Defence True");
 
-                damage -= defender.GetComponent<CreatureToken>().defence;
+                damage -= defender.GetComponent<CreatureToken>().currentDefence;
                 print(damage);
 
                 if (damage > 0)
                 {
                     Debug.Log("Defence < Damage");
-                    defender.GetComponent<CreatureToken>().health -= damage;
+                    defender.GetComponent<CreatureToken>().currentHealth -= damage;
                     
                 }else if (damage <= 0)
                 {
@@ -234,7 +234,7 @@ public class AttackUIScript : MonoBehaviour
 
             case false:
                 Debug.Log("Defence False");
-                defender.GetComponent<CreatureToken>().health -= damage;             
+                defender.GetComponent<CreatureToken>().currentHealth -= damage;             
                 break;
         }
 
@@ -246,7 +246,7 @@ public class AttackUIScript : MonoBehaviour
         setDetails();
 
         // check if defender health is less than 0 if so run the chekcstate function to destory it then change the UI sprite to Empty.
-        if (defender.GetComponent<CreatureToken>().health <= 0)
+        if (defender.GetComponent<CreatureToken>().currentHealth <= 0)
         {
            UIElements[13].GetComponent<Image>().enabled = true;
         }
