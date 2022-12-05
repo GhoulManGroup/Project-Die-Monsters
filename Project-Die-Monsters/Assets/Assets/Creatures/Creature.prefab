@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 1520335839070375842}
   - component: {fileID: 1449270305}
   - component: {fileID: 342285540849623483}
+  - component: {fileID: 1925031674277869028}
   m_Layer: 0
   m_Name: Creature
   m_TagString: Untagged
@@ -181,9 +182,9 @@ MonoBehaviour:
   myCreature: {fileID: 0}
   myArtSlot: {fileID: 1520335838488642177}
   myBoardLocation: {fileID: 0}
-  health: 0
-  attack: 0
-  defence: 0
+  currentHealth: 0
+  currentAttack: 0
+  currentDefence: 0
   moveCost: 1
   attackDistance: 1
   attackCost: 1
@@ -218,5 +219,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 55e7c7a5908d53549a4c05399b73e8ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1925031674277869028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520335839070375853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f809ff96b970611489dfddf7f2bf573d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
