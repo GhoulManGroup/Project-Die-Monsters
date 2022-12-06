@@ -41,11 +41,7 @@ public class CreatureToken : MonoBehaviour
         lvlRef = GameObject.FindGameObjectWithTag("LevelController");
         lcScript = lvlRef.GetComponent<LevelController>();  
         myOwner = lcScript.whoseTurn;  //set my owner to either player+ playerslotnumber or AI.
-        if (myCreature.abilityType.ToString() == "None")
-        {
 
-        }
-        this.GetComponent<AbilityManager>().myAbility = myCreature.creatureAbility;
 
         //Check for either a player script or opponent script then pull the desired creature from the correct objects creaturelist and assign it to the creature piece. 
         if (lcScript.participants[lcScript.turnPlayer].GetComponent<Player>() != null)
@@ -84,6 +80,7 @@ public class CreatureToken : MonoBehaviour
         currentHealth = myCreature.Health;
         currentAttack = myCreature.Attack;
         currentDefence = myCreature.Defence;
+        abilityCost = myCreature.creatureAbility.abilityCost;
     }
 
     public void OnMouseDown() // assign this as active creature target. Switch Camera State to Board View. 

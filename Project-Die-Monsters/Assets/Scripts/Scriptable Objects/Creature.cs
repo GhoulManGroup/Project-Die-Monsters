@@ -25,14 +25,7 @@ public class Creature : ScriptableObject
 
     public CreatureLevel creatureLevel;
 
-    public AbilityType abilityType; //The trigger condition of the ability.
-    public Ability creatureAbility; //The scriptable object which contains the thing.
-
-    public enum AbilityType
-    {
-        Activate, Trigger, None
-    }
-
+    public ScriptableObject myAbility;
     public enum CreatureColor
     {
         Red, Blue, Yellow, Green, White, Black

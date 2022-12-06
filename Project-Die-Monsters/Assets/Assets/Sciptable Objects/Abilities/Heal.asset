@@ -17,5 +17,6 @@ MonoBehaviour:
   abilityCost: 1
   modifierValue: 10
   statChanged: 0
-  whichState: 2
+  whichState: 3
   myTrigger: 7
+  abilityType: 0

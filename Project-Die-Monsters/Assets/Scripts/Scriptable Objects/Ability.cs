@@ -15,7 +15,21 @@ public class Ability : ScriptableObject
     
     public ModifiedProperty statChanged;
     public StateReset whichState;
-    public TriggerType myTrigger;
+    public TriggeredBy myTrigger;
+    public AbilityType abilityType; //The trigger condition of the ability.
+    public enum AbilityType
+    {
+       Activated, Trigger, None
+    }
+    public enum TriggeredBy
+    {
+        attacked, attacking, defending, defended, damaged, death, moved, none
+    }
+
+    public enum MyEffect
+    {
+        stateChange, modifier, none
+    }
 
     public enum ModifiedProperty
     {
@@ -27,9 +41,5 @@ public class Ability : ScriptableObject
         move, attack, useAbility, none
     }
 
-    public enum TriggerType
-    {
-        attacked, attacking, defending, defended, damaged, death, moved, none
-    }
 }
 
