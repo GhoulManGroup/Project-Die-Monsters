@@ -15,7 +15,7 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
     {
         if (myAbility != null)
         {
-            if (myAbility.abilityType == Ability.AbilityType.Activate)
+            if (myAbility.abilityType == Ability.AbilityType.Activated)
             {
                
             }else if (myAbility.abilityType == Ability.AbilityType.Trigger)

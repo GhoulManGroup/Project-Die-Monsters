@@ -10,22 +10,25 @@ public class Ability : ScriptableObject
     public string abilityDescription;
     public int abilityCost;
 
+    public AbilityType abilityType; //The trigger condition of the ability.
+
     [Header("Ability Properties")]
     public int modifierValue;
     
     public ModifiedProperty statChanged;
     public StateReset whichState;
     public TriggeredBy myTrigger;
-    public AbilityType abilityType; //The trigger condition of the ability.
+
     public enum AbilityType
     {
        Activated, Trigger, None
     }
+    //Triggered by this condition else its activated or no ability.
     public enum TriggeredBy
     {
         attacked, attacking, defending, defended, damaged, death, moved, none
     }
-
+    //What catagory of ability it is state change stat modifier ect
     public enum MyEffect
     {
         stateChange, modifier, none
