@@ -75,6 +75,7 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
                 OrderBTNS[0].GetComponent<Button>().interactable = false;
             }
 
+            //Check if the creature can attack & if the player can pay its cost.
             if (ChosenCreatureToken.GetComponent<CreatureToken>().targets.Count != 0 && ChosenCreatureToken.GetComponent<CreatureToken>().HasAttackedThisTurn == false)
             {
                 Debug.Log("Has Target");
@@ -89,12 +90,21 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
                 OrderBTNS[1].GetComponent<Button>().interactable = false;
             }
 
-            //Add a check for ability later when we get into that step of development.
-            if (turnPlayer.GetComponent<Player>().abiltyPowerCrestPoints != 0)
+            // check if the creature has an ability the player can use & can pay the ability crest cost.
+            Ability myAbility = ChosenCreatureToken.GetComponent<CreatureToken>().myCreature.myAbility;
+            if (myAbility.abilityType == Ability.AbilityType.Activated)
             {
-                //OrderBTNS[2].GetComponent<Button>().interactable = true;
+                if (turnPlayer.GetComponent<Player>().abiltyPowerCrestPoints >= myAbility.abilityCost)
+                {
+                    OrderBTNS[2].GetComponent<Button>().interactable = true;
+                }else if (turnPlayer.GetComponent<Player>().abiltyPowerCrestPoints < myAbility.abilityCost)
+                {
+                    Debug.Log("Cant Afford To Cast");
+                }
+            }else if (myAbility.abilityType != Ability.AbilityType.Activated)
+            {
+                Debug.Log("Cant Use it not activatable");
             }
-
             // Enable the cancle button.
             OrderBTNS[3].GetComponent<Button>().interactable = true;
         }
@@ -136,6 +146,7 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
             case "Ability":
                 ChosenAction = "Ability";
                 lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = true;
+                // Call Ability manager & Do things.
                 break;
 
             case "Back":

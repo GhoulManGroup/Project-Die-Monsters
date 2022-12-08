@@ -25,7 +25,7 @@ public class Creature : ScriptableObject
 
     public CreatureLevel creatureLevel;
 
-    public ScriptableObject myAbility;
+    public Ability myAbility;
     public enum CreatureColor
     {
         Red, Blue, Yellow, Green, White, Black

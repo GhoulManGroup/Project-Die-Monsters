@@ -14,15 +14,25 @@ public class Ability : ScriptableObject
 
     [Header("Ability Properties")]
     public int modifierValue;
+    public int numberOfTargets;
     
+    public TargetType howITarget;
+    public TriggeredBy myTrigger;
     public ModifiedProperty statChanged;
     public StateReset whichState;
-    public TriggeredBy myTrigger;
 
+    [Header("AI Stuff")]
+    public float SpellPriority = 0; // How much importance the AI should place on casting this determiend by highest priority
     public enum AbilityType
     {
        Activated, Trigger, None
     }
+
+    public enum TargetType
+    {
+        Decleration, AOE
+    }
+
     //Triggered by this condition else its activated or no ability.
     public enum TriggeredBy
     {
