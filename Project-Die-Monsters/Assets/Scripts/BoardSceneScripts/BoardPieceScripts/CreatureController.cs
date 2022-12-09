@@ -92,18 +92,25 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
 
             // check if the creature has an ability the player can use & can pay the ability crest cost.
             Ability myAbility = ChosenCreatureToken.GetComponent<CreatureToken>().myCreature.myAbility;
-            if (myAbility.abilityType == Ability.AbilityType.Activated)
+            if (myAbility != null)
             {
-                if (turnPlayer.GetComponent<Player>().abiltyPowerCrestPoints >= myAbility.abilityCost)
+                if (myAbility.abilityType == Ability.AbilityType.Activated)
                 {
-                    OrderBTNS[2].GetComponent<Button>().interactable = true;
-                }else if (turnPlayer.GetComponent<Player>().abiltyPowerCrestPoints < myAbility.abilityCost)
-                {
-                    Debug.Log("Cant Afford To Cast");
+                    if (turnPlayer.GetComponent<Player>().abiltyPowerCrestPoints >= myAbility.abilityCost && ChosenCreatureToken.GetComponent<CreatureToken>().hasUsedAbilityThisTurn == false)
+                    {
+                        OrderBTNS[2].GetComponent<Button>().interactable = true;
+                    }
+                    else if (turnPlayer.GetComponent<Player>().abiltyPowerCrestPoints < myAbility.abilityCost || ChosenCreatureToken.GetComponent<CreatureToken>().hasUsedAbilityThisTurn == true)
+                    {
+                        Debug.Log("Cant Afford To Cast Or has cast this turn");
+                        OrderBTNS[2].GetComponent<Button>().interactable = false;
+                    }
                 }
-            }else if (myAbility.abilityType != Ability.AbilityType.Activated)
-            {
-                Debug.Log("Cant Use it not activatable");
+                else if (myAbility.abilityType != Ability.AbilityType.Activated)
+                {
+                    Debug.Log("Cant Use it not activatable");
+                    OrderBTNS[2].GetComponent<Button>().interactable = false;
+                }
             }
             // Enable the cancle button.
             OrderBTNS[3].GetComponent<Button>().interactable = true;
@@ -146,6 +153,9 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
             case "Ability":
                 ChosenAction = "Ability";
                 lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = true;
+                CheckPossibleActions();
+                OpenAndCloseControllerUI();
+                ChosenCreatureToken.GetComponent<AbilityManager>().ActivatedAbilityCast();
                 // Call Ability manager & Do things.
                 break;
 

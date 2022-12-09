@@ -6,38 +6,43 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
 {
     public Ability myAbility;
     CreatureToken  myCreature;
+    public bool canBeCast = false;
+
+    public List<GameObject> targetedCreatures = new List<GameObject>();
+
     public void Awake()
     {
         myCreature = this.gameObject.GetComponent<CreatureToken>();
+        myAbility = myCreature.myCreature.myAbility;
     }
 
-    public void CheckAbility(string whyChecked) //Check the conditions of the attached creatures ability then resolve it.
+    public void DetermineIfAbilityCanBeCast()
+    {// Like the pathfinding system before we allow the player the option to use their ability we must know if there would be a way for them to resolve that effect eg. 
+
+    }
+
+    //Identify what we are casting & its conditions
+    //Apply those conditions & resolve its effect.
+    public void ActivatedAbilityCast()
     {
-        if (myAbility != null)
+        if (myAbility.howITarget == Ability.TargetType.Decleration)
         {
-            if (myAbility.abilityType == Ability.AbilityType.Activated)
-            {
-               
-            }else if (myAbility.abilityType == Ability.AbilityType.Trigger)
-            {
 
-            }else if (myAbility.abilityType == Ability.AbilityType.None)
-            {
-                Debug.Log("Error Why is ability type None!");
-            }
-        }
-        else
+        }else if (myAbility.howITarget == Ability.TargetType.Random)
         {
-            Debug.Log("No Ability Found are you expecting one?");
+
+        }else if (myAbility.howITarget == Ability.TargetType.AOE)
+        {
+
         }
     }
 
-    public void castAbility()
+    public void DeclareTargets()
     {
-        Debug.Log("AP Cost Paid casting!" + myAbility.nameOfAbility.ToString());
+
     }
 
-    public void checkForTrigger(string triggerType)
+    public void CheckForTrigger(string triggerType)
     {
         if (triggerType == myAbility.myTrigger.ToString())
         {

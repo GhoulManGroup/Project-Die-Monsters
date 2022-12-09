@@ -23,4 +23,5 @@ MonoBehaviour:
   Defence: 25
   creatureType: 0
   creatureColor: 3
-  creaturelevel: 1
+  creatureLevel: 0
+  myAbility: {fileID: 11400000, guid: 0973673d2e4699e4b9573e3be9751031, type: 2}

@@ -80,7 +80,7 @@ public class CreatureToken : MonoBehaviour
         currentHealth = myCreature.Health;
         currentAttack = myCreature.Attack;
         currentDefence = myCreature.Defence;
-        //abilityCost = myCreature.creatureAbility.abilityCost;
+        abilityCost = myCreature.myAbility.abilityCost;
     }
 
     public void OnMouseDown() // assign this as active creature target. Switch Camera State to Board View. 

@@ -14,12 +14,16 @@ public class Ability : ScriptableObject
 
     [Header("Ability Properties")]
     public int modifierValue;
-    public int numberOfTargets;
-    
-    public TargetType howITarget;
     public TriggeredBy myTrigger;
     public ModifiedProperty statChanged;
     public StateReset whichState;
+    
+    [Header("Ability Target System")]
+    public TargetType howITarget;
+    public AllowedTargets allowedTargets;
+    public int numberOfTargets;
+   
+
 
     [Header("AI Stuff")]
     public float SpellPriority = 0; // How much importance the AI should place on casting this determiend by highest priority
@@ -29,8 +33,13 @@ public class Ability : ScriptableObject
     }
 
     public enum TargetType
+    {//Decleration pick a target on the board,Aoe = all possible targets within 
+        Decleration, AOE, Random
+    }
+
+    public enum AllowedTargets
     {
-        Decleration, AOE
+        Self, Friend, Enemy, Both
     }
 
     //Triggered by this condition else its activated or no ability.
