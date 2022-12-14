@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1353ce617e913ff4580db3a48c6cfedd, type: 3}
-  m_Name: Heal
+  m_Name: DoubleStrike
   m_EditorClassIdentifier: 
-  nameOfAbility: Heal
-  abilityDescription: Restores 10 health to a damaged creature.
+  nameOfAbility: Double Strike
+  abilityDescription: Pay 1 Ability Crest to allow a second combat for this creature.
   abilityCost: 1
   abilityType: 0
   myTrigger: 7
-  myEffect: 1
-  modifierValue: 10
-  statChanged: 0
-  whichState: 3
+  myEffect: 0
+  modifierValue: 0
+  statChanged: 3
+  whichState: 1
   howITarget: 0
   myTargetPoint: 0
   targetAmmount: 0
   allowedTargets: 0
-  numberOfTargets: 0
-  SpellPriority: 0
+  numberOfTargets: 1
+  SpellPriority: 1

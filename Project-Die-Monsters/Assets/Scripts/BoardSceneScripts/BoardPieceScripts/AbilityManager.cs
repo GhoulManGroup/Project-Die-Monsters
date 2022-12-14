@@ -8,6 +8,7 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
     CreatureToken  myCreature;
     public bool canBeCast = false;
 
+
     public List<GameObject> targetedCreatures = new List<GameObject>();
 
     public void Awake()
@@ -16,37 +17,43 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
         myAbility = myCreature.myCreature.myAbility;
     }
 
-    public void DetermineIfAbilityCanBeCast()
-    {// Like the pathfinding system before we allow the player the option to use their ability we must know if there would be a way for them to resolve that effect eg. 
-
-    }
-
-    //Identify what we are casting & its conditions
-    //Apply those conditions & resolve its effect.
     public void ActivatedAbilityCast()
     {
-        if (myAbility.howITarget == Ability.TargetType.Decleration)
-        {
+        //What do we want to do
+        //What do we do it to
+        //How will we do it.
+        //Do it.?
+        MyEffect();
+    }
 
-        }else if (myAbility.howITarget == Ability.TargetType.Random)
+    public void MyEffect()
+    {
+        if (myAbility.myEffect == Ability.MyEffect.stateChange)
         {
+            if (myAbility.whichState == Ability.StateReset.move)
+            {
 
-        }else if (myAbility.howITarget == Ability.TargetType.AOE)
-        {
+            }else if (myAbility.whichState == Ability.StateReset.attack)
+            {
+                myTargets("AttackReset");
+            }else if (myAbility.whichState == Ability.StateReset.useAbility)
+            {
 
+            }
         }
     }
 
-    public void DeclareTargets()
+    public void myTargets(string myEffect)
     {
-
-    }
-
-    public void CheckForTrigger(string triggerType)
-    {
-        if (triggerType == myAbility.myTrigger.ToString())
+        if (myAbility.allowedTargets == Ability.AllowedTargets.Self)
         {
-            Debug.Log("TriggerMatch, casting Ability");
+            switch (myEffect)
+            {
+                case "AttackReset":
+
+                    break;
+            }
         }
     }
+
 }

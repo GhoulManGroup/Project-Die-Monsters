@@ -11,15 +11,18 @@ public class Ability : ScriptableObject
     public int abilityCost;
 
     public AbilityType abilityType; //The trigger condition of the ability.
+    public TriggeredBy myTrigger;
+    public MyEffect myEffect;
 
     [Header("Ability Properties")]
     public int modifierValue;
-    public TriggeredBy myTrigger;
     public ModifiedProperty statChanged;
     public StateReset whichState;
     
     [Header("Ability Target System")]
     public TargetType howITarget;
+    public TargetPoint myTargetPoint;
+    public TargetAmmount targetAmmount;
     public AllowedTargets allowedTargets;
     public int numberOfTargets;
    
@@ -32,9 +35,29 @@ public class Ability : ScriptableObject
        Activated, Trigger, None
     }
 
+    public enum MyEffect
+    {
+        stateChange, modifier, none
+    }
+
+    public enum StateReset
+    {
+        move, attack, useAbility, none
+    }
+
     public enum TargetType
     {//Decleration pick a target on the board,Aoe = all possible targets within 
         Decleration, AOE, Random
+    }
+
+    public enum TargetPoint
+    {//Where AOE effects occur.
+        self, otherCreature, tile
+    }
+
+    public enum TargetAmmount
+    {//How many targets up to numberOFTargetInt we must effect.
+        some, all
     }
 
     public enum AllowedTargets
@@ -48,20 +71,14 @@ public class Ability : ScriptableObject
         attacked, attacking, defending, defended, damaged, death, moved, none
     }
     //What catagory of ability it is state change stat modifier ect
-    public enum MyEffect
-    {
-        stateChange, modifier, none
-    }
+
 
     public enum ModifiedProperty
     {
         health, defence, attack, none
     }
 
-    public enum StateReset
-    {
-        move, attack, useAbility, none
-    }
+
 
 }
 
