@@ -42,7 +42,6 @@ public class CreatureToken : MonoBehaviour
         lcScript = lvlRef.GetComponent<LevelController>();  
         myOwner = lcScript.whoseTurn;  //set my owner to either player+ playerslotnumber or AI.
 
-
         //Check for either a player script or opponent script then pull the desired creature from the correct objects creaturelist and assign it to the creature piece. 
         if (lcScript.participants[lcScript.turnPlayer].GetComponent<Player>() != null)
         {
@@ -68,8 +67,9 @@ public class CreatureToken : MonoBehaviour
         {
 
         }
+        this.GetComponent<AbilityManager>().myAbility = this.myCreature.myAbility;
 
-       setDetails();
+        setDetails();
        declareTile("Start");
     }
 

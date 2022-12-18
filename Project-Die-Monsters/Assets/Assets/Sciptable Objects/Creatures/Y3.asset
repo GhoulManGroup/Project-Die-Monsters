@@ -24,4 +24,4 @@ MonoBehaviour:
   creatureType: 0
   creatureColor: 2
   creatureLevel: 0
-  myAbility: {fileID: 11400000, guid: 0973673d2e4699e4b9573e3be9751031, type: 2}
+  myAbility: {fileID: 11400000, guid: c493281cb3327fa46b9c849234b69214, type: 2}

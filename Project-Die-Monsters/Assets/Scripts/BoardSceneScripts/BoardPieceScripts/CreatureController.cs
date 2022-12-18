@@ -96,13 +96,14 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
             {
                 if (myAbility.abilityType == Ability.AbilityType.Activated)
                 {
-                    if (turnPlayer.GetComponent<Player>().abiltyPowerCrestPoints >= myAbility.abilityCost && ChosenCreatureToken.GetComponent<CreatureToken>().hasUsedAbilityThisTurn == false)
+                    ChosenCreatureToken.GetComponent<AbilityManager>().checkCanCastAbility();
+                    if (turnPlayer.GetComponent<Player>().abiltyPowerCrestPoints >= myAbility.abilityCost && ChosenCreatureToken.GetComponent<CreatureToken>().hasUsedAbilityThisTurn == false && ChosenCreatureToken.GetComponent<AbilityManager>().canBeCast == true)
                     {
                         OrderBTNS[2].GetComponent<Button>().interactable = true;
                     }
-                    else if (turnPlayer.GetComponent<Player>().abiltyPowerCrestPoints < myAbility.abilityCost || ChosenCreatureToken.GetComponent<CreatureToken>().hasUsedAbilityThisTurn == true)
+                    else if (turnPlayer.GetComponent<Player>().abiltyPowerCrestPoints < myAbility.abilityCost || ChosenCreatureToken.GetComponent<CreatureToken>().hasUsedAbilityThisTurn == true || ChosenCreatureToken.GetComponent<AbilityManager>().canBeCast == false)
                     {
-                        Debug.Log("Cant Afford To Cast Or has cast this turn");
+                        Debug.Log("Cant Afford To Cast Or has cast this turn, or cant be cast");
                         OrderBTNS[2].GetComponent<Button>().interactable = false;
                     }
                 }
