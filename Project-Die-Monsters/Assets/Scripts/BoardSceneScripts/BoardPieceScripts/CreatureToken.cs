@@ -26,8 +26,8 @@ public class CreatureToken : MonoBehaviour
     public string facingDirection = "Right";
 
     [Header("Creature Action Checks")]
-    public bool HasAttackedThisTurn = false; //A creature may only attack once this turn unless an ability specifies otherwise.
-    public bool HasMovedThisTurn; //A creature may only move once per turn unless an abilty specfies otherwise.
+    public bool hasAttackedThisTurn = false; //A creature may only attack once this turn unless an ability specifies otherwise.
+    public bool hasMovedThisTurn; //A creature may only move once per turn unless an abilty specfies otherwise.
     public bool hasUsedAbilityThisTurn; // A creature may only use their ability once per turn unless an ability specfies otherwise.
     public bool canReachTarget = false;
 

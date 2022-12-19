@@ -254,7 +254,7 @@ public class AttackUIScript : MonoBehaviour
         // tell each piece in the fight to update their states.
         defender.GetComponent<CreatureToken>().CheckState();
         attacker.GetComponent<CreatureToken>().CheckForAttackTarget();
-        attacker.GetComponent<CreatureToken>().HasAttackedThisTurn = true;
+        attacker.GetComponent<CreatureToken>().hasAttackedThisTurn = true;
     }
 
 }

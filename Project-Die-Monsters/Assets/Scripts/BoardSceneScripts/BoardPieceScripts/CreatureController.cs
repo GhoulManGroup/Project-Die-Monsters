@@ -63,20 +63,20 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
         if (ChosenAction == "None")
         {
             //Check if the creature can be moved & if the player can pay its cost.
-            if (ChosenCreatureToken.GetComponent<CreatureToken>().HasMovedThisTurn == false)
+            if (ChosenCreatureToken.GetComponent<CreatureToken>().hasMovedThisTurn == false)
             {
                 if (ableToMove == true && turnPlayer.GetComponent<Player>().moveCrestPoints >= ChosenCreatureToken.GetComponent<CreatureToken>().moveCost)
                 {
                     OrderBTNS[0].GetComponent<Button>().interactable = true;
                 }
             }
-            else if (ChosenCreatureToken.GetComponent<CreatureToken>().HasMovedThisTurn == true)
+            else if (ChosenCreatureToken.GetComponent<CreatureToken>().hasMovedThisTurn == true)
             {
                 OrderBTNS[0].GetComponent<Button>().interactable = false;
             }
 
             //Check if the creature can attack & if the player can pay its cost.
-            if (ChosenCreatureToken.GetComponent<CreatureToken>().targets.Count != 0 && ChosenCreatureToken.GetComponent<CreatureToken>().HasAttackedThisTurn == false)
+            if (ChosenCreatureToken.GetComponent<CreatureToken>().targets.Count != 0 && ChosenCreatureToken.GetComponent<CreatureToken>().hasAttackedThisTurn == false)
             {
                 Debug.Log("Has Target");
                 if (turnPlayer.GetComponent<Player>().attackCrestPoints >= ChosenCreatureToken.GetComponent<CreatureToken>().attackCost)
@@ -85,7 +85,7 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
                     OrderBTNS[1].GetComponent<Button>().interactable = true;
                 }
             }
-            else if (ChosenCreatureToken.GetComponent<CreatureToken>().targets.Count == 0 || ChosenCreatureToken.GetComponent<CreatureToken>().HasAttackedThisTurn == true)
+            else if (ChosenCreatureToken.GetComponent<CreatureToken>().targets.Count == 0 || ChosenCreatureToken.GetComponent<CreatureToken>().hasAttackedThisTurn == true)
             {
                 OrderBTNS[1].GetComponent<Button>().interactable = false;
             }
@@ -132,7 +132,7 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
         switch (actionBTNPressed)
         {
             case "Move":
-                if (ChosenCreatureToken.GetComponent<CreatureToken>().HasMovedThisTurn == false)
+                if (ChosenCreatureToken.GetComponent<CreatureToken>().hasMovedThisTurn == false)
                 {
                     lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = true;
                     ChosenAction = "Move";
@@ -199,8 +199,8 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
     {
         for (int i = 0; i < CreaturesOnBoard.Count; i++)
         {
-            CreaturesOnBoard[i].GetComponent<CreatureToken>().HasMovedThisTurn = false;
-            CreaturesOnBoard[i].GetComponent<CreatureToken>().HasAttackedThisTurn = false;
+            CreaturesOnBoard[i].GetComponent<CreatureToken>().hasMovedThisTurn = false;
+            CreaturesOnBoard[i].GetComponent<CreatureToken>().hasAttackedThisTurn = false;
             CreaturesOnBoard[i].GetComponent<CreatureToken>().hasUsedAbilityThisTurn = false;
             lcScript.ableToInteractWithBoard = false;
         }

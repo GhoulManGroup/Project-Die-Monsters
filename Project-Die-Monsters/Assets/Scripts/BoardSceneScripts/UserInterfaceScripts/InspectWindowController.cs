@@ -370,7 +370,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
     public void DungeonLordIsAttackTarget()
     {
         //tell the dungeon lord to take damage and set the state of the attacking piece.
-        currentCreaturePiece.GetComponent<CreatureToken>().HasAttackedThisTurn = true;
+        currentCreaturePiece.GetComponent<CreatureToken>().hasAttackedThisTurn = true;
         if (currentCreaturePiece.GetComponent<CreatureToken>().myOwner == "Player0")
         {
             levelManager.GetComponent<LevelController>().participants[0].gameObject.GetComponent<Player>().attackCrestPoints -= currentCreaturePiece.GetComponent<CreatureToken>().attackCost;

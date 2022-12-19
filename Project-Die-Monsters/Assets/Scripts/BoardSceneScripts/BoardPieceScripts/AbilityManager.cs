@@ -72,20 +72,19 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
         if (myAbility.allowedTargets == Ability.AllowedTargets.Self)
         {
             switch (myEffect)
-            {
+            {   
+                //State Change Self
                 case "AttackReset":
-                    if (myCreature.GetComponent<CreatureToken>().HasAttackedThisTurn == true)
+                    if (myCreature.GetComponent<CreatureToken>().hasAttackedThisTurn == true)
                     {
                         if (canBeCast == true)
                         {
-                            myCreature.GetComponent<CreatureToken>().HasAttackedThisTurn = false;
+                            myCreature.GetComponent<CreatureToken>().hasAttackedThisTurn = false;
                             myCreature.GetComponent<CreatureToken>().hasUsedAbilityThisTurn = true;
-                            Debug.Log("Casting Ability");
                         }
                         else
                         {
                             canBeCast = true;
-                            Debug.Log("Can Cast Ability");
                         }
                     }
                     else
@@ -94,24 +93,33 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
                     }
                     break;
                 case "MoveReset":
-                    if (myCreature.GetComponent<CreatureToken>().HasMovedThisTurn == true)
+                    if (myCreature.GetComponent<CreatureToken>().hasMovedThisTurn == true)
                     {
                         if (canBeCast == true)
                         {
-                            myCreature.GetComponent<CreatureToken>().HasAttackedThisTurn = false;
+                            myCreature.GetComponent<CreatureToken>().hasMovedThisTurn = false;
                             myCreature.GetComponent<CreatureToken>().hasUsedAbilityThisTurn = true;
-                            Debug.Log("Casting Ability");
                         }
                         else
                         {
                             canBeCast = true;
-                            Debug.Log("Can Cast Ability");
                         }
                     }
                     else
                     {
                         Debug.Log("Cant do that havent moved first already");
                     }
+                    break;
+
+                //Modifiyer Self
+                case "ModifyAttack":
+
+                    break;
+                case "ModifyDefence":
+
+                    break;
+                case "ModifyHealth":
+
                     break;
             }
         }

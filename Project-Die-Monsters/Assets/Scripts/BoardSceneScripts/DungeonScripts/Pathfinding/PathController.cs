@@ -153,7 +153,7 @@ public class PathController : MonoBehaviour
         }
 
         //Where we currenly face & how we get to face wantedir;
-       
+        rotationSpeed = 45;
         float value = rotationSpeed;
         switch (chosenPiece.transform.eulerAngles.y)
         {
@@ -259,6 +259,7 @@ public class PathController : MonoBehaviour
         {
             myDir = Mathf.Round(chosenPiece.transform.eulerAngles.y);
             chosenPiece.transform.Rotate(new Vector3(0f, rotationSpeed, 0f) * Time.deltaTime, Space.World);
+            Debug.Log(rotationSpeed);
             yield return null;
         }
     }
@@ -276,7 +277,7 @@ public class PathController : MonoBehaviour
 
     public void HasMoved()
     {
-        chosenPiece.GetComponent<CreatureToken>().HasMovedThisTurn = true;
+        chosenPiece.GetComponent<CreatureToken>().hasMovedThisTurn = true;
         chosenPiece.GetComponent<CreatureToken>().CheckForAttackTarget();
         ResetBoard("Reset");
         startPosition.GetComponent<GridScript>().TileContents = "Empty";
