@@ -10,6 +10,7 @@ public class Ability : ScriptableObject
     public string abilityDescription;
     public int abilityCost;
 
+
     public AbilityType abilityType; //The trigger condition of the ability.
     public TriggeredBy myTrigger;
     public MyEffect myEffect;
