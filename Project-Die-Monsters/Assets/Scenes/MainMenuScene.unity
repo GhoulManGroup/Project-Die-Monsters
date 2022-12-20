@@ -421,7 +421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f809ff96b970611489dfddf7f2bf573d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myAbility: {fileID: 0}
+  myAbility: {fileID: 11400000, guid: 9eb719890a81a0b4d80d22adfd75d657, type: 2}
   canBeCast: 0
   targetedCreatures:
   - {fileID: 0}

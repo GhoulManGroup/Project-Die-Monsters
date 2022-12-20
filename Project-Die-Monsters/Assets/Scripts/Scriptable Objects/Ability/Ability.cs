@@ -9,17 +9,15 @@ public class Ability : ScriptableObject
     public string nameOfAbility;
     public string abilityDescription;
     public int abilityCost;
-
-
-    public AbilityType abilityType; //The trigger condition of the ability.
+    public AbilityActivatedHow abilityActivatedHow; //The trigger condition of the ability.
     public TriggeredBy myTrigger;
-    public MyEffect myEffect;
 
-    [Header("Ability Properties")]
-    public int modifierValue;
-    public ModifiedProperty statChanged;
-    public StateReset whichState;
-    
+    [Header("Effect Values")]
+    public AbilityEffect[] myEffects;
+    public int[] modifierValue;
+
+
+
     [Header("Ability Target System")]
     public TargetType howITarget;
     public TargetPoint myTargetPoint;
@@ -27,23 +25,17 @@ public class Ability : ScriptableObject
     public AllowedTargets allowedTargets;
     public int numberOfTargets;
    
-
-
     [Header("AI Stuff")]
     public float SpellPriority = 0; // How much importance the AI should place on casting this determiend by highest priority
-    public enum AbilityType
+
+    public enum AbilityActivatedHow
     {
        Activated, Trigger, None
     }
 
-    public enum MyEffect
+    public enum TriggeredBy
     {
-        stateChange, modifier, none
-    }
-
-    public enum StateReset
-    {
-        move, attack, useAbility, none
+        attacked, attacking, defending, defended, damaged, death, moved, none
     }
 
     public enum TargetType
@@ -67,17 +59,11 @@ public class Ability : ScriptableObject
     }
 
     //Triggered by this condition else its activated or no ability.
-    public enum TriggeredBy
-    {
-        attacked, attacking, defending, defended, damaged, death, moved, none
-    }
+
     //What catagory of ability it is state change stat modifier ect
 
 
-    public enum ModifiedProperty
-    {
-        health, defence, attack, none
-    }
+
 
 
 

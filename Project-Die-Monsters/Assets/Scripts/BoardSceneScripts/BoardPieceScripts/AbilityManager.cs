@@ -20,7 +20,7 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
     {
         if (canBeCast == false)
         {
-            MyEffect();
+            //MyEffect();
         }
     }
 
@@ -30,9 +30,10 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
         //What do we do it to
         //How will we do it.
         //Do it.?
-        MyEffect();
+        //MyEffect();
     }
 
+    /*
     public void MyEffect()
     {
         if (myAbility.myEffect == Ability.MyEffect.stateChange)
@@ -124,5 +125,5 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
             }
         }
     }
-
+    */
 }

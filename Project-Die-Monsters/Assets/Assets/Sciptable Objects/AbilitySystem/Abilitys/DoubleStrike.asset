@@ -10,20 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1353ce617e913ff4580db3a48c6cfedd, type: 3}
-  m_Name: DoubleMove
+  m_Name: DoubleStrike
   m_EditorClassIdentifier: 
-  nameOfAbility: DoubleMove
-  abilityDescription: Allows the creature to move a second time.
-  abilityCost: 2
-  abilityType: 0
+  nameOfAbility: Double Strike
+  abilityDescription: Pay 1 Ability Crest to allow a second combat for this creature.
+  abilityCost: 1
+  abilityActivatedHow: 0
   myTrigger: 7
-  myEffect: 0
-  modifierValue: 0
-  statChanged: 3
-  whichState: 0
+  myEffects:
+  - {fileID: 11400000, guid: 55169f1e69d17104f91211afa5c21c58, type: 2}
+  modifierValue: 
   howITarget: 0
   myTargetPoint: 0
-  targetAmmount: 1
+  targetAmmount: 0
   allowedTargets: 0
   numberOfTargets: 1
   SpellPriority: 1
