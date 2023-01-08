@@ -12,17 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1353ce617e913ff4580db3a48c6cfedd, type: 3}
   m_Name: DoubleStrike
   m_EditorClassIdentifier: 
-  nameOfAbility: Double Strike
-  abilityDescription: Pay 1 Ability Crest to allow a second combat for this creature.
+  AbilityName: Double Strike
+  AbilityDescriptionText: 
   abilityCost: 1
   abilityActivatedHow: 0
-  myTrigger: 7
-  myEffects:
+  abilityEffects:
   - {fileID: 11400000, guid: 55169f1e69d17104f91211afa5c21c58, type: 2}
-  modifierValue: 
-  howITarget: 0
-  myTargetPoint: 0
-  targetAmmount: 0
-  allowedTargets: 0
-  numberOfTargets: 1
-  SpellPriority: 1

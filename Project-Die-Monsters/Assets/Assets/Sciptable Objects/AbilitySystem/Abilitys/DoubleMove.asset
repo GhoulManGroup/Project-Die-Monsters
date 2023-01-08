@@ -12,17 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1353ce617e913ff4580db3a48c6cfedd, type: 3}
   m_Name: DoubleMove
   m_EditorClassIdentifier: 
-  nameOfAbility: DoubleMove
-  abilityDescription: Allows the creature to move a second time.
+  AbilityName: Double Move
+  AbilityDescriptionText: Spend Two Crests to move again.
   abilityCost: 2
   abilityActivatedHow: 0
-  myTrigger: 7
-  myEffects:
+  abilityEffects:
   - {fileID: 11400000, guid: abd04000fe002ef48bb69e4839171e71, type: 2}
-  modifierValue: 
-  howITarget: 0
-  myTargetPoint: 0
-  targetAmmount: 1
-  allowedTargets: 0
-  numberOfTargets: 1
-  SpellPriority: 1

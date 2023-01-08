@@ -12,9 +12,13 @@ public class PathController : MonoBehaviour
     GameObject levelController;
     LevelController LCScript;
     public GameObject chosenPiece; // the board piece we are moving or doing other things ect.
-
-    [Header("Pathfinding Varibles")]
     public string desiredAction = "Move";
+
+    [Header("Pathfinding Variibles Ability")]
+    public int aoeRadius = 0;
+    public Ability chosenAbility;
+
+    [Header("Pathfinding Varibles Movement")]
     public GameObject startPosition;
     public GameObject desiredPosition;
 
@@ -28,7 +32,6 @@ public class PathController : MonoBehaviour
     public float rotationSpeed = 45;
     float wantedDir;
     float directionToTurn;
-
     public Vector3 positionToMove;
 
     public void Awake()
@@ -49,17 +52,19 @@ public class PathController : MonoBehaviour
                 startPosition = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
                 tilesToCheck.Add(startPosition);
                 possibleMoveDistance = LCScript.participants[LCScript.turnPlayer].GetComponent<Player>().moveCrestPoints / chosenPiece.GetComponent<CreatureToken>().moveCost;
-                establishPossibleMoves("CheckPossibleMoves");
+                EstablishPossibleMoves("CheckPossibleMoves");
                 break;
             case "Ability":
                 chosenPiece = creatureTokenPicked;
+                chosenAbility = creatureTokenPicked.GetComponent<AbilityManager>().myAbility;
+               // aoeRadius = chosenAbility.distanceFromCaster; // How many tiles from our creature this ability will effect.
                 break;
         }
     }
     
 
     #region PathMovementCode
-    public void establishPossibleMoves(string checkWhat)
+    public void EstablishPossibleMoves(string checkWhat)
     {
         if (checkWhat == "CheckPossibleMoves")
         {
@@ -290,7 +295,7 @@ public class PathController : MonoBehaviour
     #endregion
 
     #region Abilties
-
+    //public void 
     #endregion
     public void ResetBoard(string why)
     {// Go through every grid tile that has been interacted with and reset it to its default state.

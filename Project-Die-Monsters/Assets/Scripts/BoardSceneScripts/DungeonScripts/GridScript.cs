@@ -208,7 +208,7 @@ public class GridScript : MonoBehaviour
         //Remove this checked tile from the list of tiles to check add it to the checked list.
         LvlRef.GetComponent<PathController>().tilesToCheck.Remove(this.gameObject);
         LvlRef.GetComponent<PathController>().checkedTiles.Add(this.gameObject);
-        LvlRef.GetComponent<PathController>().establishPossibleMoves("CheckPossibleMoves");
+        LvlRef.GetComponent<PathController>().EstablishPossibleMoves("CheckPossibleMoves");
     }
 
     public void FindPossiblePathToStart()
@@ -233,7 +233,7 @@ public class GridScript : MonoBehaviour
             {
                 LvlRef.GetComponent<PathController>().tilesToCheck.Remove(this.gameObject);
                 //LvlRef.GetComponent<PathController>().chosenPathTiles.Add(Neighbours[i]); Cant add start since we don't want to move into that spot just end the search for it.
-                LvlRef.GetComponent<PathController>().establishPossibleMoves("FindPath");
+                LvlRef.GetComponent<PathController>().EstablishPossibleMoves("FindPath");
                 return;
             }
 
@@ -250,7 +250,7 @@ public class GridScript : MonoBehaviour
             LvlRef.GetComponent<PathController>().chosenPathTiles.Add(dupliacteProtect[0]);
             LvlRef.GetComponent<PathController>().tilesToCheck.Add(dupliacteProtect[0]);
             LvlRef.GetComponent<PathController>().tilesToCheck.Remove(this.gameObject);
-            LvlRef.GetComponent<PathController>().establishPossibleMoves("FindPath");
+            LvlRef.GetComponent<PathController>().EstablishPossibleMoves("FindPath");
         }
  
     }
@@ -278,7 +278,7 @@ public class GridScript : MonoBehaviour
                 LvlRef.GetComponent<PathController>().desiredPosition = this.gameObject;
                 LvlRef.GetComponent<PathController>().tilesToCheck.Clear();
                 LvlRef.GetComponent<PathController>().tilesToCheck.Add(LvlRef.GetComponent<PathController>().desiredPosition);
-                LvlRef.GetComponent<PathController>().establishPossibleMoves("FindPath");
+                LvlRef.GetComponent<PathController>().EstablishPossibleMoves("FindPath");
             }
             else if(LvlRef.GetComponent<PathController>().quickMove == true)
             {
