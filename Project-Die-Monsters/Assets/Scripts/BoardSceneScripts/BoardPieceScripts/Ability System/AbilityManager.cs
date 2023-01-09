@@ -20,9 +20,9 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
     {
         for (int i = 0; i < myAbility.abilityEffects.Count; i++)
         {
-            this.GetComponent<EffectManager>().effectToResolve = myAbility.abilityEffects[i];   
+            this.GetComponent<EffectManager>().effectToResolve = myAbility.abilityEffects[i];
+            this.GetComponent<EffectManager>().WhatEffect();
         }
-
 
         yield return null;
     }

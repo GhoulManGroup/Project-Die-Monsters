@@ -11,7 +11,23 @@ public class EffectManager : MonoBehaviour
         switch (effectToResolve.effectType) 
         {
             case AbilityEffect.EffectType.stateChange:
+                switch (effectToResolve.stateChanged)
+                {
+                    case AbilityEffect.StateReset.attack:
 
+                        break;
+                    case AbilityEffect.StateReset.move:
+                        switch (effectToResolve.abilityTarget)
+                        {
+                            case AbilityEffect.EffectTarget.self:
+
+                                break;
+                        }
+                        break;
+                    case AbilityEffect.StateReset.useAbility:
+
+                        break;
+                }
                 break;
             case AbilityEffect.EffectType.modifier:
 
@@ -23,5 +39,4 @@ public class EffectManager : MonoBehaviour
 
     }
 
-    public void 
 }

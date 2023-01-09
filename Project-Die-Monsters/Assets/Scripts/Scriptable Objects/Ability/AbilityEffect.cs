@@ -10,6 +10,7 @@ public class AbilityEffect : ScriptableObject
     public ModifiedProperty statChanged;
     public int modifierValue = 0;
     public StateReset stateChanged;
+    public EffectTarget abilityTarget;
 
     public enum EffectType
     {
@@ -24,6 +25,11 @@ public class AbilityEffect : ScriptableObject
     public enum StateReset
     {
         move, attack, useAbility, none
+    }
+
+    public enum EffectTarget
+    {
+        self, areaOfEffect, global
     }
 
 

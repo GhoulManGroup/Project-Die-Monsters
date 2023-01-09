@@ -4,8 +4,5 @@ using UnityEngine;
 
 public class TargetManager : MonoBehaviour
 {
-    public void targetPeramiters()
-    {
-
-    }
+    //public void determineTa
 }
