@@ -5,7 +5,28 @@ using UnityEngine;
 public class EffectManager : MonoBehaviour
 {
     public AbilityEffect effectToResolve;
+
+    public List<GameObject> effectTargets = new List<GameObject>();
+
     // Start is called before the first frame update
+
+    public IEnumerator ResolveEffect()
+    {
+        ResetManager();
+        //Find target type & declare them here in a list.
+        this.GetComponent<TargetManager>().currentEffect = effectToResolve;
+        this.GetComponent<TargetManager>().FindTarget();
+
+        while(effectTargets.Contains(null))
+        {
+            yield return null;
+        } 
+        WhatEffect();
+        yield return null;
+    }
+
+
+
     public void WhatEffect()
     {
         switch (effectToResolve.effectType) 
@@ -17,12 +38,9 @@ public class EffectManager : MonoBehaviour
 
                         break;
                     case AbilityEffect.StateReset.move:
-                        switch (effectToResolve.abilityTarget)
-                        {
-                            case AbilityEffect.EffectTarget.self:
-
-                                break;
-                        }
+                       // switch (effectToResolve.abilityTarget)
+                        
+    
                         break;
                     case AbilityEffect.StateReset.useAbility:
 
@@ -39,4 +57,8 @@ public class EffectManager : MonoBehaviour
 
     }
 
+    public void ResetManager()
+    {
+        effectTargets.Clear();
+    }
 }

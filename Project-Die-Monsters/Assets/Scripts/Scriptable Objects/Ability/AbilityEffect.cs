@@ -10,7 +10,8 @@ public class AbilityEffect : ScriptableObject
     public ModifiedProperty statChanged;
     public int modifierValue = 0;
     public StateReset stateChanged;
-    public EffectTarget abilityTarget;
+    public EffectTargeting abilityTarget;
+    public AllowedTargets allowedTargets;
 
     public enum EffectType
     {
@@ -27,9 +28,14 @@ public class AbilityEffect : ScriptableObject
         move, attack, useAbility, none
     }
 
-    public enum EffectTarget
+    public enum EffectTargeting
     {
-        self, areaOfEffect, global
+        areaOfEffect,   declared
+    }
+
+    public enum AllowedTargets
+    {
+        self, friendly , hostile, all
     }
 
 

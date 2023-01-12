@@ -16,7 +16,6 @@ public class PathController : MonoBehaviour
 
     [Header("Pathfinding Variibles Ability")]
     public int aoeRadius = 0;
-    public Ability chosenAbility;
 
     [Header("Pathfinding Varibles Movement")]
     public GameObject startPosition;
@@ -55,9 +54,7 @@ public class PathController : MonoBehaviour
                 EstablishPossibleMoves("CheckPossibleMoves");
                 break;
             case "Ability":
-                chosenPiece = creatureTokenPicked;
-                chosenAbility = creatureTokenPicked.GetComponent<AbilityManager>().myAbility;
-               // aoeRadius = chosenAbility.distanceFromCaster; // How many tiles from our creature this ability will effect.
+
                 break;
         }
     }
