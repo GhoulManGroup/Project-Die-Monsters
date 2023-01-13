@@ -13,9 +13,17 @@ public class TargetManager : MonoBehaviour
         switch (currentEffect.allowedTargets)
         {
             case AbilityEffect.AllowedTargets.self:
+                Debug.Log("Self Targeting");
                 foundTargets.Add(this.gameObject);
+                this.GetComponent<EffectManager>().targetsFound = true;
                 break;
         }
+    }
+
+
+    public void SendTargets()
+    {
+        
     }
 
     public void ResetManager()

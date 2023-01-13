@@ -14,4 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectType: 0
   statChanged: 3
+  modifierValue: 0
   stateChanged: 0
+  abilityTarget: 1
+  allowedTargets: 0

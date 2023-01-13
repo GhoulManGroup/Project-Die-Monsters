@@ -96,6 +96,8 @@ GameObject:
   - component: {fileID: 1449270305}
   - component: {fileID: 342285540849623483}
   - component: {fileID: 1925031674277869028}
+  - component: {fileID: 7419501601629678506}
+  - component: {fileID: 8506130748815286975}
   m_Layer: 0
   m_Name: Creature
   m_TagString: Untagged
@@ -191,8 +193,8 @@ MonoBehaviour:
   abilityCost: 0
   myOwner: 
   facingDirection: Right
-  HasAttackedThisTurn: 0
-  HasMovedThisTurn: 0
+  hasAttackedThisTurn: 0
+  hasMovedThisTurn: 0
   hasUsedAbilityThisTurn: 0
   canReachTarget: 0
   targets: []
@@ -233,3 +235,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f809ff96b970611489dfddf7f2bf573d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myAbility: {fileID: 0}
+  canBeCast: 0
+  effectResolved: 0
+  targetedCreatures: []
+--- !u!114 &7419501601629678506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520335839070375853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4693b9f33c939d84bafe5b398edaa29f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectToResolve: {fileID: 0}
+  targetsFound: 0
+  effectTargets: []
+--- !u!114 &8506130748815286975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520335839070375853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c8c676e20a786e4c9c2c9a8ca1531f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentEffect: {fileID: 0}
+  foundTargets: []

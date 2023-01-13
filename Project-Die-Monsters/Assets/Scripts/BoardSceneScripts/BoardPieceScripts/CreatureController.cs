@@ -156,7 +156,7 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
                 lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = true;
                 CheckPossibleActions();
                 OpenAndCloseControllerUI();
-                //ChosenCreatureToken.GetComponent<AbilityManager>().ActivatedAbilityCast();
+                ChosenCreatureToken.GetComponent<AbilityManager>().StartCoroutine("ActivateEffect");
                 // Call Ability manager & Do things.
                 break;
 

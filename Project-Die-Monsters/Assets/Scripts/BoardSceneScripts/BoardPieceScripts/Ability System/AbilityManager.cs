@@ -7,6 +7,7 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
     public Ability myAbility;
     CreatureToken  myCreature;
     public bool canBeCast = false;
+    public bool effectResolved = false;
 
 
     public List<GameObject> targetedCreatures = new List<GameObject>();
@@ -16,12 +17,18 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
         myCreature = this.gameObject.GetComponent<CreatureToken>();
     }   
 
-    IEnumerator ActivateEffect()
+    public IEnumerator ActivateEffect()
     {
         for (int i = 0; i < myAbility.abilityEffects.Count; i++)
         {
+            effectResolved = false;
             this.GetComponent<EffectManager>().effectToResolve = myAbility.abilityEffects[i];
             this.GetComponent<EffectManager>().StartCoroutine("ResolveEffect");
+            while (effectResolved == false)
+            {
+                yield return null;
+            }
+            effectResolved = true;
         }
 
         yield return null;
