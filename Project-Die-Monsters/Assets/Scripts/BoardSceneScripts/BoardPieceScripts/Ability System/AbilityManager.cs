@@ -9,9 +9,6 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
     public bool canBeCast = false;
     public bool effectResolved = false;
 
-
-    public List<GameObject> targetedCreatures = new List<GameObject>();
-
     public void Awake()
     {
         myCreature = this.gameObject.GetComponent<CreatureToken>();
@@ -28,9 +25,16 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
             {
                 yield return null;
             }
-            effectResolved = true;
+            Debug.Log("Effect Resolved");
+            
         }
-
+        Debug.Log("Ability Finished Resolving");
+        this.GetComponent<CreatureToken>().hasUsedAbilityThisTurn = true;
+        this.GetComponent<EffectManager>().ResetManager();
+        this.GetComponent<TargetManager>().ResetManager();
+        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenAction = "None";
+        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().OpenAndCloseControllerUI();
+        effectResolved = false;
         yield return null;
     }
 }

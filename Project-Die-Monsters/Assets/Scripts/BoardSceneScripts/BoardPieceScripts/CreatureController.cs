@@ -96,10 +96,13 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
             {
                 if (myAbility.abilityActivatedHow == Ability.AbilityActivatedHow.Activated)
                 {
-                    //ChosenCreatureToken.GetComponent<AbilityManager>().checkCanCastAbility();
-                    if (turnPlayer.GetComponent<Player>().abiltyPowerCrestPoints >= myAbility.abilityCost && ChosenCreatureToken.GetComponent<CreatureToken>().hasUsedAbilityThisTurn == false && ChosenCreatureToken.GetComponent<AbilityManager>().canBeCast == true)
+                    if (turnPlayer.GetComponent<Player>().abiltyPowerCrestPoints >= myAbility.abilityCost && ChosenCreatureToken.GetComponent<CreatureToken>().hasUsedAbilityThisTurn == false)
                     {
-                        OrderBTNS[2].GetComponent<Button>().interactable = true;
+                        //ChosenCreatureToken.GetComponent<AbilityManager>().checkCanCastAbility();
+                        if (ChosenCreatureToken.GetComponent<AbilityManager>().canBeCast == true)
+                        {
+                            OrderBTNS[2].GetComponent<Button>().interactable = true;
+                        }
                     }
                     else if (turnPlayer.GetComponent<Player>().abiltyPowerCrestPoints < myAbility.abilityCost || ChosenCreatureToken.GetComponent<CreatureToken>().hasUsedAbilityThisTurn == true || ChosenCreatureToken.GetComponent<AbilityManager>().canBeCast == false)
                     {

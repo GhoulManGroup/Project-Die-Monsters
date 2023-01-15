@@ -261,7 +261,6 @@ public class PathController : MonoBehaviour
         {
             myDir = Mathf.Round(chosenPiece.transform.eulerAngles.y);
             chosenPiece.transform.Rotate(new Vector3(0f, rotationSpeed, 0f) * Time.deltaTime, Space.World);
-            Debug.Log(rotationSpeed);
             yield return null;
         }
     }

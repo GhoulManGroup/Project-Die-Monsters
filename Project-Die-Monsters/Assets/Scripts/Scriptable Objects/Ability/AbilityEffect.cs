@@ -12,6 +12,7 @@ public class AbilityEffect : ScriptableObject
     public StateReset stateChanged;
     public EffectTargeting abilityTarget;
     public AllowedTargets allowedTargets;
+    public int howManyTargets;
 
     public enum EffectType
     {
