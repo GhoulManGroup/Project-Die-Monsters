@@ -6,7 +6,7 @@ using UnityEngine;
 public class EffectManager : MonoBehaviour
 {
     public AbilityEffect effectToResolve;
-    public bool targetsFound = false;
+    public bool targetsChecked = false; //Has the target manager finished looking for the effects valid targets
     TargetManager targetFinder;
     // Start is called before the first frame update
 
@@ -17,22 +17,26 @@ public class EffectManager : MonoBehaviour
     public IEnumerator ResolveEffect()
     {
         //Find target type & declare them here in a list.
-        Debug.Log("fIND tARGETS");
         this.GetComponent<TargetManager>().currentEffect = effectToResolve;
         this.GetComponent<TargetManager>().FindTarget(effectToResolve.allowedTargets.ToString());
 
-        while(targetsFound == false)
+        while(targetsChecked == false)
         {
             yield return null;
         }
-        Debug.Log("Finding Effect");
-        WhatEffect();
-        this.GetComponent<AbilityManager>().effectResolved = true;
+        //If we are checking if the ability can be cast check for the last criteria to be met, else 
+        if (this.GetComponent<AbilityManager>().checkingCanCast == true)
+        {
+            //checkCondition();
+        }else if(this.GetComponent<AbilityManager>().checkingCanCast == false)
+        {
+            WhatEffect();
+            this.GetComponent<AbilityManager>().effectResolved = true;
+        }
         yield return null;
     }
 
-
-
+    //This is applying the effect to the targets
     public void WhatEffect()
     {
         switch (effectToResolve.effectType) 
@@ -72,7 +76,7 @@ public class EffectManager : MonoBehaviour
 
     public void ResetManager()
     {
-        targetsFound = false;
+        targetsChecked = false;
         effectToResolve = null;
     }
 

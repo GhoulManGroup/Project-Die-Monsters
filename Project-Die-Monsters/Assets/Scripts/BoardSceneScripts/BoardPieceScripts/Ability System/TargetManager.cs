@@ -15,7 +15,7 @@ public class TargetManager : MonoBehaviour
         {
             Debug.Log("Self Targeting");
             foundTargets.Add(this.gameObject);
-            this.GetComponent<EffectManager>().targetsFound = true;
+            this.GetComponent<EffectManager>().targetsChecked = true;
         }else
         {
             switch (currentEffect.abilityTarget)
@@ -28,31 +28,8 @@ public class TargetManager : MonoBehaviour
                     break;
             }
         }
-
-        /*
-        switch (currentEffect.allowedTargets)
-        {
-            case AbilityEffect.AllowedTargets.self:
-
-                break;
-            case AbilityEffect.AllowedTargets.friendly:
-
-                break;
-            case AbilityEffect.AllowedTargets.hostile:
-
-                break;
-            case AbilityEffect.AllowedTargets.all:
-
-                break;
-        }
-        */
     }
 
-
-    public void SendTargets()
-    {
-        
-    }
 
     public void ResetManager()
     {

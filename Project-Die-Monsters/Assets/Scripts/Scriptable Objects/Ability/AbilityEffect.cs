@@ -10,9 +10,14 @@ public class AbilityEffect : ScriptableObject
     public ModifiedProperty statChanged;
     public int modifierValue = 0;
     public StateReset stateChanged;
+
+    [Header("Ability Target System")]
     public EffectTargeting abilityTarget;
+    public AOEDirections AOEDirection;
     public AllowedTargets allowedTargets;
-    public int howManyTargets;
+
+    public int requiredTargetCount;
+    public int maximumTargetCount;
 
     public enum EffectType
     {
@@ -32,6 +37,11 @@ public class AbilityEffect : ScriptableObject
     public enum EffectTargeting
     {
         areaOfEffect,   declared
+    }
+
+    public enum AOEDirections
+    {
+        forward, frontSides, frontBack, all
     }
 
     public enum AllowedTargets
