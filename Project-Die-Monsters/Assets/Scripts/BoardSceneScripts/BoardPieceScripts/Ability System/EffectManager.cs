@@ -16,28 +16,25 @@ public class EffectManager : MonoBehaviour
     }
     public IEnumerator ResolveEffect()
     {
+
         //Find target type & declare them here in a list.
         this.GetComponent<TargetManager>().currentEffect = effectToResolve;
-        this.GetComponent<TargetManager>().FindTarget(effectToResolve.allowedTargets.ToString());
+        this.GetComponent<TargetManager>().FindTarget();
 
         while(targetsChecked == false)
         {
             yield return null;
         }
-        //If we are checking if the ability can be cast check for the last criteria to be met, else 
-        if (this.GetComponent<AbilityManager>().checkingCanCast == true)
-        {
-            //checkCondition();
-        }else if(this.GetComponent<AbilityManager>().checkingCanCast == false)
-        {
-            WhatEffect();
-            this.GetComponent<AbilityManager>().effectResolved = true;
-        }
+
+       // Store Local List Here untill All are checked new List<GameObject>
+
+        ApplyWhichEffect();
+        this.GetComponent<AbilityManager>().effectResolved = true;
         yield return null;
     }
 
     //This is applying the effect to the targets
-    public void WhatEffect()
+    public void ApplyWhichEffect()
     {
         switch (effectToResolve.effectType) 
         {

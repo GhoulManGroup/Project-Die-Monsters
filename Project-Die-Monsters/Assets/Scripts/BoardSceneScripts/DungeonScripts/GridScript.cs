@@ -270,25 +270,33 @@ public class GridScript : MonoBehaviour
     
     public void OnMouseDown()
     {
-        if (LvlRef.GetComponent<PathController>().reachableTiles.Contains(this.gameObject) && LvlRef.GetComponent<PathController>().allowedToMove == true)
+        if (GameObject.FindGameObjectWithTag("LevelController").GetComponent<PathController>().desiredAction == "Move")
         {
-            if (LvlRef.GetComponent<PathController>().quickMove == false)
+            if (LvlRef.GetComponent<PathController>().reachableTiles.Contains(this.gameObject) && LvlRef.GetComponent<PathController>().allowedToMove == true)
             {
-                LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().turnPlayer].GetComponent<Player>().moveCrestPoints -= distanceFromStartTile;
-                LvlRef.GetComponent<PathController>().desiredPosition = this.gameObject;
-                LvlRef.GetComponent<PathController>().tilesToCheck.Clear();
-                LvlRef.GetComponent<PathController>().tilesToCheck.Add(LvlRef.GetComponent<PathController>().desiredPosition);
-                LvlRef.GetComponent<PathController>().EstablishPossibleMoves("FindPath");
-            }
-            else if(LvlRef.GetComponent<PathController>().quickMove == true)
-            {
-                MoveCreaturetome();
-            }
+                if (LvlRef.GetComponent<PathController>().quickMove == false)
+                {
+                    LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().turnPlayer].GetComponent<Player>().moveCrestPoints -= distanceFromStartTile;
+                    LvlRef.GetComponent<PathController>().desiredPosition = this.gameObject;
+                    LvlRef.GetComponent<PathController>().tilesToCheck.Clear();
+                    LvlRef.GetComponent<PathController>().tilesToCheck.Add(LvlRef.GetComponent<PathController>().desiredPosition);
+                    LvlRef.GetComponent<PathController>().EstablishPossibleMoves("FindPath");
+                }
+                else if (LvlRef.GetComponent<PathController>().quickMove == true)
+                {
+                    MoveCreaturetome();
+                }
 
-            LvlRef.GetComponent<PathController>().allowedToMove = false;
-        }else
+                LvlRef.GetComponent<PathController>().allowedToMove = false;
+            }
+            else
+            {
+                //Debug.Log("Not Allowed" + gameObject.name + myState + myOwner + TileContents);
+            }
+        }
+        else if (GameObject.FindGameObjectWithTag("LevelController").GetComponent<PathController>().desiredAction == "Abilty")
         {
-            //Debug.Log("Not Allowed" + gameObject.name + myState + myOwner + TileContents);
+            //Do Nothing Yet
         }
     }
 

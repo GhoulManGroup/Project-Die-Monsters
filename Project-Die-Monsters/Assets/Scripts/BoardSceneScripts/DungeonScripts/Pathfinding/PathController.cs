@@ -41,20 +41,18 @@ public class PathController : MonoBehaviour
 
     //Rotate to face the direction we need to walk.
 
-    public void DeclareConditions(GameObject creatureTokenPicked, string wantedAction)
+    public void DeclarePathfindingConditions(GameObject creatureTokenPicked, string wantedAction)
     {
         switch (wantedAction)
         {
             case "Move":
+                desiredAction = "Move";
                 //To get here we have the crests to move but we need to find if there is anywhere we can move.
                 chosenPiece = creatureTokenPicked;
                 startPosition = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
                 tilesToCheck.Add(startPosition);
                 possibleMoveDistance = LCScript.participants[LCScript.turnPlayer].GetComponent<Player>().moveCrestPoints / chosenPiece.GetComponent<CreatureToken>().moveCost;
                 EstablishPossibleMoves("CheckPossibleMoves");
-                break;
-            case "Ability":
-
                 break;
         }
     }

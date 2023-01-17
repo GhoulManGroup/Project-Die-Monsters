@@ -141,7 +141,7 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
                 {
                     lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = true;
                     ChosenAction = "Move";
-                    lvlRef.GetComponent<PathController>().DeclareConditions(ChosenCreatureToken, "Move");
+                    lvlRef.GetComponent<PathController>().DeclarePathfindingConditions(ChosenCreatureToken, "Move");
                 }
                 break;
 
