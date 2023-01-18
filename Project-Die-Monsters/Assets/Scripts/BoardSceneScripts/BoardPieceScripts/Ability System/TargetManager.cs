@@ -57,5 +57,6 @@ public class TargetManager : MonoBehaviour
     {
         currentEffect = null;
         foundTargets.Clear();
+        StopAllCoroutines();
     }
 }

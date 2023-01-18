@@ -176,7 +176,6 @@ public class PathController : MonoBehaviour
                         {
                             rotationSpeed = value;
                         }
-                        print(dir);
                         break;
                 }
                 break;

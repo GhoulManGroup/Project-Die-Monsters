@@ -98,11 +98,11 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
                 {
                     if (turnPlayer.GetComponent<Player>().abiltyPowerCrestPoints >= myAbility.abilityCost && ChosenCreatureToken.GetComponent<CreatureToken>().hasUsedAbilityThisTurn == false)
                     {
-                        ChosenCreatureToken.GetComponent<AbilityManager>().checkingCanCast = true;
-                        ChosenCreatureToken.GetComponent<AbilityManager>().CheckAbilityCanCast();
+                        //ChosenCreatureToken.GetComponent<AbilityManager>().checkingCanCast = true;
+                        //ChosenCreatureToken.GetComponent<AbilityManager>().CheckAbilityCanCast();
                         if (ChosenCreatureToken.GetComponent<AbilityManager>().canBeCast == true)
                         {
-                            ChosenCreatureToken.GetComponent<AbilityManager>().checkingCanCast = false;
+                            //ChosenCreatureToken.GetComponent<AbilityManager>().checkingCanCast = false;
                             OrderBTNS[2].GetComponent<Button>().interactable = true;
                         }
                     }
@@ -162,6 +162,8 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
                 CheckPossibleActions();
                 OpenAndCloseControllerUI();
                 ChosenCreatureToken.GetComponent<AbilityManager>().StartCoroutine("ActivateEffect");
+                GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().currentCreature = ChosenCreatureToken;
+                GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().ShowInterface();
                 // Call Ability manager & Do things.
                 break;
 
@@ -174,6 +176,8 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
                         break;
                     case "Ability":
                         ChosenAction = "None";
+                        GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().HideInterface();
+                        GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().CancleAbility();
                         break;
                     case "Attack":
                         //Go back from select attack target in inspect window.
