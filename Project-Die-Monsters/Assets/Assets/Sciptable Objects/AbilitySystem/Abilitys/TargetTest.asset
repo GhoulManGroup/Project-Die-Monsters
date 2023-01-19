@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1353ce617e913ff4580db3a48c6cfedd, type: 3}
-  m_Name: Heal
+  m_Name: TargetTest
   m_EditorClassIdentifier: 
-  AbilityName: 
-  AbilityDescriptionText: 
+  AbilityName: TargetingTest
+  AbilityDescriptionText: Testing Target
   abilityCost: 1
   abilityActivatedHow: 0
   abilityEffects:
-  - {fileID: 11400000, guid: 55169f1e69d17104f91211afa5c21c58, type: 2}
+  - {fileID: 0}

@@ -14,4 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectType: 0
   statChanged: 3
+  modifierValue: 0
   stateChanged: 1
+  abilityTarget: 1
+  AOEDirection: 0
+  allowedTargets: 0
+  requiredTargetCount: 0
+  maximumTargetCount: 0

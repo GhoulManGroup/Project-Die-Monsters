@@ -9,6 +9,11 @@ public class AbilityUIController : MonoBehaviour
     public GameObject confirmBTN;
     public GameObject currentCreature;
 
+    public void Awake()
+    {
+        HideInterface();
+    }
+
     public void HideInterface()
     {
         cancleBTN.SetActive(false);

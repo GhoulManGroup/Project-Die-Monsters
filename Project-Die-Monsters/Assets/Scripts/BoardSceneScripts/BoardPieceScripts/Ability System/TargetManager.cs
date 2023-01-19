@@ -7,6 +7,7 @@ public class TargetManager : MonoBehaviour
    // THIS SCRIPT IS TO FIND ALL POSSIBLE TARGETS NOT FILTER IF THEY ARE SUTIABLE FOR THE EFFECT.
 
     public AbilityEffect currentEffect;
+    public bool hasDeclared = false;
     public List<GameObject> foundTargets = new List<GameObject>();
     public void FindTarget()
     {
@@ -42,13 +43,15 @@ public class TargetManager : MonoBehaviour
 
     IEnumerator DeclaringTargets()
     {
-        bool hasDeclared = false;
+
         //Open Declare UI
+
         while (hasDeclared == false)
         {
 
             yield return null;
         }
+        this.GetComponent<EffectManager>().targetsChecked = true;
         yield return null;
     }
 
