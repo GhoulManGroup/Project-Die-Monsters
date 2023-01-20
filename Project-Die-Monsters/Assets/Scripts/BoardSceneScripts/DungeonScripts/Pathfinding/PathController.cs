@@ -51,7 +51,7 @@ public class PathController : MonoBehaviour
                 chosenPiece = creatureTokenPicked;
                 startPosition = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
                 tilesToCheck.Add(startPosition);
-                possibleMoveDistance = LCScript.participants[LCScript.turnPlayer].GetComponent<Player>().moveCrestPoints / chosenPiece.GetComponent<CreatureToken>().moveCost;
+                possibleMoveDistance = LCScript.participants[LCScript.turnPlayerSlot].GetComponent<Player>().moveCrestPoints / chosenPiece.GetComponent<CreatureToken>().moveCost;
                 EstablishPossibleMoves("CheckPossibleMoves");
                 break;
         }
@@ -287,9 +287,6 @@ public class PathController : MonoBehaviour
 
     #endregion
 
-    #region Abilties
-    //public void 
-    #endregion
     public void ResetBoard(string why)
     {// Go through every grid tile that has been interacted with and reset it to its default state.
         if (why == "Reset")

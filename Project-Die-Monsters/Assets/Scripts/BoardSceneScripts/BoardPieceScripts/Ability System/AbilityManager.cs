@@ -48,6 +48,7 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
 
         Debug.Log("Hello From effects ready!");
         //Enable Confirm Ability BTN in the ability UI & wait for outcome.
+        GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().ShowInterface();
         GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().confirmBTN.GetComponent<Button>().interactable = true;
 
         while (effectsResolved != myAbility.abilityEffects.Count)

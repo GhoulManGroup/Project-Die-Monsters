@@ -43,7 +43,7 @@ public class CreatureToken : MonoBehaviour
         myOwner = lcScript.whoseTurn;  //set my owner to either player+ playerslotnumber or AI.
 
         //Check for either a player script or opponent script then pull the desired creature from the correct objects creaturelist and assign it to the creature piece. 
-        if (lcScript.participants[lcScript.turnPlayer].GetComponent<Player>() != null)
+        if (lcScript.participants[lcScript.turnPlayerSlot].GetComponent<Player>() != null)
         {
             if (lcScript.creaturePlacedFrom == "CreaturePool") 
             {
@@ -83,23 +83,6 @@ public class CreatureToken : MonoBehaviour
         abilityCost = myCreature.myAbility.abilityCost;
     }
 
-    public void OnMouseDown() // assign this as active creature target. Switch Camera State to Board View. 
-    {
-        if (myOwner == lvlRef.GetComponent<LevelController>().whoseTurn)
-        {
-            if (lcScript.ableToInteractWithBoard == true)
-            {
-                myBoardLocation.GetComponent<GridScript>().IsAnyMovementPossible();
-                lvlRef.GetComponent<CameraController>().switchCamera("Board");
-                lvlRef.GetComponent<CreatureController>().ChosenAction = "None";
-                lvlRef.GetComponent<CreatureController>().ChosenCreatureToken = this.gameObject;
-                lcScript.ableToInteractWithBoard = false;
-                lvlRef.GetComponent<CreatureController>().OpenAndCloseControllerUI();
-                CheckForAttackTarget();
-            }
-        }
-        
-    }
 
     public void declareTile(string why) // declare where we are.
     {
@@ -231,6 +214,41 @@ public class CreatureToken : MonoBehaviour
             canReachTarget = true;
         }
     } // raycast adjacent tiles for enemy creature pieces,
+
+    public void OnMouseDown()
+    {
+        if (lcScript.ableToInteractWithBoard == true)
+        {
+            switch (lcScript.boardInteraction)
+            {
+                case "TargetPick":
+                    Debug.Log("Picking");
+                    //Find the creature casting its ability in the ability UI Script, if we are a valid target pass this creature through to see if we can be added to declared creature list.
+                    TargetManager castingCreature = GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().currentCreature.GetComponent<TargetManager>();
+                    if (castingCreature.targetPool.Contains(this.gameObject))
+                    {
+                        castingCreature.CheckDeclareState(this.gameObject);
+                    }
+                    break;
+
+                case "None":
+                    if (myOwner == lvlRef.GetComponent<LevelController>().whoseTurn)
+                    {
+                        myBoardLocation.GetComponent<GridScript>().IsAnyMovementPossible();
+                        lvlRef.GetComponent<CameraController>().switchCamera("Board");
+                        lvlRef.GetComponent<CreatureController>().ChosenAction = "None";
+                        lvlRef.GetComponent<CreatureController>().ChosenCreatureToken = this.gameObject;
+                        lcScript.ableToInteractWithBoard = false;
+                        lvlRef.GetComponent<CreatureController>().OpenAndCloseControllerUI();
+                        CheckForAttackTarget();
+                    }
+                    break;
+            }
+        }else
+        {
+            // Do Nothing
+        }
+    }
 
     public void CheckState()
     {

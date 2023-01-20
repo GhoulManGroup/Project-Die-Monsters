@@ -32,13 +32,15 @@ public class LevelController : MonoBehaviour //This class controls everything at
 
     //which participant is the turn player.
     public string whoseTurn = "P1";
-    public int turnPlayer = 0;
+    public GameObject turnPlayerObject;
+    public int turnPlayerSlot = 0;
 
     [Header("Turn Player Constraints & Resources")] // Tweak constraints.
 
     public bool turnPlayerPerformingAction = false; // this bool will be what we check before being able to perform certain action.
 
     public bool ableToInteractWithBoard = false; // Player is allowed to interact with the pieces on the board, checked before raycast on piece ect.
+    public string boardInteraction = "None";
 
     public bool placingCreature = false; // The player is placing a creature on the board.
 
@@ -80,6 +82,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
                         DungeonLord[0].GetComponent<DungeonLordPiece>().SetDungeonLordTile();
                         DungeonLord[1].GetComponent<DungeonLordPiece>().SetDungeonLordTile();
 
+                    
                         break;
 
                     case "AI":
@@ -117,40 +120,40 @@ public class LevelController : MonoBehaviour //This class controls everything at
      public void BeginTurnFunction() // this function is only called when it is a Human Players turn not the ai,
      {
         // check if the player has any dice in the list 
-        if (participants[turnPlayer].GetComponent<Player>().diceDeck.Count != 0)
+        if (participants[turnPlayerSlot].GetComponent<Player>().diceDeck.Count != 0)
          {           
             this.GetComponent<LevelController>().turnPlayerPerformingAction = true; // Player is in dice window, action being performed.
             GetComponent<CameraController>().switchCamera("Dice");
             GetComponent<UIDiceController>().SetUp();       
         }
                  
-         else if (participants[turnPlayer].GetComponent<Player>().diceDeck.Count == 0) // if no dice in pool proceed to board phase.
+         else if (participants[turnPlayerSlot].GetComponent<Player>().diceDeck.Count == 0) // if no dice in pool proceed to board phase.
          {
              this.GetComponent<CameraController>().switchCamera("Alt");
              ableToInteractWithBoard = true;
          }
 
         startTurnBTN.GetComponent<Image>().enabled = false;
-        participants[turnPlayer].GetComponent<Player>().moveCrestPoints += 1;
+        participants[turnPlayerSlot].GetComponent<Player>().moveCrestPoints += 1;
         updateTurnPlayerCrestDisplay();
      }
 
     public void SetTurnPlayer() // call this function after turn player changes to update each script.
     {
-        this.GetComponent<CreatureController>().turnPlayer = participants[turnPlayer].gameObject;
-        this.GetComponent<CreaturePoolController>().turnPlayer = participants[turnPlayer].gameObject;
-        this.GetComponent<UIDiceController>().turnPlayer = participants[turnPlayer].gameObject;
-        GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectWindowController>().turnPlayer = participants[turnPlayer].gameObject;
-        whoseTurn = "Player" + turnPlayer.ToString();
+        this.GetComponent<CreatureController>().turnPlayer = participants[turnPlayerSlot].gameObject;
+        this.GetComponent<CreaturePoolController>().turnPlayer = participants[turnPlayerSlot].gameObject;
+        this.GetComponent<UIDiceController>().turnPlayer = participants[turnPlayerSlot].gameObject;
+        GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectWindowController>().turnPlayer = participants[turnPlayerSlot].gameObject;
+        whoseTurn = "Player" + turnPlayerSlot.ToString();
     }
 
     public void updateTurnPlayerCrestDisplay()
     {
-        turnPlayerUIDisplay[0].text = "Turn Player = " + turnPlayer.ToString();
-        turnPlayerUIDisplay[1].text = participants[turnPlayer].GetComponent<Player>().attackCrestPoints.ToString();
-        turnPlayerUIDisplay[2].text = participants[turnPlayer].GetComponent<Player>().abiltyPowerCrestPoints.ToString();
-        turnPlayerUIDisplay[3].text = participants[turnPlayer].GetComponent<Player>().defenceCrestPoints.ToString();
-        turnPlayerUIDisplay[4].text = participants[turnPlayer].GetComponent<Player>().moveCrestPoints.ToString();
+        turnPlayerUIDisplay[0].text = "Turn Player = " + turnPlayerSlot.ToString();
+        turnPlayerUIDisplay[1].text = participants[turnPlayerSlot].GetComponent<Player>().attackCrestPoints.ToString();
+        turnPlayerUIDisplay[2].text = participants[turnPlayerSlot].GetComponent<Player>().abiltyPowerCrestPoints.ToString();
+        turnPlayerUIDisplay[3].text = participants[turnPlayerSlot].GetComponent<Player>().defenceCrestPoints.ToString();
+        turnPlayerUIDisplay[4].text = participants[turnPlayerSlot].GetComponent<Player>().moveCrestPoints.ToString();
     }
 
 
@@ -165,13 +168,13 @@ public class LevelController : MonoBehaviour //This class controls everything at
                 {
                     case "Player0":
                         whoseTurn = "Player1";
-                        turnPlayer = 1;
+                        turnPlayerSlot = 1;
                         SetTurnPlayer();
                         break;
 
                     case "Player1":
                         whoseTurn = "Player0";
-                        turnPlayer = 0;
+                        turnPlayerSlot = 0;
                         SetTurnPlayer();
                         break;
                 }

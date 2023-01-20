@@ -24,6 +24,7 @@ public class GridScript : MonoBehaviour
 
     [Header("Tile Visuals")]
     public List<Material> myMat = new List<Material>();
+    public List<Material> indicatorMat = new List<Material>();  
 
     [Header("PrefabsToSpawn")]
     public GameObject creatureSpawnFab;
@@ -197,7 +198,7 @@ public class GridScript : MonoBehaviour
                         //Then if all these conditions are met we add the tile to the list to check and increase that tiles distancefromstart by 1 space to indicate its 1 away from this tile.
                         LvlRef.GetComponent<PathController>().tilesToCheck.Add(Neighbours[i].gameObject);
                         Neighbours[i].gameObject.GetComponent<GridScript>().distanceFromStartTile = distanceFromStartTile + 1;
-                        Neighbours[i].gameObject.GetComponent<GridScript>().myIndicator.gameObject.SetActive(true);
+                        Neighbours[i].gameObject.GetComponent<GridScript>().SetIndicatorMaterial("MoveSpace");
                         Neighbours[i].gameObject.GetComponent<GridScript>().updateTMPRO();
                         //Add the neighbour to the list of possible tiles to move to.
                         LvlRef.GetComponent<PathController>().reachableTiles.Add(Neighbours[i].gameObject);
@@ -261,7 +262,7 @@ public class GridScript : MonoBehaviour
         {
             GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.transform.position = new Vector3(this.transform.position.x, 0.3f, this.transform.position.z);
             GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.GetComponent<CreatureToken>().declareTile("Move");
-            LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().turnPlayer].GetComponent<Player>().moveCrestPoints -= distanceFromStartTile;            
+            LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().turnPlayerSlot].GetComponent<Player>().moveCrestPoints -= distanceFromStartTile;            
             TileContents = "Creature";
             LvlRef.GetComponent<PathController>().HasMoved();
         }
@@ -276,7 +277,7 @@ public class GridScript : MonoBehaviour
             {
                 if (LvlRef.GetComponent<PathController>().quickMove == false)
                 {
-                    LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().turnPlayer].GetComponent<Player>().moveCrestPoints -= distanceFromStartTile;
+                    LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().turnPlayerSlot].GetComponent<Player>().moveCrestPoints -= distanceFromStartTile;
                     LvlRef.GetComponent<PathController>().desiredPosition = this.gameObject;
                     LvlRef.GetComponent<PathController>().tilesToCheck.Clear();
                     LvlRef.GetComponent<PathController>().tilesToCheck.Add(LvlRef.GetComponent<PathController>().desiredPosition);
@@ -301,6 +302,23 @@ public class GridScript : MonoBehaviour
     }
 
 
+    public void SetIndicatorMaterial(string whatMaterial)
+    {
+        myIndicator.gameObject.SetActive(true);
+        switch (whatMaterial)
+        {
+            
+            case "MoveSpace":
+                myIndicator.GetComponent<MeshRenderer>().material = indicatorMat[0];
+                break;
+            case "PossibleTarget":
+                myIndicator.GetComponent<MeshRenderer>().material = indicatorMat[1];
+                break;                     
+            case "PickedTarget":
+                myIndicator.GetComponent<MeshRenderer>().material = indicatorMat[2];
+                break;
+        }
+    }
     public void ResetGridTile()
     {
         distanceFromStartTile = 0;

@@ -21,4 +21,13 @@ public class Player : MonoBehaviour
     public int defenceCrestPoints = 0;
     public int abiltyPowerCrestPoints = 0;
 
+    [Header("Player ID")]
+    public GameObject thisObject;
+    public string myName;
+
+    public void Awake()
+    {
+        thisObject = this.gameObject;
+
+    }
 }

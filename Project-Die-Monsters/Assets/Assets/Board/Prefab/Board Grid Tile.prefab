@@ -112,6 +112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myTextObject: {fileID: 2049598878663054170}
   myIndicator: {fileID: 2607876242930370959}
+  currrentInteraction: None
   turnPlayerDungeonConnection: 0
   myState: Empty
   myOwner: None
@@ -122,6 +123,10 @@ MonoBehaviour:
   - {fileID: 2100000, guid: bb01b738e954ecf46806bb560859a1f5, type: 2}
   - {fileID: 2100000, guid: 7e8c08b3270c5a840a94d206ad10ced4, type: 2}
   - {fileID: 2100000, guid: 459ba4f873a97f4408266a31eaa79199, type: 2}
+  indicatorMat:
+  - {fileID: 2100000, guid: e045253ab0a207641aa11c1cf1e9dc1f, type: 2}
+  - {fileID: 2100000, guid: c36902ecf0161474382e72a1e9996e94, type: 2}
+  - {fileID: 2100000, guid: 949a57c93f6c57e45be078634dca3b61, type: 2}
   creatureSpawnFab: {fileID: 0}
   desiredDir: 
   Neighbours: []

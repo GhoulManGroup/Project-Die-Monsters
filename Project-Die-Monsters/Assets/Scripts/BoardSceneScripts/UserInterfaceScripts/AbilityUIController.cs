@@ -9,6 +9,8 @@ public class AbilityUIController : MonoBehaviour
     public GameObject confirmBTN;
     public GameObject currentCreature;
 
+    public string confirmBTNFunction = "Nothing";
+
     public void Awake()
     {
         HideInterface();
@@ -35,9 +37,18 @@ public class AbilityUIController : MonoBehaviour
 
     public void ConfirmCast()
     {
-        currentCreature.GetComponent<AbilityManager>().abilityCast = true;
-        confirmBTN.GetComponent<Button>().interactable = false;
-        cancleBTN.GetComponent<Button>().interactable = false;
-        HideInterface();
+        switch (confirmBTNFunction)
+        {
+            case "DeclareTargets":
+                currentCreature.GetComponent<TargetManager>().hasDeclared = true;
+                break;
+
+            case "CastAbility":
+                currentCreature.GetComponent<AbilityManager>().abilityCast = true;
+                break;
+        }
+                confirmBTN.GetComponent<Button>().interactable = false;
+                cancleBTN.GetComponent<Button>().interactable = false;
+                HideInterface();
     }
 }
