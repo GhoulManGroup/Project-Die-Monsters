@@ -6,28 +6,28 @@ using UnityEngine.UI;
 public class TargetManager : MonoBehaviour
 {
     // THIS SCRIPT IS TO FIND ALL POSSIBLE TARGETS NOT FILTER IF THEY ARE SUTIABLE FOR THE EFFECT.
+    CreatureController creatureController;
+    LevelController levelController;
+    public AbilityEffect currentEffect;
+    public bool hasDeclared = false;
+    public List<GameObject> foundTargets = new List<GameObject>();
 
     public void Awake()
     {
         creatureController = GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>();
         levelController = GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>();
     }
-    CreatureController creatureController;
-    LevelController levelController;
-    public AbilityEffect currentEffect;
-    public bool hasDeclared = false;
-    public List<GameObject> foundTargets = new List<GameObject>();
+
     public List<GameObject> targetPool = new List<GameObject>();
+
     public void FindTarget()
     {
-
         switch (currentEffect.abilityTarget)
         {
             case AbilityEffect.EffectTargeting.areaOfEffect:
 
                 break;
             case AbilityEffect.EffectTargeting.declared:
-                Debug.Log("Declare");
                 switch (currentEffect.allowedTargets)
                 {
                     case AbilityEffect.AllowedTargets.self:
@@ -87,8 +87,10 @@ public class TargetManager : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log("Hello From After Has Declared");
-        //Hide pick selection / clear this,.
+        for (int i = 0; i < targetPool.Count; i++)
+        {
+            targetPool[i].GetComponent<CreatureToken>().myBoardLocation.GetComponent<GridScript>().ResetGridTile();
+        }
         this.GetComponent<EffectManager>().targetsChecked = true;
         yield return null;
     }
@@ -112,7 +114,6 @@ public class TargetManager : MonoBehaviour
             }
         }
 
-
         if (foundTargets.Count >= currentEffect.requiredTargetCount)
         {
             GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().confirmBTN.gameObject.GetComponent<Button>().interactable = true;
@@ -128,6 +129,7 @@ public class TargetManager : MonoBehaviour
     public void ResetManager()
     {
         currentEffect = null;
+        hasDeclared = false;
         foundTargets.Clear();
         targetPool.Clear();
         StopAllCoroutines();

@@ -222,7 +222,6 @@ public class CreatureToken : MonoBehaviour
             switch (lcScript.boardInteraction)
             {
                 case "TargetPick":
-                    Debug.Log("Picking");
                     //Find the creature casting its ability in the ability UI Script, if we are a valid target pass this creature through to see if we can be added to declared creature list.
                     TargetManager castingCreature = GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().currentCreature.GetComponent<TargetManager>();
                     if (castingCreature.targetPool.Contains(this.gameObject))

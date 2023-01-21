@@ -4,16 +4,16 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class EffectManager : MonoBehaviour
-{
+{ //This script handles the application of the effect to the target creatures.
     public AbilityEffect effectToResolve;
     public bool targetsChecked = false; //Has the target manager finished looking for the effects valid targets
     TargetManager targetFinder;
-    // Start is called before the first frame update
 
     public void Awake()
     {
         targetFinder = this.GetComponent<TargetManager>();
     }
+
     public IEnumerator PrepareAndCastEffect()
     {
         //Call target manager and have it find the effects targets then inform the ability manager the effect is ready!
@@ -28,13 +28,12 @@ public class EffectManager : MonoBehaviour
         // Store Local List Here untill All are effects have their targets and the ability is resolved or cancled.
         List<GameObject> EffectTargets = new List<GameObject>(targetFinder.foundTargets);
         this.GetComponent<AbilityManager>().readyEffects += 1;
-        Debug.Log(EffectTargets.Count + " Effect Ready");
+ 
 
         while (this.GetComponent<AbilityManager>().abilityCast == false)
         {
             yield return null;
         }
-        Debug.Log("Ability Cast");
         ApplyWhichEffect(EffectTargets);
         this.GetComponent<AbilityManager>().effectsResolved += 1;
         yield return null;

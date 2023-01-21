@@ -319,6 +319,7 @@ public class GridScript : MonoBehaviour
                 break;
         }
     }
+
     public void ResetGridTile()
     {
         distanceFromStartTile = 0;
