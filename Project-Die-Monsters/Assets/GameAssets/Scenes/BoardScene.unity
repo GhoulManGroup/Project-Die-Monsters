@@ -12406,7 +12406,7 @@ RectTransform:
   m_GameObject: {fileID: 1840636385}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.0501, y: 0.45543, z: 1}
+  m_LocalScale: {x: 3.539703, y: 0.79735434, z: 1.7266}
   m_Children:
   - {fileID: 1468817243}
   m_Father: {fileID: 1853885423}
@@ -12414,7 +12414,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 459}
+  m_AnchoredPosition: {x: 0, y: 393}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1840636387
@@ -12548,6 +12548,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cancleBTN: {fileID: 737161545}
   confirmBTN: {fileID: 1971116649}
+  confirmBTNFunction: Nothing
+  targetsPickedPanel: {fileID: 1840636385}
+  targetText: {fileID: 1468817244}
   currentCreature: {fileID: 0}
 --- !u!1 &1860749761
 GameObject:

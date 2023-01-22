@@ -25,7 +25,7 @@ public class TargetManager : MonoBehaviour
         switch (currentEffect.abilityTarget)
         {
             case AbilityEffect.EffectTargeting.areaOfEffect:
-
+                //Add AOE Code and write a script to manage all the shit.
                 break;
             case AbilityEffect.EffectTargeting.declared:
                 switch (currentEffect.allowedTargets)
@@ -71,6 +71,7 @@ public class TargetManager : MonoBehaviour
         }
     }
 
+    #region Declare Targeting Code
     public IEnumerator DeclaringTargets()
     {
 
@@ -81,6 +82,7 @@ public class TargetManager : MonoBehaviour
         
         GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>().ableToInteractWithBoard = true;
         GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>().boardInteraction = "TargetPick";
+        GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().ShowAndUpdateInterface("Declare");
 
         while (hasDeclared == false)
         {
@@ -124,7 +126,14 @@ public class TargetManager : MonoBehaviour
             GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().confirmBTN.gameObject.GetComponent<Button>().interactable = false;
             GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().confirmBTNFunction = "Nothing";
         }
+        GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().ShowAndUpdateInterface("Declare");
     }
+
+    #endregion
+
+    #region AOE Targeting Code
+
+    #endregion
 
     public void ResetManager()
     {

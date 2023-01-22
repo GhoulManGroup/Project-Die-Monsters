@@ -7,9 +7,13 @@ public class AbilityUIController : MonoBehaviour
 {
     public GameObject cancleBTN;
     public GameObject confirmBTN;
-    public GameObject currentCreature;
-
     public string confirmBTNFunction = "Nothing";
+
+    public GameObject targetsPickedPanel;
+    public Text targetText;
+
+    public GameObject currentCreature;
+    AbilityEffect currentEffect;
 
     public void Awake()
     {
@@ -18,12 +22,26 @@ public class AbilityUIController : MonoBehaviour
 
     public void HideInterface()
     {
+        targetsPickedPanel.SetActive(false);
         cancleBTN.SetActive(false);
         confirmBTN.SetActive(false);    
     }
 
-    public void ShowInterface()
+    public void ShowAndUpdateInterface(string showedFor)
     {
+        currentEffect = currentCreature.GetComponent<EffectManager>().effectToResolve;
+
+        switch (showedFor)
+        {
+            case "Declare":
+                targetsPickedPanel.SetActive(true);
+                targetText.text = "Targets Min " + currentEffect.requiredTargetCount + "Targets Max " + currentEffect.maximumTargetCount + "Tagets Picked " + currentCreature.GetComponent<TargetManager>().foundTargets.Count;
+                break;
+
+            case "AOE":
+
+                break;
+        }
         cancleBTN.SetActive(true);
         confirmBTN.SetActive(true);
     }
