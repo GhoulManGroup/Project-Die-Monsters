@@ -14,7 +14,9 @@ public class AbilityEffect : ScriptableObject
     [Header("Ability Target System")]
     public EffectTargeting abilityTarget;
     public AOEDirections AOEDirection;
+    public AOEPosition AOEBoardPosition;
     public AllowedTargets allowedTargets;
+    int distanceInDirection = 0;
 
     public int requiredTargetCount;
     public int maximumTargetCount;
@@ -36,12 +38,17 @@ public class AbilityEffect : ScriptableObject
 
     public enum EffectTargeting
     {
-        areaOfEffect,   declared
+        areaOfEffect,   declared , random
+    }
+
+    public enum AOEPosition
+    {
+        self, friendly, hostile, all, boardTile
     }
 
     public enum AOEDirections
     {
-        forward, frontSides, frontBack, all
+        front, frontSides, frontBack, sides, all
     }
 
     public enum AllowedTargets

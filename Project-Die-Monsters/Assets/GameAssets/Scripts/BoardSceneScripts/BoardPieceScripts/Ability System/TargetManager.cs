@@ -11,7 +11,7 @@ public class TargetManager : MonoBehaviour
     public AbilityEffect currentEffect;
     public bool hasDeclared = false;
     public List<GameObject> foundTargets = new List<GameObject>();
-
+    public GameObject Position;
     public void Awake()
     {
         creatureController = GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>();
@@ -24,9 +24,14 @@ public class TargetManager : MonoBehaviour
     {
         switch (currentEffect.abilityTarget)
         {
-            case AbilityEffect.EffectTargeting.areaOfEffect:
-                //Add AOE Code and write a script to manage all the shit.
+            case AbilityEffect.EffectTargeting.random:
+
                 break;
+
+            case AbilityEffect.EffectTargeting.areaOfEffect:
+                StartCoroutine("AOEEffectTargeting");
+                break;
+
             case AbilityEffect.EffectTargeting.declared:
                 switch (currentEffect.allowedTargets)
                 {
@@ -65,7 +70,6 @@ public class TargetManager : MonoBehaviour
                         }
                         StartCoroutine("DeclaringTargets");
                         break;
-
                 }
                 break;
         }
@@ -132,7 +136,56 @@ public class TargetManager : MonoBehaviour
     #endregion
 
     #region AOE Targeting Code
+    
+    public IEnumerator AOEEffectTargeting()
+    {
 
+        DetermineAOEPosition();
+        while(Position == null)
+        {
+            yield return null;
+        }
+        yield return null;
+    }
+    public void DetermineAOEPosition()
+    {//Determine where the AOE effect is occuring from based on this Enum then either go to next step or wait for player to declare game object.
+        switch (currentEffect.AOEBoardPosition)
+        {
+            case AbilityEffect.AOEPosition.self:
+
+                break;
+            case AbilityEffect.AOEPosition.friendly:
+
+                break;
+        }
+    }
+
+    public void AOEDirection()
+    {
+        switch (currentEffect.AOEDirection)
+        {
+            case AbilityEffect.AOEDirections.front:
+
+                break;
+            case AbilityEffect.AOEDirections.frontBack:
+
+                break;
+            case AbilityEffect.AOEDirections.frontSides:
+
+                break;
+            case AbilityEffect.AOEDirections.sides:
+
+                break;
+            case AbilityEffect.AOEDirections.all:
+
+                break;
+        }
+    }
+
+    public IEnumerator FindTargetsInDirection(string direction)
+    {
+        yield return null;
+    }
     #endregion
 
     public void ResetManager()
