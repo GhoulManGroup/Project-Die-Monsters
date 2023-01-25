@@ -149,6 +149,8 @@ public class TargetManager : MonoBehaviour
         }
 
         Debug.Log("Found Position" + Position.gameObject.name) ;
+        AOEDirection();
+
 
         yield return null;
     }
@@ -169,10 +171,11 @@ public class TargetManager : MonoBehaviour
 
     public void AOEDirection()
     {
+        CreatureToken mySelf = this.gameObject.GetComponent<CreatureToken>();
         switch (currentEffect.AOEDirection)
         {
             case AbilityEffect.AOEDirections.front:
-
+                mySelf.myBoardLocation.GetComponent<GridScript>().FindTargetsInDirection(mySelf.facingDirection, 0, this.gameObject);
                 break;
             case AbilityEffect.AOEDirections.frontBack:
 

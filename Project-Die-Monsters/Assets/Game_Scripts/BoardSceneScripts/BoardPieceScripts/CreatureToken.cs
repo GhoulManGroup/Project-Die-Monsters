@@ -23,7 +23,7 @@ public class CreatureToken : MonoBehaviour
     public int abilityCost = 1; // how much does the ability of creature cost.
     public string myOwner; // who owns this piece.
 
-    public string facingDirection = "Right";
+    public string facingDirection = "East";
 
     [Header("Creature Action Checks")]
     public bool hasAttackedThisTurn = false; //A creature may only attack once this turn unless an ability specifies otherwise.

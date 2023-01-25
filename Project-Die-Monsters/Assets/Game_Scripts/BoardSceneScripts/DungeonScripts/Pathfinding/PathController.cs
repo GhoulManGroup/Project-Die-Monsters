@@ -268,7 +268,7 @@ public class PathController : MonoBehaviour
         switch (wantedDir)
         {
             case 0:
-                chosenPiece.GetComponent<CreatureToken>().facingDirection = "Right";
+                chosenPiece.GetComponent<CreatureToken>().facingDirection = "East";
                 break;
             case 90:
                 chosenPiece.GetComponent<CreatureToken>().facingDirection = "South";
