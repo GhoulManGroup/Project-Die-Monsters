@@ -30,6 +30,7 @@ public class GridScript : MonoBehaviour
     public GameObject creatureSpawnFab;
 
     [Header("PieceManagement")]
+    public GameObject creatureAboveMe;
     public string desiredDir;
     public List<GameObject> Neighbours = new List<GameObject>();
     //These are here for AOE since some tiles have less than 4 neighbours and I cant use the existing list for what I want and don't want to break pathfinding.
@@ -284,9 +285,13 @@ public class GridScript : MonoBehaviour
     public void FindTargetsInDirection(string direction, int distance, GameObject Origin) //0 east / 1 west /2 north 3/ soith
     { //Do Not add to orign if distance is 0 or greater than disanceIndirection or not dungeon tile.
 
-        if (distance > 0 && distance < Origin.GetComponent<TargetManager>().currentEffect.distanceInDirection)
+        if (distance > 0 && distance <= Origin.GetComponent<TargetManager>().currentEffect.distanceInDirection)
         {
             //How do we find the creatures when the grid tiles don't store that information ....
+            if (creatureAboveMe != null)
+            {
+                Origin.GetComponent<TargetManager>().foundTargets.Add(creatureAboveMe);
+            }
         }
 
         if (distance < Origin.GetComponent<TargetManager>().currentEffect.distanceInDirection)
