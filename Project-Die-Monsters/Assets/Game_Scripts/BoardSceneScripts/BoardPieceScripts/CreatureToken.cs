@@ -23,7 +23,11 @@ public class CreatureToken : MonoBehaviour
     public int abilityCost = 1; // how much does the ability of creature cost.
     public string myOwner; // who owns this piece.
 
+    [Header("Directions")]
     public string facingDirection = "East";
+    public string behindDirection;
+    public string sideDirection;
+    public string otherSideDirection;
 
     [Header("Creature Action Checks")]
     public bool hasAttackedThisTurn = false; //A creature may only attack once this turn unless an ability specifies otherwise.
@@ -82,9 +86,35 @@ public class CreatureToken : MonoBehaviour
         currentAttack = myCreature.Attack;
         currentDefence = myCreature.Defence;
         abilityCost = myCreature.myAbility.abilityCost;
+        setDirections();
     }
 
-
+    public void setDirections()
+    {
+        switch (facingDirection)
+        {
+            case "North":
+                behindDirection = "South";
+                sideDirection = "East";
+                otherSideDirection = "West";
+                break;
+            case "South":
+                behindDirection = "North";
+                sideDirection = "West";
+                otherSideDirection = "East";
+                break;
+            case "West":
+                behindDirection = "East";
+                sideDirection = "North";
+                otherSideDirection = "South";
+                break;
+            case "East":
+                behindDirection = "West";
+                sideDirection = "South";
+                otherSideDirection = "North";
+                break;
+        }
+    }
     public void declareTile(string why) // declare where we are.
     {
         RaycastHit Down;

@@ -38,7 +38,8 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
         for (int i = 0; i < myAbility.abilityEffects.Count; i++)
         {
             this.GetComponent<EffectManager>().effectToResolve = myAbility.abilityEffects[i];
-            this.GetComponent<EffectManager>().StartCoroutine("PrepareAndCastEffect");          
+            this.GetComponent<EffectManager>().StartCoroutine("PrepareAndCastEffect"); 
+            //Add a Wait here untill the effect is done as user input is required.
         }
 
         while (readyEffects != myAbility.abilityEffects.Count)
@@ -47,7 +48,6 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
         }
 
         Debug.Log("Hello From effects ready!");
-        //Enable Confirm Ability BTN in the ability UI & wait for outcome.
         GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().ShowAndUpdateInterface("ConfirmCast");
         GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().confirmBTNFunction = "CastAbility";
         GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().confirmBTN.GetComponent<Button>().interactable = true;
@@ -56,17 +56,17 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
         {
             yield return null;
         }
-
+        //Add subtraction of ability crest to this step, rather than when the ability is first pressed as it makes sence to only remove once its done casting.
         Debug.Log("Ability Has Been Cast Finished");
         this.GetComponent<CreatureToken>().hasUsedAbilityThisTurn = true;
-        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenAction = "None";
-        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().OpenAndCloseControllerUI();
         CancleAbilityCast();
         yield return null;
     }
 
     public void CancleAbilityCast()
     {
+        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenAction = "None";
+        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().OpenAndCloseControllerUI();
         ResetManager();
         this.GetComponent<EffectManager>().ResetManager();
         this.GetComponent<TargetManager>().ResetManager();

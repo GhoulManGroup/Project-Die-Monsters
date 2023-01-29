@@ -192,7 +192,10 @@ MonoBehaviour:
   attackCost: 1
   abilityCost: 0
   myOwner: 
-  facingDirection: Right
+  facingDirection: East
+  behindDirection: 
+  sideDirection: 
+  otherSideDirection: 
   hasAttackedThisTurn: 0
   hasMovedThisTurn: 0
   hasUsedAbilityThisTurn: 0
@@ -237,8 +240,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myAbility: {fileID: 0}
   canBeCast: 0
-  effectResolved: 0
-  targetedCreatures: []
+  readyEffects: 0
+  abilityCast: 0
+  effectsResolved: 0
 --- !u!114 &7419501601629678506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,8 +256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectToResolve: {fileID: 0}
-  targetsFound: 0
-  effectTargets: []
+  targetsChecked: 0
 --- !u!114 &8506130748815286975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -267,4 +270,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentEffect: {fileID: 0}
+  hasDeclared: 0
   foundTargets: []
+  Position: {fileID: 0}
+  directionIndicated: 0
+  targetPool: []

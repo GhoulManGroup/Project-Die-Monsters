@@ -10,14 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7a3a00c1f4505404cb8582547ddb1195, type: 3}
-  m_Name: TargetingTest
+  m_Name: DeclareTest
   m_EditorClassIdentifier: 
   effectType: 1
   statChanged: 0
   modifierValue: -10
   stateChanged: 0
   abilityTarget: 1
-  AOEDirection: 0
+  AOEDirection: 4
+  AOEBoardPosition: 0
   allowedTargets: 2
+  distanceInDirection: 0
   requiredTargetCount: 1
   maximumTargetCount: 1

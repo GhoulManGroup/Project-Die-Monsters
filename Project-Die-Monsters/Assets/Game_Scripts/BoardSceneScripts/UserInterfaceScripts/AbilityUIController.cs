@@ -39,7 +39,8 @@ public class AbilityUIController : MonoBehaviour
                 break;
 
             case "AOE":
-
+                confirmBTN.GetComponent<Button>().interactable = true;
+                cancleBTN.GetComponent<Button>().interactable = true;
                 break;
         }
         cancleBTN.SetActive(true);
@@ -57,10 +58,12 @@ public class AbilityUIController : MonoBehaviour
     {
         switch (confirmBTNFunction)
         {
+            case "DeclareAOEPosition":
+                currentCreature.GetComponent<TargetManager>().directionIndicated = true;
+                break;
             case "DeclareTargets":
                 currentCreature.GetComponent<TargetManager>().hasDeclared = true;
                 break;
-
             case "CastAbility":
                 currentCreature.GetComponent<AbilityManager>().abilityCast = true;
                 break;

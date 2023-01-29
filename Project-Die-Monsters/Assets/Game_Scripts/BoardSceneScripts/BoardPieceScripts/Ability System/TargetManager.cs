@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,14 +12,18 @@ public class TargetManager : MonoBehaviour
     public AbilityEffect currentEffect;
     public bool hasDeclared = false;
     public List<GameObject> foundTargets = new List<GameObject>();
+    public List<GameObject> targetPool = new List<GameObject>();
+
+    [Header("AOE Specific Varibles")]
     public GameObject Position;
+    public bool directionIndicated;
+
     public void Awake()
     {
         creatureController = GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>();
         levelController = GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>();
     }
 
-    public List<GameObject> targetPool = new List<GameObject>();
 
     public void FindTarget()
     {
@@ -93,10 +98,7 @@ public class TargetManager : MonoBehaviour
             yield return null;
         }
 
-        for (int i = 0; i < targetPool.Count; i++)
-        {
-            targetPool[i].GetComponent<CreatureToken>().myBoardLocation.GetComponent<GridScript>().ResetGridTile();
-        }
+        ResetGridIndicators();
         this.GetComponent<EffectManager>().targetsChecked = true;
         yield return null;
     }
@@ -148,9 +150,17 @@ public class TargetManager : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log("Found Position" + Position.gameObject.name) ;
         AOEDirection();
+        GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().ShowAndUpdateInterface("AOE");
+        GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().confirmBTNFunction = "DeclareAOEPosition";
 
+        while (directionIndicated == false)
+        {
+            yield return null;
+        }
+
+        ResetGridIndicators();
+        Debug.Log("Find Creatures That Are Matching Now");
 
         yield return null;
     }
@@ -172,22 +182,30 @@ public class TargetManager : MonoBehaviour
     public void AOEDirection()
     {
         CreatureToken mySelf = this.gameObject.GetComponent<CreatureToken>();
+        Debug.Log(currentEffect.AOEDirection);
         switch (currentEffect.AOEDirection)
         {
             case AbilityEffect.AOEDirections.front:
                 mySelf.myBoardLocation.GetComponent<GridScript>().FindTargetsInDirection(mySelf.facingDirection, 0, this.gameObject);
                 break;
             case AbilityEffect.AOEDirections.frontBack:
-
+                mySelf.myBoardLocation.GetComponent<GridScript>().FindTargetsInDirection(mySelf.facingDirection, 0, this.gameObject);
+                mySelf.myBoardLocation.GetComponent<GridScript>().FindTargetsInDirection(mySelf.behindDirection, 0, this.gameObject);
                 break;
             case AbilityEffect.AOEDirections.frontSides:
-
+                mySelf.myBoardLocation.GetComponent<GridScript>().FindTargetsInDirection(mySelf.facingDirection, 0, this.gameObject);
+                mySelf.myBoardLocation.GetComponent<GridScript>().FindTargetsInDirection(mySelf.sideDirection, 0, this.gameObject);
+                mySelf.myBoardLocation.GetComponent<GridScript>().FindTargetsInDirection(mySelf.otherSideDirection, 0, this.gameObject);
                 break;
             case AbilityEffect.AOEDirections.sides:
-
+                mySelf.myBoardLocation.GetComponent<GridScript>().FindTargetsInDirection(mySelf.sideDirection, 0, this.gameObject);
+                mySelf.myBoardLocation.GetComponent<GridScript>().FindTargetsInDirection(mySelf.otherSideDirection, 0, this.gameObject);
                 break;
             case AbilityEffect.AOEDirections.all:
-
+                mySelf.myBoardLocation.GetComponent<GridScript>().FindTargetsInDirection(mySelf.facingDirection, 0, this.gameObject);
+                mySelf.myBoardLocation.GetComponent<GridScript>().FindTargetsInDirection(mySelf.behindDirection, 0, this.gameObject);
+                mySelf.myBoardLocation.GetComponent<GridScript>().FindTargetsInDirection(mySelf.sideDirection, 0, this.gameObject);
+                mySelf.myBoardLocation.GetComponent<GridScript>().FindTargetsInDirection(mySelf.otherSideDirection, 0, this.gameObject);
                 break;
         }
     }
@@ -197,10 +215,32 @@ public class TargetManager : MonoBehaviour
 
     public void ResetManager()
     {
+        ResetGridIndicators();
         currentEffect = null;
         hasDeclared = false;
         foundTargets.Clear();
         targetPool.Clear();
         StopAllCoroutines();
+    }
+
+    public void ResetGridIndicators()
+    {
+        if (currentEffect != null)
+        {
+            if (currentEffect.abilityTarget == AbilityEffect.EffectTargeting.declared)
+            {
+                for (int i = 0; i < targetPool.Count; i++)
+                {
+                    targetPool[i].GetComponent<CreatureToken>().myBoardLocation.GetComponent<GridScript>().ResetGridTile();
+                }
+            }
+            else if (currentEffect.abilityTarget == AbilityEffect.EffectTargeting.areaOfEffect)
+            {
+                for (int i = 0; i < targetPool.Count; i++)
+                {
+                    targetPool[i].GetComponent<GridScript>().ResetGridTile();
+                }
+            }
+        }
     }
 }

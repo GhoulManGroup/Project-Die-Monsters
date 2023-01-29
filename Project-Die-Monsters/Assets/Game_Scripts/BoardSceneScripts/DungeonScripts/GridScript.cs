@@ -284,32 +284,31 @@ public class GridScript : MonoBehaviour
     #region AOEAbilityCode
     public void FindTargetsInDirection(string direction, int distance, GameObject Origin) //0 east / 1 west /2 north 3/ soith
     { //Do Not add to orign if distance is 0 or greater than disanceIndirection or not dungeon tile.
-
-        if (distance > 0 && distance <= Origin.GetComponent<TargetManager>().currentEffect.distanceInDirection)
+        if (myState == "DungeonTile")
         {
-            //How do we find the creatures when the grid tiles don't store that information ....
-            if (creatureAboveMe != null)
+            if (distance > 0 && distance <= Origin.GetComponent<TargetManager>().currentEffect.distanceInDirection)
             {
-                Origin.GetComponent<TargetManager>().foundTargets.Add(creatureAboveMe);
+                SetIndicatorMaterial("AOEMarker");
+                Origin.GetComponent<TargetManager>().targetPool.Add(this.gameObject);     
             }
-        }
 
-        if (distance < Origin.GetComponent<TargetManager>().currentEffect.distanceInDirection)
-        {
-            switch (direction)
+            if (distance < Origin.GetComponent<TargetManager>().currentEffect.distanceInDirection)
             {
-                case "North":
-                    NeighbourNorth.GetComponent<GridScript>().FindTargetsInDirection(direction, distance + 1, Origin);
-                    break;
-                case "South":
-                    NeighbourSouth.GetComponent<GridScript>().FindTargetsInDirection(direction, distance + 1, Origin);
-                    break;
-                case "West":
-                    NeighbourWest.GetComponent<GridScript>().FindTargetsInDirection(direction, distance + 1, Origin);
-                    break;
-                case "East":
-                    NeighbourEast.GetComponent<GridScript>().FindTargetsInDirection(direction, distance + 1, Origin);
-                    break;
+                switch (direction)
+                {
+                    case "North":
+                        NeighbourNorth.GetComponent<GridScript>().FindTargetsInDirection(direction, distance + 1, Origin);
+                        break;
+                    case "South":
+                        NeighbourSouth.GetComponent<GridScript>().FindTargetsInDirection(direction, distance + 1, Origin);
+                        break;
+                    case "West":
+                        NeighbourWest.GetComponent<GridScript>().FindTargetsInDirection(direction, distance + 1, Origin);
+                        break;
+                    case "East":
+                        NeighbourEast.GetComponent<GridScript>().FindTargetsInDirection(direction, distance + 1, Origin);
+                        break;
+                }
             }
         }
     }
