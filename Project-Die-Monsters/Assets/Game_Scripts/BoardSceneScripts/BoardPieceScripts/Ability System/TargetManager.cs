@@ -27,22 +27,25 @@ public class TargetManager : MonoBehaviour
 
     public void FindTarget()
     {
-        switch (currentEffect.abilityTarget)
+        hasDeclared = false;
+        switch (currentEffect.howAbilityTarget)
         {
             case AbilityEffect.EffectTargeting.random:
 
                 break;
 
             case AbilityEffect.EffectTargeting.areaOfEffect:
+
                 StartCoroutine("AOEEffectTargeting");
                 break;
 
             case AbilityEffect.EffectTargeting.declared:
+
                 switch (currentEffect.allowedTargets)
                 {
                     case AbilityEffect.AllowedTargets.self:
                         foundTargets.Add(this.gameObject);
-                        this.GetComponent<EffectManager>().targetsChecked = true;
+                        this.GetComponent<EffectManager>().targetsChecked = true;                       
                         break;
 
                     case AbilityEffect.AllowedTargets.friendly:
@@ -161,7 +164,9 @@ public class TargetManager : MonoBehaviour
 
         ResetGridIndicators();
         Debug.Log("Find Creatures That Are Matching Now");
-
+        TargetsAllowed();
+        Debug.Log(foundTargets.Count);
+        this.GetComponent<EffectManager>().targetsChecked = true;
         yield return null;
     }
 
@@ -210,8 +215,55 @@ public class TargetManager : MonoBehaviour
         }
     }
 
+    public void TargetsAllowed()
+    {
+        switch (currentEffect.allowedTargets)
+        {
+            case AbilityEffect.AllowedTargets.all:
+                for (int i = 0; i < targetPool.Count; i++)
+                {
+                    if (targetPool[i].GetComponent<GridScript>().creatureAboveMe != null)
+                    {
+                        foundTargets.Add(targetPool[i].GetComponent<GridScript>().creatureAboveMe);
+                    }
+                }
+                break;
 
+            case AbilityEffect.AllowedTargets.friendly:
+                for (int i = 0; i < targetPool.Count; i++)
+                {
+                    if (targetPool[i].GetComponent<GridScript>().creatureAboveMe != null)
+                    {
+                        if (targetPool[i].GetComponent<GridScript>().creatureAboveMe.GetComponent<CreatureToken>().myOwner == levelController.whoseTurn)
+                        {
+                            foundTargets.Add(targetPool[i].GetComponent<GridScript>().creatureAboveMe);
+                        }
+                    }
+                }
+                break;
+
+            case AbilityEffect.AllowedTargets.hostile:
+                for (int i = 0; i < targetPool.Count; i++)
+                {
+                    if (targetPool[i].GetComponent<GridScript>().creatureAboveMe != null)
+                    {
+                        if (targetPool[i].GetComponent<GridScript>().creatureAboveMe.GetComponent<CreatureToken>().myOwner != levelController.whoseTurn)
+                        {
+                            foundTargets.Add(targetPool[i].GetComponent<GridScript>().creatureAboveMe);
+                        }
+                    }
+                }
+                break;
+
+            case AbilityEffect.AllowedTargets.self:
+                Debug.Log("Error Should not be able to effect self check for wrong code");
+                break;
+        }
+
+        targetPool.Clear();
+    }
     #endregion
+
 
     public void ResetManager()
     {
@@ -227,14 +279,14 @@ public class TargetManager : MonoBehaviour
     {
         if (currentEffect != null)
         {
-            if (currentEffect.abilityTarget == AbilityEffect.EffectTargeting.declared)
+            if (currentEffect.howAbilityTarget == AbilityEffect.EffectTargeting.declared)
             {
                 for (int i = 0; i < targetPool.Count; i++)
                 {
                     targetPool[i].GetComponent<CreatureToken>().myBoardLocation.GetComponent<GridScript>().ResetGridTile();
                 }
             }
-            else if (currentEffect.abilityTarget == AbilityEffect.EffectTargeting.areaOfEffect)
+            else if (currentEffect.howAbilityTarget == AbilityEffect.EffectTargeting.areaOfEffect)
             {
                 for (int i = 0; i < targetPool.Count; i++)
                 {

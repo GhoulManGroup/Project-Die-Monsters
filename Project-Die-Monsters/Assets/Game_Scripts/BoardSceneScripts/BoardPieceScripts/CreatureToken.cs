@@ -115,6 +115,7 @@ public class CreatureToken : MonoBehaviour
                 break;
         }
     }
+
     public void declareTile(string why) // declare where we are.
     {
         RaycastHit Down;
@@ -261,6 +262,7 @@ public class CreatureToken : MonoBehaviour
                 case "AOETarget":
 
                     break;
+
                 case "TargetPick":
                     //Find the creature casting its ability in the ability UI Script, if we are a valid target pass this creature through to see if we can be added to declared creature list.
                     TargetManager castingCreature = GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().currentCreature.GetComponent<TargetManager>();

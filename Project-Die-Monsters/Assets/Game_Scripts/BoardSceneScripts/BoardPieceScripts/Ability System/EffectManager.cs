@@ -16,6 +16,7 @@ public class EffectManager : MonoBehaviour
 
     public IEnumerator PrepareAndCastEffect()
     {
+        targetsChecked = false;
         //Call target manager and have it find the effects targets then inform the ability manager the effect is ready!
         this.GetComponent<TargetManager>().currentEffect = effectToResolve;
         this.GetComponent<TargetManager>().FindTarget();

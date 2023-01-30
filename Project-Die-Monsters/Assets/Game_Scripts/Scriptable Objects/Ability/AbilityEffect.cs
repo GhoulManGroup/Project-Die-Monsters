@@ -12,7 +12,7 @@ public class AbilityEffect : ScriptableObject
     public StateReset stateChanged;
 
     [Header("Ability Target System")]
-    public EffectTargeting abilityTarget;
+    public EffectTargeting howAbilityTarget;
     public AOEDirections AOEDirection;
     public AOEPosition AOEBoardPosition;
     public AllowedTargets allowedTargets;
