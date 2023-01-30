@@ -28,6 +28,7 @@ public class TargetManager : MonoBehaviour
     public void FindTarget()
     {
         hasDeclared = false;
+        directionIndicated = false;
         switch (currentEffect.howAbilityTarget)
         {
             case AbilityEffect.EffectTargeting.random:
@@ -154,6 +155,8 @@ public class TargetManager : MonoBehaviour
         }
 
         AOEDirection();
+        TargetsAllowed();
+        Debug.Log(foundTargets.Count);
         GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().ShowAndUpdateInterface("AOE");
         GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().confirmBTNFunction = "DeclareAOEPosition";
 
@@ -163,9 +166,7 @@ public class TargetManager : MonoBehaviour
         }
 
         ResetGridIndicators();
-        Debug.Log("Find Creatures That Are Matching Now");
-        TargetsAllowed();
-        Debug.Log(foundTargets.Count);
+
         this.GetComponent<EffectManager>().targetsChecked = true;
         yield return null;
     }
@@ -259,8 +260,6 @@ public class TargetManager : MonoBehaviour
                 Debug.Log("Error Should not be able to effect self check for wrong code");
                 break;
         }
-
-        targetPool.Clear();
     }
     #endregion
 
@@ -269,6 +268,7 @@ public class TargetManager : MonoBehaviour
     {
         ResetGridIndicators();
         currentEffect = null;
+        directionIndicated = false;
         hasDeclared = false;
         foundTargets.Clear();
         targetPool.Clear();
@@ -294,5 +294,7 @@ public class TargetManager : MonoBehaviour
                 }
             }
         }
+
+        targetPool.Clear();
     }
 }

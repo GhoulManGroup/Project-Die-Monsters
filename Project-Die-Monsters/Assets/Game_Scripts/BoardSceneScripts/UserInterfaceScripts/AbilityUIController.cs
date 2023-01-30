@@ -34,15 +34,26 @@ public class AbilityUIController : MonoBehaviour
         switch (showedFor)
         {
             case "Declare":
+                cancleBTN.GetComponent<Button>().interactable = true;
                 targetsPickedPanel.SetActive(true);
                 targetText.text = "Targets Min " + currentEffect.requiredTargetCount + "Targets Max " + currentEffect.maximumTargetCount + "Tagets Picked " + currentCreature.GetComponent<TargetManager>().foundTargets.Count;
                 break;
 
             case "AOE":
+                targetsPickedPanel.SetActive(true);
+                targetText.text = "Creatures Hit! " + currentCreature.GetComponent<TargetManager>().foundTargets.Count;
                 confirmBTN.GetComponent<Button>().interactable = true;
                 cancleBTN.GetComponent<Button>().interactable = true;
                 break;
+
+            case "ConfirmCast":
+                targetsPickedPanel.SetActive(true);
+                targetText.text = "Confirm Cast?";
+                cancleBTN.GetComponent<Button>().interactable = true;
+                confirmBTN.GetComponent<Button>().interactable = true;
+                break;
         }
+
         cancleBTN.SetActive(true);
         confirmBTN.SetActive(true);
     }
