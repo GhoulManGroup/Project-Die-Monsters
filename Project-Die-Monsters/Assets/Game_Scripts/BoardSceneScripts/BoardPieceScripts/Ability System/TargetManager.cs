@@ -24,7 +24,6 @@ public class TargetManager : MonoBehaviour
         levelController = GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>();
     }
 
-
     public void FindTarget()
     {
         hasDeclared = false;
@@ -78,7 +77,7 @@ public class TargetManager : MonoBehaviour
                             targetPool.Add(creatureController.CreaturesOnBoard[i]);                         
                         }
                         StartCoroutine("DeclaringTargets");
-                        break;
+                        break; 
                 }
                 break;
         }
@@ -156,7 +155,6 @@ public class TargetManager : MonoBehaviour
 
         AOEDirection();
         TargetsAllowed();
-        Debug.Log(foundTargets.Count);
         GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().ShowAndUpdateInterface("AOE");
         GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().confirmBTNFunction = "DeclareAOEPosition";
 
@@ -177,10 +175,6 @@ public class TargetManager : MonoBehaviour
         {
             case AbilityEffect.AOEPosition.self:
                 Position = this.gameObject.GetComponent<CreatureToken>().myBoardLocation;
-                break;
-
-            case AbilityEffect.AOEPosition.friendly:
-
                 break;
         }
     }
@@ -226,6 +220,7 @@ public class TargetManager : MonoBehaviour
                     if (targetPool[i].GetComponent<GridScript>().creatureAboveMe != null)
                     {
                         foundTargets.Add(targetPool[i].GetComponent<GridScript>().creatureAboveMe);
+                        targetPool[i].GetComponent<GridScript>().SetIndicatorMaterial("PickedTarget");
                     }
                 }
                 break;
@@ -238,6 +233,7 @@ public class TargetManager : MonoBehaviour
                         if (targetPool[i].GetComponent<GridScript>().creatureAboveMe.GetComponent<CreatureToken>().myOwner == levelController.whoseTurn)
                         {
                             foundTargets.Add(targetPool[i].GetComponent<GridScript>().creatureAboveMe);
+                            targetPool[i].GetComponent<GridScript>().SetIndicatorMaterial("PickedTarget");
                         }
                     }
                 }
@@ -251,6 +247,7 @@ public class TargetManager : MonoBehaviour
                         if (targetPool[i].GetComponent<GridScript>().creatureAboveMe.GetComponent<CreatureToken>().myOwner != levelController.whoseTurn)
                         {
                             foundTargets.Add(targetPool[i].GetComponent<GridScript>().creatureAboveMe);
+                            targetPool[i].GetComponent<GridScript>().SetIndicatorMaterial("PickedTarget");
                         }
                     }
                 }
@@ -262,7 +259,6 @@ public class TargetManager : MonoBehaviour
         }
     }
     #endregion
-
 
     public void ResetManager()
     {
@@ -297,4 +293,12 @@ public class TargetManager : MonoBehaviour
 
         targetPool.Clear();
     }
+
+    #region CheckCanBeCast
+    //This code will simply check that there are enough possible targets for the ability to be cast and then check that the effect state.
+    public IEnumerator HasPossibleTargets()
+    {
+        yield return null;
+    }
+    #endregion
 }

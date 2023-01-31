@@ -16,10 +16,10 @@ MonoBehaviour:
   statChanged: 0
   modifierValue: 5
   stateChanged: 3
-  abilityTarget: 0
+  howAbilityTarget: 0
   AOEDirection: 4
   AOEBoardPosition: 0
-  allowedTargets: 2
+  allowedTargets: 3
   distanceInDirection: 3
   requiredTargetCount: 0
   maximumTargetCount: 0

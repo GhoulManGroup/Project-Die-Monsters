@@ -23,16 +23,6 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
         myCreature = this.gameObject.GetComponent<CreatureToken>();
     }   
 
-    public void CheckAbilityCanCast() // Check if ability can be cast by seeing if there are enough valid targets for its conditions
-    {
-        Debug.Log("Checking Ability");
-        for (int i = 0; i < myAbility.abilityEffects.Count; i++)
-        {
-            this.GetComponent<EffectManager>().effectToResolve = myAbility.abilityEffects[i];
-            this.GetComponent<EffectManager>().StartCoroutine("ResolveEffect");
-        }
-    }
-
     public IEnumerator ActivateEffect()
     {
         for (int i = 0; i < myAbility.abilityEffects.Count; i++)
@@ -79,5 +69,33 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
         readyEffects = 0;
         abilityCast = false;
         effectsResolved= 0;
+    }
+
+    public IEnumerator CheckAbilityCanBeCast(int checkedEffects, int castableEffects, bool hasChecked )
+    {
+        for (int i = 0; i < myAbility.abilityEffects.Count; i++)
+        {
+
+        }
+        while (hasChecked == false)
+        {
+            if (checkedEffects == myAbility.abilityEffects.Count)
+            {
+                hasChecked = true;
+            }
+            yield return null;
+        }
+
+        if (castableEffects == myAbility.abilityEffects.Count)
+        {
+            canBeCast = true;
+            Debug.Log("cANcASTiVElOoked");
+        }else
+        {
+            canBeCast = false;
+            Debug.Log("CANT cAST IVE CHECKED");
+        }
+
+        yield return null;
     }
 }

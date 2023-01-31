@@ -288,6 +288,7 @@ public class PathController : MonoBehaviour
         startPosition.GetComponent<GridScript>().TileContents = "Creature";
         GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenAction = "None";
         GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().OpenAndCloseControllerUI();
+        GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>().boardInteraction = "None";
     }
 
     #endregion
