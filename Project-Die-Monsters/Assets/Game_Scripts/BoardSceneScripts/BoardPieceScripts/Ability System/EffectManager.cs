@@ -14,6 +14,7 @@ public class EffectManager : MonoBehaviour
         targetFinder = this.GetComponent<TargetManager>();
     }
 
+    #region AbilityCastingCode
     public IEnumerator PrepareAndCastEffect()
     {
         targetsChecked = false;
@@ -77,6 +78,7 @@ public class EffectManager : MonoBehaviour
         }
 
     }
+    #endregion
 
     public void ResetManager()
     {
@@ -85,6 +87,11 @@ public class EffectManager : MonoBehaviour
         StopAllCoroutines();
     }
 
+    #region CheckCanBeCastCode
+    public void EffectChecking()
+    {
 
+    }
+    #endregion
 
 }

@@ -298,6 +298,53 @@ public class TargetManager : MonoBehaviour
     //This code will simply check that there are enough possible targets for the ability to be cast and then check that the effect state.
     public IEnumerator HasPossibleTargets()
     {
+        int possibleTargetsFound = 0;
+        switch (currentEffect.howAbilityTarget)
+        {
+            case AbilityEffect.EffectTargeting.areaOfEffect:
+
+                break;
+            case AbilityEffect.EffectTargeting.declared:
+                switch (currentEffect.allowedTargets)
+                {
+                    case AbilityEffect.AllowedTargets.friendly:
+                        for (int i = 0; i < creatureController.CreaturesOnBoard.Count; i++)
+                        {
+                            if (creatureController.CreaturesOnBoard[i].GetComponent<CreatureToken>().myOwner == levelController.whoseTurn)
+                            {
+                                possibleTargetsFound += 1;
+                            }
+                        }
+                        break;
+
+                    case AbilityEffect.AllowedTargets.hostile:
+                        for (int i = 0; i < creatureController.CreaturesOnBoard.Count; i++)
+                        {
+                            if (creatureController.CreaturesOnBoard[i].GetComponent<CreatureToken>().myOwner != levelController.whoseTurn)
+                            {
+                                possibleTargetsFound += 1;
+                            }
+                        }
+                        break;
+
+                    case AbilityEffect.AllowedTargets.self:
+                        //Just skip next step.
+                        yield break;
+
+                    case AbilityEffect.AllowedTargets.all:
+                        possibleTargetsFound = creatureController.CreaturesOnBoard.Count;
+                        break;
+                }
+                break;
+        }
+
+        if (possibleTargetsFound >= currentEffect.requiredTargetCount)
+        {
+            //Effect hAS ENOUGH TARGETS
+        }else if (possibleTargetsFound < currentEffect.requiredTargetCount)
+        {
+            //EFFECT HAS NOT ENOUGH TARGETS
+        }
         yield return null;
     }
     #endregion

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.U2D.IK;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,14 +9,18 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
     public Ability myAbility;
     CreatureToken  myCreature;
 
+    public bool abilityCast = false; // this is the check for if the ability has been used this turn already
+
+    [Header("Ability Casting System")]
+    public int readyEffects = 0; //effects prepared and ready for applicaiton to targets
+    public int effectsResolved = 0; //resolved effect count
+
+
+    [Header("Check Can Cast")]
+    public bool checkingEffect = false; //This is inside for loop to make it wait untill the previous effect is checked before continung the loop.
     public bool canBeCast = false; // Can we cast the ability used to enable creature controller UI
-
-    // how many effects in the list of effects are ready to cast. if == count of effect list ability ready to cast.
-    public int readyEffects = 0;
-
-    public bool abilityCast = false; // Has the player actually confirmed the casting.
-    //how many effects of our pending effects have actualy resolved used to determine when the effect is done.
-    public int effectsResolved = 0;
+    int effectChecked = 0; // number of effects checked for necessary target count
+    int effectsCanBeDone = 0; // effects out of count that can be cast if not = to count ability can't be cast
 
 
     public void Awake()
@@ -28,8 +33,8 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
         for (int i = 0; i < myAbility.abilityEffects.Count; i++)
         {
             this.GetComponent<EffectManager>().effectToResolve = myAbility.abilityEffects[i];
-            this.GetComponent<EffectManager>().StartCoroutine("PrepareAndCastEffect"); 
-            //Add a Wait here untill the effect is done as user input is required.
+            this.GetComponent<EffectManager>().StartCoroutine("PrepareAndCastEffect");
+            //Add while loop to stargger effect preperation.
         }
 
         while (readyEffects != myAbility.abilityEffects.Count)
@@ -71,22 +76,30 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
         effectsResolved= 0;
     }
 
-    public IEnumerator CheckAbilityCanBeCast(int checkedEffects, int castableEffects, bool hasChecked )
+    //Call this from creature controller.
+    public IEnumerator CheckAbilityCanBeCast( )
     {
         for (int i = 0; i < myAbility.abilityEffects.Count; i++)
-        {
-
-        }
-        while (hasChecked == false)
-        {
-            if (checkedEffects == myAbility.abilityEffects.Count)
+        {//Loop through each effect and check.
+            checkingEffect = true;
+            this.GetComponent<TargetManager>().currentEffect = myAbility.abilityEffects[i];
+            this.GetComponent<EffectManager>().effectToResolve = myAbility.abilityEffects[i];
+            this.GetComponent<EffectManager>().StartCoroutine("EffectChecking");
+            Debug.Log("Hello Cunt");
+            while (checkingEffect == true)
             {
-                hasChecked = true;
+                yield return null;
             }
+        }
+
+        Debug.Log("After Loop");
+
+        while (effectChecked != myAbility.abilityEffects.Count)
+        { // Wait untill this = count
             yield return null;
         }
 
-        if (castableEffects == myAbility.abilityEffects.Count)
+        if (effectsCanBeDone == myAbility.abilityEffects.Count)
         {
             canBeCast = true;
             Debug.Log("cANcASTiVElOoked");
