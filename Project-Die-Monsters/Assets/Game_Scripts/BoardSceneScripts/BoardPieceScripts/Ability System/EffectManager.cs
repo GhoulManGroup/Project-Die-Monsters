@@ -9,6 +9,9 @@ public class EffectManager : MonoBehaviour
     public bool targetsChecked = false; //Has the target manager finished looking for the effects valid targets
     TargetManager targetFinder;
 
+    [Header("CheckCanCast")]
+    public bool targetsExist = false;
+
     public void Awake()
     {
         targetFinder = this.GetComponent<TargetManager>();
@@ -83,6 +86,7 @@ public class EffectManager : MonoBehaviour
     public void ResetManager()
     {
         targetsChecked = false;
+        targetsExist = false;
         effectToResolve = null;
         StopAllCoroutines();
     }
@@ -91,8 +95,14 @@ public class EffectManager : MonoBehaviour
     public IEnumerator EffectChecking()
     {
         Debug.Log("Hello Cunt 2");
-        yield return null;
-        this.GetComponent<TargetManager>().StartCoroutine("HasPossibleTargets");
+        yield return this.GetComponent<TargetManager>().StartCoroutine("HasPossibleTargets");
+
+        while (targetsExist == true)
+        {
+            yield return null;
+        }
+
+        Debug.Log("Hello rom Effect");
         //Find Valid Targets for effect -------------------------------------------------------------------------------------------------------
         List<GameObject> targets = new List<GameObject>(targetFinder.targetPool);
         int validTargetCount = 0;
@@ -142,9 +152,11 @@ public class EffectManager : MonoBehaviour
         if (validTargetCount == effectToResolve.requiredTargetCount)
         {
             //Has Stuff
+            this.GetComponent<AbilityManager>().checkingEffect = false;
         }else if (validTargetCount != effectToResolve.requiredTargetCount)
         {
             //Does Not Have Stuff
+            this.GetComponent<AbilityManager>().ResetManager();
         }
     }
         #endregion
