@@ -88,10 +88,64 @@ public class EffectManager : MonoBehaviour
     }
 
     #region CheckCanBeCastCode
-    public void EffectChecking()
+    public IEnumerator EffectChecking()
     {
+        Debug.Log("Hello Cunt 2");
+        yield return null;
+        this.GetComponent<TargetManager>().StartCoroutine("HasPossibleTargets");
+        //Find Valid Targets for effect -------------------------------------------------------------------------------------------------------
+        List<GameObject> targets = new List<GameObject>(targetFinder.targetPool);
+        int validTargetCount = 0;
+        switch (effectToResolve.effectType)
+        {
+            case AbilityEffect.EffectType.stateChange:
+                switch (effectToResolve.stateChanged)
+                {
+                    case AbilityEffect.StateReset.attack:
+                        for (int i = 0; i < targets.Count; i++)
+                        {
+                            if (targets[i].GetComponent<CreatureToken>().hasAttackedThisTurn == false)
+                            {
+                                validTargetCount += 1;
+                            }
+                        }
+                        break;
+                    case AbilityEffect.StateReset.move:
+                        for (int i = 0; i < targets.Count; i++)
+                        {
+                            if (targets[i].GetComponent<CreatureToken>().hasMovedThisTurn == false)
+                            {
+                                validTargetCount += 1;
+                            }
+                        }
+                        break;
+                    case AbilityEffect.StateReset.useAbility:
+                        for (int i = 0; i < targets.Count; i++)
+                        {
+                            if (targets[i].GetComponent<CreatureToken>().hasUsedAbilityThisTurn == false)
+                            {
+                                validTargetCount += 1;
+                            }
+                        }
+                        break;
+                }
+                break;
+            case AbilityEffect.EffectType.modifier:
 
+                break;
+            case AbilityEffect.EffectType.none:
+
+                break;
+                //Check valid target count vs needed target count to confirm ability is valid.--------------------------------------------------------------------------------------------
+        }
+
+        if (validTargetCount == effectToResolve.requiredTargetCount)
+        {
+            //Has Stuff
+        }else if (validTargetCount != effectToResolve.requiredTargetCount)
+        {
+            //Does Not Have Stuff
+        }
     }
-    #endregion
-
+        #endregion
 }

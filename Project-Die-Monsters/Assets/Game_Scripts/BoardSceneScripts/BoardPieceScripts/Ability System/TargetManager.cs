@@ -313,6 +313,7 @@ public class TargetManager : MonoBehaviour
                             if (creatureController.CreaturesOnBoard[i].GetComponent<CreatureToken>().myOwner == levelController.whoseTurn)
                             {
                                 possibleTargetsFound += 1;
+                                targetPool.Add(creatureController.CreaturesOnBoard[i]);
                             }
                         }
                         break;
@@ -323,16 +324,18 @@ public class TargetManager : MonoBehaviour
                             if (creatureController.CreaturesOnBoard[i].GetComponent<CreatureToken>().myOwner != levelController.whoseTurn)
                             {
                                 possibleTargetsFound += 1;
+                                targetPool.Add(creatureController.CreaturesOnBoard[i]);
                             }
                         }
                         break;
 
                     case AbilityEffect.AllowedTargets.self:
-                        //Just skip next step.
+                        targetPool.Add(this.gameObject);
                         yield break;
 
                     case AbilityEffect.AllowedTargets.all:
                         possibleTargetsFound = creatureController.CreaturesOnBoard.Count;
+                        targetPool.AddRange(creatureController.CreaturesOnBoard);
                         break;
                 }
                 break;

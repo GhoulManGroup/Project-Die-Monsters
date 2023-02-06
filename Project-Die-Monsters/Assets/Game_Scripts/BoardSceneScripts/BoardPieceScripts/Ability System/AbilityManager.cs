@@ -22,7 +22,6 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
     int effectChecked = 0; // number of effects checked for necessary target count
     int effectsCanBeDone = 0; // effects out of count that can be cast if not = to count ability can't be cast
 
-
     public void Awake()
     {
         myCreature = this.gameObject.GetComponent<CreatureToken>();
@@ -71,9 +70,14 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
     public void ResetManager()
     {
         StopAllCoroutines();
-        readyEffects = 0;
         abilityCast = false;
+        readyEffects = 0;
         effectsResolved= 0;
+
+        checkingEffect = false;
+        canBeCast = false;
+        effectChecked = 0;
+        effectsCanBeDone = 0;
     }
 
     //Call this from creature controller.
@@ -81,11 +85,11 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
     {
         for (int i = 0; i < myAbility.abilityEffects.Count; i++)
         {//Loop through each effect and check.
+            Debug.Log("Hello Cunt");
             checkingEffect = true;
             this.GetComponent<TargetManager>().currentEffect = myAbility.abilityEffects[i];
             this.GetComponent<EffectManager>().effectToResolve = myAbility.abilityEffects[i];
             this.GetComponent<EffectManager>().StartCoroutine("EffectChecking");
-            Debug.Log("Hello Cunt");
             while (checkingEffect == true)
             {
                 yield return null;
@@ -105,8 +109,8 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
             Debug.Log("cANcASTiVElOoked");
         }else
         {
-            canBeCast = false;
-            Debug.Log("CANT cAST IVE CHECKED");
+            Debug.Log("CanTcAsTHaveCheCkEEd");
+            ResetManager();
         }
 
         yield return null;
