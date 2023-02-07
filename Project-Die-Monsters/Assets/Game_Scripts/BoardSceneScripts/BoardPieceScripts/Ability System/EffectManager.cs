@@ -97,7 +97,7 @@ public class EffectManager : MonoBehaviour
         Debug.Log("Hello Cunt 2");
         yield return this.GetComponent<TargetManager>().StartCoroutine("HasPossibleTargets");
 
-        while (targetsExist == true)
+        while (targetsExist == false)
         {
             yield return null;
         }
@@ -105,6 +105,7 @@ public class EffectManager : MonoBehaviour
         Debug.Log("Hello rom Effect");
         //Find Valid Targets for effect -------------------------------------------------------------------------------------------------------
         List<GameObject> targets = new List<GameObject>(targetFinder.targetPool);
+        Debug.Log(targets.Count);
         int validTargetCount = 0;
         switch (effectToResolve.effectType)
         {
@@ -140,8 +141,20 @@ public class EffectManager : MonoBehaviour
                         break;
                 }
                 break;
-            case AbilityEffect.EffectType.modifier:
 
+            case AbilityEffect.EffectType.modifier:
+                switch (effectToResolve.statChanged)
+                {
+                    case AbilityEffect.ModifiedProperty.attack:
+
+                        break;
+                    case AbilityEffect.ModifiedProperty.defence:
+
+                        break;
+                    case AbilityEffect.ModifiedProperty.health:
+
+                        break;
+                }
                 break;
             case AbilityEffect.EffectType.none:
 
@@ -152,11 +165,13 @@ public class EffectManager : MonoBehaviour
         if (validTargetCount == effectToResolve.requiredTargetCount)
         {
             //Has Stuff
+            Debug.Log("Hello From Effect Success");
             this.GetComponent<AbilityManager>().checkingEffect = false;
         }else if (validTargetCount != effectToResolve.requiredTargetCount)
         {
             //Does Not Have Stuff
-            this.GetComponent<AbilityManager>().ResetManager();
+            Debug.Log("Hello From Effect Failure");
+            this.GetComponent<AbilityManager>().ResetAbilitySystem();
         }
     }
         #endregion

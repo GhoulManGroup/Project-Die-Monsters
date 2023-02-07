@@ -61,10 +61,15 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
     {
         GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenAction = "None";
         GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().OpenAndCloseControllerUI();
+        ResetAbilitySystem();
+    }
+
+    public void ResetAbilitySystem()
+    {
+        Debug.Log("Reseting Ability System");
         ResetManager();
         this.GetComponent<EffectManager>().ResetManager();
         this.GetComponent<TargetManager>().ResetManager();
-        //by runing the reset funcitons all all 3.
     }
 
     public void ResetManager()
@@ -94,6 +99,7 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
             {
                 yield return null;
             }
+            Debug.Log("AM lOOP Check");
         }
 
         Debug.Log("After Loop");

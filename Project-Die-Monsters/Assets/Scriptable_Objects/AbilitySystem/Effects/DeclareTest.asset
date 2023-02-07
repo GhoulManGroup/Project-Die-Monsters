@@ -16,7 +16,7 @@ MonoBehaviour:
   statChanged: 0
   modifierValue: -10
   stateChanged: 0
-  abilityTarget: 1
+  howAbilityTarget: 1
   AOEDirection: 4
   AOEBoardPosition: 0
   allowedTargets: 2

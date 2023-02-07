@@ -346,10 +346,12 @@ public class TargetManager : MonoBehaviour
         {
             //Effect hAS ENOUGH TARGETS
             this.GetComponent<EffectManager>().targetsExist = true;
+            Debug.Log("Hello From Targets Found");
         }else if (possibleTargetsFound < currentEffect.requiredTargetCount)
         {
             //EFFECT HAS NOT ENOUGH TARGETS
-            this.GetComponent<AbilityManager>().ResetManager();
+            this.GetComponent<AbilityManager>().ResetAbilitySystem();
+            Debug.Log("Hello From Targets Not Found");
         }
         yield return null;
     }

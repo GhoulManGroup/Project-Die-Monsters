@@ -38,7 +38,7 @@ public class AbilityEffect : ScriptableObject
 
     public enum EffectTargeting
     {
-        areaOfEffect,   declared , random
+        areaOfEffect, declared, random
     }
 
     public enum AOEPosition
