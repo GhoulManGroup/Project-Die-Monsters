@@ -19,8 +19,7 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
     [Header("Check Can Cast")]
     public bool checkingEffect = false; //This is inside for loop to make it wait untill the previous effect is checked before continung the loop.
     public bool canBeCast = false; // Can we cast the ability used to enable creature controller UI
-    int effectChecked = 0; // number of effects checked for necessary target count
-    int effectsCanBeDone = 0; // effects out of count that can be cast if not = to count ability can't be cast
+    public int effectsCanBeDone = 0; //How many effects are able to be done.
 
     public void Awake()
     {
@@ -81,7 +80,6 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
 
         checkingEffect = false;
         canBeCast = false;
-        effectChecked = 0;
         effectsCanBeDone = 0;
     }
 
@@ -104,14 +102,11 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
 
         Debug.Log("After Loop");
 
-        while (effectChecked != myAbility.abilityEffects.Count)
-        { // Wait untill this = count
-            yield return null;
-        }
 
         if (effectsCanBeDone == myAbility.abilityEffects.Count)
         {
             canBeCast = true;
+            GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().CheckPossibleActions();
             Debug.Log("cANcASTiVElOoked");
         }else
         {

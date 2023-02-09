@@ -143,21 +143,14 @@ public class EffectManager : MonoBehaviour
                 break;
 
             case AbilityEffect.EffectType.modifier:
-                switch (effectToResolve.statChanged)
+                for (int i = 0; i < targets.Count; i++)
                 {
-                    case AbilityEffect.ModifiedProperty.attack:
-
-                        break;
-                    case AbilityEffect.ModifiedProperty.defence:
-
-                        break;
-                    case AbilityEffect.ModifiedProperty.health:
-
-                        break;
+                    validTargetCount += 1;
                 }
                 break;
-            case AbilityEffect.EffectType.none:
 
+            case AbilityEffect.EffectType.none:
+                Debug.Log("How did you get here check abilty effect settings");
                 break;
                 //Check valid target count vs needed target count to confirm ability is valid.--------------------------------------------------------------------------------------------
         }
@@ -167,6 +160,7 @@ public class EffectManager : MonoBehaviour
             //Has Stuff
             Debug.Log("Hello From Effect Success");
             this.GetComponent<AbilityManager>().checkingEffect = false;
+            this.GetComponent<AbilityManager>().effectsCanBeDone += 1;
         }else if (validTargetCount != effectToResolve.requiredTargetCount)
         {
             //Does Not Have Stuff

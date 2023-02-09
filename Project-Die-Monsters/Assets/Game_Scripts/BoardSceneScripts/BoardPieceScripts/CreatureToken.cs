@@ -11,17 +11,25 @@ public class CreatureToken : MonoBehaviour
     GameObject lvlRef;
     LevelController lcScript;
 
-    [Header("Creature Varibles")] // creature stats.
+    [Header("Creature Varibles")] 
+    //Current Creature Values
     public int currentHealth;
     public int currentAttack;
     public int currentDefence;
+    //Creature Max Values
+    public int healthCap;
+    public int attackCap;
+    public int defenceCap;
 
-
+    //Action Costs
     public int moveCost = 1; // how many move crests per tile.
     public int attackDistance = 1; // how far we can attack.
     public int attackCost = 1; // how much to attack.
     public int abilityCost = 1; // how much does the ability of creature cost.
-    public string myOwner; // who owns this piece.
+
+    //Creature Owner
+    public string myOwner;
+
 
     [Header("Directions")]
     public string facingDirection = "East";
@@ -85,6 +93,9 @@ public class CreatureToken : MonoBehaviour
         currentHealth = myCreature.Health;
         currentAttack = myCreature.Attack;
         currentDefence = myCreature.Defence;
+        healthCap = myCreature.Health;
+        attackCap = myCreature.Attack;
+        defenceCap = myCreature.Defence;
         abilityCost = myCreature.myAbility.abilityCost;
         setDirections();
     }
