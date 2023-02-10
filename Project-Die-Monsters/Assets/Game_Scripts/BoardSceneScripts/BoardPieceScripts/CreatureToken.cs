@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Scripting.APIUpdating;
 
 public class CreatureToken : MonoBehaviour
 {
@@ -302,15 +303,30 @@ public class CreatureToken : MonoBehaviour
         }
     }
 
-    public void CheckState()
-    {
+    public void CheckCreatureHealth()
+    {// Used to detemine if the creature is dead or to remove any overhealing.
+        if (currentHealth > healthCap)
+        {
+            currentHealth = healthCap;
+        }
+
         if (currentHealth <= 0)
         {
             myBoardLocation.GetComponent<GridScript>().TileContents = "Empty";
             lvlRef.GetComponent<CreatureController>().CreaturesOnBoard.Remove(this.gameObject);
             Destroy(this.gameObject);
-            Debug.Log("Creature Dead");
         }
+
+        Debug.Log("Check Creature Health Call");
     }
 
+    public void CreatureResetTurnEnd()
+    {
+        hasAttackedThisTurn = false;
+        hasMovedThisTurn = false;
+        hasUsedAbilityThisTurn = false;
+
+        currentAttack = attackCap;
+        currentDefence = defenceCap;
+    }
 }

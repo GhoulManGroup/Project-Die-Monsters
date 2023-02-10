@@ -98,8 +98,11 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
                 {
                     if (turnPlayer.GetComponent<Player>().abiltyPowerCrestPoints >= myAbility.abilityCost && ChosenCreatureToken.GetComponent<CreatureToken>().hasUsedAbilityThisTurn == false)
                     {
-                        ChosenCreatureToken.GetComponent<AbilityManager>().StartCoroutine("CheckAbilityCanBeCast");
-                        if (ChosenCreatureToken.GetComponent<AbilityManager>().canBeCast == true)
+                        if (ChosenCreatureToken.GetComponent<AbilityManager>().canBeCast != true)
+                        {
+                            ChosenCreatureToken.GetComponent<AbilityManager>().StartCoroutine("CheckAbilityCanBeCast");
+                        }
+                        else if (ChosenCreatureToken.GetComponent<AbilityManager>().canBeCast == true)
                         {
                             //ChosenCreatureToken.GetComponent<AbilityManager>().checkingCanCast = false;
                             OrderBTNS[2].GetComponent<Button>().interactable = true;
@@ -209,10 +212,16 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
     {
         for (int i = 0; i < CreaturesOnBoard.Count; i++)
         {
-            CreaturesOnBoard[i].GetComponent<CreatureToken>().hasMovedThisTurn = false;
-            CreaturesOnBoard[i].GetComponent<CreatureToken>().hasAttackedThisTurn = false;
-            CreaturesOnBoard[i].GetComponent<CreatureToken>().hasUsedAbilityThisTurn = false;
+            CreaturesOnBoard[i].GetComponent<CreatureToken>().CreatureResetTurnEnd();     
             lcScript.ableToInteractWithBoard = false;
+        }
+    }
+
+    public void CheckCreatureStates()
+    {
+        for (int i = 0; i < CreaturesOnBoard.Count; i++)
+        {
+            CreaturesOnBoard[i].GetComponent<CreatureToken>().CheckCreatureHealth();
         }
     }
 }

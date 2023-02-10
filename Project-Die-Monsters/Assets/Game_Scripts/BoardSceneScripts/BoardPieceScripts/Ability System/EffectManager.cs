@@ -73,7 +73,33 @@ public class EffectManager : MonoBehaviour
                 }
                 break;
             case AbilityEffect.EffectType.modifier:
-
+                switch (effectToResolve.statChanged)
+                {
+                    case AbilityEffect.ModifiedProperty.healthDamage:
+                        for (int i = 0; i < targets.Count; i++)
+                        {
+                            targets[i].GetComponent<CreatureToken>().currentHealth -= effectToResolve.modifierValue;
+                        }
+                        break;
+                    case AbilityEffect.ModifiedProperty.healthHeal:
+                        for (int i = 0; i < targets.Count; i++)
+                        {
+                            targets[i].GetComponent<CreatureToken>().currentHealth += effectToResolve.modifierValue;
+                        }
+                        break;
+                    case AbilityEffect.ModifiedProperty.attack:
+                        for (int i = 0; i < targets.Count; i++)
+                        {
+                            targets[i].GetComponent<CreatureToken>().hasUsedAbilityThisTurn = false;
+                        }
+                        break;
+                    case AbilityEffect.ModifiedProperty.defence:
+                        for (int i = 0; i < targets.Count; i++)
+                        {
+                            targets[i].GetComponent<CreatureToken>().hasUsedAbilityThisTurn = false;
+                        }
+                        break;
+                }
                 break;
             case AbilityEffect.EffectType.none:
 
@@ -143,9 +169,35 @@ public class EffectManager : MonoBehaviour
                 break;
 
             case AbilityEffect.EffectType.modifier:
-                for (int i = 0; i < targets.Count; i++)
+                switch (effectToResolve.statChanged)
                 {
-                    validTargetCount += 1;
+                    case AbilityEffect.ModifiedProperty.healthHeal:
+                        for (int i = 0; i < targets.Count; i++)
+                        {
+                            if (this.GetComponent<CreatureToken>().currentHealth != this.GetComponent<CreatureToken>().healthCap)
+                            {
+                                validTargetCount += 1;
+                            }
+                        }
+                        break;
+                    case AbilityEffect.ModifiedProperty.healthDamage:
+                        for (int i = 0; i < targets.Count; i++)
+                        {
+                            validTargetCount += 1;
+                        }
+                        break;
+                    case AbilityEffect.ModifiedProperty.attack:
+                        for (int i = 0; i < targets.Count; i++)
+                        {
+                            validTargetCount += 1;
+                        }
+                        break;
+                    case AbilityEffect.ModifiedProperty.defence:
+                        for (int i = 0; i < targets.Count; i++)
+                        {
+                            validTargetCount += 1;
+                        }
+                        break;
                 }
                 break;
 

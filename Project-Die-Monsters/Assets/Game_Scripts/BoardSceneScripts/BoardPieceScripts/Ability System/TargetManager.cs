@@ -302,7 +302,7 @@ public class TargetManager : MonoBehaviour
         switch (currentEffect.howAbilityTarget)
         {
             case AbilityEffect.EffectTargeting.areaOfEffect:
-
+                possibleTargetsFound = currentEffect.requiredTargetCount;  
                 break;
             case AbilityEffect.EffectTargeting.declared:
                 switch (currentEffect.allowedTargets)

@@ -28,7 +28,7 @@ public class AbilityEffect : ScriptableObject
 
     public enum ModifiedProperty
     {
-        health, defence, attack,  none
+        healthHeal, healthDamage, defence, attack,  none
     }
 
     public enum StateReset

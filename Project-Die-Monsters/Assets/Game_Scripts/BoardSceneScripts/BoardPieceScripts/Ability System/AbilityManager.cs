@@ -52,6 +52,7 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
         //Add subtraction of ability crest to this step, rather than when the ability is first pressed as it makes sence to only remove once its done casting.
         Debug.Log("Ability Has Been Cast Finished");
         this.GetComponent<CreatureToken>().hasUsedAbilityThisTurn = true;
+        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().CheckCreatureStates();
         CancleAbilityCast();
         yield return null;
     }
@@ -60,6 +61,7 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
     {
         GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenAction = "None";
         GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().OpenAndCloseControllerUI();
+
         ResetAbilitySystem();
     }
 
@@ -106,9 +108,9 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
         if (effectsCanBeDone == myAbility.abilityEffects.Count)
         {
             canBeCast = true;
-            GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().CheckPossibleActions();
             Debug.Log("cANcASTiVElOoked");
-        }else
+            GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().CheckPossibleActions();
+        }else if (effectsCanBeDone != myAbility.abilityEffects.Count)
         {
             Debug.Log("CanTcAsTHaveCheCkEEd");
             ResetManager();
