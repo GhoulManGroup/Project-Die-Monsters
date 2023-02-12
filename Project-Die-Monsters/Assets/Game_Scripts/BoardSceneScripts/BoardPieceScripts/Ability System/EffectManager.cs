@@ -34,13 +34,15 @@ public class EffectManager : MonoBehaviour
         List<GameObject> EffectTargets = new List<GameObject>(targetFinder.foundTargets);
         this.GetComponent<AbilityManager>().readyEffects += 1;
  
-
         while (this.GetComponent<AbilityManager>().abilityCast == false)
         {
             yield return null;
         }
+
         ApplyWhichEffect(EffectTargets);
+
         this.GetComponent<AbilityManager>().effectsResolved += 1;
+
         yield return null;
     }
 
@@ -78,7 +80,7 @@ public class EffectManager : MonoBehaviour
                     case AbilityEffect.ModifiedProperty.healthDamage:
                         for (int i = 0; i < targets.Count; i++)
                         {
-                            targets[i].GetComponent<CreatureToken>().currentHealth -= effectToResolve.modifierValue;
+                            targets[i].GetComponent<CreatureToken>().currentHealth += effectToResolve.modifierValue;
                         }
                         break;
                     case AbilityEffect.ModifiedProperty.healthHeal:
@@ -90,13 +92,13 @@ public class EffectManager : MonoBehaviour
                     case AbilityEffect.ModifiedProperty.attack:
                         for (int i = 0; i < targets.Count; i++)
                         {
-                            targets[i].GetComponent<CreatureToken>().hasUsedAbilityThisTurn = false;
+                            targets[i].GetComponent<CreatureToken>().currentAttack += effectToResolve.modifierValue;
                         }
                         break;
                     case AbilityEffect.ModifiedProperty.defence:
                         for (int i = 0; i < targets.Count; i++)
                         {
-                            targets[i].GetComponent<CreatureToken>().hasUsedAbilityThisTurn = false;
+                            targets[i].GetComponent<CreatureToken>().currentDefence += effectToResolve.modifierValue;
                         }
                         break;
                 }
@@ -106,6 +108,10 @@ public class EffectManager : MonoBehaviour
                 break;
         }
 
+        for (int i = 0; i < targets.Count; i++)
+        {
+            Debug.Log(targets[i].name + "Random Target Name");
+        }
     }
     #endregion
 
@@ -120,7 +126,6 @@ public class EffectManager : MonoBehaviour
     #region CheckCanBeCastCode
     public IEnumerator EffectChecking()
     {
-        Debug.Log("Hello Cunt 2");
         yield return this.GetComponent<TargetManager>().StartCoroutine("HasPossibleTargets");
 
         while (targetsExist == false)
@@ -128,10 +133,8 @@ public class EffectManager : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log("Hello rom Effect");
         //Find Valid Targets for effect -------------------------------------------------------------------------------------------------------
         List<GameObject> targets = new List<GameObject>(targetFinder.targetPool);
-        Debug.Log(targets.Count);
         int validTargetCount = 0;
         switch (effectToResolve.effectType)
         {
@@ -207,15 +210,14 @@ public class EffectManager : MonoBehaviour
                 //Check valid target count vs needed target count to confirm ability is valid.--------------------------------------------------------------------------------------------
         }
 
-        if (validTargetCount == effectToResolve.requiredTargetCount)
+        Debug.Log(validTargetCount + "Valid Targets Found");
+        if (validTargetCount >= effectToResolve.requiredTargetCount)
         {
-            //Has Stuff
             Debug.Log("Hello From Effect Success");
             this.GetComponent<AbilityManager>().checkingEffect = false;
             this.GetComponent<AbilityManager>().effectsCanBeDone += 1;
-        }else if (validTargetCount != effectToResolve.requiredTargetCount)
+        }else if (validTargetCount < effectToResolve.requiredTargetCount)
         {
-            //Does Not Have Stuff
             Debug.Log("Hello From Effect Failure");
             this.GetComponent<AbilityManager>().ResetAbilitySystem();
         }

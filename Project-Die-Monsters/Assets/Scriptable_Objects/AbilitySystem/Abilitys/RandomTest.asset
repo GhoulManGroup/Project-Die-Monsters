@@ -10,16 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1353ce617e913ff4580db3a48c6cfedd, type: 3}
-  m_Name: None
+  m_Name: RandomTest
   m_EditorClassIdentifier: 
-  nameOfAbility: None
-  abilityDescription: Has No Ability
-  abilityCost: 0
-  abilityType: 2
-  modifierValue: 0
-  numberOfTargets: 0
-  howITarget: 0
-  myTrigger: 7
-  statChanged: 3
-  whichState: 3
-  SpellPriority: 0
+  AbilityName: TestRandom
+  AbilityDescriptionText: 
+  abilityCost: 1
+  abilityActivatedHow: 0
+  abilityEffects:
+  - {fileID: 11400000, guid: d8bfa9ec56b0a3d49ac331e048a55201, type: 2}

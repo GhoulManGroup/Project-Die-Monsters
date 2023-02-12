@@ -16,6 +16,11 @@ public class Ability : ScriptableObject
         Activated, Trigger, None
     }
 
+    public enum TriggerCondition
+    {
+        attacked, ability
+    }
+
     [Header("Ability Components")]
     public List<AbilityEffect> abilityEffects = new List<AbilityEffect>();
     //public List<Targeting> targeting;

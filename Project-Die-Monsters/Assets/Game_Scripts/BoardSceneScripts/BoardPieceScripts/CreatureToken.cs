@@ -89,7 +89,7 @@ public class CreatureToken : MonoBehaviour
 
     public void setDetails()
     { // This function sets all the details of the piece token on the board, once it has had its creature sciptable object assigned from where ever it is being summoned from.
-        this.gameObject.name = myCreature.name;
+        this.gameObject.name = myCreature.CreatureName;
         myArtSlot.GetComponent<MeshRenderer>().material = myCreature.cardArt3D;
         currentHealth = myCreature.Health;
         currentAttack = myCreature.Attack;
@@ -313,6 +313,7 @@ public class CreatureToken : MonoBehaviour
         if (currentHealth <= 0)
         {
             myBoardLocation.GetComponent<GridScript>().TileContents = "Empty";
+            myBoardLocation.GetComponent<GridScript>().creatureAboveMe = null;
             lvlRef.GetComponent<CreatureController>().CreaturesOnBoard.Remove(this.gameObject);
             Destroy(this.gameObject);
         }

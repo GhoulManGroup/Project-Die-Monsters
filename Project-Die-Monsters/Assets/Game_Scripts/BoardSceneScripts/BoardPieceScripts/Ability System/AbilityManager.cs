@@ -26,7 +26,16 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
         myCreature = this.gameObject.GetComponent<CreatureToken>();
     }   
 
-    public IEnumerator ActivateEffect()
+    public void abilityTrigger()
+    {
+        //if (myAbility.)
+    }
+    public IEnumerator TriggeredEffect()
+    {
+        yield return null;
+    }
+
+    public IEnumerator ActivatedEffect()
     {
         for (int i = 0; i < myAbility.abilityEffects.Count; i++)
         {
@@ -90,7 +99,6 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
     {
         for (int i = 0; i < myAbility.abilityEffects.Count; i++)
         {//Loop through each effect and check.
-            Debug.Log("Hello Cunt");
             checkingEffect = true;
             this.GetComponent<TargetManager>().currentEffect = myAbility.abilityEffects[i];
             this.GetComponent<EffectManager>().effectToResolve = myAbility.abilityEffects[i];
@@ -102,17 +110,14 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
             Debug.Log("AM lOOP Check");
         }
 
-        Debug.Log("After Loop");
-
-
         if (effectsCanBeDone == myAbility.abilityEffects.Count)
         {
             canBeCast = true;
-            Debug.Log("cANcASTiVElOoked");
+            Debug.Log("AbilityCanBeCast");
             GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().CheckPossibleActions();
         }else if (effectsCanBeDone != myAbility.abilityEffects.Count)
         {
-            Debug.Log("CanTcAsTHaveCheCkEEd");
+            Debug.Log("AbilityCantBeCast");
             ResetManager();
         }
 

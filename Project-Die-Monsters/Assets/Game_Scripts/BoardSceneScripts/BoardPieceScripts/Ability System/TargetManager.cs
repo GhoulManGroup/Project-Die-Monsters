@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Random = UnityEngine.Random;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,8 +13,8 @@ public class TargetManager : MonoBehaviour
     LevelController levelController;
     public AbilityEffect currentEffect;
     public bool hasDeclared = false;
-    public List<GameObject> foundTargets = new List<GameObject>();
-    public List<GameObject> targetPool = new List<GameObject>();
+    public List<GameObject> foundTargets = new List<GameObject>(); //What EffectManager Stores in its effect corutine as the chosen targets.
+    public List<GameObject> targetPool = new List<GameObject>();//Where we store the possible targets for this effect.
 
     [Header("AOE Specific Varibles")]
     public GameObject Position;
@@ -31,11 +33,10 @@ public class TargetManager : MonoBehaviour
         switch (currentEffect.howAbilityTarget)
         {
             case AbilityEffect.EffectTargeting.random:
-
+                StartCoroutine("RandomTarget");
                 break;
 
             case AbilityEffect.EffectTargeting.areaOfEffect:
-
                 StartCoroutine("AOEEffectTargeting");
                 break;
 
@@ -82,6 +83,58 @@ public class TargetManager : MonoBehaviour
                 break;
         }
     }
+
+    #region Random Targeting Code
+    private IEnumerator RandomTarget()
+    {
+        switch (currentEffect.allowedTargets)
+        {
+            case AbilityEffect.AllowedTargets.self:
+                Debug.LogError("Random Target Self Not Supported Please Check Effect Settings");
+                break;
+
+            case AbilityEffect.AllowedTargets.friendly:
+                for (int i = 0; i < creatureController.CreaturesOnBoard.Count; i++)
+                {
+
+                    if (creatureController.CreaturesOnBoard[i].GetComponent<CreatureToken>().myOwner == levelController.whoseTurn)
+                    {
+                        targetPool.Add(creatureController.CreaturesOnBoard[i]);
+                    }
+                }
+                break;
+
+            case AbilityEffect.AllowedTargets.hostile:
+                for (int i = 0; i < creatureController.CreaturesOnBoard.Count; i++)
+                {
+                    if (creatureController.CreaturesOnBoard[i].GetComponent<CreatureToken>().myOwner != levelController.whoseTurn)
+                    {
+                        targetPool.Add(creatureController.CreaturesOnBoard[i]);
+                    }
+                }
+  
+                break;
+
+            case AbilityEffect.AllowedTargets.all:
+                for (int i = 0; i < creatureController.CreaturesOnBoard.Count; i++)
+                {
+                    targetPool.Add(creatureController.CreaturesOnBoard[i]);
+                }
+                break;
+        }
+
+        while(targetPool.Count > currentEffect.requiredTargetCount)
+        {
+            int removeAt = Random.Range(0, targetPool.Count);
+            targetPool.RemoveAt(removeAt);
+        }
+
+        foundTargets.AddRange(targetPool);
+
+        this.GetComponent<EffectManager>().targetsChecked = true;
+        yield return null;
+    }   
+    #endregion
 
     #region Declare Targeting Code
     public IEnumerator DeclaringTargets()
@@ -339,17 +392,49 @@ public class TargetManager : MonoBehaviour
                         break;
                 }
                 break;
+            case AbilityEffect.EffectTargeting.random:
+                switch (currentEffect.allowedTargets)
+                {
+                    case AbilityEffect.AllowedTargets.friendly:
+                        for (int i = 0; i < creatureController.CreaturesOnBoard.Count; i++)
+                        {
+                            if (creatureController.CreaturesOnBoard[i].GetComponent<CreatureToken>().myOwner == levelController.whoseTurn)
+                            {
+                                possibleTargetsFound += 1;
+                                targetPool.Add(creatureController.CreaturesOnBoard[i]);
+                            }
+                        }
+                        break;
+
+                    case AbilityEffect.AllowedTargets.hostile:
+                        for (int i = 0; i < creatureController.CreaturesOnBoard.Count; i++)
+                        {
+                            if (creatureController.CreaturesOnBoard[i].GetComponent<CreatureToken>().myOwner != levelController.whoseTurn)
+                            {
+                                possibleTargetsFound += 1;
+                                targetPool.Add(creatureController.CreaturesOnBoard[i]);
+                            }
+                        }
+                        break;
+
+                    case AbilityEffect.AllowedTargets.self:
+                        Debug.LogError("Hello Self Isnt a supported allowTarget option for Random Please Change");
+                        yield break;
+
+                    case AbilityEffect.AllowedTargets.all:
+                        possibleTargetsFound = creatureController.CreaturesOnBoard.Count;
+                        targetPool.AddRange(creatureController.CreaturesOnBoard);
+                        break;
+                }
+                break;
         }
 
-        Debug.Log(possibleTargetsFound);
         if (possibleTargetsFound >= currentEffect.requiredTargetCount)
         {
-            //Effect hAS ENOUGH TARGETS
             this.GetComponent<EffectManager>().targetsExist = true;
             Debug.Log("Hello From Targets Found");
         }else if (possibleTargetsFound < currentEffect.requiredTargetCount)
         {
-            //EFFECT HAS NOT ENOUGH TARGETS
             this.GetComponent<AbilityManager>().ResetAbilitySystem();
             Debug.Log("Hello From Targets Not Found");
         }
