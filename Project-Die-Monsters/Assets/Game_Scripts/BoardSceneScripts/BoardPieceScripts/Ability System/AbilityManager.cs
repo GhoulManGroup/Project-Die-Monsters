@@ -41,7 +41,7 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
         {
             this.GetComponent<EffectManager>().effectToResolve = myAbility.abilityEffects[i];
             this.GetComponent<EffectManager>().StartCoroutine("PrepareAndCastEffect");
-            //Add while loop to stargger effect preperation.
+            Debug.Log("Hello From Activated Effect" + i);
         }
 
         while (readyEffects != myAbility.abilityEffects.Count)
@@ -68,6 +68,7 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
 
     public void CancleAbilityCast()
     {
+        GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>().boardInteraction = "None";
         GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenAction = "None";
         GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().OpenAndCloseControllerUI();
 
@@ -77,9 +78,9 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
     public void ResetAbilitySystem()
     {
         Debug.Log("Reseting Ability System");
-        ResetManager();
         this.GetComponent<EffectManager>().ResetManager();
         this.GetComponent<TargetManager>().ResetManager();
+        ResetManager();
     }
 
     public void ResetManager()

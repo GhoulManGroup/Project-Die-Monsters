@@ -13,13 +13,13 @@ public class AbilityEffect : ScriptableObject
 
     [Header("Ability Target System")]
     public EffectTargeting howAbilityTarget;
-    public AOEDirections AOEDirection;
-    public AOEPosition AOEBoardPosition;
     public AllowedTargets allowedTargets;
-    public int distanceInDirection = 0;
-
     public int requiredTargetCount;
     public int maximumTargetCount;
+    [Space(10)]
+    public AOEPosition AOEBoardPosition;
+    public AOEDirections AOEDirection;
+    public int distanceInDirection = 0;
 
     public enum EffectType
     {
@@ -53,7 +53,7 @@ public class AbilityEffect : ScriptableObject
 
     public enum AllowedTargets
     {
-        self, friendly , hostile, all
+        self, friendly , hostile, all, otherTrigger
     }
 
 

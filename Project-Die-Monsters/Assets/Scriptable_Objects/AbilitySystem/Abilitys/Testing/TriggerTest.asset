@@ -10,11 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1353ce617e913ff4580db3a48c6cfedd, type: 3}
-  m_Name: LesserHeal
+  m_Name: TriggerTest
   m_EditorClassIdentifier: 
-  AbilityName: Heal
-  AbilityDescriptionText: Restore 10 health to damaged creature.
-  abilityCost: 1
+  AbilityName: 
+  AbilityDescriptionText: 
+  abilityCost: 0
   abilityActivatedHow: 0
-  abilityEffects:
-  - {fileID: 11400000, guid: abd04000fe002ef48bb69e4839171e71, type: 2}
+  abilityEffects: []

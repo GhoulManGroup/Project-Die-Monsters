@@ -74,6 +74,7 @@ public class AbilityUIController : MonoBehaviour
                 break;
             case "DeclareTargets":
                 currentCreature.GetComponent<TargetManager>().hasDeclared = true;
+                GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>().boardInteraction = "None";
                 break;
             case "CastAbility":
                 currentCreature.GetComponent<AbilityManager>().abilityCast = true;

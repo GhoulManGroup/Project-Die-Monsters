@@ -165,7 +165,7 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
                 OpenAndCloseControllerUI();
                 GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().currentCreature = ChosenCreatureToken;
                 GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().ShowAndUpdateInterface("Start");
-                ChosenCreatureToken.GetComponent<AbilityManager>().StartCoroutine("ActivateEffect");
+                ChosenCreatureToken.GetComponent<AbilityManager>().StartCoroutine("ActivatedEffect");
                 // Call Ability manager & Do things.
                 break;
 
@@ -176,16 +176,19 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
                         //Close Creature Order UI.
                         CancleBTNFunction();
                         break;
+
                     case "Ability":
                         ChosenAction = "None";
                         lvlRef.GetComponent<LevelController>().boardInteraction = "None";
                         GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().HideInterface();
                         GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().CancleAbility();
                         break;
+
                     case "Attack":
                         //Go back from select attack target in inspect window.
                         break;
                     case "Move":
+
                         //Cancle Move
                         lvlRef.GetComponent<PathController>().ResetBoard("Reset");
                         lvlRef.GetComponent<LevelController>().boardInteraction = "None";

@@ -135,6 +135,7 @@ public class EffectManager : MonoBehaviour
 
         //Find Valid Targets for effect -------------------------------------------------------------------------------------------------------
         List<GameObject> targets = new List<GameObject>(targetFinder.targetPool);
+        targetFinder.targetPool.Clear();
         int validTargetCount = 0;
         switch (effectToResolve.effectType)
         {
