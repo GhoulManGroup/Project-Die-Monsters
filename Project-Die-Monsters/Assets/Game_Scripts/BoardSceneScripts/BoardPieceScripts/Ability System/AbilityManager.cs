@@ -39,9 +39,14 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
     {
         for (int i = 0; i < myAbility.abilityEffects.Count; i++)
         {
+            checkingEffect = true;
             this.GetComponent<EffectManager>().effectToResolve = myAbility.abilityEffects[i];
             this.GetComponent<EffectManager>().StartCoroutine("PrepareAndCastEffect");
             Debug.Log("Hello From Activated Effect" + i);
+            while (checkingEffect == true)
+            {
+                yield return null;
+            }
         }
 
         while (readyEffects != myAbility.abilityEffects.Count)
@@ -77,7 +82,6 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
 
     public void ResetAbilitySystem()
     {
-        Debug.Log("Reseting Ability System");
         this.GetComponent<EffectManager>().ResetManager();
         this.GetComponent<TargetManager>().ResetManager();
         ResetManager();
@@ -85,14 +89,14 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
 
     public void ResetManager()
     {
-        StopAllCoroutines();
         abilityCast = false;
         readyEffects = 0;
-        effectsResolved= 0;
+        effectsResolved = 0;
 
         checkingEffect = false;
         canBeCast = false;
         effectsCanBeDone = 0;
+        StopAllCoroutines();
     }
 
     //Call this from creature controller.
@@ -108,7 +112,6 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
             {
                 yield return null;
             }
-            Debug.Log("AM lOOP Check");
         }
 
         if (effectsCanBeDone == myAbility.abilityEffects.Count)

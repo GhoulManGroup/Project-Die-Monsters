@@ -33,7 +33,7 @@ public class EffectManager : MonoBehaviour
         // Store Local List Here untill All are effects have their targets and the ability is resolved or cancled.
         List<GameObject> EffectTargets = new List<GameObject>(targetFinder.foundTargets);
         this.GetComponent<AbilityManager>().readyEffects += 1;
- 
+        this.GetComponent<AbilityManager>().checkingEffect = false;
         while (this.GetComponent<AbilityManager>().abilityCast == false)
         {
             yield return null;
@@ -211,7 +211,6 @@ public class EffectManager : MonoBehaviour
                 //Check valid target count vs needed target count to confirm ability is valid.--------------------------------------------------------------------------------------------
         }
 
-        Debug.Log(validTargetCount + "Valid Targets Found");
         if (validTargetCount >= effectToResolve.requiredTargetCount)
         {
             Debug.Log("Hello From Effect Success");

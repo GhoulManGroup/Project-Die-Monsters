@@ -174,6 +174,7 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
                 {
                     case "None":
                         //Close Creature Order UI.
+                        ChosenCreatureToken.GetComponent<AbilityManager>().ResetAbilitySystem();
                         CancleBTNFunction();
                         break;
 
