@@ -10,6 +10,7 @@ public class Ability : ScriptableObject
     public string AbilityDescriptionText;
     public int abilityCost;
     public AbilityActivatedHow abilityActivatedHow;
+    public TriggerCondition howTriggered;
 
     public enum AbilityActivatedHow
     {

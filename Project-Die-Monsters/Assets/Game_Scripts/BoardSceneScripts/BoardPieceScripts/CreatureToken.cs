@@ -303,7 +303,7 @@ public class CreatureToken : MonoBehaviour
         }
     }
 
-    public void CheckCreatureHealth()
+    public IEnumerator CheckCreatureHealth()
     {// Used to detemine if the creature is dead or to remove any overhealing.
         if (currentHealth > healthCap)
         {
@@ -318,7 +318,7 @@ public class CreatureToken : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        Debug.Log("Check Creature Health Call");
+        yield return null;
     }
 
     public void CreatureResetTurnEnd()

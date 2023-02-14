@@ -348,7 +348,7 @@ public class TargetManager : MonoBehaviour
     }
 
     #region CheckCanBeCast
-    //This code will simply check that there are enough possible targets for the ability to be cast and then check that the effect state.
+    //Checks if the ability in question can be cast by checking if their are enough suitable targets to meet each effects requirement.
     public IEnumerator HasPossibleTargets()
     {
         int possibleTargetsFound = 0;
@@ -432,7 +432,7 @@ public class TargetManager : MonoBehaviour
         if (possibleTargetsFound >= currentEffect.requiredTargetCount)
         {
             this.GetComponent<EffectManager>().targetsExist = true;
-            Debug.Log("Hello From Targets Found");
+            Debug.Log("Hello From Targets Found" + targetPool.Count); 
         }else if (possibleTargetsFound < currentEffect.requiredTargetCount)
         {
             this.GetComponent<AbilityManager>().ResetAbilitySystem();

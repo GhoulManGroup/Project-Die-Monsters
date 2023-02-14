@@ -32,6 +32,7 @@ public class EffectManager : MonoBehaviour
   
         // Store Local List Here untill All are effects have their targets and the ability is resolved or cancled.
         List<GameObject> EffectTargets = new List<GameObject>(targetFinder.foundTargets);
+        this.GetComponent<TargetManager>().foundTargets.Clear();
         this.GetComponent<AbilityManager>().readyEffects += 1;
         this.GetComponent<AbilityManager>().checkingEffect = false;
         while (this.GetComponent<AbilityManager>().abilityCast == false)
@@ -126,8 +127,8 @@ public class EffectManager : MonoBehaviour
     #region CheckCanBeCastCode
     public IEnumerator EffectChecking()
     {
+        targetsExist = false;
         yield return this.GetComponent<TargetManager>().StartCoroutine("HasPossibleTargets");
-
         while (targetsExist == false)
         {
             yield return null;

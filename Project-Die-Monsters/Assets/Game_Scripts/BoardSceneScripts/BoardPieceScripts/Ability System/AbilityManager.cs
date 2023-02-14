@@ -26,12 +26,21 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
         myCreature = this.gameObject.GetComponent<CreatureToken>();
     }   
 
-    public void abilityTrigger()
+    public void CheckTrigger(string trigger)
     {
-        //if (myAbility.)
+        if (trigger == myAbility.howTriggered.ToString())
+        {
+            Debug.Log("Trigger Match" + trigger + myAbility.howTriggered);
+            StartCoroutine("TriggeredEffect");
+        }else
+        {
+            Debug.Log("Trigger Not Matched" + trigger + myAbility.howTriggered);
+        }
     }
+
     public IEnumerator TriggeredEffect()
     {
+    
         yield return null;
     }
 

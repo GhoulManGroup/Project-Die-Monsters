@@ -18,5 +18,5 @@ MonoBehaviour:
   abilityActivatedHow: 0
   abilityEffects:
   - {fileID: 11400000, guid: f46ab273cf19e714894e131e614abb7a, type: 2}
-  - {fileID: 11400000, guid: f46ab273cf19e714894e131e614abb7a, type: 2}
-  - {fileID: 11400000, guid: f46ab273cf19e714894e131e614abb7a, type: 2}
+  - {fileID: 11400000, guid: 9948548570afd6543af51a85d38abca5, type: 2}
+  - {fileID: 11400000, guid: d8bfa9ec56b0a3d49ac331e048a55201, type: 2}
