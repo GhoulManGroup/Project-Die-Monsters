@@ -156,6 +156,14 @@ public class LevelController : MonoBehaviour //This class controls everything at
         turnPlayerUIDisplay[4].text = participants[turnPlayerSlot].GetComponent<Player>().moveCrestPoints.ToString();
     }
 
+    public void CheckStackAction()
+    {
+        // If trigger to resolvecount != 0{
+        // resolve trigger
+
+        //else  restore to action none.
+        boardInteraction = "None";
+    }
 
      public void EndTurnFunction()
      {

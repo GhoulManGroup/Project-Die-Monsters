@@ -26,7 +26,7 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
         myCreature = this.gameObject.GetComponent<CreatureToken>();
     }   
 
-    public void CheckTrigger(string trigger)
+    public void CheckTrigger(string trigger, GameObject triggeredBy)
     {
         if (trigger == myAbility.howTriggered.ToString())
         {

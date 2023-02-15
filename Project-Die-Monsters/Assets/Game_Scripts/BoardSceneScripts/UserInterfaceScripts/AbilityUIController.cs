@@ -15,6 +15,9 @@ public class AbilityUIController : MonoBehaviour
     public GameObject currentCreature;
     AbilityEffect currentEffect;
 
+    [Header("Ability Stack")]
+    public List<GameObject> creaturesToTrigger = new List<GameObject>();
+
     public void Awake()
     {
         HideInterface();

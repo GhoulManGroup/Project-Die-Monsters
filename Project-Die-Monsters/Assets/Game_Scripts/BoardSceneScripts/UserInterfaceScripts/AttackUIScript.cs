@@ -249,8 +249,11 @@ public class AttackUIScript : MonoBehaviour
         if (defender.GetComponent<CreatureToken>().currentHealth <= 0)
         {
            UIElements[13].GetComponent<Image>().enabled = true;
+            attacker.GetComponent<AbilityManager>().CheckTrigger("OnKill", attacker.gameObject);
             //Add call here for Has Killed Trigger Check!-----------------------------------------------------------------------------------------------------------------
         }
+        attacker.GetComponent<AbilityManager>().CheckTrigger("OnAttack", attacker.gameObject);
+        defender.GetComponent<AbilityManager>().CheckTrigger("OnHit", attacker.gameObject);
 
         // tell each piece in the fight to update their states.
         defender.GetComponent<CreatureToken>().StartCoroutine("CheckCreatureHealth");
