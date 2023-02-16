@@ -156,18 +156,16 @@ public class LevelController : MonoBehaviour //This class controls everything at
         turnPlayerUIDisplay[4].text = participants[turnPlayerSlot].GetComponent<Player>().moveCrestPoints.ToString();
     }
 
-    public void CheckStackAction()
-    {
-        // If trigger to resolvecount != 0{
-        // resolve trigger
-
-        //else  restore to action none.
-        boardInteraction = "None";
-    }
-
      public void EndTurnFunction()
      {
-        if (this.GetComponent<LevelController>().turnPlayerPerformingAction == false) { // if current player isnt in the middle of an action eg moving a piece or combat end turn.
+        //Ensure that player isnt currently doing somthing.
+        StartCoroutine("EndTurn");
+     } 
+
+    private IEnumerator EndTurn()
+    {
+        if (this.GetComponent<LevelController>().turnPlayerPerformingAction == false)
+        { // if current player isnt in the middle of an action eg moving a piece or combat end turn.
 
             //Player vs Player
             if (gameManager.GetComponent<GameManagerScript>().desiredOpponent == "Player")
@@ -190,9 +188,9 @@ public class LevelController : MonoBehaviour //This class controls everything at
                 ResetFunction();
                 startTurnBTN.GetComponent<Image>().enabled = true;
             }
-            //Player VS AI
         }
-    } 
+        yield return null;
+    }
     
     public void ResetFunction()
     {
@@ -218,6 +216,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
         currentGameEndScreen.SetActive(true);
         ableToInteractWithBoard = false;
     }
+
     public void ReturnToMain()
     {
         SceneManager.LoadScene("MainMenuScene");

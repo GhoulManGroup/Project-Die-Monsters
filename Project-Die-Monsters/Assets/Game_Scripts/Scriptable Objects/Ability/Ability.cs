@@ -19,7 +19,7 @@ public class Ability : ScriptableObject
 
     public enum TriggerCondition
     {
-        onDeath, onKill, onHit, onHitAbility, onAttack
+        onDeath, onKill, onHit, onHitAbility, onAttack, onEndTurn
     }
 
     [Header("Ability Components")]

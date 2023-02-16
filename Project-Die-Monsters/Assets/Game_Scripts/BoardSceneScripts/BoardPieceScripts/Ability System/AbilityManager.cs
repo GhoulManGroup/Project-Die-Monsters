@@ -28,19 +28,32 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
 
     public void CheckTrigger(string trigger, GameObject triggeredBy)
     {
-        if (trigger == myAbility.howTriggered.ToString())
+        if (myAbility.abilityActivatedHow == Ability.AbilityActivatedHow.Trigger)
         {
-            Debug.Log("Trigger Match" + trigger + myAbility.howTriggered);
-            StartCoroutine("TriggeredEffect");
-        }else
+            if (trigger == myAbility.howTriggered.ToString())
+            {
+                Debug.Log("Trigger Match" + trigger + myAbility.howTriggered);
+                StartCoroutine("TriggeredEffect");
+            }
+            else
+            {
+                Debug.Log("Trigger Not Matched" + trigger + myAbility.howTriggered);
+            }
+        }
+        else
         {
-            Debug.Log("Trigger Not Matched" + trigger + myAbility.howTriggered);
+            Debug.Log("No Trigger On Creature" + this.gameObject.name);
         }
     }
 
     public IEnumerator TriggeredEffect()
     {
-    
+        canBeCast = false;
+        while(canBeCast == false)
+        {
+            yield return null;
+            //Wait Untill What ever controller the sequence of trigger activations 
+        }
         yield return null;
     }
 

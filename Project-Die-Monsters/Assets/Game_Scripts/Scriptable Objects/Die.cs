@@ -31,7 +31,7 @@ public class Die : ScriptableObject // this script is the data conainer for ever
 
     public enum DieColor
     {
-        Red, Blue, Yellow, Green, White, Black
+        Red, Blue, Yellow, Green, Purple, Orange, White, Black
     }
 
     public enum DieCreatureLevel

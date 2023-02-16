@@ -17,6 +17,7 @@ public class AbilityUIController : MonoBehaviour
 
     [Header("Ability Stack")]
     public List<GameObject> creaturesToTrigger = new List<GameObject>();
+    public bool waitForCast;
 
     public void Awake()
     {
@@ -60,6 +61,7 @@ public class AbilityUIController : MonoBehaviour
         cancleBTN.SetActive(true);
         confirmBTN.SetActive(true);
     }
+
     public void CancleAbility()
     {
         currentCreature.GetComponent<AbilityManager>().CancleAbilityCast();
@@ -86,5 +88,24 @@ public class AbilityUIController : MonoBehaviour
                 confirmBTN.GetComponent<Button>().interactable = false;
                 cancleBTN.GetComponent<Button>().interactable = false;
                 HideInterface();
+    }
+
+    public IEnumerator StackManager()
+    {
+        for (int i = 0; i < creaturesToTrigger.Count; i++)
+        {
+            waitForCast = true;
+            // Resolve Trigger Effect of this creature
+            while(waitForCast == true)
+            {
+                yield return null;
+                //Wait here untill that creature is done casting its effect.
+                //Add other creature to stack if triggered by another effect.
+            }
+            //Resume Loop.
+        }
+        //Loop Is Done
+
+        yield return null;
     }
 }
