@@ -123,7 +123,7 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
             canCloseUI = true;
         }
 
-        lvlRef.GetComponent<LevelController>().updateTurnPlayerCrestDisplay();
+        lvlRef.GetComponent<LevelController>().UpdateTurnPlayerCrestDisplay();
     }
 
     public void resetFunction()

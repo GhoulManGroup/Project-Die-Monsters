@@ -111,7 +111,6 @@ public class EffectManager : MonoBehaviour
 
         for (int i = 0; i < targets.Count; i++)
         {
-            Debug.Log(targets[i].name + "Random Target Name");
             targets[i].GetComponent<AbilityManager>().CheckTrigger("OnHitAbility", this.gameObject);
         }
     }

@@ -16,9 +16,11 @@ public class AbilityUIController : MonoBehaviour
     AbilityEffect currentEffect;
 
     [Header("Ability Stack")]
+    bool startStack = false;
     public List<GameObject> creaturesToTrigger = new List<GameObject>();
     public bool waitForCast;
 
+    #region Ability UI Display
     public void Awake()
     {
         HideInterface();
@@ -89,23 +91,32 @@ public class AbilityUIController : MonoBehaviour
                 cancleBTN.GetComponent<Button>().interactable = false;
                 HideInterface();
     }
+    #endregion
 
+    #region Trigger Ability Management
     public IEnumerator StackManager()
     {
+        Debug.Log("Inside Stack Manager");
+        targetsPickedPanel.SetActive(true);
+        targetText.text = "Trigger Ability To Resolve";
+        yield return new WaitForSeconds(1f);
         for (int i = 0; i < creaturesToTrigger.Count; i++)
         {
             waitForCast = true;
-            // Resolve Trigger Effect of this creature
+            creaturesToTrigger[i].GetComponent<AbilityManager>().StartCoroutine("ActivatedEffect");
             while(waitForCast == true)
             {
                 yield return null;
                 //Wait here untill that creature is done casting its effect.
                 //Add other creature to stack if triggered by another effect.
             }
-            //Resume Loop.
+            yield return new WaitForSeconds(1f);
         }
         //Loop Is Done
-
+        HideInterface();
+        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().CheckCreatureStates();
         yield return null;
+        Debug.Log("Howdy FROM STACK MANAGER BOYO");
     }
+    #endregion
 }

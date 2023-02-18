@@ -16,6 +16,6 @@ MonoBehaviour:
   AbilityDescriptionText: Test Trigger
   abilityCost: 0
   abilityActivatedHow: 1
-  howTriggered: 0
+  howTriggered: 5
   abilityEffects:
   - {fileID: 11400000, guid: c97a6c8626f7c0b488facbb45b689993, type: 2}

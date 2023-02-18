@@ -235,7 +235,7 @@ public class TargetManager : MonoBehaviour
     public void AOEDirection()
     {
         CreatureToken mySelf = this.gameObject.GetComponent<CreatureToken>();
-        Debug.Log(currentEffect.AOEDirection);
+
         switch (currentEffect.AOEDirection)
         {
             case AbilityEffect.AOEDirections.front:

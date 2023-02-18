@@ -12552,6 +12552,8 @@ MonoBehaviour:
   targetsPickedPanel: {fileID: 1840636385}
   targetText: {fileID: 1468817244}
   currentCreature: {fileID: 0}
+  creaturesToTrigger: []
+  waitForCast: 0
 --- !u!1 &1860749761
 GameObject:
   m_ObjectHideFlags: 0
@@ -14250,7 +14252,7 @@ MonoBehaviour:
   startTurnBTN: {fileID: 349136845}
   endTurnBTN: {fileID: 2086019584}
   currentGameEndScreen: {fileID: 0}
-  DungeonLord:
+  DungeonLordStartTiles:
   - {fileID: 1919373821}
   - {fileID: 349105848}
   playerFab: {fileID: 1640307794083697217, guid: f365061563cae5d409cb98399b77873a, type: 3}

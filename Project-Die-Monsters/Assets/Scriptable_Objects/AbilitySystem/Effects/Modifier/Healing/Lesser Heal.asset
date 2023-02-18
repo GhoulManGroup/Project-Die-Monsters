@@ -17,9 +17,9 @@ MonoBehaviour:
   modifierValue: 10
   stateChanged: 3
   howAbilityTarget: 1
-  AOEDirection: 4
-  AOEBoardPosition: 0
-  allowedTargets: 1
-  distanceInDirection: 0
+  allowedTargets: 0
   requiredTargetCount: 1
   maximumTargetCount: 1
+  AOEBoardPosition: 0
+  AOEDirection: 4
+  distanceInDirection: 0

@@ -8,6 +8,9 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
 {
     public Ability myAbility;
     CreatureToken  myCreature;
+    LevelController lvlRef;
+    CreatureController CCRef;
+    AbilityUIController AbilityWindow;
 
     public bool abilityCast = false; // this is the check for if the ability has been used this turn already
 
@@ -24,16 +27,19 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
     public void Awake()
     {
         myCreature = this.gameObject.GetComponent<CreatureToken>();
+        AbilityWindow = GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>();
+        CCRef = GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>();
+        lvlRef = GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>();
     }   
 
-    public void CheckTrigger(string trigger, GameObject triggeredBy)
+    public void CheckTrigger(string trigger, GameObject triggeredBy = null)
     {
         if (myAbility.abilityActivatedHow == Ability.AbilityActivatedHow.Trigger)
         {
             if (trigger == myAbility.howTriggered.ToString())
             {
                 Debug.Log("Trigger Match" + trigger + myAbility.howTriggered);
-                StartCoroutine("TriggeredEffect");
+                AbilityWindow.creaturesToTrigger.Add(this.gameObject);
             }
             else
             {
@@ -48,15 +54,20 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
 
     public IEnumerator TriggeredEffect()
     {
-        canBeCast = false;
-        while(canBeCast == false)
+        for (int i = 0; i < myAbility.abilityEffects.Count; i++)
         {
-            yield return null;
-            //Wait Untill What ever controller the sequence of trigger activations 
+            checkingEffect = true;
+            this.GetComponent<EffectManager>().effectToResolve = myAbility.abilityEffects[i];
+            this.GetComponent<EffectManager>().StartCoroutine("PrepareAndCastEffect");
+
+            while (checkingEffect == true)
+            {
+                yield return null;
+            }
         }
-        yield return null;
     }
 
+    #region Activated Ability System
     public IEnumerator ActivatedEffect()
     {
         for (int i = 0; i < myAbility.abilityEffects.Count; i++)
@@ -64,7 +75,7 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
             checkingEffect = true;
             this.GetComponent<EffectManager>().effectToResolve = myAbility.abilityEffects[i];
             this.GetComponent<EffectManager>().StartCoroutine("PrepareAndCastEffect");
-            Debug.Log("Hello From Activated Effect" + i);
+
             while (checkingEffect == true)
             {
                 yield return null;
@@ -76,20 +87,25 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
             yield return null;
         }
 
-        Debug.Log("Hello From effects ready!");
-        GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().ShowAndUpdateInterface("ConfirmCast");
-        GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().confirmBTNFunction = "CastAbility";
-        GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().confirmBTN.GetComponent<Button>().interactable = true;
+        AbilityWindow.ShowAndUpdateInterface("ConfirmCast");
+        AbilityWindow.confirmBTNFunction = "CastAbility";
+        AbilityWindow.confirmBTN.GetComponent<Button>().interactable = true;
 
         while (effectsResolved != myAbility.abilityEffects.Count)
         {
             yield return null;
         }
-        //Add subtraction of ability crest to this step, rather than when the ability is first pressed as it makes sence to only remove once its done casting.
-        Debug.Log("Ability Has Been Cast Finished");
+
+        lvlRef.GetComponent<LevelController>().turnPlayerObject.GetComponent<Player>().abiltyPowerCrestPoints -= myAbility.abilityCost;
         this.GetComponent<CreatureToken>().hasUsedAbilityThisTurn = true;
-        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().CheckCreatureStates();
         CancleAbilityCast();
+        if (GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().creaturesToTrigger.Contains(this.gameObject))
+        {
+            Debug.Log("Test from ability trigger resolve");
+            GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().waitForCast = false;
+            GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().creaturesToTrigger.Remove(this.gameObject);
+        }
+        lvlRef.CheckForTriggersToResolve();
         yield return null;
     }
 
@@ -98,7 +114,7 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
         GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>().boardInteraction = "None";
         GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenAction = "None";
         GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().OpenAndCloseControllerUI();
-
+        lvlRef.turnPlayerPerformingAction = false;
         ResetAbilitySystem();
     }
 
@@ -121,7 +137,6 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
         StopAllCoroutines();
     }
 
-    //Call this from creature controller.
     public IEnumerator CheckAbilityCanBeCast( )
     {
         for (int i = 0; i < myAbility.abilityEffects.Count; i++)
@@ -149,4 +164,5 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
 
         yield return null;
     }
+    #endregion
 }

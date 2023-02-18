@@ -8,7 +8,7 @@ public class DungeonLordPiece : MonoBehaviour
     public string myOwner;
     public string myName;
     public int Health = 0;
-
+    //ADD CODE on level controller to have these game objects spawned in at the start like a creature is played.
     public void SetDungeonLordTile()
     {
         // Set the tile bellow the dungeon lord object 

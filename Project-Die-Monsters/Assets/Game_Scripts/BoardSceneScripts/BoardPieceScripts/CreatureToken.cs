@@ -314,6 +314,11 @@ public class CreatureToken : MonoBehaviour
         {
             myBoardLocation.GetComponent<GridScript>().TileContents = "Empty";
             myBoardLocation.GetComponent<GridScript>().creatureAboveMe = null;
+            if (lvlRef.GetComponent<CreatureController>().ChosenCreatureToken == this.gameObject)
+            {
+                lvlRef.GetComponent<CreatureController>().CancleBTNFunction();
+                Debug.Log("Chosen Creature Died");
+            }
             lvlRef.GetComponent<CreatureController>().CreaturesOnBoard.Remove(this.gameObject);
             Destroy(this.gameObject);
         }

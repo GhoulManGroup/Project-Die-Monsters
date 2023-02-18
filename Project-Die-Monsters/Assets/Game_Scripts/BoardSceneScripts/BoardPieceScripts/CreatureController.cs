@@ -110,13 +110,11 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
                     }
                     else if (turnPlayer.GetComponent<Player>().abiltyPowerCrestPoints < myAbility.abilityCost || ChosenCreatureToken.GetComponent<CreatureToken>().hasUsedAbilityThisTurn == true || ChosenCreatureToken.GetComponent<AbilityManager>().canBeCast == false)
                     {
-                        Debug.Log("Cant Afford To Cast Or has cast this turn, or cant be cast");
                         OrderBTNS[2].GetComponent<Button>().interactable = false;
                     }
                 }
                 else if (myAbility.abilityActivatedHow != Ability.AbilityActivatedHow.Activated)
                 {
-                    Debug.Log("Cant Use it not activatable");
                     OrderBTNS[2].GetComponent<Button>().interactable = false;
                 }
             }
@@ -181,6 +179,7 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
                     case "Ability":
                         ChosenAction = "None";
                         lvlRef.GetComponent<LevelController>().boardInteraction = "None";
+                        lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;
                         GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().HideInterface();
                         GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().CancleAbility();
                         break;
@@ -190,7 +189,7 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
                         break;
                     case "Move":
 
-                        //Cancle Move
+                        lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;
                         lvlRef.GetComponent<PathController>().ResetBoard("Reset");
                         lvlRef.GetComponent<LevelController>().boardInteraction = "None";
                         ChosenAction = "None";
@@ -223,9 +222,10 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
 
     public void CheckCreatureStates()
     {
+        Debug.Log("Updating Creature Health & Things");
         for (int i = 0; i < CreaturesOnBoard.Count; i++)
         {
-            CreaturesOnBoard[i].GetComponent<CreatureToken>().StartCoroutine("CheckCreatureStates");
+            CreaturesOnBoard[i].GetComponent<CreatureToken>().StartCoroutine("CheckCreatureHealth");
         }
     }
 }

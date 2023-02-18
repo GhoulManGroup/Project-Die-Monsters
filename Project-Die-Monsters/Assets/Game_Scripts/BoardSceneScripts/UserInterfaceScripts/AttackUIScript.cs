@@ -139,6 +139,7 @@ public class AttackUIScript : MonoBehaviour
                         //Combat over contiune turn.
                         hideAttackWindow();
                         //Call creature controller and set us back to controling the piece.
+                        lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;
                         lvlRef.GetComponent<CreatureController>().ChosenAction = "None";
                         lvlRef.GetComponent<CreatureController>().CheckPossibleActions();
                         lvlRef.GetComponent<CreatureController>().OpenAndCloseControllerUI();
@@ -249,16 +250,13 @@ public class AttackUIScript : MonoBehaviour
         if (defender.GetComponent<CreatureToken>().currentHealth <= 0)
         {
            UIElements[13].GetComponent<Image>().enabled = true;
-            attacker.GetComponent<AbilityManager>().CheckTrigger("OnKill", attacker.gameObject);
-            //Add call here for Has Killed Trigger Check!-----------------------------------------------------------------------------------------------------------------
+           attacker.GetComponent<AbilityManager>().CheckTrigger("OnKill", attacker.gameObject);
         }
         attacker.GetComponent<AbilityManager>().CheckTrigger("OnAttack", attacker.gameObject);
         defender.GetComponent<AbilityManager>().CheckTrigger("OnHit", attacker.gameObject);
-
-        // tell each piece in the fight to update their states.
-        defender.GetComponent<CreatureToken>().StartCoroutine("CheckCreatureHealth");
         attacker.GetComponent<CreatureToken>().CheckForAttackTarget();
         attacker.GetComponent<CreatureToken>().hasAttackedThisTurn = true;
+        lvlRef.GetComponent<LevelController>().CheckForTriggersToResolve();
     }
 
 }
