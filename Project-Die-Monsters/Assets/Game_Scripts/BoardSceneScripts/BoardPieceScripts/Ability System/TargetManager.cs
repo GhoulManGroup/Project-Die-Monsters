@@ -44,6 +44,11 @@ public class TargetManager : MonoBehaviour
 
                 switch (currentEffect.allowedTargets)
                 {
+                    case AbilityEffect.AllowedTargets.otherTrigger:
+                        foundTargets.Add(this.GetComponent<AbilityManager>().TriggeringCreature);
+                        this.GetComponent<EffectManager>().targetsChecked = true;
+                        break;
+
                     case AbilityEffect.AllowedTargets.self:
                         foundTargets.Add(this.gameObject);
                         this.GetComponent<EffectManager>().targetsChecked = true;                       

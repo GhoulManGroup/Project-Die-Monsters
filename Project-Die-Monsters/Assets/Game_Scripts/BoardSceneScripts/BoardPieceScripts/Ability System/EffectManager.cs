@@ -111,7 +111,14 @@ public class EffectManager : MonoBehaviour
 
         for (int i = 0; i < targets.Count; i++)
         {
-            targets[i].GetComponent<AbilityManager>().CheckTrigger("OnHitAbility", this.gameObject);
+            if (targets[i] != this.gameObject && targets[i].GetComponent<CreatureToken>().hasUsedAbilityThisTurn == false)
+            {
+                targets[i].GetComponent<AbilityManager>().CheckTrigger("OnHitAbility", this.gameObject);
+            }
+            else
+            {
+                //Do Nothing To Prevent Infinte Loops
+            }
         }
     }
     #endregion

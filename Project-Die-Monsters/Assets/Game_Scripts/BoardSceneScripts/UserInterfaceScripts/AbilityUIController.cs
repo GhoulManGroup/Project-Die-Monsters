@@ -35,6 +35,7 @@ public class AbilityUIController : MonoBehaviour
 
     public void ShowAndUpdateInterface(string showedFor)
     {
+        Debug.Log(showedFor);
         currentEffect = currentCreature.GetComponent<EffectManager>().effectToResolve;
 
         switch (showedFor)
@@ -96,10 +97,10 @@ public class AbilityUIController : MonoBehaviour
     #region Trigger Ability Management
     public IEnumerator StackManager()
     {
-        Debug.Log("Inside Stack Manager");
         targetsPickedPanel.SetActive(true);
         targetText.text = "Trigger Ability To Resolve";
         yield return new WaitForSeconds(1f);
+        Debug.Log(creaturesToTrigger.Count + "Triggers On Board");
         for (int i = 0; i < creaturesToTrigger.Count; i++)
         {
             waitForCast = true;
@@ -111,12 +112,13 @@ public class AbilityUIController : MonoBehaviour
                 //Add other creature to stack if triggered by another effect.
             }
             yield return new WaitForSeconds(1f);
+            creaturesToTrigger[i].GetComponent<CreatureToken>().hasUsedAbilityThisTurn = true;
         }
-        //Loop Is Done
+        creaturesToTrigger.Clear();
+
         HideInterface();
         GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().CheckCreatureStates();
         yield return null;
-        Debug.Log("Howdy FROM STACK MANAGER BOYO");
     }
     #endregion
 }

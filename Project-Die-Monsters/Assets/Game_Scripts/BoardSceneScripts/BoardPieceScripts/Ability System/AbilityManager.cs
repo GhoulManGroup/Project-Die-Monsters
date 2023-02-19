@@ -11,6 +11,7 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
     LevelController lvlRef;
     CreatureController CCRef;
     AbilityUIController AbilityWindow;
+    public GameObject TriggeringCreature;
 
     public bool abilityCast = false; // this is the check for if the ability has been used this turn already
 
@@ -30,8 +31,7 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
         AbilityWindow = GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>();
         CCRef = GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>();
         lvlRef = GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>();
-    }   
-
+    }
     public void CheckTrigger(string trigger, GameObject triggeredBy = null)
     {
         if (myAbility.abilityActivatedHow == Ability.AbilityActivatedHow.Trigger)
@@ -39,6 +39,7 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
             if (trigger == myAbility.howTriggered.ToString())
             {
                 Debug.Log("Trigger Match" + trigger + myAbility.howTriggered);
+                TriggeringCreature = triggeredBy;
                 AbilityWindow.creaturesToTrigger.Add(this.gameObject);
             }
             else
@@ -52,22 +53,6 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
         }
     }
 
-    public IEnumerator TriggeredEffect()
-    {
-        for (int i = 0; i < myAbility.abilityEffects.Count; i++)
-        {
-            checkingEffect = true;
-            this.GetComponent<EffectManager>().effectToResolve = myAbility.abilityEffects[i];
-            this.GetComponent<EffectManager>().StartCoroutine("PrepareAndCastEffect");
-
-            while (checkingEffect == true)
-            {
-                yield return null;
-            }
-        }
-    }
-
-    #region Activated Ability System
     public IEnumerator ActivatedEffect()
     {
         for (int i = 0; i < myAbility.abilityEffects.Count; i++)
@@ -81,15 +66,22 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
                 yield return null;
             }
         }
-
+        // Here We Are
         while (readyEffects != myAbility.abilityEffects.Count)
         {
             yield return null;
         }
 
-        AbilityWindow.ShowAndUpdateInterface("ConfirmCast");
-        AbilityWindow.confirmBTNFunction = "CastAbility";
-        AbilityWindow.confirmBTN.GetComponent<Button>().interactable = true;
+        if (myAbility.abilityActivatedHow == Ability.AbilityActivatedHow.Trigger)
+        {
+            abilityCast = true;
+        }
+        else
+        {
+            AbilityWindow.ShowAndUpdateInterface("ConfirmCast");
+            AbilityWindow.confirmBTNFunction = "CastAbility";
+            AbilityWindow.confirmBTN.GetComponent<Button>().interactable = true;
+        }
 
         while (effectsResolved != myAbility.abilityEffects.Count)
         {
@@ -99,13 +91,15 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
         lvlRef.GetComponent<LevelController>().turnPlayerObject.GetComponent<Player>().abiltyPowerCrestPoints -= myAbility.abilityCost;
         this.GetComponent<CreatureToken>().hasUsedAbilityThisTurn = true;
         CancleAbilityCast();
-        if (GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().creaturesToTrigger.Contains(this.gameObject))
+        if (myAbility.abilityActivatedHow == Ability.AbilityActivatedHow.Trigger)
         {
-            Debug.Log("Test from ability trigger resolve");
             GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().waitForCast = false;
-            GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().creaturesToTrigger.Remove(this.gameObject);
         }
-        lvlRef.CheckForTriggersToResolve();
+        else
+        {
+            lvlRef.CheckForTriggersToResolve();
+
+        }
         yield return null;
     }
 
@@ -164,5 +158,4 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
 
         yield return null;
     }
-    #endregion
 }

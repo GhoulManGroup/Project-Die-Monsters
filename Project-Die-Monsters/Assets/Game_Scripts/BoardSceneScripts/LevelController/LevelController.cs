@@ -191,7 +191,6 @@ public class LevelController : MonoBehaviour //This class controls everything at
 
         while (GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().creaturesToTrigger.Count > 0)
         {
-            Debug.Log("Waiting for End Turn Triggers");
             yield return null;
         }
 
