@@ -10,44 +10,54 @@ public class DicePoolInspectScript : MonoBehaviour
     public int diceNumber;
     [SerializeField] GameObject dieImage;
     [SerializeField] GameObject crestImage;
-    public List<Sprite> crestAndMaterialList = new List<Sprite>();
+    public List<Sprite> dieCrestList = new List<Sprite>();
+    public List<Sprite> dieColorList = new List<Sprite>();
 
     // This script will now be repurposed to manage the redesigned die selection interface 
 
     public void setUp()
     {
+        myDie.UpdateDetails();
+       // myDie.dieCreature.UpdateDetails();
+        
         switch (myDie.dieCreatureLevel.ToString())
         {
             case "one":
-                crestImage.GetComponent<Image>().sprite = crestAndMaterialList[0];
+                crestImage.GetComponent<Image>().sprite = dieCrestList[0];
                 break;
             case "two":
-                crestImage.GetComponent<Image>().sprite = crestAndMaterialList[1];
+                crestImage.GetComponent<Image>().sprite = dieCrestList[1];
                 break;
             case "three":
-                crestImage.GetComponent<Image>().sprite = crestAndMaterialList[2];
+                crestImage.GetComponent<Image>().sprite = dieCrestList[2];
                 break;
             case "four":
-                crestImage.GetComponent<Image>().sprite = crestAndMaterialList[3];
+                crestImage.GetComponent<Image>().sprite = dieCrestList[3];
                 break;
         }
 
         switch (myDie.dieColor.ToString())
         {
             case "Red":
-                dieImage.GetComponent<Image>().sprite = crestAndMaterialList[5];
+                dieImage.GetComponent<Image>().sprite = dieColorList[0];
                 break;
             case "Blue":
-                dieImage.GetComponent<Image>().sprite = crestAndMaterialList[6];
+                dieImage.GetComponent<Image>().sprite = dieColorList[2];
                 break;
             case "Yellow":
-                dieImage.GetComponent<Image>().sprite = crestAndMaterialList[8];
+                dieImage.GetComponent<Image>().sprite = dieColorList[1];
                 break;
             case "Green":
-                dieImage.GetComponent<Image>().sprite = crestAndMaterialList[7];
+                dieImage.GetComponent<Image>().sprite = dieColorList[4];
+                break;
+            case "Purple":
+                dieImage.GetComponent<Image>().sprite = dieColorList[5];
+                break;
+            case "Orange":
+                dieImage.GetComponent<Image>().sprite = dieColorList[3];
                 break;
             case "White":
-                dieImage.GetComponent<Image>().sprite = crestAndMaterialList[4];
+                dieImage.GetComponent<Image>().sprite = dieColorList[6];
                 break;
         }
     }
@@ -62,9 +72,7 @@ public class DicePoolInspectScript : MonoBehaviour
     {
         GameObject.FindGameObjectWithTag("LevelController").GetComponent<UIDiceController>().UIElements[3].gameObject.SetActive(false);
         GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectWindowController>().AssignDice();
-
     }
-
-    
+ 
 }
 

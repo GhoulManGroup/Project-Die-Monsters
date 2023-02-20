@@ -10,18 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 24381e643d237d243a458a2acea94416, type: 3}
-  m_Name: G3
+  m_Name: 005
   m_EditorClassIdentifier: 
-  CardArt: {fileID: 21300000, guid: a5cf366141c461a489ae0a179cd1b422, type: 3}
-  cardArt3D: {fileID: 2100000, guid: 132cbf4f10bc7fa419c4ab4cdd2cf7bd, type: 2}
-  TribeSprite: {fileID: 21300000, guid: a9a366bee81b9b048b598b3827ba972e, type: 3}
-  LevelSprite: {fileID: 21300000, guid: 0bf535b73586257428c6a3a4705eb7b5, type: 3}
-  TypeSprite: {fileID: 21300000, guid: a9a366bee81b9b048b598b3827ba972e, type: 3}
-  CreatureName: SpikeDrake G3
-  Health: 40
-  Attack: 25
-  Defence: 25
+  creatureID: 0
+  CreatureName: Undead Dragon G2
   creatureType: 0
-  creatureColor: 3
+  creatureColor: 4
   creatureLevel: 0
+  CardArt: {fileID: 21300000, guid: 01eca7185efafdb408fb43f018b0e773, type: 3}
+  cardArt3D: {fileID: 2100000, guid: ea5eaf53370ff5941839d0ff8303060b, type: 2}
+  TribeSprite: {fileID: 21300000, guid: a9a366bee81b9b048b598b3827ba972e, type: 3}
+  LevelSprite: {fileID: 21300000, guid: f17991a73256ac241b0f93279350b6e4, type: 3}
+  TypeSprite: {fileID: 21300000, guid: a9a366bee81b9b048b598b3827ba972e, type: 3}
+  Health: 20
+  Attack: 25
+  Defence: 15
   myAbility: {fileID: 11400000, guid: 200c80fce0e7bf845a1ea601e1ac8591, type: 2}

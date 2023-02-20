@@ -25,13 +25,40 @@ public class Die : ScriptableObject // this script is the data conainer for ever
     [Header("Dice State")]
     public bool dieInDeck = false; // this boolean will prevent a die from being reused once it is in play.
     public Sprite Icon;
-    
 
 
+    public void UpdateDetails()
+    {
+        switch (dieCreature.creatureColor)
+        {
+            case Creature.CreatureColor.Red:
+                dieColor = DieColor.Red;
+                break;
+            case Creature.CreatureColor.Yellow:
+                dieColor = DieColor.Yellow;
+                break;
+            case Creature.CreatureColor.Blue:
+                dieColor = DieColor.Blue;
+                break;
+            case Creature.CreatureColor.Orange:
+                dieColor = DieColor.Orange;
+                break;
+            case Creature.CreatureColor.Green:
+                dieColor = DieColor.Green;
+                break;
+            case Creature.CreatureColor.Purple:
+                dieColor = DieColor.Purple;
+                break;
+            case Creature.CreatureColor.White:
+                dieColor = DieColor.White;
+                break;
+
+        }
+    }
 
     public enum DieColor
     {
-        Red, Blue, Yellow, Green, Purple, Orange, White, Black
+        Red, Yellow, Blue, Orange, Green, Purple, White
     }
 
     public enum DieCreatureLevel

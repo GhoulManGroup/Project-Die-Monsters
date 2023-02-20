@@ -5,30 +5,34 @@ using UnityEngine;
 [CreateAssetMenu]
 public class Creature : ScriptableObject
 {
-    // these are what artwork shows up on the inspect card window.
+    [Header("Crature Identifyers")]
+    public int creatureID = 0;
+    public string CreatureName;
+    public CreatureType creatureType;
+    public CreatureColor creatureColor;
+    public CreatureLevel creatureLevel;
+
+
+    [Header("Creature Assets&Materials")]
     public Sprite CardArt;
     public Material cardArt3D;
     public Sprite TribeSprite;
     public Sprite LevelSprite;
     public Sprite TypeSprite;
 
-    // contains the creatures basic health and such on summon.
-    public string CreatureName;
-
+    [Header("Creature Properties")]
     public int Health;
     public int Attack;
     public int Defence;
 
-    public CreatureType creatureType;
 
-    public CreatureColor creatureColor;
 
-    public CreatureLevel creatureLevel;
 
     public Ability myAbility;
+
     public enum CreatureColor
     {
-        Red, Blue, Yellow, Green, White, Black
+        Red, Yellow, Blue, Orange, Green, Purple, White
     }
 
     public enum CreatureType

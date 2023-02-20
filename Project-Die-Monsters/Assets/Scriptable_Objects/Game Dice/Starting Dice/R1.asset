@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 442d4f4127b13e345b0d2df6a7e5c597, type: 3}
   m_Name: R1
   m_EditorClassIdentifier: 
-  dieColor: 0
+  dieColor: 6
   dieCreatureLevel: 0
   diceContents: 0
   firstCrest: 0

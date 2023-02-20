@@ -73,18 +73,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myDie: {fileID: 0}
+  diceNumber: 0
   dieImage: {fileID: 5807680785071646826}
   crestImage: {fileID: 5807680784709933506}
-  crestAndMaterialList:
+  dieCrestList:
   - {fileID: 21300000, guid: f17991a73256ac241b0f93279350b6e4, type: 3}
   - {fileID: 21300000, guid: 0bf535b73586257428c6a3a4705eb7b5, type: 3}
   - {fileID: 21300000, guid: a4bc289de487f0941af9e9337c389476, type: 3}
   - {fileID: 21300000, guid: 389f60dab80577e4bbf3e1c8057e4da4, type: 3}
-  - {fileID: 21300000, guid: 49f7b583cabfa6d4b9134437dd1d0bc8, type: 3}
+  dieColorList:
   - {fileID: 21300000, guid: 9a79ab270abe5124a8bbafd822c002e6, type: 3}
-  - {fileID: 21300000, guid: 8bdfc3d899714f0418a42e80977f55d6, type: 3}
-  - {fileID: 21300000, guid: a9a366bee81b9b048b598b3827ba972e, type: 3}
   - {fileID: 21300000, guid: 8260297b326814e4abacf1b7d66d4524, type: 3}
+  - {fileID: 21300000, guid: 8bdfc3d899714f0418a42e80977f55d6, type: 3}
+  - {fileID: 21300000, guid: 89654d29340e4b748b5906bab465619c, type: 3}
+  - {fileID: 21300000, guid: a9a366bee81b9b048b598b3827ba972e, type: 3}
+  - {fileID: 21300000, guid: a1d9aad0d87a1964a91ce56f4f0a92f2, type: 3}
+  - {fileID: 21300000, guid: 49f7b583cabfa6d4b9134437dd1d0bc8, type: 3}
 --- !u!1 &5807680784709933506
 GameObject:
   m_ObjectHideFlags: 0
