@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu]
@@ -12,7 +13,6 @@ public class Creature : ScriptableObject
     public CreatureColor creatureColor;
     public CreatureLevel creatureLevel;
 
-
     [Header("Creature Assets&Materials")]
     public Sprite CardArt;
     public Material cardArt3D;
@@ -24,9 +24,6 @@ public class Creature : ScriptableObject
     public int Health;
     public int Attack;
     public int Defence;
-
-
-
 
     public Ability myAbility;
 

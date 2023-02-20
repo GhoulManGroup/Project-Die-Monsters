@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEditor;
 
 public class DicePoolInspectScript : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class DicePoolInspectScript : MonoBehaviour
 
     public void setUp()
     {
+        Die.RenameScriptableObject(myDie, myDie.dieCreature.name +" "+ myDie.dieID);
         myDie.UpdateDetails();
        // myDie.dieCreature.UpdateDetails();
         

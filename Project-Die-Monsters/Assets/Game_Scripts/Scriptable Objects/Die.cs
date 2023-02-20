@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,9 +27,16 @@ public class Die : ScriptableObject // this script is the data conainer for ever
     public bool dieInDeck = false; // this boolean will prevent a die from being reused once it is in play.
     public Sprite Icon;
 
+    public static void RenameScriptableObject(ScriptableObject scriptableObject, string newName)
+    {
+        string path = AssetDatabase.GetAssetPath(scriptableObject);
+        AssetDatabase.RenameAsset(path, newName);
+        AssetDatabase.SaveAssets();
+    }
 
     public void UpdateDetails()
     {
+        RenameScriptableObject(dieCreature, dieCreature.CreatureName);
         switch (dieCreature.creatureColor)
         {
             case Creature.CreatureColor.Red:

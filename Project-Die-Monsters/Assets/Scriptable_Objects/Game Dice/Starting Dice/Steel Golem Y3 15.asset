@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 442d4f4127b13e345b0d2df6a7e5c597, type: 3}
-  m_Name: B2
+  m_Name: Steel Golem Y3 15
   m_EditorClassIdentifier: 
-  dieColor: 1
-  dieCreatureLevel: 0
+  dieColor: 5
+  dieCreatureLevel: 1
   diceContents: 0
   firstCrest: 0
-  secondCrest: 1
+  secondCrest: 3
   thirdCrest: 0
-  forthCrest: 0
-  fifthCrest: 4
-  sixthCrest: 0
-  dieCreature: {fileID: 11400000, guid: 8e111512779f3294cb0a6d6ec9b06c02, type: 2}
-  dieID: 2
+  forthCrest: 2
+  fifthCrest: 0
+  sixthCrest: 3
+  dieCreature: {fileID: 11400000, guid: aaf901ae66aa29b418579399d81e2dde, type: 2}
+  dieID: 15
   dieInDeck: 0
   Icon: {fileID: 0}
