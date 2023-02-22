@@ -10,18 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 24381e643d237d243a458a2acea94416, type: 3}
-  m_Name: Minotuar R2
+  m_Name: Living Tome
   m_EditorClassIdentifier: 
   creatureID: 10
-  CreatureName: Minotuar R2
+  CreatureName: Living Tome
   creatureType: 0
-  creatureColor: 0
+  creatureColor: 2
   creatureLevel: 0
   CardArt: {fileID: 21300000, guid: f1ae655b41bc7da488f51ba57acddd2c, type: 3}
   cardArt3D: {fileID: 2100000, guid: 64972e9df4cd77e4f8d001d816a02282, type: 2}
-  TribeSprite: {fileID: 21300000, guid: 8c675b45da8812e4391d63d0a4012f76, type: 3}
+  TribeSprite: {fileID: 21300000, guid: 8bdfc3d899714f0418a42e80977f55d6, type: 3}
   LevelSprite: {fileID: 21300000, guid: f17991a73256ac241b0f93279350b6e4, type: 3}
   TypeSprite: {fileID: 21300000, guid: 8c675b45da8812e4391d63d0a4012f76, type: 3}
+  summonCost: 0
   Health: 10
   Attack: 10
   Defence: 0

@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 442d4f4127b13e345b0d2df6a7e5c597, type: 3}
-  m_Name: Turtle B3 3
+  m_Name: Living Tome 10
   m_EditorClassIdentifier: 
-  dieColor: 2
-  dieCreatureLevel: 1
+  dieColor: 0
+  dieCreatureLevel: 0
   diceContents: 0
   firstCrest: 0
-  secondCrest: 1
+  secondCrest: 2
   thirdCrest: 0
-  forthCrest: 3
-  fifthCrest: 0
-  sixthCrest: 2
-  dieCreature: {fileID: 11400000, guid: 116bb14f09b330b4094a12fd69e4c965, type: 2}
-  dieID: 3
+  forthCrest: 0
+  fifthCrest: 1
+  sixthCrest: 0
+  dieCreature: {fileID: 11400000, guid: dbbf734e45aed6643ad28e876c9b25c7, type: 2}
+  dieID: 8
   dieInDeck: 0
   Icon: {fileID: 0}

@@ -10,18 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 24381e643d237d243a458a2acea94416, type: 3}
-  m_Name: Jellyfish B2
+  m_Name: Knight
   m_EditorClassIdentifier: 
-  creatureID: 6
-  CreatureName: Jellyfish B2
+  creatureID: 1
+  CreatureName: Knight
   creatureType: 0
-  creatureColor: 0
-  creatureLevel: 0
-  CardArt: {fileID: 21300000, guid: 06b9a1e56a389d141ad16ee7c8ada1b6, type: 3}
-  cardArt3D: {fileID: 2100000, guid: 726555eb5f4b07540a6b814f0926121f, type: 2}
-  TribeSprite: {fileID: 21300000, guid: 8c675b45da8812e4391d63d0a4012f76, type: 3}
+  creatureColor: 1
+  creatureLevel: 1
+  CardArt: {fileID: 21300000, guid: c443fa2e8c7350f45b095679b5bcb17b, type: 3}
+  cardArt3D: {fileID: 2100000, guid: 1d34d84322623924e92b5383718f886b, type: 2}
+  TribeSprite: {fileID: 21300000, guid: 8260297b326814e4abacf1b7d66d4524, type: 3}
   LevelSprite: {fileID: 21300000, guid: f17991a73256ac241b0f93279350b6e4, type: 3}
   TypeSprite: {fileID: 21300000, guid: 8c675b45da8812e4391d63d0a4012f76, type: 3}
+  summonCost: 0
   Health: 10
   Attack: 10
   Defence: 0

@@ -21,6 +21,7 @@ public class Creature : ScriptableObject
     public Sprite TypeSprite;
 
     [Header("Creature Properties")]
+    public int summonCost;
     public int Health;
     public int Attack;
     public int Defence;

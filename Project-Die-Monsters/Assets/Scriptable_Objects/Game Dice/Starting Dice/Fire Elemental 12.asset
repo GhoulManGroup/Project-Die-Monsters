@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 442d4f4127b13e345b0d2df6a7e5c597, type: 3}
-  m_Name: Steel Golem Y3 15
+  m_Name: Fire Elemental 12
   m_EditorClassIdentifier: 
   dieColor: 5
   dieCreatureLevel: 1

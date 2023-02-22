@@ -37,6 +37,7 @@ public class Die : ScriptableObject // this script is the data conainer for ever
     public void UpdateDetails()
     {
         RenameScriptableObject(dieCreature, dieCreature.CreatureName);
+        dieID = dieCreature.creatureID;
         switch (dieCreature.creatureColor)
         {
             case Creature.CreatureColor.Red:
@@ -60,8 +61,9 @@ public class Die : ScriptableObject // this script is the data conainer for ever
             case Creature.CreatureColor.White:
                 dieColor = DieColor.White;
                 break;
-
         }
+
+
     }
 
     public enum DieColor

@@ -10,18 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 24381e643d237d243a458a2acea94416, type: 3}
-  m_Name: Imp W2
+  m_Name: Fire Elemental
   m_EditorClassIdentifier: 
-  creatureID: 5
-  CreatureName: Imp W2
+  creatureID: 12
+  CreatureName: Fire Elemental
   creatureType: 0
-  creatureColor: 0
-  creatureLevel: 0
-  CardArt: {fileID: 21300000, guid: 4f4d212d8a89ca14c9164c04ee14ec37, type: 3}
-  cardArt3D: {fileID: 2100000, guid: a89f2ef0105ec5149abe0fff9e6e96b6, type: 2}
-  TribeSprite: {fileID: 21300000, guid: 8c675b45da8812e4391d63d0a4012f76, type: 3}
+  creatureColor: 2
+  creatureLevel: 2
+  CardArt: {fileID: 21300000, guid: 7ee6501cc55dcff47b054d522fd02254, type: 3}
+  cardArt3D: {fileID: 2100000, guid: c254cd4e8876ad747bc2e0288acccefa, type: 2}
+  TribeSprite: {fileID: 21300000, guid: 8bdfc3d899714f0418a42e80977f55d6, type: 3}
   LevelSprite: {fileID: 21300000, guid: f17991a73256ac241b0f93279350b6e4, type: 3}
   TypeSprite: {fileID: 21300000, guid: 8c675b45da8812e4391d63d0a4012f76, type: 3}
+  summonCost: 0
   Health: 10
   Attack: 10
   Defence: 0

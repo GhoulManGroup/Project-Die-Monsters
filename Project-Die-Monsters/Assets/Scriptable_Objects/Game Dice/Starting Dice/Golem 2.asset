@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 442d4f4127b13e345b0d2df6a7e5c597, type: 3}
-  m_Name: Minotuar R2 8
+  m_Name: Golem 2
   m_EditorClassIdentifier: 
-  dieColor: 0
+  dieColor: 6
   dieCreatureLevel: 0
   diceContents: 0
   firstCrest: 0
@@ -21,7 +21,7 @@ MonoBehaviour:
   forthCrest: 0
   fifthCrest: 1
   sixthCrest: 0
-  dieCreature: {fileID: 11400000, guid: dbbf734e45aed6643ad28e876c9b25c7, type: 2}
-  dieID: 8
+  dieCreature: {fileID: 11400000, guid: 9338db65bd793b843805a9ff67c1db6b, type: 2}
+  dieID: 7
   dieInDeck: 0
   Icon: {fileID: 0}

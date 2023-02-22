@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     public List<Creature> CreaturePool = new List<Creature>();
 
     [Header("Player Resources")] // these are the resources the player has gained from rolling dice.
+    public int summmonCrestPoints = 0;
     public int moveCrestPoints = 0;
     public int attackCrestPoints = 0;
     public int defenceCrestPoints = 0;
