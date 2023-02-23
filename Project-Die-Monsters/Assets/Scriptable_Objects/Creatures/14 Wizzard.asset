@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 24381e643d237d243a458a2acea94416, type: 3}
-  m_Name: Lich
+  m_Name: 14 Wizzard
   m_EditorClassIdentifier: 
-  creatureID: 13
-  CreatureName: Lich
+  creatureID: 14
+  CreatureName: Wizzard
   creatureType: 0
   creatureColor: 2
-  creatureLevel: 3
-  CardArt: {fileID: 21300000, guid: 865e57658940f0e47a3f1ea8fb8c5bfa, type: 3}
-  cardArt3D: {fileID: 2100000, guid: e067dc587aeb1e44cb21789394bacfd7, type: 2}
+  creatureLevel: 0
+  CardArt: {fileID: 21300000, guid: 01eca7185efafdb408fb43f018b0e773, type: 3}
+  cardArt3D: {fileID: 2100000, guid: ea5eaf53370ff5941839d0ff8303060b, type: 2}
   TribeSprite: {fileID: 21300000, guid: 8bdfc3d899714f0418a42e80977f55d6, type: 3}
   LevelSprite: {fileID: 21300000, guid: f17991a73256ac241b0f93279350b6e4, type: 3}
   TypeSprite: {fileID: 21300000, guid: 8c675b45da8812e4391d63d0a4012f76, type: 3}
-  summonCost: 0
+  summonCost: 2
   Health: 10
   Attack: 10
   Defence: 0
-  myAbility: {fileID: 11400000, guid: 200c80fce0e7bf845a1ea601e1ac8591, type: 2}
+  myAbility: {fileID: 0}

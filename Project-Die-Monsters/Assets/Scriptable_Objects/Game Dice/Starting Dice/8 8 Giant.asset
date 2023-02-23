@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 442d4f4127b13e345b0d2df6a7e5c597, type: 3}
-  m_Name: Wizzard 14
+  m_Name: 8 8 Giant
   m_EditorClassIdentifier: 
-  dieColor: 4
-  dieCreatureLevel: 0
+  dieColor: 0
+  dieCreatureLevel: 3
   diceContents: 0
   firstCrest: 0
   secondCrest: 2
-  thirdCrest: 0
+  thirdCrest: 1
   forthCrest: 0
-  fifthCrest: 1
-  sixthCrest: 0
-  dieCreature: {fileID: 11400000, guid: 8e1015672dd389540910b22aa545074f, type: 2}
-  dieID: 5
+  fifthCrest: 2
+  sixthCrest: 1
+  dieCreature: {fileID: 11400000, guid: f5e7b0e7a6d684b4c9192330ccfc12eb, type: 2}
+  dieID: 8
   dieInDeck: 0
   Icon: {fileID: 0}

@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 442d4f4127b13e345b0d2df6a7e5c597, type: 3}
-  m_Name: Mimic 4
+  m_Name: 12 12 Fire Elemental
   m_EditorClassIdentifier: 
-  dieColor: 6
-  dieCreatureLevel: 0
+  dieColor: 2
+  dieCreatureLevel: 2
   diceContents: 0
   firstCrest: 0
-  secondCrest: 3
+  secondCrest: 1
   thirdCrest: 0
-  forthCrest: 0
-  fifthCrest: 1
-  sixthCrest: 0
-  dieCreature: {fileID: 11400000, guid: 5fae0b64a970b184eaa7d3b7557c8965, type: 2}
-  dieID: 14
+  forthCrest: 2
+  fifthCrest: 0
+  sixthCrest: 4
+  dieCreature: {fileID: 11400000, guid: aaf901ae66aa29b418579399d81e2dde, type: 2}
+  dieID: 12
   dieInDeck: 0
   Icon: {fileID: 0}

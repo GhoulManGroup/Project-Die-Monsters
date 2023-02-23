@@ -154,6 +154,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
         turnPlayerUIDisplay[2].text = participants[turnPlayerSlot].GetComponent<Player>().abiltyPowerCrestPoints.ToString();
         turnPlayerUIDisplay[3].text = participants[turnPlayerSlot].GetComponent<Player>().defenceCrestPoints.ToString();
         turnPlayerUIDisplay[4].text = participants[turnPlayerSlot].GetComponent<Player>().moveCrestPoints.ToString();
+        turnPlayerUIDisplay[5].text = participants[turnPlayerSlot].GetComponent<Player>().summmonCrestPoints.ToString();
     }
 
     public void CheckForTriggersToResolve()

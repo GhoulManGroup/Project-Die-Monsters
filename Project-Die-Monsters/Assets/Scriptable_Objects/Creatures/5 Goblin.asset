@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 24381e643d237d243a458a2acea94416, type: 3}
-  m_Name: Kolbold Sorceress
+  m_Name: 5 Goblin
   m_EditorClassIdentifier: 
-  creatureID: 11
-  CreatureName: Kolbold Sorceress
+  creatureID: 5
+  CreatureName: Goblin
   creatureType: 0
-  creatureColor: 2
-  creatureLevel: 1
-  CardArt: {fileID: 21300000, guid: a5cf366141c461a489ae0a179cd1b422, type: 3}
-  cardArt3D: {fileID: 2100000, guid: 132cbf4f10bc7fa419c4ab4cdd2cf7bd, type: 2}
-  TribeSprite: {fileID: 21300000, guid: 8bdfc3d899714f0418a42e80977f55d6, type: 3}
+  creatureColor: 0
+  creatureLevel: 0
+  CardArt: {fileID: 21300000, guid: 4f4d212d8a89ca14c9164c04ee14ec37, type: 3}
+  cardArt3D: {fileID: 2100000, guid: a89f2ef0105ec5149abe0fff9e6e96b6, type: 2}
+  TribeSprite: {fileID: 21300000, guid: 9a79ab270abe5124a8bbafd822c002e6, type: 3}
   LevelSprite: {fileID: 21300000, guid: f17991a73256ac241b0f93279350b6e4, type: 3}
   TypeSprite: {fileID: 21300000, guid: 8c675b45da8812e4391d63d0a4012f76, type: 3}
-  summonCost: 0
+  summonCost: 2
   Health: 10
   Attack: 10
   Defence: 0
-  myAbility: {fileID: 11400000, guid: 200c80fce0e7bf845a1ea601e1ac8591, type: 2}
+  myAbility: {fileID: 0}

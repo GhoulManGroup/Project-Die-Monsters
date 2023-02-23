@@ -36,6 +36,8 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
     public int lvl2Crest;
     public int lvl3Crest;
     public int lvl4Crest;
+    public int summonCrestPool = 0;
+    bool hasSummoned = false;
 
     public void Start()
     {
@@ -201,6 +203,8 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
                     //Player not performing action can press end turn BTN.
                     lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;
                     lvlRef.GetComponent<LevelController>().ableToInteractWithBoard = true;
+                    turnPlayer.GetComponent<Player>().summmonCrestPoints += summonCrestPool;
+                    summonCrestPool = 0;
                     inspectWindow.GetComponent<InspectWindowController>().CloseInspectWindow();
                 }
                 break;
@@ -213,6 +217,7 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
                     GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().HideandShow();
                     lvlRef.GetComponent<CameraController>().switchCamera("Board");
                     lvlRef.GetComponent<LevelController>().creaturePlacedFrom = "DiceBoard";
+                    hasSummoned = true;
                     resetFunction();
                 }
                 break;
@@ -220,6 +225,7 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
                 case "PoolBTN":
                     inspectWindow.GetComponent<InspectWindowController>().AddCreatureToPool();
                     lvlRef.GetComponent<LevelController>().ableToInteractWithBoard = true;
+                    hasSummoned = true;
                     resetFunction();
                 break;
 

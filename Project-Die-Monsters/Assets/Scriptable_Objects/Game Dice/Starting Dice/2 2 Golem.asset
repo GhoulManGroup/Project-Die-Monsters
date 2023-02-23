@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 442d4f4127b13e345b0d2df6a7e5c597, type: 3}
-  m_Name: Bandit 6
+  m_Name: 2 2 Golem
   m_EditorClassIdentifier: 
   dieColor: 1
-  dieCreatureLevel: 0
+  dieCreatureLevel: 2
   diceContents: 0
   firstCrest: 0
-  secondCrest: 1
-  thirdCrest: 0
-  forthCrest: 0
-  fifthCrest: 4
+  secondCrest: 2
+  thirdCrest: 1
+  forthCrest: 2
+  fifthCrest: 1
   sixthCrest: 0
-  dieCreature: {fileID: 11400000, guid: 8e111512779f3294cb0a6d6ec9b06c02, type: 2}
+  dieCreature: {fileID: 11400000, guid: 9338db65bd793b843805a9ff67c1db6b, type: 2}
   dieID: 2
   dieInDeck: 0
   Icon: {fileID: 0}

@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 442d4f4127b13e345b0d2df6a7e5c597, type: 3}
-  m_Name: Knight 1
+  m_Name: 3 3 Slime
   m_EditorClassIdentifier: 
-  dieColor: 4
-  dieCreatureLevel: 1
+  dieColor: 1
+  dieCreatureLevel: 3
   diceContents: 0
   firstCrest: 0
-  secondCrest: 4
-  thirdCrest: 0
-  forthCrest: 1
-  fifthCrest: 0
-  sixthCrest: 4
-  dieCreature: {fileID: 11400000, guid: 0499810bb60c8b743bb0b2331a5240fe, type: 2}
-  dieID: 12
+  secondCrest: 3
+  thirdCrest: 2
+  forthCrest: 0
+  fifthCrest: 1
+  sixthCrest: 0
+  dieCreature: {fileID: 11400000, guid: 048de222444760d4d9ee14d0623e63e8, type: 2}
+  dieID: 3
   dieInDeck: 0
   Icon: {fileID: 0}

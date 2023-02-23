@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 24381e643d237d243a458a2acea94416, type: 3}
-  m_Name: Giant
+  m_Name: 0 Skeletal Warior
   m_EditorClassIdentifier: 
-  creatureID: 8
-  CreatureName: Giant
+  creatureID: 0
+  CreatureName: Skeletal Warior
   creatureType: 0
-  creatureColor: 0
-  creatureLevel: 3
-  CardArt: {fileID: 21300000, guid: 612f048e64e29ba4d987fccfe179e29f, type: 3}
-  cardArt3D: {fileID: 2100000, guid: 69af770fb75246146bf9f1e5b404a00f, type: 2}
-  TribeSprite: {fileID: 21300000, guid: 9a79ab270abe5124a8bbafd822c002e6, type: 3}
+  creatureColor: 1
+  creatureLevel: 0
+  CardArt: {fileID: 21300000, guid: 6e27fa14efdfff542a2628901ea6ebb3, type: 3}
+  cardArt3D: {fileID: 2100000, guid: 4207d79dffc8cf34498f4c7ec514f11b, type: 2}
+  TribeSprite: {fileID: 21300000, guid: 8260297b326814e4abacf1b7d66d4524, type: 3}
   LevelSprite: {fileID: 21300000, guid: f17991a73256ac241b0f93279350b6e4, type: 3}
   TypeSprite: {fileID: 21300000, guid: 8c675b45da8812e4391d63d0a4012f76, type: 3}
-  summonCost: 0
+  summonCost: 2
   Health: 10
   Attack: 10
   Defence: 0
-  myAbility: {fileID: 11400000, guid: 200c80fce0e7bf845a1ea601e1ac8591, type: 2}
+  myAbility: {fileID: 0}

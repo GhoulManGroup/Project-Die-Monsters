@@ -206,6 +206,7 @@ public class SceneDieScript : MonoBehaviour
                         myController.lvl4Crest += 1;
                         break;
                 }
+                myController.summonCrestPool += 1;
                 break;
             case "Attack":
                 rollResult = "Attack";
