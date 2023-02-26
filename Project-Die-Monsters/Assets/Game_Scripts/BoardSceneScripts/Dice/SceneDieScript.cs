@@ -11,6 +11,8 @@ public class SceneDieScript : MonoBehaviour
     public bool diceSetUp; // If the dice has a creature inside.
     public string rollResult; // What the dice has rolled.
     public bool canBeChosen = false; //If the dice can be picked to add to the creature pool.
+    public bool isFree = false;
+    public bool rolledLevelCrest = false;
 
     Rigidbody myBody;
     Vector3 startingPosition;
@@ -46,9 +48,8 @@ public class SceneDieScript : MonoBehaviour
 
         if (myController.hasRolledDice == true)
         {
-            if (canBeChosen == true)
+            if (canBeChosen == true && isFree == true || canBeChosen == true && myDie.dieCreature.summonCost <= myController.turnPlayer.GetComponent<Player>().summmonCrestPoints )
             {
-                //Check if dice already done.
                 inspectTab.sceneDice = gameObject;
                 inspectTab.OpenInspectWindow("DieInspect");
                 myController.UIElements[2].SetActive(true);
@@ -206,6 +207,8 @@ public class SceneDieScript : MonoBehaviour
                         myController.lvl4Crest += 1;
                         break;
                 }
+                rolledLevelCrest = true;
+                canBeChosen = true;
                 myController.summonCrestPool += 1;
                 break;
             case "Attack":
@@ -226,13 +229,15 @@ public class SceneDieScript : MonoBehaviour
                 break;
         }
         myController.dicechecked += 1;
-        myController.matchingSummonCrestCheck();
+        myController.CheckCanSummonCreature();
     }
 
     public void resetDie()
     {
         //reset the dice position
         transform.position = startingPosition;
+        canBeChosen = false;
+        isFree = false;
 
         //When the dice are done we reset the material.
         for (int i = 0; i < myParts.Count; i++)

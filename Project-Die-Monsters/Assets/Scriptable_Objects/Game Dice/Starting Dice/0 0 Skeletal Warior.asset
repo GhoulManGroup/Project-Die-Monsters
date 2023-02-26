@@ -22,6 +22,6 @@ MonoBehaviour:
   fifthCrest: 1
   sixthCrest: 0
   dieCreature: {fileID: 11400000, guid: 3cbbbc6dbfbd59f41b9eac8d2484ebf9, type: 2}
-  dieID: 4
+  dieID: 0
   dieInDeck: 0
   Icon: {fileID: 0}

@@ -118,6 +118,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
     #region TurnManagement
     public void SetTurnPlayer() // call this function after turn player changes to update each script.
     {
+        endTurnBTN.GetComponent<Button>().interactable = false;
         this.GetComponent<CreatureController>().turnPlayer = participants[turnPlayerSlot].gameObject;
         this.GetComponent<CreaturePoolController>().turnPlayer = participants[turnPlayerSlot].gameObject;
         this.GetComponent<UIDiceController>().turnPlayer = participants[turnPlayerSlot].gameObject;
@@ -217,6 +218,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
                 }
 
                 ResetFunction();
+                this.GetComponent<CreaturePoolController>().enableButtons();
                 startTurnBTN.GetComponent<Image>().enabled = true;
             }
         }

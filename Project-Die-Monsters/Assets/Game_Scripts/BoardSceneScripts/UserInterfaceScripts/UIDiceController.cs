@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIDiceController : MonoBehaviour // This class controls the In game dice selection and roll system and its UI elements involved in that process.
@@ -73,16 +74,18 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
         dieToRoll.Add(DiceSpawned);
     }
 
-    public void matchingSummonCrestCheck()
+    public void CheckCanSummonCreature()
     {
+        
         //check if each int is 2+ in value then tell any dice thats result string matches that intcrestname to change their can be played state to true.
         if (lvl1Crest >= 2)
         {
             for (int i = 0; i < dieToRoll.Count; i++)
             {
-                if (dieToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC1")
+                if (dieToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC1" && dieToRoll[i].GetComponent<SceneDieScript>().isFree == false)
                 {
-                    dieToRoll[i].GetComponent<SceneDieScript>().canBeChosen = true;
+                    Debug.Log("Hello From THing");
+                    dieToRoll[i].GetComponent<SceneDieScript>().isFree = true;
                 }
             }
         }
@@ -91,9 +94,9 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
         {
             for (int i = 0; i < dieToRoll.Count; i++)
             {
-                if (dieToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC2")
+                if (dieToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC2" && dieToRoll[i].GetComponent<SceneDieScript>().isFree == false)
                 {
-                    dieToRoll[i].GetComponent<SceneDieScript>().canBeChosen = true;
+                    dieToRoll[i].GetComponent<SceneDieScript>().isFree = true;
                 }
             }
         }
@@ -102,9 +105,9 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
         {
             for (int i = 0; i < dieToRoll.Count; i++)
             {
-                if (dieToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC3")
+                if (dieToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC3" && dieToRoll[i].GetComponent<SceneDieScript>().isFree == false)
                 {
-                    dieToRoll[i].GetComponent<SceneDieScript>().canBeChosen = true;
+                    dieToRoll[i].GetComponent<SceneDieScript>().isFree = true;
                 }
             }
         }
@@ -113,23 +116,33 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
         {
             for (int i = 0; i < dieToRoll.Count; i++)
             {
-                if (dieToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC4")
-                {
-                    dieToRoll[i].GetComponent<SceneDieScript>().canBeChosen = true;
+                if (dieToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC4" && dieToRoll[i].GetComponent<SceneDieScript>().isFree == false)
+                {                
+                    dieToRoll[i].GetComponent<SceneDieScript>().isFree = true;
                 }
             }
         }
 
         if (dicechecked == 3)
         {
+
+            for (int i = 0; i < dieToRoll.Count; i++)
+            {// Add if rolled levle crest. Need to rewrite the script a bit more.
+                if (dieToRoll[i].GetComponent<SceneDieScript>().myDie.dieCreature.summonCost <= turnPlayer.GetComponent<Player>().summmonCrestPoints && dieToRoll[i].GetComponent<SceneDieScript>().isFree == false && dieToRoll[i].GetComponent<SceneDieScript>().rolledLevelCrest == true)
+                {
+                    Debug.Log("Can Pay to Summon " + dieToRoll[i].name);
+                    dieToRoll[i].GetComponent<SceneDieScript>().canBeChosen = true;
+                }
+            }
             canCloseUI = true;
         }
 
-        lvlRef.GetComponent<LevelController>().UpdateTurnPlayerCrestDisplay();
+        //
     }
 
     public void resetFunction()
     {
+        lvlRef.GetComponent<LevelController>().UpdateTurnPlayerCrestDisplay();
         //Add the dice objects on each dice if not null back to the player list.(The Unchosen ones)
         for (int i = 0; i < readyDice; i++)
         {

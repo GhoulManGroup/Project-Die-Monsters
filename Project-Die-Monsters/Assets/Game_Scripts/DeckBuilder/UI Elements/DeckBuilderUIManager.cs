@@ -169,6 +169,32 @@ public class DeckBuilderUIManager : MonoBehaviour
                     UISetUp();
                     break;
 
+                case "Purple":
+                    switch (colorFilter == "Purple")
+                    {
+                        case false:
+                            colorFilter = "Purple";
+                            break;
+                        case true:
+                            colorFilter = "None";
+                            break;
+                    }
+                    DisplayDice();
+                    break;
+
+                case "Orange":
+                    switch (colorFilter == "Orange")
+                    {
+                        case false:
+                            colorFilter = "Orange";
+                            break;
+                        case true:
+                            colorFilter = "None";
+                            break;
+                    }
+                    DisplayDice();
+                    break;
+
                 case "Red":
                     switch (colorFilter == "Red")
                     {

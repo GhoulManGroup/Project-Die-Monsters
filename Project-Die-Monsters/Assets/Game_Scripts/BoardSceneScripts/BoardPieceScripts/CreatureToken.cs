@@ -97,7 +97,10 @@ public class CreatureToken : MonoBehaviour
         healthCap = myCreature.Health;
         attackCap = myCreature.Attack;
         defenceCap = myCreature.Defence;
-        abilityCost = myCreature.myAbility.abilityCost;
+        if (myCreature.myAbility != null)
+        {
+            abilityCost = myCreature.myAbility.abilityCost;
+        }
         setDirections();
     }
 
