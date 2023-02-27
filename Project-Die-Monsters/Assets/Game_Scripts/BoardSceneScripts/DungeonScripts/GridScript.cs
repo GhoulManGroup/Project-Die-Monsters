@@ -170,6 +170,7 @@ public class GridScript : MonoBehaviour
     public void SpawnCreatureAbove()
     {
         Instantiate(creatureSpawnFab, new Vector3(this.transform.position.x, 0.3f, this.transform.position.z), Quaternion.identity);
+        LvlRef.GetComponent<LevelController>().CanEndTurn();
     }
     #endregion
 

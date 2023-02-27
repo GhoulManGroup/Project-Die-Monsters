@@ -22,11 +22,11 @@ public class DungeonSpawner : MonoBehaviour
     public Quaternion lastRotation; // The last the spawner had without being out of bounds.
     public int lastPattern; // The last pattern that was not out of bounds.
 
-    GameObject levelController;
+    GameObject lvlRef;
 
     void Start()
     {
-        levelController = GameObject.FindGameObjectWithTag("LevelController");
+        lvlRef = GameObject.FindGameObjectWithTag("LevelController");
         resetPoint = this.transform.position;
         UpdateBoard();
         HideandShow();
@@ -39,7 +39,7 @@ public class DungeonSpawner : MonoBehaviour
 
     public void checkPlayerAction()
     {
-        if (levelController.GetComponent<LevelController>().placingCreature == true)
+        if (lvlRef.GetComponent<LevelController>().placingCreature == true)
         {
             MoveDungeonSpawner();
             PlaceDungeonPath();
@@ -48,7 +48,7 @@ public class DungeonSpawner : MonoBehaviour
 
     public void HideandShow()
     {
-        if (levelController.GetComponent<LevelController>().placingCreature == true) // Next Condition to Change.
+        if (lvlRef.GetComponent<LevelController>().placingCreature == true) // Next Condition to Change.
         {
             for (int i = 0; i < DungeonTiles.Count; i++)
             {
@@ -57,7 +57,7 @@ public class DungeonSpawner : MonoBehaviour
             }
         }
 
-        if (levelController.GetComponent<LevelController>().placingCreature == false)
+        if (lvlRef.GetComponent<LevelController>().placingCreature == false)
         {
             for (int i = 0; i < DungeonTiles.Count; i++)
             {
@@ -175,7 +175,7 @@ public class DungeonSpawner : MonoBehaviour
                 {
                     DungeonTiles[i].GetComponent<SpawnerTileScript>().dungeonToBePlaced();
                 }
-                levelController.GetComponent<LevelController>().placingCreature = false;
+                lvlRef.GetComponent<LevelController>().placingCreature = false;
                 GameObject.FindGameObjectWithTag("LevelController").GetComponent<CameraController>().switchCamera("Alt");
                 HideandShow();
                 UpdateBoard();
@@ -195,10 +195,8 @@ public class DungeonSpawner : MonoBehaviour
 
     public void UpdateBoard()
     {
-        // Runs a for loop and tells every tile in the grid 
         for (int i = 0; i < BoardTiles.Count; i++)
         {
-            //BoardTiles[i].GetComponent<GridScript>().CheckForDungeonConnection();
             BoardTiles[i].GetComponent<GridScript>().turnPlayerDungeonConnection = false;
         }
     }

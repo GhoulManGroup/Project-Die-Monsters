@@ -209,6 +209,7 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
         OpenAndCloseControllerUI();
         lvlRef.GetComponent<CameraController>().switchCamera("Alt");
         lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;
+        lvlRef.GetComponent<LevelController>().CanEndTurn();
     }
 
     public void ResetCreatureStates()

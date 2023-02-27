@@ -340,7 +340,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
         sceneDice.GetComponent<SceneDieScript>().myDie = null;
 
         //Call the UIDICEController and run the reset function.
-        levelManager.GetComponent<UIDiceController>().resetFunction();
+        levelManager.GetComponent<UIDiceController>().ResetFunction();
 
         // hide the inspect tab
         CloseInspectWindow();

@@ -60,12 +60,12 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
             if (diceToSpawn <= player.diceDeck.Count)
             {
                 //Spawn those dice into the arena.
-                spawnDice();
+                SpawnDice();
             }
         }
     }
 
-    public void spawnDice()
+    public void SpawnDice()
     {
         GameObject DiceSpawned;
 
@@ -84,7 +84,6 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
             {
                 if (dieToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC1" && dieToRoll[i].GetComponent<SceneDieScript>().isFree == false)
                 {
-                    Debug.Log("Hello From THing");
                     dieToRoll[i].GetComponent<SceneDieScript>().isFree = true;
                 }
             }
@@ -140,9 +139,10 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
         //
     }
 
-    public void resetFunction()
+    public void ResetFunction()
     {
         lvlRef.GetComponent<LevelController>().UpdateTurnPlayerCrestDisplay();
+        lvlRef.GetComponent<LevelController>().CanEndTurn();
         //Add the dice objects on each dice if not null back to the player list.(The Unchosen ones)
         for (int i = 0; i < readyDice; i++)
         {
@@ -175,7 +175,7 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
         lvl4Crest = 0;
     }
 
-    public void buttonPressed()
+    public void ButtonPressed()
     {
         string BTNPressed = EventSystem.current.currentSelectedGameObject.name.ToString();
 
@@ -209,9 +209,6 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
             case "CloseBTN":
                 if (canCloseUI == true)
                 {
-                    //Close window and delete the die.
-                    resetFunction();
-                    lvlRef.GetComponent<CameraController>().switchCamera("Alt");
 
                     //Player not performing action can press end turn BTN.
                     lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;
@@ -219,6 +216,9 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
                     turnPlayer.GetComponent<Player>().summmonCrestPoints += summonCrestPool;
                     summonCrestPool = 0;
                     inspectWindow.GetComponent<InspectWindowController>().CloseInspectWindow();
+                    //Close window and delete the die.
+                    ResetFunction();
+                    lvlRef.GetComponent<CameraController>().switchCamera("Alt");
                 }
                 break;
 
@@ -231,7 +231,7 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
                     lvlRef.GetComponent<CameraController>().switchCamera("Board");
                     lvlRef.GetComponent<LevelController>().creaturePlacedFrom = "DiceBoard";
                     hasSummoned = true;
-                    resetFunction();
+                    ResetFunction();
                 }
                 break;
 
@@ -239,13 +239,13 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
                     inspectWindow.GetComponent<InspectWindowController>().AddCreatureToPool();
                     lvlRef.GetComponent<LevelController>().ableToInteractWithBoard = true;
                     hasSummoned = true;
-                    resetFunction();
+                    ResetFunction();
                 break;
 
         }
     }
 
-    public void diceSelectWindow()
+    public void DiceSelectWindow()
     {
         UIElements[3].SetActive(true);
         // For each dice in the player dice pool activate and assign a dice object in the UI 1 dice then have it display a sprite to represent its contents.

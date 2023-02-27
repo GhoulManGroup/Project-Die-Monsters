@@ -37,7 +37,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
     public bool ableToInteractWithBoard = false; // Player is allowed to interact with the pieces on the board, checked before raycast on piece ect.
     public string boardInteraction = "None"; //What action the player is taking
     
-    [Header("Creature  ")]
+    [Header("Creature")]
     public bool placingCreature = false; // The player is placing a creature on the board
     public string creaturePlacedFrom = "None"; // DiceZone, Creature Pool, Other?
 
@@ -131,19 +131,20 @@ public class LevelController : MonoBehaviour //This class controls everything at
      {
         // check if the player has any dice in the list 
         if (participants[turnPlayerSlot].GetComponent<Player>().diceDeck.Count != 0)
-         {           
+        {
             this.GetComponent<LevelController>().turnPlayerPerformingAction = true; // Player is in dice window, action being performed.
             GetComponent<CameraController>().switchCamera("Dice");
             GetComponent<UIDiceController>().SetUp();       
         }
-                 
+                
          else if (participants[turnPlayerSlot].GetComponent<Player>().diceDeck.Count == 0) // if no dice in pool proceed to board phase.
          {
+            Debug.Log("Turn Player Has No Dice");
              this.GetComponent<CameraController>().switchCamera("Alt");
              ableToInteractWithBoard = true;
          }
 
-        startTurnBTN.GetComponent<Image>().enabled = false;
+        startTurnBTN.SetActive(false);
         participants[turnPlayerSlot].GetComponent<Player>().moveCrestPoints += 1;
         UpdateTurnPlayerCrestDisplay();
      }
@@ -173,6 +174,18 @@ public class LevelController : MonoBehaviour //This class controls everything at
             GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().CheckCreatureStates();
         }
     }
+
+    public void CanEndTurn()
+    {
+        if (turnPlayerPerformingAction == false)
+        {
+            endTurnBTN.GetComponent<Button>().interactable = true;
+        }else if (turnPlayerPerformingAction == true)
+        {
+            endTurnBTN.GetComponent<Button>().interactable = false;
+        }
+    }
+
     public void EndTurnFunction()
      {
         //Ensure that player isnt currently doing somthing.
@@ -216,10 +229,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
                         SetTurnPlayer();
                         break;
                 }
-
                 ResetFunction();
-                this.GetComponent<CreaturePoolController>().enableButtons();
-                startTurnBTN.GetComponent<Image>().enabled = true;
             }
         }
         yield return null;
@@ -227,6 +237,10 @@ public class LevelController : MonoBehaviour //This class controls everything at
     
     public void ResetFunction()
     {
+        endTurnBTN.GetComponent<Button>().interactable = false;
+        startTurnBTN.SetActive(true);
+        this.GetComponent<CreaturePoolController>().enableButtons();
+
         //Run cancle on end turn to close the control UI if it is still open.
         this.GetComponent<CreatureController>().CancleBTNFunction();
 

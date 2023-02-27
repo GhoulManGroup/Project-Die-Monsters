@@ -28,7 +28,6 @@ public class BuilderDie : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public void ButtonPressed()
     {
-        Debug.Log("BTN pressed");
 
         if (dRef.GetComponent<DeckBuilderUIManager>().tempDeck.Count < 15)
         {
