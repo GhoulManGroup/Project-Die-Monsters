@@ -74,6 +74,7 @@ public class CreatureToken : MonoBehaviour
             lvlRef.GetComponent<CreatureController>().CreaturesOnBoard.Add(this.gameObject); // add this piece to the creature controller script.
             lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false; // piece placed player no longer performing action.
             lvlRef.GetComponent<LevelController>().ableToInteractWithBoard = true; // Player can now interact with the board.
+            lvlRef.GetComponent<LevelController>().CanEndTurn();
         }
 
         if (myOwner == "AI") // change to opponent

@@ -41,7 +41,6 @@ public class SceneDieScript : MonoBehaviour
     {
         if (myController.hasRolledDice == false)
         {
-            //declare this as first dice pick then open the pool window.
             inspectTab.sceneDice = gameObject;
             myController.DiceSelectWindow();
         }

@@ -53,13 +53,13 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
         //Enable our UI BTNS.
         UIElements[0].SetActive(true);
         UIElements[1].SetActive(true);
+        UIElements[1].GetComponent<Button>().interactable = false;
 
         //Check how many dice to roll.
         for (int diceToSpawn = 0; diceToSpawn < player.diceHandSize; diceToSpawn++)
         {
             if (diceToSpawn <= player.diceDeck.Count)
             {
-                //Spawn those dice into the arena.
                 SpawnDice();
             }
         }
