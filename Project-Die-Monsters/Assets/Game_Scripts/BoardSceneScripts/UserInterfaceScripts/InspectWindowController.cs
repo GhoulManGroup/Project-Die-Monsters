@@ -33,6 +33,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
         public GameObject creatureTribe;
         public GameObject creatureType;
         public Text creatureName;
+        public Text creatureAbility;
         public Text attackValue;
         public Text defenceValue;
         public Text healthValue;
@@ -162,12 +163,14 @@ public class InspectWindowController : MonoBehaviour //This script will control 
         if (usedFor == "DrawDice" || usedFor == "DieInspect" || usedFor == "PoolInspect")
         {
             creatureWindow.creatureName.GetComponent<Text>().text = currentCreature.CreatureName;
+            creatureWindow.creatureAbility.GetComponent<Text>().text = currentCreature.myAbility.AbilityName + " " + currentCreature.myAbility.AbilityDescriptionText;
             creatureWindow.attackValue.GetComponent<Text>().text = "ATK" + currentCreature.Attack;
             creatureWindow.defenceValue.GetComponent<Text>().text = "DEF" + currentCreature.Defence;
             creatureWindow.healthValue.GetComponent<Text>().text = "HP" + currentCreature.Health;
         }else if (usedFor == "PieceInspect")
         {
             creatureWindow.creatureName.GetComponent<Text>().text = currentCreature.CreatureName;
+            creatureWindow.creatureAbility.GetComponent<Text>().text = currentCreature.myAbility.AbilityName + " " + currentCreature.myAbility.AbilityDescriptionText;
             creatureWindow.attackValue.GetComponent<Text>().text = "ATK" + currentCreaturePiece.GetComponent<CreatureToken>().currentAttack;
             creatureWindow.defenceValue.GetComponent<Text>().text = "DEF" + currentCreaturePiece.GetComponent<CreatureToken>().currentDefence;
             creatureWindow.healthValue.GetComponent<Text>().text = "HP" + currentCreaturePiece.GetComponent<CreatureToken>().currentHealth;
@@ -175,6 +178,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
         {
             CreatureToken target = currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>();
             creatureWindow.creatureName.GetComponent<Text>().text = target.myCreature.name;
+            creatureWindow.creatureAbility.GetComponent<Text>().text = currentCreature.myAbility.AbilityName + " " + currentCreature.myAbility.AbilityDescriptionText;
             creatureWindow.attackValue.GetComponent<Text>().text = "ATK" + target.currentAttack;
             creatureWindow.defenceValue.GetComponent<Text>().text = "DEF" + target.currentDefence;
             creatureWindow.healthValue.GetComponent<Text>().text = "HP" + target.currentHealth;
@@ -228,7 +232,6 @@ public class InspectWindowController : MonoBehaviour //This script will control 
 
         //Add that current dice from the deck to the dice object.
         sceneDice.GetComponent<SceneDieScript>().myDie = turnPlayer.GetComponent<Player>().diceDeck[diceShown];
-
         //Add this die scriptable object to our die object.
         sceneDice.GetComponent<SceneDieScript>().setUpDie();
 

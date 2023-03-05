@@ -43,8 +43,9 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
         {
             for (int i = 0; i < OrderBTNS.Count; i++)
             {
-                OrderBTNS[i].GetComponent<Image>().enabled = true;
+
                 OrderBTNS[i].GetComponent<Button>().interactable = false;
+                OrderBTNS[i].gameObject.SetActive(true);
             }
             CheckPossibleActions();
         }
@@ -53,7 +54,7 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
         {
             for (int i = 0; i < OrderBTNS.Count; i++)
             {
-                OrderBTNS[i].GetComponent<Image>().enabled = false;
+                OrderBTNS[i].gameObject.SetActive(false);
             }
         }       
     }

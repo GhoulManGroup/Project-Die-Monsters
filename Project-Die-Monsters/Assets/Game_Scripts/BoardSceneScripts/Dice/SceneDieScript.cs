@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SceneDieScript : MonoBehaviour
 {
@@ -52,6 +53,8 @@ public class SceneDieScript : MonoBehaviour
                 inspectTab.sceneDice = gameObject;
                 inspectTab.OpenInspectWindow("DieInspect");
                 myController.UIElements[2].SetActive(true);
+                myController.UIElements[5].GetComponent<Button>().interactable = true;
+                myController.UIElements[6].GetComponent<Button>().interactable = true;
             }
         }
     }
@@ -60,7 +63,6 @@ public class SceneDieScript : MonoBehaviour
     {
         // Reset the contents of my face crest list before we add the new ones.
         myFaceCrests.Clear();
-
         //Check each enum in MyDie, and add the results to mycrest list as a string.
         myFaceCrests.Add(myDie.firstCrest.ToString());
         myFaceCrests.Add(myDie.secondCrest.ToString());
@@ -133,6 +135,7 @@ public class SceneDieScript : MonoBehaviour
         {
             diceSetUp = true;
         }
+        myController.CheckAllDiceSetUp();
     }
 
     public void spinDie()

@@ -36,7 +36,7 @@ public class Die : ScriptableObject // this script is the data conainer for ever
 
     public void UpdateDetails()
     {
-        RenameScriptableObject(dieCreature, dieCreature.creatureID + " " + dieCreature.CreatureName);
+        RenameScriptableObject(dieCreature, dieCreature.creatureID + " " + dieCreature.CreatureName); 
         dieID = dieCreature.creatureID;
         switch (dieCreature.creatureColor)
         {

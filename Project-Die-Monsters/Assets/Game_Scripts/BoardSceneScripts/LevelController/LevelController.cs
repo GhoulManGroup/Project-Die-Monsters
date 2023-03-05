@@ -133,6 +133,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
         if (participants[turnPlayerSlot].GetComponent<Player>().diceDeck.Count != 0)
         {
             this.GetComponent<LevelController>().turnPlayerPerformingAction = true; // Player is in dice window, action being performed.
+
             GetComponent<CameraController>().switchCamera("Dice");
             GetComponent<UIDiceController>().SetUp();       
         }
@@ -194,25 +195,23 @@ public class LevelController : MonoBehaviour //This class controls everything at
 
     private IEnumerator EndTurn()
     {
-        for (int i = 0; i < this.GetComponent<CreatureController>().CreaturesOnBoard.Count; i++)
+        if (turnPlayerPerformingAction == false)
         {
-            if (this.GetComponent<CreatureController>().CreaturesOnBoard[i].GetComponent<AbilityManager>().myAbility.abilityActivatedHow == Ability.AbilityActivatedHow.Trigger)
+            for (int i = 0; i < this.GetComponent<CreatureController>().CreaturesOnBoard.Count; i++)
             {
-                this.GetComponent<CreatureController>().CreaturesOnBoard[i].GetComponent<AbilityManager>().CheckTrigger("OnEndTurn");
+                if (this.GetComponent<CreatureController>().CreaturesOnBoard[i].GetComponent<AbilityManager>().myAbility.abilityActivatedHow == Ability.AbilityActivatedHow.Trigger)
+                {
+                    this.GetComponent<CreatureController>().CreaturesOnBoard[i].GetComponent<AbilityManager>().CheckTrigger("OnEndTurn");
+                }
             }
-        }
 
-        CheckForTriggersToResolve();
+            CheckForTriggersToResolve();
 
-        while (GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().creaturesToTrigger.Count > 0)
-        {
-            yield return null;
-        }
+            while (GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().creaturesToTrigger.Count > 0)
+            {
+                yield return null;
+            }
 
-        if (this.GetComponent<LevelController>().turnPlayerPerformingAction == false)
-        { // if current player isnt in the middle of an action eg moving a piece or combat end turn.
-
-            //Player vs Player
             if (gameManager.GetComponent<GameManagerScript>().desiredOpponent == "Player")
             {
                 switch (whoseTurn)
@@ -232,7 +231,6 @@ public class LevelController : MonoBehaviour //This class controls everything at
                 ResetFunction();
             }
         }
-        yield return null;
     }
     
     public void ResetFunction()

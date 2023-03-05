@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -42,6 +43,10 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
 
     public void Start()
     {
+        UIElements[0].SetActive(false);
+        UIElements[1].SetActive(false);
+        UIElements[2].SetActive(false);
+        UIElements[3].SetActive(false);
         lvlRef = GameObject.FindGameObjectWithTag("LevelController");
         inspectWindow = GameObject.FindGameObjectWithTag("InspectWindow");
     }
@@ -49,12 +54,6 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
     public void SetUp()
     {
         player = turnPlayer.GetComponent<Player>();
-
-        //Enable our UI BTNS.
-        UIElements[0].SetActive(true);
-        UIElements[1].SetActive(true);
-        UIElements[1].GetComponent<Button>().interactable = false;
-
         //Check how many dice to roll.
         for (int diceToSpawn = 0; diceToSpawn < player.diceHandSize; diceToSpawn++)
         {
@@ -63,6 +62,8 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
                 SpawnDice();
             }
         }
+        UIElements[0].SetActive(true);
+        UIElements[4].GetComponent<TextMeshProUGUI>().text = "Click Each Dice To Assign Which Die To Roll";
     }
 
     public void SpawnDice()
@@ -74,9 +75,50 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
         dieToRoll.Add(DiceSpawned);
     }
 
+    public void DiceSelectWindow()
+    {
+        UIElements[3].SetActive(true);
+        // For each dice in the player dice pool activate and assign a dice object in the UI 1 dice then have it display a sprite to represent its contents.
+        for (int i = 0; i < player.GetComponent<Player>().dicePool; i++)
+        {
+            if (i < player.GetComponent<Player>().diceDeck.Count)
+            {
+                UIDice[i].gameObject.SetActive(true);
+                UIDice[i].GetComponent<DicePoolInspectScript>().diceNumber = i;
+                UIDice[i].GetComponent<DicePoolInspectScript>().myDie = player.GetComponent<Player>().diceDeck[i];
+                UIDice[i].GetComponent<DicePoolInspectScript>().setUp();
+            }
+            else
+            {
+                UIDice[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public void CheckAllDiceSetUp()
+    {
+        int diceReady = 0;
+        for (int i = 0; i < dieToRoll.Count; i++)
+        {
+            if (dieToRoll[i].GetComponent<SceneDieScript>().diceSetUp == true)
+            {
+                diceReady += 1;
+            }
+        }
+
+        if (diceReady == dieToRoll.Count)
+        { 
+            Debug.Log("All Dice Set Up");
+            UIElements[1].SetActive(true);
+            UIElements[4].GetComponent<TextMeshProUGUI>().text = "Roll Your Dice!";
+        }
+    }
+
     public void CheckCanSummonCreature()
     {
-        
+        UIElements[1].SetActive(false);
+        UIElements[2].SetActive(true);
+        UIElements[4].GetComponent<TextMeshProUGUI>().text = "Summon a creature if able? or return to the board";
         //check if each int is 2+ in value then tell any dice thats result string matches that intcrestname to change their can be played state to true.
         if (lvl1Crest >= 2)
         {
@@ -139,42 +181,6 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
         //
     }
 
-    public void ResetFunction()
-    {
-        lvlRef.GetComponent<LevelController>().UpdateTurnPlayerCrestDisplay();
-        lvlRef.GetComponent<LevelController>().CanEndTurn();
-        //Add the dice objects on each dice if not null back to the player list.(The Unchosen ones)
-        for (int i = 0; i < readyDice; i++)
-        {
-            if (dieToRoll[i].GetComponent<SceneDieScript>().myDie != null)
-            {
-                turnPlayer.GetComponent<Player>().diceDeck.Add(dieToRoll[i].GetComponent<SceneDieScript>().myDie);
-            }
-            GameObject.Destroy(dieToRoll[i]);
-        }
-
-        //Empty list of missing objects.
-        dieToRoll.Clear();
-
-        //Reset States
-        dicechecked = 0;
-        canCloseUI = false;
-        hasRolledDice = false;
-        readyDice = 0;
-
-        //Then hide the UI elements as the camera has changed view.
-        UIElements[0].SetActive(false);
-        UIElements[1].SetActive(false);
-        UIElements[2].SetActive(false);
-
-
-        //Reset dice results.
-        lvl1Crest = 0;
-        lvl2Crest = 0;
-        lvl3Crest = 0;
-        lvl4Crest = 0;
-    }
-
     public void ButtonPressed()
     {
         string BTNPressed = EventSystem.current.currentSelectedGameObject.name.ToString();
@@ -199,8 +205,10 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
                         dieToRoll[i].GetComponent<SceneDieScript>().spinDie();
                     }
                     hasRolledDice = true;
+                    UIElements[1].SetActive(false);
 
-                }else if (readyDice != 3 && hasRolledDice == false)
+                }
+                else if (readyDice != 3 && hasRolledDice == false)
                 {
                     readyDice = 0;
                 }
@@ -209,7 +217,6 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
             case "CloseBTN":
                 if (canCloseUI == true)
                 {
-
                     //Player not performing action can press end turn BTN.
                     lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;
                     lvlRef.GetComponent<LevelController>().ableToInteractWithBoard = true;
@@ -245,24 +252,42 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
         }
     }
 
-    public void DiceSelectWindow()
+    public void ResetFunction()
     {
-        UIElements[3].SetActive(true);
-        // For each dice in the player dice pool activate and assign a dice object in the UI 1 dice then have it display a sprite to represent its contents.
-        for (int i = 0; i < player.GetComponent<Player>().dicePool; i++)
+        lvlRef.GetComponent<LevelController>().UpdateTurnPlayerCrestDisplay();
+        lvlRef.GetComponent<LevelController>().CanEndTurn();
+        //Add the dice objects on each dice if not null back to the player list.(The Unchosen ones)
+        for (int i = 0; i < readyDice; i++)
         {
-            if (i < player.GetComponent<Player>().diceDeck.Count)
+            if (dieToRoll[i].GetComponent<SceneDieScript>().myDie != null)
             {
-                UIDice[i].gameObject.SetActive(true);
-                UIDice[i].GetComponent<DicePoolInspectScript>().diceNumber = i;
-                UIDice[i].GetComponent<DicePoolInspectScript>().myDie = player.GetComponent<Player>().diceDeck[i];
-                UIDice[i].GetComponent<DicePoolInspectScript>().setUp();
+                turnPlayer.GetComponent<Player>().diceDeck.Add(dieToRoll[i].GetComponent<SceneDieScript>().myDie);
             }
-            else
-            {
-                UIDice[i].gameObject.SetActive(false);
-            }
+            GameObject.Destroy(dieToRoll[i]);
         }
+
+        //Empty list of missing objects.
+        dieToRoll.Clear();
+
+        //Reset States
+        dicechecked = 0;
+        canCloseUI = false;
+        hasRolledDice = false;
+        readyDice = 0;
+
+        //Then hide the UI elements as the camera has changed view.
+        UIElements[0].SetActive(false);
+        UIElements[2].SetActive(false);
+        UIElements[3].SetActive(false);
+        UIElements[5].GetComponent<Button>().interactable = false;
+        UIElements[6].GetComponent<Button>().interactable = false;
+
+
+        //Reset dice results.
+        lvl1Crest = 0;
+        lvl2Crest = 0;
+        lvl3Crest = 0;
+        lvl4Crest = 0;
     }
 
 }
