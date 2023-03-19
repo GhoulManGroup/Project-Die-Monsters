@@ -6,12 +6,21 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Game_Scenes/MainMenuScene.unity
+    path: Assets/Game_Scenes/GameLoading.unity
+    guid: ab0dfa1518a6ed5498522ac119fb9ab9
+  - enabled: 1
+    path: Assets/Game_Scenes/GameManagers.unity
+    guid: 893c9779ca2ea1345846ba631bfc4d06
+  - enabled: 1
+    path: Assets/Game_Scenes/MenuMain.unity
     guid: 35fdfa28f34ed4c4596ae38d79173bf0
   - enabled: 1
-    path: Assets/Game_Scenes/DeckBuilder.unity
+    path: Assets/Game_Scenes/MenuMultiplayer.unity
+    guid: 330af623cae1d714894c6b717a96a3e3
+  - enabled: 1
+    path: Assets/Game_Scenes/MenuDeckBuilder.unity
     guid: 568c78657bc21ad49911437c129eb3b5
   - enabled: 1
-    path: Assets/Game_Scenes/BoardScene.unity
+    path: Assets/Game_Scenes/GameBoardScene.unity
     guid: 835d3fc29fad3f84baa571c3f3d656c3
   m_configObjects: {}

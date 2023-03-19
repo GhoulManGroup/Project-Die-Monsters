@@ -145,7 +145,8 @@ public class DeckBuilderUIManager : MonoBehaviour
                     SetDeck();
                     break;
                 case "Back":
-                    SceneManager.LoadScene("MainMenuScene");
+                    LoadingManager.loadingManager.LoadSceneAdditive("MenuMain");
+                    LoadingManager.loadingManager.UnloadScene("MenuDeckBuilder");
                     break;
             }
         }

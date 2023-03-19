@@ -19,7 +19,6 @@ public class DicePoolInspectScript : MonoBehaviour
     public void setUp()
     {
         myDie.UpdateDetails();
-        Die.RenameScriptableObject(myDie, myDie.dieID + " "+ myDie.dieCreature.name);
         
         switch (myDie.dieCreatureLevel.ToString())
         {

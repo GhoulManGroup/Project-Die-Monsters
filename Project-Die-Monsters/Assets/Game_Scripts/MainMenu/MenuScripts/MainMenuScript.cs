@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.SceneManagement;
 
 public class MainMenuScript : MonoBehaviour
 {
@@ -42,14 +41,17 @@ public class MainMenuScript : MonoBehaviour
                 MRef.GetComponent<DeckManager>().decksInPlay.Add(0);
                 MRef.GetComponent<GameManagerScript>().gameMode = "Freeplay";
                 MRef.GetComponent<GameManagerScript>().desiredOpponent = "Player";
-                SceneManager.LoadScene("BoardScene");
+                LoadingManager.loadingManager.LoadSceneAdditive("GameBoardScene",true);
+                LoadingManager.loadingManager.UnloadScene("MenuMain");
                 showWhichUI();
                 break;
             case "Multiplayer":
-                print("In Development");
+                LoadingManager.loadingManager.LoadSceneAdditive("MenuMultiplayer");
+                LoadingManager.loadingManager.UnloadScene("MenuMain");
                 break;
             case "DeckBuilder":
-                SceneManager.LoadScene("DeckBuilder");
+                LoadingManager.loadingManager.LoadSceneAdditive("MenuDeckBuilder");
+                LoadingManager.loadingManager.UnloadScene("MenuMain");
                 break;
             case "Quit":
                 print("In Development");

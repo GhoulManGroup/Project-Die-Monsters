@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2307832698955982014
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2307832698955982002}
+  - component: {fileID: 2307832698955982001}
+  - component: {fileID: 2307832698955982000}
+  - component: {fileID: 2307832698955982015}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: GameController
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2307832698955982002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2307832698955982014}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 795.4872, y: 413.27844, z: -0.18200684}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2307832698955982001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2307832698955982014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89ea5e718812c284b9d2258aff9018c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fileName: data.player
+--- !u!114 &2307832698955982000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2307832698955982014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c82b13e2a6a06e244a9cab7731703a57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameMode: Freeplay
+  desiredOpponent: Player
+--- !u!114 &2307832698955982015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2307832698955982014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ccb4db260aca784fb9472cb3af09b58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dieLibary: {fileID: 11400000, guid: 1d95ce6a46d870049aeac0db02e53b4e, type: 2}
+  playerCollection: {fileID: 11400000, guid: 1fcb55f04d251194abf96e871f194210, type: 2}
+  DeckSlots:
+  - {fileID: 11400000, guid: e81c11b53b0f20e4b85016d11ec408bd, type: 2}
+  - {fileID: 11400000, guid: ad32916a764f13641afc44db8ce2b037, type: 2}
+  - {fileID: 11400000, guid: 4f7fe7c4cd611fd458cd96ec37c843dc, type: 2}
+  - {fileID: 11400000, guid: ec32904fc4241de449547b741791c19f, type: 2}
+  - {fileID: 11400000, guid: 4f411df25d9be7e4d91ea2e5359db691, type: 2}
+  decksInPlay: 0000000000000000
