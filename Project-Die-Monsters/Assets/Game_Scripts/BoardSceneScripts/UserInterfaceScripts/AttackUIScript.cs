@@ -39,7 +39,7 @@ public class AttackUIScript : MonoBehaviour
         //Hide window at start.
         hideAttackWindow();
         lvlRef = GameObject.FindGameObjectWithTag("LevelController");
-        UIElements[12].GetComponent<Image>().sprite = spriteList[0];
+        UIElements[15].GetComponent<Image>().sprite = spriteList[0];
     }
 
     public void hideAttackWindow()
@@ -66,7 +66,7 @@ public class AttackUIScript : MonoBehaviour
     public void displayAttackWindow()
     {
         // show the attack window UI
-        for (int i = 0; i < 13; i++)
+        for (int i = 1; i < UIElements.Count; i++)
         {
             if (UIElements[i].GetComponent<Image>() != null)
             {
@@ -79,7 +79,7 @@ public class AttackUIScript : MonoBehaviour
             }
         }
 
-        UIElements[12].GetComponent<Image>().sprite = spriteList[0];
+        UIElements[15].GetComponent<Image>().sprite = spriteList[0];
         buttonState();
         setDetails();
     }
@@ -98,13 +98,13 @@ public class AttackUIScript : MonoBehaviour
                 if (defendingPlayer.GetComponent<Player>().defenceCrestPoints > 0)
                 {
                     Action = "Defend";
-                    UIElements[12].GetComponent<Image>().sprite = spriteList[1];
+                    UIElements[15].GetComponent<Image>().sprite = spriteList[1];
                     buttonState();
                     
                 }else if (defendingPlayer.GetComponent<Player>().defenceCrestPoints == 0)
                 {
                     Action = "Resolve";
-                    UIElements[12].GetComponent<Image>().sprite = spriteList[2];
+                    UIElements[15].GetComponent<Image>().sprite = spriteList[2];
                     buttonState();
                     ResolveCombat();
                 }
@@ -114,7 +114,7 @@ public class AttackUIScript : MonoBehaviour
                 //Apply defence value to combat this fight.
                 buttonState();
                 applyDefence = true;
-                UIElements[12].GetComponent<Image>().sprite = spriteList[2];
+                UIElements[15].GetComponent<Image>().sprite = spriteList[2];
                 Action = "Resolve";
                 ResolveCombat();
                 break;
@@ -168,10 +168,12 @@ public class AttackUIScript : MonoBehaviour
         AttackerDisplay[1].GetComponent<Text>().text = attacker.GetComponent<CreatureToken>().currentAttack.ToString();
         AttackerDisplay[2].GetComponent<Text>().text = attacker.GetComponent<CreatureToken>().currentDefence.ToString();
         AttackerDisplay[3].GetComponent<Text>().text = attacker.GetComponent<CreatureToken>().currentHealth.ToString();
+        AttackerDisplay[4].GetComponent<Image>().sprite = attacker.GetComponent<CreatureToken>().myCreature.CardArt;
 
         DefenderDisplay[1].GetComponent<Text>().text = defender.GetComponent<CreatureToken>().currentAttack.ToString();
         DefenderDisplay[2].GetComponent<Text>().text = defender.GetComponent<CreatureToken>().currentDefence.ToString();
         DefenderDisplay[3].GetComponent<Text>().text = defender.GetComponent<CreatureToken>().currentHealth.ToString();
+        DefenderDisplay[4].GetComponent<Image>().sprite = defender.GetComponent<CreatureToken>().myCreature.CardArt;
     }
 
     public void buttonState() //Update the button interactable state based on the action.
@@ -249,7 +251,7 @@ public class AttackUIScript : MonoBehaviour
         // check if defender health is less than 0 if so run the chekcstate function to destory it then change the UI sprite to Empty.
         if (defender.GetComponent<CreatureToken>().currentHealth <= 0)
         {
-           UIElements[13].GetComponent<Image>().enabled = true;
+           UIElements[0].GetComponent<Image>().enabled = true;
            attacker.GetComponent<AbilityManager>().CheckTrigger("OnKill", attacker.gameObject);
         }
         attacker.GetComponent<AbilityManager>().CheckTrigger("OnAttack", attacker.gameObject);
