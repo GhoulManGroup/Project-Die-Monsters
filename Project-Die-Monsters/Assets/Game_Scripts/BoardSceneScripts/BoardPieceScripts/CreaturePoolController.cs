@@ -27,10 +27,12 @@ public class CreaturePoolController : MonoBehaviour
         {
             creatureDiceBTNS[i].GetComponent<Button>().interactable = false;
         }
-
-        for (int i = 0; i < turnPlayer.GetComponent<Player>().CreaturePool.Count; i++)
+        if (turnPlayer.GetComponent<Player>() != null)
         {
-            creatureDiceBTNS[i].GetComponent<Button>().interactable = true;
+            for (int i = 0; i < turnPlayer.GetComponent<Player>().CreaturePool.Count; i++)
+            {
+                creatureDiceBTNS[i].GetComponent<Button>().interactable = true;
+            }
         }
     }
 

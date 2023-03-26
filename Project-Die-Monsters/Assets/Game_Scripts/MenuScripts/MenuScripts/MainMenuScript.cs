@@ -38,7 +38,6 @@ public class MainMenuScript : MonoBehaviour
                 break;
             case "QuickPlay":
                 MRef.GetComponent<DeckManager>().decksInPlay.Add(0);
-                MRef.GetComponent<DeckManager>().decksInPlay.Add(0);
                 MRef.GetComponent<GameManagerScript>().gameMode = "Freeplay";
                 MRef.GetComponent<GameManagerScript>().desiredOpponent = "Player";
                 LoadingManager.loadingManager.LoadSceneAdditive("GameBoardScene",true);
@@ -46,15 +45,23 @@ public class MainMenuScript : MonoBehaviour
                 showWhichUI();
                 break;
             case "Multiplayer":
-                LoadingManager.loadingManager.LoadSceneAdditive("MenuMultiplayer");
-                LoadingManager.loadingManager.UnloadScene("MenuMain");
+                Debug.Log("In Development");
+                //LoadingManager.loadingManager.LoadSceneAdditive("MenuMultiplayer");
+                //LoadingManager.loadingManager.UnloadScene("MenuMain");
                 break;
             case "DeckBuilder":
                 LoadingManager.loadingManager.LoadSceneAdditive("MenuDeckBuilder");
                 LoadingManager.loadingManager.UnloadScene("MenuMain");
                 break;
+            case "AI":
+                MRef.GetComponent<DeckManager>().decksInPlay.Add(0);
+                MRef.GetComponent<GameManagerScript>().gameMode = "Freeplay";
+                MRef.GetComponent<GameManagerScript>().desiredOpponent = "AI";
+                LoadingManager.loadingManager.LoadSceneAdditive("GameBoardScene", true);
+                LoadingManager.loadingManager.UnloadScene("MenuMain");
+                break;
             case "Quit":
-                print("In Development");
+                Application.Quit();
                 break;
             case "Back":
                 switch (ActiveUI)

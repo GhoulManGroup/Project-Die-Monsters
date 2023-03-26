@@ -58,7 +58,7 @@ public class TargetManager : MonoBehaviour
                         for (int i = 0; i < creatureController.CreaturesOnBoard.Count; i++)
                         {
                    
-                            if (creatureController.CreaturesOnBoard[i].GetComponent<CreatureToken>().myOwner == levelController.whoseTurn)
+                            if (creatureController.CreaturesOnBoard[i].GetComponent<CreatureToken>().myOwner == levelController.currentTurnParticipant.ToString())
                             {
                                targetPool.Add(creatureController.CreaturesOnBoard[i]);
                             }
@@ -69,7 +69,7 @@ public class TargetManager : MonoBehaviour
                     case AbilityEffect.AllowedTargets.hostile:
                         for (int i = 0; i < creatureController.CreaturesOnBoard.Count; i++)
                         {
-                            if (creatureController.CreaturesOnBoard[i].GetComponent<CreatureToken>().myOwner != levelController.whoseTurn)
+                            if (creatureController.CreaturesOnBoard[i].GetComponent<CreatureToken>().myOwner != levelController.currentTurnParticipant.ToString())
                             {
                                targetPool.Add(creatureController.CreaturesOnBoard[i]);                        
                             }
@@ -102,7 +102,7 @@ public class TargetManager : MonoBehaviour
                 for (int i = 0; i < creatureController.CreaturesOnBoard.Count; i++)
                 {
 
-                    if (creatureController.CreaturesOnBoard[i].GetComponent<CreatureToken>().myOwner == levelController.whoseTurn)
+                    if (creatureController.CreaturesOnBoard[i].GetComponent<CreatureToken>().myOwner == levelController.currentTurnParticipant.ToString())
                     {
                         targetPool.Add(creatureController.CreaturesOnBoard[i]);
                     }
@@ -112,7 +112,7 @@ public class TargetManager : MonoBehaviour
             case AbilityEffect.AllowedTargets.hostile:
                 for (int i = 0; i < creatureController.CreaturesOnBoard.Count; i++)
                 {
-                    if (creatureController.CreaturesOnBoard[i].GetComponent<CreatureToken>().myOwner != levelController.whoseTurn)
+                    if (creatureController.CreaturesOnBoard[i].GetComponent<CreatureToken>().myOwner != levelController.currentTurnParticipant.ToString())
                     {
                         targetPool.Add(creatureController.CreaturesOnBoard[i]);
                     }
@@ -288,7 +288,7 @@ public class TargetManager : MonoBehaviour
                 {
                     if (targetPool[i].GetComponent<GridScript>().creatureAboveMe != null)
                     {
-                        if (targetPool[i].GetComponent<GridScript>().creatureAboveMe.GetComponent<CreatureToken>().myOwner == levelController.whoseTurn)
+                        if (targetPool[i].GetComponent<GridScript>().creatureAboveMe.GetComponent<CreatureToken>().myOwner == levelController.currentTurnParticipant.ToString())
                         {
                             foundTargets.Add(targetPool[i].GetComponent<GridScript>().creatureAboveMe);
                             targetPool[i].GetComponent<GridScript>().SetIndicatorMaterial("PickedTarget");
@@ -302,7 +302,7 @@ public class TargetManager : MonoBehaviour
                 {
                     if (targetPool[i].GetComponent<GridScript>().creatureAboveMe != null)
                     {
-                        if (targetPool[i].GetComponent<GridScript>().creatureAboveMe.GetComponent<CreatureToken>().myOwner != levelController.whoseTurn)
+                        if (targetPool[i].GetComponent<GridScript>().creatureAboveMe.GetComponent<CreatureToken>().myOwner != levelController.currentTurnParticipant.ToString())
                         {
                             foundTargets.Add(targetPool[i].GetComponent<GridScript>().creatureAboveMe);
                             targetPool[i].GetComponent<GridScript>().SetIndicatorMaterial("PickedTarget");
@@ -368,7 +368,7 @@ public class TargetManager : MonoBehaviour
                     case AbilityEffect.AllowedTargets.friendly:
                         for (int i = 0; i < creatureController.CreaturesOnBoard.Count; i++)
                         {
-                            if (creatureController.CreaturesOnBoard[i].GetComponent<CreatureToken>().myOwner == levelController.whoseTurn)
+                            if (creatureController.CreaturesOnBoard[i].GetComponent<CreatureToken>().myOwner == levelController.currentTurnParticipant.ToString())
                             {
                                 possibleTargetsFound += 1;
                                 targetPool.Add(creatureController.CreaturesOnBoard[i]);
@@ -379,7 +379,7 @@ public class TargetManager : MonoBehaviour
                     case AbilityEffect.AllowedTargets.hostile:
                         for (int i = 0; i < creatureController.CreaturesOnBoard.Count; i++)
                         {
-                            if (creatureController.CreaturesOnBoard[i].GetComponent<CreatureToken>().myOwner != levelController.whoseTurn)
+                            if (creatureController.CreaturesOnBoard[i].GetComponent<CreatureToken>().myOwner != levelController.currentTurnParticipant.ToString())
                             {
                                 possibleTargetsFound += 1;
                                 targetPool.Add(creatureController.CreaturesOnBoard[i]);
@@ -403,7 +403,7 @@ public class TargetManager : MonoBehaviour
                     case AbilityEffect.AllowedTargets.friendly:
                         for (int i = 0; i < creatureController.CreaturesOnBoard.Count; i++)
                         {
-                            if (creatureController.CreaturesOnBoard[i].GetComponent<CreatureToken>().myOwner == levelController.whoseTurn)
+                            if (creatureController.CreaturesOnBoard[i].GetComponent<CreatureToken>().myOwner == levelController.currentTurnParticipant.ToString())
                             {
                                 possibleTargetsFound += 1;
                                 targetPool.Add(creatureController.CreaturesOnBoard[i]);
@@ -414,7 +414,7 @@ public class TargetManager : MonoBehaviour
                     case AbilityEffect.AllowedTargets.hostile:
                         for (int i = 0; i < creatureController.CreaturesOnBoard.Count; i++)
                         {
-                            if (creatureController.CreaturesOnBoard[i].GetComponent<CreatureToken>().myOwner != levelController.whoseTurn)
+                            if (creatureController.CreaturesOnBoard[i].GetComponent<CreatureToken>().myOwner != levelController.currentTurnParticipant.ToString())
                             {
                                 possibleTargetsFound += 1;
                                 targetPool.Add(creatureController.CreaturesOnBoard[i]);

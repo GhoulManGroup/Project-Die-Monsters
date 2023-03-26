@@ -52,11 +52,11 @@ public class CreatureToken : MonoBehaviour
     {
         //Set level ref to level controler object.
         lvlRef = GameObject.FindGameObjectWithTag("LevelController");
-        lcScript = lvlRef.GetComponent<LevelController>();  
-        myOwner = lcScript.whoseTurn;  //set my owner to either player+ playerslotnumber or AI.
+        lcScript = lvlRef.GetComponent<LevelController>();
+        myOwner = lcScript.currentTurnParticipant.ToString();  //set my owner to either player+ playerslotnumber or AI.
 
         //Check for either a player script or opponent script then pull the desired creature from the correct objects creaturelist and assign it to the creature piece. 
-        if (lcScript.participants[lcScript.turnPlayerSlot].GetComponent<Player>() != null)
+        if (lcScript.participants[lcScript.currentTurnParticipant].GetComponent<Player>() != null)
         {
             if (lcScript.creaturePlacedFrom == "CreaturePool") 
             {
@@ -289,7 +289,7 @@ public class CreatureToken : MonoBehaviour
                     break;
 
                 case "None":
-                    if (myOwner == lvlRef.GetComponent<LevelController>().whoseTurn)
+                    if (myOwner == lvlRef.GetComponent<LevelController>().currentTurnParticipant.ToString())
                     {
                         myBoardLocation.GetComponent<GridScript>().IsAnyMovementPossible();
                         lvlRef.GetComponent<CameraController>().switchCamera("Board");

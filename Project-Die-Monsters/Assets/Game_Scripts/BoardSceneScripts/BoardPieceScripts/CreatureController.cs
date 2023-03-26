@@ -224,7 +224,6 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
 
     public void CheckCreatureStates()
     {
-        Debug.Log("Updating Creature Health & Things");
         for (int i = 0; i < CreaturesOnBoard.Count; i++)
         {
             CreaturesOnBoard[i].GetComponent<CreatureToken>().StartCoroutine("CheckCreatureHealth");

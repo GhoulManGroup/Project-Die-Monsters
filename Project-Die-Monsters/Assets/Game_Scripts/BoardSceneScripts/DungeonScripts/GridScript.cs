@@ -56,12 +56,12 @@ public class GridScript : MonoBehaviour
                 break;
 
             case "DungeonTile":
-                if (myOwner == "Player0")
+                if (myOwner == "0")
                 {
                     this.GetComponent<MeshRenderer>().material = myMat[1];
                 }
 
-                if (myOwner == "Player1")
+                if (myOwner == "1")
                 {
                     this.GetComponent<MeshRenderer>().material = myMat[3];
                 }
@@ -151,7 +151,7 @@ public class GridScript : MonoBehaviour
         {
             for (int i = 0; i < Neighbours.Count; i++)
             {
-                if (Neighbours[i].GetComponent<GridScript>().myOwner == LvlRef.GetComponent<LevelController>().whoseTurn) // tile is connected to our dungeon
+                if (Neighbours[i].GetComponent<GridScript>().myOwner == LvlRef.GetComponent<LevelController>().currentTurnParticipant.ToString()) // tile is connected to our dungeon
                 {
                     if (Neighbours[i].GetComponent<GridScript>().myState == "DungeonTile")
                     {
@@ -274,7 +274,7 @@ public class GridScript : MonoBehaviour
         {
             GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.transform.position = new Vector3(this.transform.position.x, 0.3f, this.transform.position.z);
             GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.GetComponent<CreatureToken>().declareTile("Move");
-            LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().turnPlayerSlot].GetComponent<Player>().moveCrestPoints -= distanceFromStartTile;            
+            LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().currentTurnParticipant].GetComponent<Player>().moveCrestPoints -= distanceFromStartTile;            
             TileContents = "Creature";
             LvlRef.GetComponent<PathController>().HasMoved();
         }
@@ -323,7 +323,7 @@ public class GridScript : MonoBehaviour
             {
                 if (LvlRef.GetComponent<PathController>().quickMove == false)
                 {
-                    LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().turnPlayerSlot].GetComponent<Player>().moveCrestPoints -= distanceFromStartTile;
+                    LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().currentTurnParticipant].GetComponent<Player>().moveCrestPoints -= distanceFromStartTile;
                     LvlRef.GetComponent<PathController>().desiredPosition = this.gameObject;
                     LvlRef.GetComponent<PathController>().tilesToCheck.Clear();
                     LvlRef.GetComponent<PathController>().tilesToCheck.Add(LvlRef.GetComponent<PathController>().desiredPosition);

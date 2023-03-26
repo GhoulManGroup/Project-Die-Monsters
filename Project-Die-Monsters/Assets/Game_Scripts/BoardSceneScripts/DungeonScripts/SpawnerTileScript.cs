@@ -103,15 +103,15 @@ public class SpawnerTileScript : MonoBehaviour
         RaycastHit Bellow;
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out Bellow, 5f))
         {
-            switch (GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>().whoseTurn)
+            switch (GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>().currentTurnParticipant.ToString())
             {
-                case "Player0":
+                case "0":
                     Bellow.collider.GetComponent<GridScript>().myState = "DungeonTile";
-                    Bellow.collider.GetComponent<GridScript>().myOwner = "Player0";
+                    Bellow.collider.GetComponent<GridScript>().myOwner = "0";
                     break;
-                case "Player1":
+                case "1":
                     Bellow.collider.GetComponent<GridScript>().myState = "DungeonTile";
-                    Bellow.collider.GetComponent<GridScript>().myOwner = "Player1";
+                    Bellow.collider.GetComponent<GridScript>().myOwner = "1";
                     break;
             }
 

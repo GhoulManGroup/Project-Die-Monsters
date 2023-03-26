@@ -116,69 +116,74 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
 
     public void CheckCanSummonCreature()
     {
-        UIElements[1].SetActive(false);
-        UIElements[2].SetActive(true);
-        UIElements[4].GetComponent<TextMeshProUGUI>().text = "Summon a creature if able? or return to the board";
-        //check if each int is 2+ in value then tell any dice thats result string matches that intcrestname to change their can be played state to true.
-        if (lvl1Crest >= 2)
+        if (player.diceDeck.Count > 3)
         {
-            for (int i = 0; i < dieToRoll.Count; i++)
+            UIElements[1].SetActive(false);
+            UIElements[2].SetActive(true);
+            UIElements[4].GetComponent<TextMeshProUGUI>().text = "Summon a creature if able? or return to the board";
+            //check if each int is 2+ in value then tell any dice thats result string matches that intcrestname to change their can be played state to true.
+            if (lvl1Crest >= 2)
             {
-                if (dieToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC1" && dieToRoll[i].GetComponent<SceneDieScript>().isFree == false)
+                for (int i = 0; i < dieToRoll.Count; i++)
                 {
-                    dieToRoll[i].GetComponent<SceneDieScript>().isFree = true;
+                    if (dieToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC1" && dieToRoll[i].GetComponent<SceneDieScript>().isFree == false)
+                    {
+                        dieToRoll[i].GetComponent<SceneDieScript>().isFree = true;
+                    }
                 }
             }
-        }
 
-        if (lvl2Crest >= 2)
-        {
-            for (int i = 0; i < dieToRoll.Count; i++)
+            if (lvl2Crest >= 2)
             {
-                if (dieToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC2" && dieToRoll[i].GetComponent<SceneDieScript>().isFree == false)
+                for (int i = 0; i < dieToRoll.Count; i++)
                 {
-                    dieToRoll[i].GetComponent<SceneDieScript>().isFree = true;
+                    if (dieToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC2" && dieToRoll[i].GetComponent<SceneDieScript>().isFree == false)
+                    {
+                        dieToRoll[i].GetComponent<SceneDieScript>().isFree = true;
+                    }
                 }
             }
-        }
 
-        if (lvl3Crest >= 2)
-        {
-            for (int i = 0; i < dieToRoll.Count; i++)
+            if (lvl3Crest >= 2)
             {
-                if (dieToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC3" && dieToRoll[i].GetComponent<SceneDieScript>().isFree == false)
+                for (int i = 0; i < dieToRoll.Count; i++)
                 {
-                    dieToRoll[i].GetComponent<SceneDieScript>().isFree = true;
+                    if (dieToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC3" && dieToRoll[i].GetComponent<SceneDieScript>().isFree == false)
+                    {
+                        dieToRoll[i].GetComponent<SceneDieScript>().isFree = true;
+                    }
                 }
             }
-        }
 
-        if (lvl4Crest >= 2)
-        {
-            for (int i = 0; i < dieToRoll.Count; i++)
+            if (lvl4Crest >= 2)
             {
-                if (dieToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC4" && dieToRoll[i].GetComponent<SceneDieScript>().isFree == false)
-                {                
-                    dieToRoll[i].GetComponent<SceneDieScript>().isFree = true;
-                }
-            }
-        }
-
-        if (dicechecked == 3)
-        {
-
-            for (int i = 0; i < dieToRoll.Count; i++)
-            {// Add if rolled levle crest. Need to rewrite the script a bit more.
-                if (dieToRoll[i].GetComponent<SceneDieScript>().myDie.dieCreature.summonCost <= turnPlayer.GetComponent<Player>().summmonCrestPoints && dieToRoll[i].GetComponent<SceneDieScript>().isFree == false && dieToRoll[i].GetComponent<SceneDieScript>().rolledLevelCrest == true)
+                for (int i = 0; i < dieToRoll.Count; i++)
                 {
-                    Debug.Log("Can Pay to Summon " + dieToRoll[i].name);
-                    dieToRoll[i].GetComponent<SceneDieScript>().canBeChosen = true;
+                    if (dieToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC4" && dieToRoll[i].GetComponent<SceneDieScript>().isFree == false)
+                    {
+                        dieToRoll[i].GetComponent<SceneDieScript>().isFree = true;
+                    }
                 }
             }
+
+            if (dicechecked == 3)
+            {
+
+                for (int i = 0; i < dieToRoll.Count; i++)
+                {// Add if rolled levle crest. Need to rewrite the script a bit more.
+                    if (dieToRoll[i].GetComponent<SceneDieScript>().myDie.dieCreature.summonCost <= turnPlayer.GetComponent<Player>().summmonCrestPoints && dieToRoll[i].GetComponent<SceneDieScript>().isFree == false && dieToRoll[i].GetComponent<SceneDieScript>().rolledLevelCrest == true)
+                    {
+                        Debug.Log("Can Pay to Summon " + dieToRoll[i].name);
+                        dieToRoll[i].GetComponent<SceneDieScript>().canBeChosen = true;
+                    }
+                }
+                canCloseUI = true;
+            }
+        }else if (player.diceDeck.Count< 3)
+        {
+            Debug.Log("Insufficent Dice In Pool To Summon");
             canCloseUI = true;
         }
-
-        //
     }
 
     public void ButtonPressed()

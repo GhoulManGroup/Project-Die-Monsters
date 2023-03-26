@@ -153,12 +153,12 @@ public class AttackUIScript : MonoBehaviour
     {
 
         //Establish who is attacking and who is defending.
-        if (lvlRef.GetComponent<LevelController>().whoseTurn == "Player0")
+        if (lvlRef.GetComponent<LevelController>().currentTurnParticipant.ToString() == "0")
         {
             attackingPlayer = lvlRef.GetComponent<LevelController>().participants[0].gameObject;
             defendingPlayer = lvlRef.GetComponent<LevelController>().participants[1].gameObject;
         }
-        else if (lvlRef.GetComponent<LevelController>().whoseTurn == "Player1")
+        else if (lvlRef.GetComponent<LevelController>().currentTurnParticipant.ToString() == "1")
         {
             attackingPlayer = lvlRef.GetComponent<LevelController>().participants[1].gameObject;
             defendingPlayer = lvlRef.GetComponent<LevelController>().participants[0].gameObject;

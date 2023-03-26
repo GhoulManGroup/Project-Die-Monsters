@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 6.3, z: 0}
   m_LocalScale: {x: 1, y: 13.817939, z: 0.012896738}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1520335839070375841}
   m_RootOrder: 0
@@ -51,6 +52,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -93,11 +95,12 @@ GameObject:
   - component: {fileID: 1520335839070375840}
   - component: {fileID: 1520335839070375855}
   - component: {fileID: 1520335839070375842}
-  - component: {fileID: 1449270305}
   - component: {fileID: 342285540849623483}
   - component: {fileID: 1925031674277869028}
   - component: {fileID: 7419501601629678506}
   - component: {fileID: 8506130748815286975}
+  - component: {fileID: 1449270305}
+  - component: {fileID: 5515102811323097641}
   m_Layer: 0
   m_Name: Creature
   m_TagString: Untagged
@@ -115,6 +118,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3, y: 1, z: 3}
   m_LocalScale: {x: 1, y: 0.14473939, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1520335838488642181}
   m_Father: {fileID: 0}
@@ -139,6 +143,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -187,6 +192,9 @@ MonoBehaviour:
   currentHealth: 0
   currentAttack: 0
   currentDefence: 0
+  healthCap: 0
+  attackCap: 0
+  defenceCap: 0
   moveCost: 1
   attackDistance: 1
   attackCost: 1
@@ -201,19 +209,6 @@ MonoBehaviour:
   hasUsedAbilityThisTurn: 0
   canReachTarget: 0
   targets: []
---- !u!65 &1449270305
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1520335839070375853}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.8, y: 12, z: 0.6}
-  m_Center: {x: 0.000000059604645, y: 6, z: -0.00000008940697}
 --- !u!114 &342285540849623483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,10 +234,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myAbility: {fileID: 0}
-  canBeCast: 0
-  readyEffects: 0
+  TriggeringCreature: {fileID: 0}
   abilityCast: 0
+  readyEffects: 0
   effectsResolved: 0
+  checkingEffect: 0
+  canBeCast: 0
+  effectsCanBeDone: 0
 --- !u!114 &7419501601629678506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,6 +255,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectToResolve: {fileID: 0}
   targetsChecked: 0
+  targetsExist: 0
 --- !u!114 &8506130748815286975
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,6 +271,45 @@ MonoBehaviour:
   currentEffect: {fileID: 0}
   hasDeclared: 0
   foundTargets: []
+  targetPool: []
   Position: {fileID: 0}
   directionIndicated: 0
-  targetPool: []
+--- !u!65 &1449270305
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520335839070375853}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.8, y: 12, z: 0.6}
+  m_Center: {x: 0.000000059604645, y: 6, z: -0.00000008940697}
+--- !u!114 &5515102811323097641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1520335839070375853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 1
+  SyncRotAngleX: 0
+  SyncRotAngleY: 1
+  SyncRotAngleZ: 0
+  SyncScaleX: 0
+  SyncScaleY: 0
+  SyncScaleZ: 0
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  InLocalSpace: 0
+  Interpolate: 1
