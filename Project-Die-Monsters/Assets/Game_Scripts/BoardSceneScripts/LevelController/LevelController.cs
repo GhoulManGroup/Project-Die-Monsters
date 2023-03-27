@@ -88,6 +88,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
                         GameObject enemy = Instantiate(opponent);
                         enemy.GetComponent<AIOpponent>().myOpponent = opponentList[0];
                         participants.Add(enemy);
+                        GameObject.FindGameObjectWithTag("AIController").GetComponent<AIManager>().currentOpponent = enemy;
 
                         DungeonLordStartTiles[0].GetComponent<DungeonLordPiece>().myOwner = "0";
                         DungeonLordStartTiles[1].GetComponent<DungeonLordPiece>().myOwner = "1";
@@ -258,33 +259,32 @@ public class LevelController : MonoBehaviour //This class controls everything at
                         break;
                 }
                 startTurnBTN.SetActive(true);
-                ResetFunction();
+                StartCoroutine("ResetFunction");
             }
             else if (gameManager.GetComponent<GameManagerScript>().desiredOpponent == "AI")
             {
                 Debug.Log("AI End Turn");
+                StartCoroutine("ResetFunction");
                 switch (currentTurnParticipant)
                 {
                     case 0:
                         currentTurnParticipant = 1;
                         SetTurnPlayer();
+                        GameObject.FindGameObjectWithTag("AIController").GetComponent<AIManager>().BeginTurn();
                         break;
 
                     case 1:
                         startTurnBTN.SetActive(true);
                         currentTurnParticipant = 0;
                         SetTurnPlayer();
-                        GameObject.FindGameObjectWithTag("AIController").GetComponent<AIManager>().BeginTurn();
                         break;
                 }
-                ResetFunction();
             }
         }
     }
     
-    public void ResetFunction()
+    public IEnumerator ResetFunction()
     {
-        Debug.Log("Inside Reset");
         endTurnBTN.SetActive(false);
 
         this.GetComponent<CreaturePoolController>().enableButtons();
@@ -302,7 +302,11 @@ public class LevelController : MonoBehaviour //This class controls everything at
         this.GetComponent<CreatureController>().ResetCreatureStates(); //---- Need to Add Creatures we spawn to creature controller creature list in order to reset their states,.-------------------------------------------------------------------------------------------------------------------------------------
 
         //Set the camera to the right board state.
-        this.GetComponent<CameraController>().switchCamera("Alt");
+        yield return new WaitForSeconds(1f);
+        if (currentTurnParticipant != 1)
+        {
+            this.GetComponent<CameraController>().switchCamera("Alt");
+        }
     }
 
     #endregion

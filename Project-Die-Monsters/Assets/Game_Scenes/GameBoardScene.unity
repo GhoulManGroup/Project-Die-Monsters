@@ -6131,8 +6131,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5408b00bf7eb17f4088233e1a15541a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diceFab: {fileID: 0}
-  spawnPoints: []
+  diceFab: {fileID: 1252430122848364707, guid: 2a55bd9aa7abc6646a7900792aae18f9, type: 3}
+  spawnPoints:
+  - {fileID: 1171737103}
+  - {fileID: 1342201825}
+  - {fileID: 1353850599}
   DiceToRoll: []
   LVLRef: {fileID: 0}
 --- !u!1 &775594383 stripped

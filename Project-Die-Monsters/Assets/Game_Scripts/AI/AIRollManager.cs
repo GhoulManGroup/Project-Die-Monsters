@@ -10,9 +10,11 @@ public class AIRollManager : MonoBehaviour
     public List<GameObject> DiceToRoll = new List<GameObject>();
     
     [SerializeField] GameObject LVLRef;
+    [SerializeField] AIManager mRef;
 
     public void SetUpAIDice()
     {
+        mRef = this.GetComponent<AIManager>();
         LVLRef = GameObject.FindGameObjectWithTag("LevelController");
         LVLRef.GetComponent<CameraController>().switchCamera("Dice");
 
@@ -24,10 +26,13 @@ public class AIRollManager : MonoBehaviour
             DiceSpawned = Instantiate(diceFab, spawnPoints[DiceToRoll.Count].transform.position, Quaternion.identity);
             DiceToRoll.Add(DiceSpawned);
         }
+        
+        StartCoroutine("AssignCreatureToDice");
     }
 
     private IEnumerator AssignCreatureToDice()
     {
+       
         yield return null;
     }
 
