@@ -35,14 +35,14 @@ public class SceneDieScript : MonoBehaviour
     void Start()
     {
         levelController = GameObject.FindGameObjectWithTag("LevelController");
-        if (levelController.GetComponent<LevelController>().currentTurnParticipant == 0)
+        if (levelController.GetComponent<LevelController>().turnPlayerObject.GetComponent<Player>() != null)
         {
             myController = GameObject.FindGameObjectWithTag("LevelController");
             playerController = myController.GetComponent<UIDiceController>();
         }
-        else if (levelController.GetComponent<LevelController>().currentTurnParticipant == 1)
+        else if (levelController.GetComponent<LevelController>().turnPlayerObject.GetComponent<AIOpponent>() != null)
         {
-            myController = GameObject.FindGameObjectWithTag("AIManager");
+            myController = GameObject.FindGameObjectWithTag("AIController");
             AIController = myController.GetComponent<AIRollManager>();
         }
         else
@@ -61,7 +61,6 @@ public class SceneDieScript : MonoBehaviour
     {
         if (myController.GetComponent<UIDiceController>() != null)
         {
-
             if (playerController.hasRolledDice == false)
             {
                 inspectTab.sceneDice = gameObject;
@@ -70,7 +69,7 @@ public class SceneDieScript : MonoBehaviour
 
             if (playerController.hasRolledDice == true)
             {
-                if (canBeChosen == true && isFree == true || canBeChosen == true && myDie.dieCreature.summonCost <= myController.turnPlayer.GetComponent<Player>().summmonCrestPoints)
+                if (canBeChosen == true && isFree == true || canBeChosen == true && myDie.dieCreature.summonCost <= playerController.turnPlayer.GetComponent<Player>().summmonCrestPoints)
                 {
                     inspectTab.sceneDice = gameObject;
                     inspectTab.OpenInspectWindow("DieInspect");
@@ -79,6 +78,10 @@ public class SceneDieScript : MonoBehaviour
                     playerController.UIElements[6].GetComponent<Button>().interactable = true;
                 }
             }
+        }
+        else
+        {
+            Debug.Log("Hello From OMD");
         }
     }
 
@@ -234,75 +237,69 @@ public class SceneDieScript : MonoBehaviour
                     case "two":
                         if (myController.GetComponent<UIDiceController>() != null)
                         {
-                            playerController.lvl1Crest += 1;
+                            playerController.lvl2Crest += 1;
                         }
                         else if (myController.GetComponent<UIDiceController>() != null)
                         {
 
                         }
                         rollResult = "LC2";
-                        myController.lvl2Crest += 1;
                         break;
                     case "three":
                         if (myController.GetComponent<UIDiceController>() != null)
                         {
-                            playerController.lvl1Crest += 1;
+                            playerController.lvl3Crest += 1;
                         }
                         else if (myController.GetComponent<UIDiceController>() != null)
                         {
 
                         }
                         rollResult = "LC3";
-                        myController.lvl3Crest += 1;
                         break;
                     case "four":
                         if (myController.GetComponent<UIDiceController>() != null)
                         {
-                            playerController.lvl1Crest += 1;
+                            playerController.lvl4Crest += 1;
                         }
                         else if (myController.GetComponent<UIDiceController>() != null)
                         {
 
                         }
                         rollResult = "LC4";
-                        myController.lvl4Crest += 1;
                         break;
                 }
                 rolledLevelCrest = true;
                 canBeChosen = true;
                 if (myController.GetComponent<UIDiceController>() != null)
                 {
-                    playerController.lvl1Crest += 1;
+                    playerController.summonCrestPool += 1;
                 }
                 else if (myController.GetComponent<UIDiceController>() != null)
                 {
 
                 }
-                myController.summonCrestPool += 1;
                 break;
             case "Attack":
                 rollResult = "Attack";
                 if (myController.GetComponent<UIDiceController>() != null)
                 {
-                    playerController.lvl1Crest += 1;
+                    playerController.turnPlayer.GetComponent<Player>().attackCrestPoints += 1;
                 }
                 else if (myController.GetComponent<UIDiceController>() != null)
                 {
 
                 }
-                myController.turnPlayer.GetComponent<Player>().attackCrestPoints += 1;
                 break;
             case "Defence":
                 rollResult = "Defence";
                 if (myController.GetComponent<UIDiceController>() != null)
                 {
-                    playerController.lvl1Crest += 1;
+                    playerController.turnPlayer.GetComponent<Player>().defenceCrestPoints += 1;
                 }
                 else if (myController.GetComponent<UIDiceController>() != null)
                 {
 
                 }
-                myController.turnPlayer.GetComponent<Player>().defenceCrestPoints += 1;
                 break;
             case "AP":
                 rollResult = "AP";
