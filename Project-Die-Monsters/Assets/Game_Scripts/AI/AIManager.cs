@@ -12,6 +12,14 @@ public class AIManager : MonoBehaviour
     [SerializeField]
     GameObject currentActionText;
 
+    [Header("Resources")]
+    public List<GameObject> myCreatures = new List<GameObject>();
+
+    [Header("PossibleActions")]
+    public int canAttack = 0;
+    public int abiltiesCanBeCast;
+
+
     public void BeginTurn()
     {
         Debug.Log("Being Turn Function");
