@@ -18,10 +18,9 @@ public class AIManager : MonoBehaviour
     [Header("PossibleActions")]
     public int canAttack = 0;
     public int abiltiesCanBeCast;
-
-
     public void BeginTurn()
     {
+        currentOpponent.GetComponent<AIOpponent>().SetUp();
         Debug.Log("Being Turn Function");
         currentAction.SetActive(true);
         currentActionText.GetComponent<TextMeshProUGUI>().text = "AI Turn Start";
