@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class LoadingManager : MonoBehaviour
 {
-    public static LoadingManager loadingManager;
+    public static LoadingManager loadingManager { get; private set; }
 
     [SerializeField] GameObject loadingSceneCamera; // use untill other scene has loaded in.
     [SerializeField] Image loadingBackground;

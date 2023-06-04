@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManagerScript : MonoBehaviour
 {
-    public static GameManagerScript instance;
+    public static GameManagerScript instance { get; private set; }
 
     [Header("Game Location & Other Settings")]
 

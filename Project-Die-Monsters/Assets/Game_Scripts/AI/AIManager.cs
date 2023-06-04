@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class AIManager : MonoBehaviour
 {
+    public static GameManagerScript instance { get; private set; }
+
+    //static AIManager Instance pro
     public GameObject currentOpponent;
     [SerializeField]
     GameObject currentAction;
@@ -25,6 +28,8 @@ public class AIManager : MonoBehaviour
         Debug.Log("Being Turn Function");
         currentAction.SetActive(true);
         currentActionText.GetComponent<TextMeshProUGUI>().text = "AI Turn Start";
+        //Determine Priority of what to day :?
+
         this.GetComponent<AIRollManager>().SetUpAIDice();
     }
 

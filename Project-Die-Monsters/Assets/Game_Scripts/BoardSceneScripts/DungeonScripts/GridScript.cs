@@ -169,6 +169,8 @@ public class GridScript : MonoBehaviour
 
     public void SpawnCreatureAbove()
     {
+        Debug.LogError("Here We Spawn Cube");
+        //Spawn Cube & Wait for cube to finish so call another method I think.
         Instantiate(creatureSpawnFab, new Vector3(this.transform.position.x, 0.3f, this.transform.position.z), Quaternion.identity);
         LvlRef.GetComponent<LevelController>().CanEndTurn();
     }
