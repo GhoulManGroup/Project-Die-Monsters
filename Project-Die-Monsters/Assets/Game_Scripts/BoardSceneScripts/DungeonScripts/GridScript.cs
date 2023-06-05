@@ -28,6 +28,7 @@ public class GridScript : MonoBehaviour
 
     [Header("PrefabsToSpawn")]
     public GameObject creatureSpawnFab;
+    public List<GameObject> unfoldingDiePool = new List<GameObject>();
 
     [Header("PieceManagement")]
     public GameObject creatureAboveMe;
@@ -167,10 +168,16 @@ public class GridScript : MonoBehaviour
         }
     }
 
-    public void SpawnCreatureAbove()
+    public IEnumerator SpawnCreatureAbove(int patternToSpawn)
     {
         Debug.LogError("Here We Spawn Cube");
-        //Spawn Cube & Wait for cube to finish so call another method I think.
+        GameObject UnfoldMe = Instantiate(unfoldingDiePool[patternToSpawn],new Vector3(this.transform.position.x, 0.3f, this.transform.position.z), Quaternion.identity);
+        yield return new WaitForSeconds(2f);
+        UnfoldMe.GetComponent<Animator>().Play("Unfold");
+        while (UnfoldMe.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
+        {
+        yield return null;
+        } 
         Instantiate(creatureSpawnFab, new Vector3(this.transform.position.x, 0.3f, this.transform.position.z), Quaternion.identity);
         LvlRef.GetComponent<LevelController>().CanEndTurn();
     }
