@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "CreatureAbilitys", menuName = "CreatureAbilityComponents/Ability")]
+[CreateAssetMenu(fileName = "DieMonsters", menuName = "DieMonsters/Ability")]
 public class Ability : ScriptableObject
 {
     [Header("Ability Details")]
@@ -14,17 +14,16 @@ public class Ability : ScriptableObject
 
     public enum AbilityActivatedHow
     {
-        Activated, Trigger, None
+        None, Activated, Trigger
     }
 
     public enum TriggerCondition
     {
-        OnDeath, OnKill, OnHit, OnHitAbility, OnAttack, OnEndTurn
+        None, OnDeath, OnKill, OnHit, OnHitAbility, OnAttack, OnEndTurn
     }
 
     [Header("Ability Components")]
     public List<AbilityEffect> abilityEffects = new List<AbilityEffect>();
-    //public List<Targeting> targeting;
 
 }
 

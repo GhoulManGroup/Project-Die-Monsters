@@ -120,7 +120,7 @@ public class SpawnerTileScript : MonoBehaviour
             // If this tile out of the 6 which is the designated spawn tile instanciate a creature token object above the board position bellow this tile.
             if (amSpawnTile == true)
             {
-                Bellow.collider.GetComponent<GridScript>().SpawnCreatureAbove(1);
+                Bellow.collider.GetComponent<GridScript>().spawnMe(0, DungeonSpawner.SpawnerYRotation);
             }
             
         }      

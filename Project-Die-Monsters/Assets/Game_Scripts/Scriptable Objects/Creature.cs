@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(fileName = "DieMonsters", menuName = "DieMonsters/Creature")]
 public class Creature : ScriptableObject
 {
     [Header("Crature Identifyers")]

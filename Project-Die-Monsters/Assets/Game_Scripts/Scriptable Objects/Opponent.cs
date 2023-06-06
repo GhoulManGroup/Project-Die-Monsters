@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(fileName = "AI", menuName = "AI/Opponent")]
 public class Opponent : ScriptableObject
 {// This class contains 
     [Header("Starting Settings")]

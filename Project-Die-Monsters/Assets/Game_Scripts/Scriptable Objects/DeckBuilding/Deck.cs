@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(fileName = "DeckCollection", menuName = "DeckCollection/DiceDeck")]
 public class Deck : ScriptableObject
 {
 

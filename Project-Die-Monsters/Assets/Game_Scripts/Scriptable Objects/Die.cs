@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[CreateAssetMenu]
+[CreateAssetMenu(fileName = "DieMonsters", menuName = "DieMonsters/Dice")]
 public class Die : ScriptableObject // this script is the data conainer for every die.
 {
     [Header("Dice Properties")]

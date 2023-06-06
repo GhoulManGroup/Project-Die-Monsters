@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(fileName = "DieMonsters", menuName = "DieMonsters/DungeonLord")]
 public class DungeonLord : ScriptableObject
 {
     public Sprite CardArt;

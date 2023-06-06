@@ -15,6 +15,8 @@ public class DungeonSpawner : MonoBehaviour
 
     [Header("SpawnStuff")]
     public bool canPlaceDie = false;
+    [HideInInspector]
+    public float SpawnerYRotation = 0;
 
     [Header("ResetPosition")]
     Vector3 resetPoint; // This the board position the spawner moves to everytime the player would move summon a creature.
@@ -28,6 +30,7 @@ public class DungeonSpawner : MonoBehaviour
     {
         lvlRef = GameObject.FindGameObjectWithTag("LevelController");
         resetPoint = this.transform.position;
+        SpawnerYRotation = this.transform.rotation.y;
         UpdateBoard();
         HideandShow();
     }
@@ -129,6 +132,8 @@ public class DungeonSpawner : MonoBehaviour
             DungeonDicePatterns[currentPattern].GetComponent<DungeonPatternScript>().ApplyPattern();
             CheckPlacement("PatternChange");
         }
+
+        SpawnerYRotation = this.transform.rotation.y;
     }
 
     public void CheckPlacement(string lastInput)

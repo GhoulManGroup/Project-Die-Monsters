@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu]
+[CreateAssetMenu(fileName = "DeckCollection", menuName = "DeckCollection/Collection")]
 public class Collection : ScriptableObject
 {
 
