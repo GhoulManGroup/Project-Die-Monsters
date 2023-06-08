@@ -178,12 +178,13 @@ public class DungeonSpawner : MonoBehaviour
             {
                 for (int i = 0; i < DungeonTiles.Count; i++)
                 {
-                    DungeonTiles[i].GetComponent<SpawnerTileScript>().dungeonToBePlaced();
+                    DungeonTiles[i].GetComponent<SpawnerTileScript>().StartCoroutine("DungeonToBePlaced");
                 }
                 lvlRef.GetComponent<LevelController>().placingCreature = false;
                 GameObject.FindGameObjectWithTag("LevelController").GetComponent<CameraController>().switchCamera("Alt");
                 HideandShow();
                 UpdateBoard();
+                //THIS NEEDS TO CHANGE ITS RESETING TOO FAST.
                 this.transform.position = resetPoint;
             }
         }
