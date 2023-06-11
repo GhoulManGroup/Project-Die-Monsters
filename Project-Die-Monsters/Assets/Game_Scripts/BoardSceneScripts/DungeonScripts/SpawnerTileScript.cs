@@ -99,8 +99,9 @@ public class SpawnerTileScript : MonoBehaviour
         }
     }
 
-    IEnumerator DungeonToBePlaced()
+   public IEnumerator DungeonToBePlaced(float Yrotation)
     {
+        Debug.Log("Reached DTBP");
         RaycastHit Bellow;
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out Bellow, 5f))
         {
@@ -120,7 +121,7 @@ public class SpawnerTileScript : MonoBehaviour
             // If this tile out of the 6 which is the designated spawn tile instanciate a creature token object above the board position bellow this tile.
             if (amSpawnTile == true)
             {
-                Bellow.collider.GetComponent<GridScript>().spawnMe(0, DungeonSpawner.transform.rotation.y);
+                Bellow.collider.GetComponent<GridScript>().spawnMe(0, Yrotation);
             }
             
         }

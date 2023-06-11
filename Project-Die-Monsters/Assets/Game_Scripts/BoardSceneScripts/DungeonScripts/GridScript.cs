@@ -174,17 +174,17 @@ public class GridScript : MonoBehaviour
     }
     public IEnumerator SpawnCreatureAbove(int patternToSpawn, float rotation)
     {
-        Debug.Log(rotation);
-        GameObject UnfoldMe = Instantiate(unfoldingDiePool[patternToSpawn],new Vector3(this.transform.position.x, 0.2f, this.transform.position.z), Quaternion.Euler(180f,rotation,0f));
-        yield return new WaitForSeconds(2f);
-        UnfoldMe.GetComponent<Animator>().Play("Unfold");
-        while (UnfoldMe.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
-        {
-            Debug.Log(UnfoldMe.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime.ToString());
-            yield return null;
-        }
-        yield return new WaitForSeconds(3f);
-        Destroy(UnfoldMe);
+       // Debug.Log(rotation);
+       // GameObject UnfoldMe = Instantiate(unfoldingDiePool[patternToSpawn],new Vector3(this.transform.position.x, 0.2f, this.transform.position.z), Quaternion.Euler(0f,rotation,0f));
+        //yield return new WaitForSeconds(2f);
+        //UnfoldMe.GetComponentInChildren<Animator>().Play("Unfold");
+       // while (UnfoldMe.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
+        //{
+            //Debug.Log(UnfoldMe.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime.ToString());
+            //yield return null;
+       // }
+        yield return new WaitForSeconds(1f);
+        //Destroy(UnfoldMe);
         Instantiate(creatureSpawnFab, new Vector3(this.transform.position.x, 0.3f, this.transform.position.z), Quaternion.identity);
         LvlRef.GetComponent<LevelController>().CanEndTurn();
     }

@@ -30,7 +30,7 @@ public class DungeonSpawner : MonoBehaviour
     {
         lvlRef = GameObject.FindGameObjectWithTag("LevelController");
         resetPoint = this.transform.position;
-        SpawnerYRotation = this.transform.rotation.y;
+        SpawnerYRotation = this.transform.localRotation.y;
         UpdateBoard();
         HideandShow();
     }
@@ -174,18 +174,22 @@ public class DungeonSpawner : MonoBehaviour
     { // Press (R) in order to place the current dungeon path displayed by the dungeon spawner onto the board.
         if (Input.GetKeyDown("r")) 
         {
+            Debug.Log(this.transform.localEulerAngles.y + "start");
             if (canPlaceDie == true)
             {
                 for (int i = 0; i < DungeonTiles.Count; i++)
                 {
-                    DungeonTiles[i].GetComponent<SpawnerTileScript>().StartCoroutine("DungeonToBePlaced");
+                    DungeonTiles[i].GetComponent<SpawnerTileScript>().StartCoroutine("DungeonToBePlaced", this.transform.localEulerAngles.y);
+                    Debug.Log(this.transform.localEulerAngles.y + "corutine");
                 }
                 lvlRef.GetComponent<LevelController>().placingCreature = false;
                 GameObject.FindGameObjectWithTag("LevelController").GetComponent<CameraController>().switchCamera("Alt");
                 HideandShow();
                 UpdateBoard();
                 //THIS NEEDS TO CHANGE ITS RESETING TOO FAST.
+                Debug.Log(this.transform.localEulerAngles.y + "reset");
                 this.transform.position = resetPoint;
+
             }
         }
 
