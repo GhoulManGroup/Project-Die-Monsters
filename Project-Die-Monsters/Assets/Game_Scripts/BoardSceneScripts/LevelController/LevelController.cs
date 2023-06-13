@@ -59,7 +59,6 @@ public class LevelController : MonoBehaviour //This class controls everything at
         // Check what Game Mode.
         switch (gameManager.GetComponent<GameManagerScript>().gameMode)
         {
-
             case "Freeplay":
                 switch (gameManager.GetComponent<GameManagerScript>().desiredOpponent)
                 {                
@@ -75,9 +74,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
                         DungeonLordStartTiles[1].GetComponent<DungeonLordPiece>().myOwner = "1";
 
                         DungeonLordStartTiles[0].GetComponent<DungeonLordPiece>().SetDungeonLordTile();
-                        DungeonLordStartTiles[1].GetComponent<DungeonLordPiece>().SetDungeonLordTile();
-
-                    
+                        DungeonLordStartTiles[1].GetComponent<DungeonLordPiece>().SetDungeonLordTile();            
                         break;
 
                     case "AI":
@@ -95,13 +92,11 @@ public class LevelController : MonoBehaviour //This class controls everything at
 
                         DungeonLordStartTiles[0].GetComponent<DungeonLordPiece>().SetDungeonLordTile();
                         DungeonLordStartTiles[1].GetComponent<DungeonLordPiece>().SetDungeonLordTile();
-
                         break;
                 }
                 break;
 
             case "Multiplayer":
-                Debug.Log("Oy Oy");
                 participants.AddRange(GameObject.FindGameObjectsWithTag("Player"));
                 break;
         }
@@ -128,7 +123,6 @@ public class LevelController : MonoBehaviour //This class controls everything at
                 }
             }
         }
-
     }
 
     #endregion
@@ -145,7 +139,6 @@ public class LevelController : MonoBehaviour //This class controls everything at
 
     public void BeginTurnFunction() // this function is only called when it is a Human Players turn not the ai,
      {
-
         // check if the player has any dice in the list 
         if (participants[currentTurnParticipant].GetComponent<Player>().diceDeck.Count != 0)
         {
@@ -202,6 +195,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
             Debug.Log("No Triggers To Resolve " + turnPlayerPerformingAction + " " + AbilityWindow.creaturesToTrigger.Count);
             GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().CheckCreatureStates();
         }
+      
     }
 
     public void CanEndTurn()

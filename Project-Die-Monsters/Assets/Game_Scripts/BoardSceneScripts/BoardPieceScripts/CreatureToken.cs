@@ -48,6 +48,7 @@ public class CreatureToken : MonoBehaviour
     public List<GameObject> targets = new List<GameObject>();
 
 
+
     void Start()
     {
         //Set level ref to level controler object.
@@ -91,7 +92,7 @@ public class CreatureToken : MonoBehaviour
     public void setDetails()
     { // This function sets all the details of the piece token on the board, once it has had its creature sciptable object assigned from where ever it is being summoned from.
         this.gameObject.name = myCreature.CreatureName;
-        myArtSlot.GetComponent<MeshRenderer>().material = myCreature.cardArt3D;
+       // myArtSlot.GetComponent<MeshRenderer>().material = myCreature.cardArt3D;
         currentHealth = myCreature.Health;
         currentAttack = myCreature.Attack;
         currentDefence = myCreature.Defence;
@@ -145,6 +146,7 @@ public class CreatureToken : MonoBehaviour
                     myBoardLocation.GetComponent<GridScript>().creatureAboveMe = null;
                 }
                 myBoardLocation = Down.collider.gameObject;
+                Debug.Log(Down.collider.gameObject);
                 Down.collider.GetComponent<GridScript>().TileContents = "Creature";
                 Down.collider.GetComponent<GridScript>().creatureAboveMe = this.gameObject;
             }

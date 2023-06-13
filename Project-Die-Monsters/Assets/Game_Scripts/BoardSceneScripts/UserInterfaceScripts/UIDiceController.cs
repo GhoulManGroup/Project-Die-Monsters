@@ -53,6 +53,7 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
 
     public void SetUp()
     {
+        Debug.Log("Setup UIDC");
         player = turnPlayer.GetComponent<Player>();
         //Check how many dice to roll.
         for (int diceToSpawn = 0; diceToSpawn < player.diceHandSize; diceToSpawn++)
@@ -69,7 +70,7 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
     public void SpawnDice()
     {
         GameObject DiceSpawned;
-
+        Debug.Log("DiceSpawned");
         //Spawn a dice at the spawn points whose position in the list is equal to the number of dice already in the space.
          DiceSpawned = Instantiate(diceFab, spawnPoints[dieToRoll.Count].transform.position, Quaternion.identity);
         dieToRoll.Add(DiceSpawned);

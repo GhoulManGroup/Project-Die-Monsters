@@ -101,7 +101,6 @@ public class SpawnerTileScript : MonoBehaviour
 
    public IEnumerator DungeonToBePlaced(float Yrotation)
     {
-        Debug.Log("Reached DTBP");
         RaycastHit Bellow;
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out Bellow, 5f))
         {

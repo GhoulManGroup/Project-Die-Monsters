@@ -169,7 +169,6 @@ public class GridScript : MonoBehaviour
     }
     public void spawnMe(int patternToSpawn, float rotation)
     {
-        Debug.Log(rotation);
         StartCoroutine(SpawnCreatureAbove(patternToSpawn, rotation));
     }
     public IEnumerator SpawnCreatureAbove(int patternToSpawn, float rotation)
