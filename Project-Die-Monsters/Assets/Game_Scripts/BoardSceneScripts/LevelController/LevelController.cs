@@ -297,9 +297,13 @@ public class LevelController : MonoBehaviour //This class controls everything at
 
         //Set the camera to the right board state.
         yield return new WaitForSeconds(1f);
-        if (currentTurnParticipant != 1)
-        {
-            this.GetComponent<CameraController>().switchCamera("Alt");
+
+        if (gameManager.GetComponent<GameManagerScript>().desiredOpponent == "AI")
+        {//When the AI turn begins switch camera to board scene untill Ai decides to move to dice.
+            if (currentTurnParticipant != 1)
+            {
+                this.GetComponent<CameraController>().switchCamera("Alt");
+            }
         }
     }
 

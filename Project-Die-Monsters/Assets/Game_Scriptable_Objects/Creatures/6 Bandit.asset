@@ -23,7 +23,7 @@ MonoBehaviour:
   LevelSprite: {fileID: 21300000, guid: f17991a73256ac241b0f93279350b6e4, type: 3}
   TypeSprite: {fileID: 21300000, guid: 8c675b45da8812e4391d63d0a4012f76, type: 3}
   summonCost: 4
-  Health: 10
-  Attack: 10
-  Defence: 0
-  myAbility: {fileID: 11400000, guid: 9eb719890a81a0b4d80d22adfd75d657, type: 2}
+  Health: 30
+  Attack: 30
+  Defence: 10
+  myAbility: {fileID: 0}

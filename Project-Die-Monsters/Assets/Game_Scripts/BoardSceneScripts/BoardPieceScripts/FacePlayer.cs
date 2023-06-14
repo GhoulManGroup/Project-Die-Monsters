@@ -12,6 +12,9 @@ public class FacePlayer : MonoBehaviour
     }
     void LateUpdate()
     {
-        transform.rotation = mainCamera.transform.rotation;
+        Vector3 newRotation = mainCamera.transform.eulerAngles;
+        newRotation.x = 0;
+        newRotation.z = 0;
+        transform.eulerAngles = newRotation;
     }
 }

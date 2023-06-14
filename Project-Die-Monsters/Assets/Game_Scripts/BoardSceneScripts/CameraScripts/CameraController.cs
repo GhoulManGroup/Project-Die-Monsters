@@ -25,7 +25,7 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     public void switchCamera(string ActiveCam)
     {
-        //Debug.Log("Hello From Me" + ActiveCam.ToString());
+        Debug.Log("Hello From Me" + ActiveCam.ToString());
         switch (ActiveCam)
         {
             case "Board": // the top down birds eye view

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
+using UnityEngine.UI;
 
 public class CreatureToken : MonoBehaviour
 {
@@ -92,7 +93,8 @@ public class CreatureToken : MonoBehaviour
     public void setDetails()
     { // This function sets all the details of the piece token on the board, once it has had its creature sciptable object assigned from where ever it is being summoned from.
         this.gameObject.name = myCreature.CreatureName;
-       // myArtSlot.GetComponent<MeshRenderer>().material = myCreature.cardArt3D;
+        //Swap this back to 3D model when we switch from placeholders to using the final thing
+        myArtSlot.GetComponent<Image>().sprite = myCreature.CardArt;
         currentHealth = myCreature.Health;
         currentAttack = myCreature.Attack;
         currentDefence = myCreature.Defence;
