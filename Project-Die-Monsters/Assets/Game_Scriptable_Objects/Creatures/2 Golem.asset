@@ -26,4 +26,4 @@ MonoBehaviour:
   Health: 50
   Attack: 20
   Defence: 30
-  myAbility: {fileID: 0}
+  myAbility: {fileID: 11400000, guid: ff99f1472f7a62940888d7fa70b49427, type: 2}
