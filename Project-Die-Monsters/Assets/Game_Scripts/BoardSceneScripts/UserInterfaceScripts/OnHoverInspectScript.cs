@@ -21,12 +21,13 @@ public class OnHoverInspectScript : MonoBehaviour, IPointerEnterHandler, IPointe
     {
         if (LevelController.GetComponent<CreatureController>().ChosenAction == "None")
         {
+            /*
             if (this.GetComponent<CreaturePoolUISlot>() != null)
             {
                 this.GetComponent<CreaturePoolUISlot>().displayMyContents();
             }
-
-            else if (this.GetComponent<DicePoolInspectScript>() != null)
+            */
+            if (this.GetComponent<DicePoolInspectScript>() != null)
             {
                 this.GetComponent<DicePoolInspectScript>().displayMyContents();
             }

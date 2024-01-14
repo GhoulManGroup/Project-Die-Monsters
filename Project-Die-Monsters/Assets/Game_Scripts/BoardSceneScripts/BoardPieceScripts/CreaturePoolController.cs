@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public class CreaturePoolController : MonoBehaviour
 {
+    /*
     public GameObject turnPlayer;
     public List<GameObject> creatureDiceBTNS = new List<GameObject>();
     public int creaturePick; // the entry in the list this creature is stored in.
@@ -83,4 +84,5 @@ public class CreaturePoolController : MonoBehaviour
         currentCreature = null;
         enableButtons();
     }
+    */
 }

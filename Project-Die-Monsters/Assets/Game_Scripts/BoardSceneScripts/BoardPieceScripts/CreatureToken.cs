@@ -60,18 +60,19 @@ public class CreatureToken : MonoBehaviour
         //Check for either a player script or opponent script then pull the desired creature from the correct objects creaturelist and assign it to the creature piece. 
         if (lcScript.participants[lcScript.currentTurnParticipant].GetComponent<Player>() != null)
         {
-            if (lcScript.creaturePlacedFrom == "CreaturePool") 
+            /*
+            if (lcScript.creaturePlacedFrom == "CreaturePool") //Cut From current Build as an option due to slow game pacing
             {
-                // set my creature to be the same scriptble object that was chosen from the creaturePoolControllerList, then run the creature played fuciton to remove that creature from said list.
-                myCreature = lvlRef.GetComponent<CreaturePoolController>().currentCreature;
-                lvlRef.GetComponent<CreaturePoolController>().creaturePlayed();
-            }
-            
-            else if (lcScript.creaturePlacedFrom == "DiceBoard")
-            {
+               // set my creature to be the same scriptble object that was chosen from the creaturePoolControllerList, then run the creature played fuciton to remove that creature from said list.
+              myCreature = lvlRef.GetComponent<CreaturePoolController>().currentCreature;
+               lvlRef.GetComponent<CreaturePoolController>().creaturePlayed();
+            }*/
+
+           if (lcScript.creaturePlacedFrom == "DiceBoard")
+           {
                 //If played directly from dice board area instead creature is current creature stored in inspect tab, 
                 myCreature = GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectWindowController>().currentCreature;
-            }
+           }
 
             lvlRef.GetComponent<CreatureController>().CreaturesOnBoard.Add(this.gameObject); // add this piece to the creature controller script.
             lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false; // piece placed player no longer performing action.

@@ -66,10 +66,11 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
             //Check if the creature can be moved & if the player can pay its cost.
             if (ChosenCreatureToken.GetComponent<CreatureToken>().hasMovedThisTurn == false)
             {
-                if (ableToMove == true && turnPlayer.GetComponent<Player>().moveCrestPoints >= ChosenCreatureToken.GetComponent<CreatureToken>().moveCost)
+                OrderBTNS[0].GetComponent<Button>().interactable = true;
+               /* if (ableToMove == true && turnPlayer.GetComponent<Player>().moveCrestPoints >= ChosenCreatureToken.GetComponent<CreatureToken>().moveCost)
                 {
-                    OrderBTNS[0].GetComponent<Button>().interactable = true;
-                }
+                    
+                }*/
             }
             else if (ChosenCreatureToken.GetComponent<CreatureToken>().hasMovedThisTurn == true)
             {

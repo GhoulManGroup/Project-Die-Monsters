@@ -42,7 +42,8 @@ public class PathController : MonoBehaviour
         chosenPiece = creatureTokenPicked;
         startPosition = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
         tilesToCheck.Add(startPosition);
-        possibleMoveDistance = LCScript.participants[LCScript.currentTurnParticipant].GetComponent<Player>().moveCrestPoints / chosenPiece.GetComponent<CreatureToken>().moveCost;
+        //Replace with creature movement varible value from creature scriptable object.
+        possibleMoveDistance = 3;//LCScript.participants[LCScript.currentTurnParticipant].GetComponent<Player>().moveCrestPoints / chosenPiece.GetComponent<CreatureToken>().moveCost;
         EstablishPossibleMoves("CheckPossibleMoves");
     }
     

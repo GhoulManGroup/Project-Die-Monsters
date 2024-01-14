@@ -119,13 +119,13 @@ public class InspectWindowController : MonoBehaviour //This script will control 
                 DisplayCreatureDetails(openedFor);
                 creatureInspectUI.SetActive(true);
                 break;
-
+            /*
             case "PoolInspect":
                 currentCreature = levelManager.GetComponent<CreaturePoolController>().currentCreature;
                 DisplayCreatureDetails(openedFor);
                 creatureInspectUI.SetActive(true);
-                break;
-
+                break;               
+           */
             case "PieceInspect":
                 DisplayCreatureDetails(openedFor);
                 creatureInspectUI.SetActive(true);
@@ -343,6 +343,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
     /// </summary>
     public void AddCreatureToPool()
     {
+        /*
         //add creature to pool
         levelManager.GetComponent<CreaturePoolController>().turnPlayer.GetComponent<Player>().CreaturePool.Add(currentCreature);
         levelManager.GetComponent<CreaturePoolController>().enableButtons();
@@ -362,7 +363,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
 
         //Player not performing action can press end turn BTN.
         levelManager.GetComponent<LevelController>().turnPlayerPerformingAction = false;
-
+        */
     }
     #endregion
 

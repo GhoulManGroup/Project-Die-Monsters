@@ -7,6 +7,7 @@ using UnityEditor.Experimental.GraphView;
 
 public class LevelController : MonoBehaviour //This class controls everything at the board scene level of the project.
 {
+    #region Refrences
     [Header("Refrences")]
     //The projects game manager object which persists between scences.
     GameObject gameManager;
@@ -41,6 +42,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
     public string creaturePlacedFrom = "None"; // DiceZone, Creature Pool, Other?
 
     public List<Text> turnPlayerUIDisplay = new List<Text>();
+    #endregion
 
     #region GameSetUp
     private void Awake()
@@ -131,7 +133,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
     public void SetTurnPlayer() // call this function after turn player changes to update each script.
     {
         this.GetComponent<CreatureController>().turnPlayer = participants[currentTurnParticipant].gameObject;
-        this.GetComponent<CreaturePoolController>().turnPlayer = participants[currentTurnParticipant].gameObject;
+        //this.GetComponent<CreaturePoolController>().turnPlayer = participants[currentTurnParticipant].gameObject;
         this.GetComponent<UIDiceController>().turnPlayer = participants[currentTurnParticipant].gameObject;
         GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectWindowController>().turnPlayer = participants[currentTurnParticipant].gameObject;
         turnPlayerObject = participants[currentTurnParticipant].gameObject;
@@ -281,7 +283,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
     {
         endTurnBTN.SetActive(false);
 
-        this.GetComponent<CreaturePoolController>().enableButtons();
+        //this.GetComponent<CreaturePoolController>().enableButtons();
 
         //Run cancle on end turn to close the control UI if it is still open.
         this.GetComponent<CreatureController>().CancleBTNFunction();

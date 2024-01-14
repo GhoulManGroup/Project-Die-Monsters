@@ -247,13 +247,14 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
                     ResetFunction();
                 }
                 break;
-
+                /*
                 case "PoolBTN":
                     inspectWindow.GetComponent<InspectWindowController>().AddCreatureToPool();
                     lvlRef.GetComponent<LevelController>().ableToInteractWithBoard = true;
                     hasSummoned = true;
                     ResetFunction();
                 break;
+                */
 
         }
     }

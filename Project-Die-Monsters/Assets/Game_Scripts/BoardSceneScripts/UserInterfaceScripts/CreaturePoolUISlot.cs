@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public class CreaturePoolUISlot : MonoBehaviour
 {
+    /*
     private GameObject InspectWindow;
     private GameObject LevelController;
 
@@ -27,4 +28,5 @@ public class CreaturePoolUISlot : MonoBehaviour
             // Do nothing
         }
     }
+    */
 }
