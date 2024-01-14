@@ -175,24 +175,49 @@ public class DungeonSpawner : MonoBehaviour
         UpdatePieceMaterials();
     }
 
+    bool placingDungeon = false;
     public void PlaceDungeonPath()
     { // Press (R) in order to place the current dungeon path displayed by the dungeon spawner onto the board.
         if (Input.GetKeyDown("r")) 
         {
-            if (canPlaceDie == true)
+            if (canPlaceDie == true && placingDungeon == false)
             {
-                for (int i = 0; i < DungeonTiles.Count; i++)
-                {
-                    DungeonTiles[i].GetComponent<SpawnerTileScript>().StartCoroutine("DungeonToBePlaced", this.transform.localEulerAngles.y);
-                }
-                lvlRef.GetComponent<LevelController>().placingCreature = false;
-                GameObject.FindGameObjectWithTag("LevelController").GetComponent<CameraController>().switchCamera("Alt");
-                HideandShow();
-                UpdateBoard();
-                this.transform.position = resetPoint;
-
+                placingDungeon = true;
+                StartCoroutine(SpawnDungeonPath());
             }
         }
+    }
+    //Place the 3D model down first wait untill the animation is done then change the tiles bellow the spawner to match the turn players path colour.
+    [HideInInspector]
+    public bool waitForPath = true;
+    IEnumerator SpawnDungeonPath()
+    {
+        for (int i = 0; i < DungeonTiles.Count; i++)
+        {
+            if (DungeonTiles[i].GetComponent<SpawnerTileScript>().amSpawnTile == true)
+            {
+                DungeonTiles[i].GetComponent<SpawnerTileScript>().StartCoroutine("DimensionTheDice", this.transform.localEulerAngles.y);
+            }
+        }
+
+        while (waitForPath == true)
+        {
+            yield return null;
+        }
+
+        for (int i = 0; i < DungeonTiles.Count; i++)
+        {
+            DungeonTiles[i].GetComponent<SpawnerTileScript>().StartCoroutine("ApplyPathToBoard", this.transform.localEulerAngles.y);
+        }
+
+        lvlRef.GetComponent<LevelController>().placingCreature = false;
+        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CameraController>().switchCamera("Alt");
+        HideandShow();
+        UpdateBoard();
+        waitForPath = true;
+        this.transform.position = resetPoint;
+        placingDungeon = false;
+        yield return null;
 
     }
 

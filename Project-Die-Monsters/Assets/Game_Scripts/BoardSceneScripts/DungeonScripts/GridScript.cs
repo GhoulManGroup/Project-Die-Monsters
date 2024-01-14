@@ -24,9 +24,10 @@ public class GridScript : MonoBehaviour
 
     [Header("Tile Visuals")]
     public List<Material> myMat = new List<Material>();
-    public List<Material> indicatorMat = new List<Material>();  
+    public List<Material> indicatorMat = new List<Material>();
 
     [Header("PrefabsToSpawn")]
+    [HideInInspector] public bool fabAnimationDone = false;
     public GameObject creatureSpawnFab;
     public List<GameObject> unfoldingDiePool = new List<GameObject>();
 
@@ -179,12 +180,13 @@ public class GridScript : MonoBehaviour
         UnfoldMe.GetComponentInChildren<Animator>().Play("Unfold");
 
        while (UnfoldMe.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
-        {
+       {
             //Debug.Log(UnfoldMe.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime.ToString());
             yield return null;
        }
+   
         yield return new WaitForSeconds(1f);
-
+        fabAnimationDone = true;
         Destroy(UnfoldMe);
 
         Instantiate(creatureSpawnFab, new Vector3(this.transform.position.x, 0.3f, this.transform.position.z), Quaternion.identity);
@@ -393,6 +395,7 @@ public class GridScript : MonoBehaviour
         distanceFromStartTile = 0;
         myTextObject.GetComponent<TextMeshPro>().text = " ";
         myIndicator.gameObject.SetActive(false);
+        fabAnimationDone = false;
     }
 
 }

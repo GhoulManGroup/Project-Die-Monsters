@@ -98,12 +98,32 @@ public class SpawnerTileScript : MonoBehaviour
             DungeonSpawner.CheckPlacement(lastInput);
         }
     }
-
-   public IEnumerator DungeonToBePlaced(float Yrotation)
+   public IEnumerator DimensionTheDice(float Yrotation)
     {
         RaycastHit Bellow;
+
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out Bellow, 5f))
         {
+            // If this tile out of the 6 is the designated spawn tile instanciate a creature token object above the board position bellow this tile.
+
+            Bellow.collider.GetComponent<GridScript>().spawnMe(0, Yrotation);
+
+            while (Bellow.collider.GetComponent<GridScript>().fabAnimationDone == false)
+            {
+                yield return null;
+            }
+            GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().waitForPath = false;
+        }
+   }
+
+   public IEnumerator ApplyPathToBoard()
+    {
+        // Change the material colour of the tile bellow this object to that of the current players path and change its update its states
+        RaycastHit Bellow;
+
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out Bellow, 5f))
+        {
+
             switch (GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>().currentTurnParticipant.ToString())
             {
                 case "0":
@@ -117,13 +137,8 @@ public class SpawnerTileScript : MonoBehaviour
             }
 
             Bellow.collider.GetComponent<GridScript>().UpdateMaterial();
-            // If this tile out of the 6 which is the designated spawn tile instanciate a creature token object above the board position bellow this tile.
-            if (amSpawnTile == true)
-            {
-                Bellow.collider.GetComponent<GridScript>().spawnMe(0, Yrotation);
-            }
-            
         }
+
         yield return null;
     }
 
