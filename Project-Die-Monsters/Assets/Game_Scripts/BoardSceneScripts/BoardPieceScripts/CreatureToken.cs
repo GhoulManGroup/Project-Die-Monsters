@@ -18,16 +18,19 @@ public class CreatureToken : MonoBehaviour
     public int currentHealth;
     public int currentAttack;
     public int currentDefence;
-    //Creature Max Values
+    public int currentMoveDistance;
+
+    //Creature Starting / Constant Values
     public int healthCap;
     public int attackCap;
     public int defenceCap;
+    public int moveDistanceCap;
 
     //Action Costs
-    public int moveCost = 1; // how many move crests per tile.
+   // public int moveCost = 1; // how many move crests per it costs to move per tile of distance on the board crest no longer in use.
     public int attackDistance = 1; // how far we can attack.
     public int attackCost = 1; // how much to attack.
-    public int abilityCost = 1; // how much does the ability of creature cost.
+    public int abilityCost = 1; // how much does the ability of creature cost to cast.
 
     //Creature Owner
     public string myOwner;
@@ -47,8 +50,7 @@ public class CreatureToken : MonoBehaviour
 
     [Header("CreatureCombat")]
     public List<GameObject> targets = new List<GameObject>();
-
-
+    internal GameObject startPosition;
 
     void Start()
     {
@@ -88,20 +90,25 @@ public class CreatureToken : MonoBehaviour
         this.GetComponent<AbilityManager>().myAbility = this.myCreature.myAbility;
 
         setDetails();
-        declareTile("Start");
+        FindTileBellowMe("Start");
     }
 
+    // This function sets all the details of the piece token on the board, once it has had its creature sciptable object assigned.
     public void setDetails()
-    { // This function sets all the details of the piece token on the board, once it has had its creature sciptable object assigned from where ever it is being summoned from.
+    { 
         this.gameObject.name = myCreature.CreatureName;
-        //Swap this back to 3D model when we switch from placeholders to using the final thing
+
+        //Swap this back to 3D model when we switch from placeholders billboard sprties to final creature 3d models.
         myArtSlot.GetComponent<Image>().sprite = myCreature.CardArt;
         currentHealth = myCreature.Health;
         currentAttack = myCreature.Attack;
         currentDefence = myCreature.Defence;
+        currentMoveDistance= myCreature.MoveDistance;
         healthCap = myCreature.Health;
         attackCap = myCreature.Attack;
         defenceCap = myCreature.Defence;
+        moveDistanceCap= myCreature.MoveDistance;
+
         if (myCreature.myAbility != null)
         {
             abilityCost = myCreature.myAbility.abilityCost;
@@ -136,7 +143,8 @@ public class CreatureToken : MonoBehaviour
         }
     }
 
-    public void declareTile(string why) // declare where we are.
+    //Assign which tile game object this creature token is above on the game board.
+    public void FindTileBellowMe(string why) 
     {
         RaycastHit Down;
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out Down, 1f))
@@ -156,6 +164,7 @@ public class CreatureToken : MonoBehaviour
         }
     }
 
+    //Raycast in adjacent directions to find any other creature tokens that arent yours and add those to the possible attack target list
     public void CheckForAttackTarget()
     {
         targets.Clear(); // empty the list of any existing targets then add new ones.
@@ -272,7 +281,8 @@ public class CreatureToken : MonoBehaviour
         {
             canReachTarget = true;
         }
-    } // raycast adjacent tiles for enemy creature pieces,
+    } 
+
 
     public void OnMouseDown()
     {
@@ -287,6 +297,7 @@ public class CreatureToken : MonoBehaviour
                 case "TargetPick":
                     //Find the creature casting its ability in the ability UI Script, if we are a valid target pass this creature through to see if we can be added to declared creature list.
                     TargetManager castingCreature = GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().currentCreature.GetComponent<TargetManager>();
+
                     if (castingCreature.targetPool.Contains(this.gameObject))
                     {
                         castingCreature.CheckDeclareState(this.gameObject);
@@ -323,11 +334,13 @@ public class CreatureToken : MonoBehaviour
         {
             myBoardLocation.GetComponent<GridScript>().TileContents = "Empty";
             myBoardLocation.GetComponent<GridScript>().creatureAboveMe = null;
+
             if (lvlRef.GetComponent<CreatureController>().ChosenCreatureToken == this.gameObject)
             {
                 lvlRef.GetComponent<CreatureController>().CancleBTNFunction();
                 Debug.Log("Chosen Creature Died");
             }
+
             lvlRef.GetComponent<CreatureController>().CreaturesOnBoard.Remove(this.gameObject);
             Destroy(this.gameObject);
         }

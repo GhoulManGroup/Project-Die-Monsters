@@ -1696,13 +1696,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 197686070}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &200029631
 GameObject:
@@ -2601,7 +2601,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &265222135 stripped
 GameObject:
@@ -3932,7 +3932,7 @@ GameObject:
   - component: {fileID: 462531827}
   - component: {fileID: 462531828}
   m_Layer: 5
-  m_Name: InspectUI
+  m_Name: Panel Inspect Creature Window
   m_TagString: InspectWindow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4481,7 +4481,7 @@ GameObject:
   m_Component:
   - component: {fileID: 517409473}
   m_Layer: 0
-  m_Name: Game Cameras ------
+  m_Name: '#Level Cameras'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4503,7 +4503,7 @@ Transform:
   - {fileID: 1939956121}
   - {fileID: 1281259609}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &524286537
 GameObject:
@@ -6517,7 +6517,7 @@ GameObject:
   - component: {fileID: 772255055}
   - component: {fileID: 772255056}
   m_Layer: 0
-  m_Name: AI Controller
+  m_Name: '#AIController'
   m_TagString: AIController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6536,7 +6536,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &772255055
 MonoBehaviour:
@@ -7846,6 +7846,37 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 321435126420113888, guid: fd4cfba2f0ce02a46b121523ec02c816, type: 3}
   m_PrefabInstance: {fileID: 5818628057575896021}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &916783607
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 916783608}
+  m_Layer: 0
+  m_Name: ----Minsc----
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &916783608
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 916783607}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3, y: 1, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &918877992
 GameObject:
   m_ObjectHideFlags: 0
@@ -7857,7 +7888,7 @@ GameObject:
   - component: {fileID: 918877993}
   - component: {fileID: 918877994}
   m_Layer: 5
-  m_Name: AttackUI
+  m_Name: Panel Combat Window
   m_TagString: CombatWindow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8137,7 +8168,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &941024302 stripped
 GameObject:
@@ -8854,7 +8885,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1078212723}
   m_Layer: 5
-  m_Name: Core UI Panel
+  m_Name: Panel Core UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12075,7 +12106,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1377382710}
   m_Layer: 5
-  m_Name: Game UI
+  m_Name: Level UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12670,7 +12701,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1430526678}
   m_Layer: 5
-  m_Name: LevelDiceWindowUI
+  m_Name: Panel Dice Window
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12710,7 +12741,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1433638213}
   m_Layer: 0
-  m_Name: Game Board
+  m_Name: '#Game Board'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12734,7 +12765,7 @@ Transform:
   - {fileID: 1919373822}
   - {fileID: 349105849}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1456000309 stripped
 GameObject:
@@ -13706,7 +13737,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1546522755 stripped
 GameObject:
@@ -14013,7 +14044,7 @@ GameObject:
   - component: {fileID: 1644236087}
   - component: {fileID: 1644236086}
   m_Layer: 0
-  m_Name: DungeonSpawnTool
+  m_Name: '#DungeonSpawnTool'
   m_TagString: DungeonSpawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14296,6 +14327,7 @@ MonoBehaviour:
   lastPos: {x: 0, y: 0, z: 0}
   lastRotation: {x: 0, y: 0, z: 0, w: 0}
   lastPattern: 0
+  ControlSchemeUI: {fileID: 0}
 --- !u!4 &1644236087
 Transform:
   m_ObjectHideFlags: 0
@@ -14314,7 +14346,7 @@ Transform:
   - {fileID: 131083260}
   - {fileID: 803507526}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1650158028 stripped
 GameObject:
@@ -15139,7 +15171,7 @@ GameObject:
   - component: {fileID: 1853885423}
   - component: {fileID: 1853885424}
   m_Layer: 5
-  m_Name: AbilityUI
+  m_Name: Panel Ability UI
   m_TagString: AbilityWindow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15972,7 +16004,7 @@ GameObject:
   - component: {fileID: 1928537138}
   - component: {fileID: 1928537137}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: '#Level UI Canvas'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16053,7 +16085,7 @@ RectTransform:
   m_Children:
   - {fileID: 1377382710}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -16705,7 +16737,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1990539381}
   m_Layer: 5
-  m_Name: Creature Orders
+  m_Name: Panel Creature Orders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16864,7 +16896,7 @@ GameObject:
   - component: {fileID: 1996620196}
   - component: {fileID: 1996620190}
   m_Layer: 0
-  m_Name: LevelManager
+  m_Name: '#LevelController'
   m_TagString: LevelController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16892,8 +16924,8 @@ MonoBehaviour:
   reachableTiles: []
   chosenPathTiles: []
   possibleMoveDistance: 0
-  moveSpeed: 2
   rotationSpeed: 45
+  moveSpeed: 2
   positionToMove: {x: 0, y: 0, z: 0}
 --- !u!114 &1996620191
 MonoBehaviour:
@@ -17009,7 +17041,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1996620195
 MonoBehaviour:
@@ -18204,7 +18236,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2095680451}
   m_Layer: 5
-  m_Name: LevelOverScreen
+  m_Name: Panel Game Over UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

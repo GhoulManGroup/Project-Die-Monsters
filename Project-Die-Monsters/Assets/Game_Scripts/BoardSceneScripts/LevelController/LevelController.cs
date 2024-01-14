@@ -159,7 +159,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
 
         startTurnBTN.SetActive(false);
         endTurnBTN.SetActive(true);
-        participants[currentTurnParticipant].GetComponent<Player>().moveCrestPoints += 1;
+        //participants[currentTurnParticipant].GetComponent<Player>().moveCrestPoints += 1; pity crest gain removed as movement changed
         UpdateTurnPlayerCrestDisplay();
      }
 
@@ -171,14 +171,14 @@ public class LevelController : MonoBehaviour //This class controls everything at
             turnPlayerUIDisplay[1].text = participants[currentTurnParticipant].GetComponent<Player>().attackCrestPoints.ToString();
             turnPlayerUIDisplay[2].text = participants[currentTurnParticipant].GetComponent<Player>().abiltyPowerCrestPoints.ToString();
             turnPlayerUIDisplay[3].text = participants[currentTurnParticipant].GetComponent<Player>().defenceCrestPoints.ToString();
-            turnPlayerUIDisplay[4].text = participants[currentTurnParticipant].GetComponent<Player>().moveCrestPoints.ToString();
+            //turnPlayerUIDisplay[4].text = participants[currentTurnParticipant].GetComponent<Player>().moveCrestPoints.ToString(); no longer active UI element so disable
             turnPlayerUIDisplay[5].text = participants[currentTurnParticipant].GetComponent<Player>().summmonCrestPoints.ToString();
         }else if (turnPlayerObject.GetComponent<AIManager>() != null)
         {
             turnPlayerUIDisplay[1].text = participants[currentTurnParticipant].GetComponent<AIOpponent>().attackCrestPoints.ToString();
             turnPlayerUIDisplay[2].text = participants[currentTurnParticipant].GetComponent<AIOpponent>().abiltyPowerCrestPoints.ToString();
             turnPlayerUIDisplay[3].text = participants[currentTurnParticipant].GetComponent<AIOpponent>().defenceCrestPoints.ToString();
-            turnPlayerUIDisplay[4].text = participants[currentTurnParticipant].GetComponent<AIOpponent>().moveCrestPoints.ToString();
+            //turnPlayerUIDisplay[4].text = participants[currentTurnParticipant].GetComponent<AIOpponent>().moveCrestPoints.ToString(); no longer active UI element so disable
             turnPlayerUIDisplay[5].text = participants[currentTurnParticipant].GetComponent<AIOpponent>().summmonCrestPoints.ToString();
         }
     }

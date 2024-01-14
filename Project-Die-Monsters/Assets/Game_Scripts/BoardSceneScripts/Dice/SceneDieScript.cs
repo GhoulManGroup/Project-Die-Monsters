@@ -316,7 +316,7 @@ public class SceneDieScript : MonoBehaviour
                 rollResult = "Move";
                 if (myController.GetComponent<UIDiceController>() != null)
                 {
-                    playerController.turnPlayer.GetComponent<Player>().moveCrestPoints += 1;
+                    //playerController.turnPlayer.GetComponent<Player>().moveCrestPoints += 1;
                 }
                 else if (myController.GetComponent<UIDiceController>() != null)
                 {

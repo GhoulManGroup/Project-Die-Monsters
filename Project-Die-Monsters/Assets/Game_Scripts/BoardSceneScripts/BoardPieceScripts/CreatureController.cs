@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+//This class attached to level controller controls the UI panel which displays the possible actions that creture can take this turn based on its performed actions and owners avalible crests.
 
-public class CreatureController : MonoBehaviour //This script managers the UI panel which allows players to select the desired action they wish to take with the chosen piece.
+public class CreatureController : MonoBehaviour 
 {
     [Header ("List of all Creatures on Board")]
    public List <GameObject> CreaturesOnBoard = new List<GameObject>(); // this list will store all the creatures on the board so I can reset their has moved or has used ability booleans.
@@ -59,14 +60,16 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
         }       
     }
 
+    //Check Which actions this creature can still be performed by this creature and enable the corisponding UI BTN.
     public void CheckPossibleActions() 
     {
         if (ChosenAction == "None")
         {
-            //Check if the creature can be moved & if the player can pay its cost.
+            //Check if the creature has already moved this turn.
             if (ChosenCreatureToken.GetComponent<CreatureToken>().hasMovedThisTurn == false)
             {
                 OrderBTNS[0].GetComponent<Button>().interactable = true;
+
                /* if (ableToMove == true && turnPlayer.GetComponent<Player>().moveCrestPoints >= ChosenCreatureToken.GetComponent<CreatureToken>().moveCost)
                 {
                     
@@ -77,23 +80,19 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
                 OrderBTNS[0].GetComponent<Button>().interactable = false;
             }
 
-            //Check if the creature can attack & if the player can pay its cost.
-            if (ChosenCreatureToken.GetComponent<CreatureToken>().targets.Count != 0 && ChosenCreatureToken.GetComponent<CreatureToken>().hasAttackedThisTurn == false)
+            //Check if the creature in in range to attack, Has not attacked already, and the player has enough attack crests 
+            if (ChosenCreatureToken.GetComponent<CreatureToken>().targets.Count != 0 && ChosenCreatureToken.GetComponent<CreatureToken>().hasAttackedThisTurn == false && turnPlayer.GetComponent<Player>().attackCrestPoints >= ChosenCreatureToken.GetComponent<CreatureToken>().attackCost)
             {
-                Debug.Log("Has Target");
-                if (turnPlayer.GetComponent<Player>().attackCrestPoints >= ChosenCreatureToken.GetComponent<CreatureToken>().attackCost)
-                {
-                    Debug.Log("Has Attack Crests");
-                    OrderBTNS[1].GetComponent<Button>().interactable = true;
-                }
+                OrderBTNS[1].GetComponent<Button>().interactable = true;
             }
-            else if (ChosenCreatureToken.GetComponent<CreatureToken>().targets.Count == 0 || ChosenCreatureToken.GetComponent<CreatureToken>().hasAttackedThisTurn == true)
+            else
             {
                 OrderBTNS[1].GetComponent<Button>().interactable = false;
             }
 
-            // check if the creature has an ability the player can use & can pay the ability crest cost.
+            // check if the creature has an ability the player can use & can pay the ability crest cost to cast.
             Ability myAbility = ChosenCreatureToken.GetComponent<CreatureToken>().myCreature.myAbility;
+
             if (myAbility != null)
             {
                 if (myAbility.abilityActivatedHow == Ability.AbilityActivatedHow.Activated)
@@ -189,8 +188,8 @@ public class CreatureController : MonoBehaviour //This script managers the UI pa
                     case "Attack":
                         //Go back from select attack target in inspect window.
                         break;
-                    case "Move":
 
+                    case "Move":
                         lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;
                         lvlRef.GetComponent<PathController>().ResetBoard("Reset");
                         lvlRef.GetComponent<LevelController>().boardInteraction = "None";

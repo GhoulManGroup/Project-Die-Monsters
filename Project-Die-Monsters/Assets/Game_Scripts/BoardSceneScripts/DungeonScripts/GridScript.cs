@@ -173,18 +173,22 @@ public class GridScript : MonoBehaviour
     }
     public IEnumerator SpawnCreatureAbove(int patternToSpawn, float rotation)
     {
-       // Debug.Log(rotation);
-       // GameObject UnfoldMe = Instantiate(unfoldingDiePool[patternToSpawn],new Vector3(this.transform.position.x, 0.2f, this.transform.position.z), Quaternion.Euler(0f,rotation,0f));
-        //yield return new WaitForSeconds(2f);
-        //UnfoldMe.GetComponentInChildren<Animator>().Play("Unfold");
-       // while (UnfoldMe.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
-        //{
+        GameObject UnfoldMe = Instantiate(unfoldingDiePool[patternToSpawn],new Vector3(this.transform.position.x, 0.2f, this.transform.position.z), Quaternion.Euler(180f,rotation +90 ,0f));
+        yield return new WaitForSeconds(2f);
+
+        UnfoldMe.GetComponentInChildren<Animator>().Play("Unfold");
+
+       while (UnfoldMe.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
+        {
             //Debug.Log(UnfoldMe.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).normalizedTime.ToString());
-            //yield return null;
-       // }
+            yield return null;
+       }
         yield return new WaitForSeconds(1f);
-        //Destroy(UnfoldMe);
+
+        Destroy(UnfoldMe);
+
         Instantiate(creatureSpawnFab, new Vector3(this.transform.position.x, 0.3f, this.transform.position.z), Quaternion.identity);
+
         LvlRef.GetComponent<LevelController>().CanEndTurn();
     }
     #endregion
@@ -288,8 +292,8 @@ public class GridScript : MonoBehaviour
         if (LvlRef.GetComponent<PathController>().quickMove == true)
         {
             GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.transform.position = new Vector3(this.transform.position.x, 0.3f, this.transform.position.z);
-            GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.GetComponent<CreatureToken>().declareTile("Move");
-            LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().currentTurnParticipant].GetComponent<Player>().moveCrestPoints -= distanceFromStartTile;            
+            GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.GetComponent<CreatureToken>().FindTileBellowMe("Move");
+            //LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().currentTurnParticipant].GetComponent<Player>().moveCrestPoints -= distanceFromStartTile;            
             TileContents = "Creature";
             LvlRef.GetComponent<PathController>().HasMoved();
         }
@@ -338,7 +342,7 @@ public class GridScript : MonoBehaviour
             {
                 if (LvlRef.GetComponent<PathController>().quickMove == false)
                 {
-                    LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().currentTurnParticipant].GetComponent<Player>().moveCrestPoints -= distanceFromStartTile;
+                    //LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().currentTurnParticipant].GetComponent<Player>().moveCrestPoints -= distanceFromStartTile;
                     LvlRef.GetComponent<PathController>().desiredPosition = this.gameObject;
                     LvlRef.GetComponent<PathController>().tilesToCheck.Clear();
                     LvlRef.GetComponent<PathController>().tilesToCheck.Add(LvlRef.GetComponent<PathController>().desiredPosition);

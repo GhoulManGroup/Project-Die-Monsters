@@ -22,9 +22,9 @@ public class PathController : MonoBehaviour
     public List<GameObject> reachableTiles = new List<GameObject>();
     public List<GameObject> chosenPathTiles = new List<GameObject>();
 
-    public int possibleMoveDistance;
-    public float moveSpeed = 2f;
+    public int possibleMoveDistance; 
     public float rotationSpeed = 45;
+    public float moveSpeed = 2f;
     float wantedDir;
     float directionToTurn;
     public Vector3 positionToMove;
@@ -40,10 +40,11 @@ public class PathController : MonoBehaviour
     public void DeclarePathfindingConditions(GameObject creatureTokenPicked)
     {
         chosenPiece = creatureTokenPicked;
+        possibleMoveDistance = creatureTokenPicked.GetComponent<CreatureToken>().currentMoveDistance;
         startPosition = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
         tilesToCheck.Add(startPosition);
-        //Replace with creature movement varible value from creature scriptable object.
-        possibleMoveDistance = 3;//LCScript.participants[LCScript.currentTurnParticipant].GetComponent<Player>().moveCrestPoints / chosenPiece.GetComponent<CreatureToken>().moveCost;
+        //Old Crest Code
+        //LCScript.participants[LCScript.currentTurnParticipant].GetComponent<Player>().moveCrestPoints / chosenPiece.GetComponent<CreatureToken>().moveCost;
         EstablishPossibleMoves("CheckPossibleMoves");
     }
     
@@ -87,6 +88,7 @@ public class PathController : MonoBehaviour
         // Check the size of chosenPath, if its 0 then we are next to desired position else  we pick the tile closest to start being the last one added so listName.count
         GameObject currentPos = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
         GameObject desiredPos = null;
+
         if (chosenPathTiles.Count == 0)
         {
             desiredPos = desiredPosition;
@@ -100,9 +102,11 @@ public class PathController : MonoBehaviour
 
         //Find where the next tile in the path is in relation to us.
         NextTileLocation(desiredPos, currentPos);
-        //Rotate to Face it.
 
-        yield return StartCoroutine("Rotation");
+        //Rotate to Face it. Turn Back On When 3D Models are added for now sprites dont need to rotate as they are billboard sprites so this just slows the game down considerabley.
+        //Also Rotation is bugged and still does not rotate in the shortest direction some times doing a 270 degreee turn rather than 90.
+       
+        // yield return StartCoroutine("Rotation");
 
         //Move Towards It
         yield return StartCoroutine("WalkToTile");
@@ -259,7 +263,7 @@ public class PathController : MonoBehaviour
             chosenPiece.transform.position = Vector3.MoveTowards(chosenPiece.transform.position, positionToMove, moveSpeed* Time.deltaTime);
             yield return null;
         }
-            GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.GetComponent<CreatureToken>().declareTile("Move");
+            GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.GetComponent<CreatureToken>().FindTileBellowMe("Move");
             yield return null;
     }
 
@@ -296,6 +300,7 @@ public class PathController : MonoBehaviour
 
     public void ResetBoard(string why)
     {// Go through every grid tile that has been interacted with and reset it to its default state.
+     //Hides the Sprites above each tile that show movement or valid targets ect.
         if (why == "Reset")
         {
             for (int i = 0; i < checkedTiles.Count; i++)

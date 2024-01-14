@@ -25,6 +25,7 @@ public class Creature : ScriptableObject
     public int Health;
     public int Attack;
     public int Defence;
+    public int MoveDistance;
 
     public Ability myAbility;
 

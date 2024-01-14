@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// The dungeon spawner is the parent object & manager of our dungeon spawner system and all assosiated game objects.
@@ -25,6 +26,10 @@ public class DungeonSpawner : MonoBehaviour
     public int lastPattern; // The last pattern that was not out of bounds.
 
     GameObject lvlRef;
+
+    [SerializeField]
+    GameObject ControlSchemeUI; //UI Image showing user control scheme for moving the Spawner Object
+
 
     void Start()
     {
