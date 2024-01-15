@@ -117,7 +117,7 @@ public class AbilityUIController : MonoBehaviour
         creaturesToTrigger.Clear();
 
         HideInterface();
-        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().CheckCreatureStates();
+        GameObject.FindGameObjectWithTag("LevelController").GetComponent<PlayerCreatureController>().CheckCreatureStates();
         yield return null;
     }
     #endregion

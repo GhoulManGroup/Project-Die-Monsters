@@ -19,7 +19,7 @@ public class OnHoverInspectScript : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public void OnPointerEnter(PointerEventData eventData) // Used for UI Elements
     {
-        if (LevelController.GetComponent<CreatureController>().ChosenAction == "None")
+        if (LevelController.GetComponent<PlayerCreatureController>().ChosenAction == "None")
         {
             /*
             if (this.GetComponent<CreaturePoolUISlot>() != null)
@@ -41,7 +41,7 @@ public class OnHoverInspectScript : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (LevelController.GetComponent<CreatureController>().ChosenAction == "None")
+        if (LevelController.GetComponent<PlayerCreatureController>().ChosenAction == "None")
         {
             InspectWindow.GetComponent<InspectWindowController>().CloseInspectWindow();
         }
@@ -49,7 +49,7 @@ public class OnHoverInspectScript : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public void OnMouseEnter()
     {
-        if (LevelController.GetComponent<CreatureController>().ChosenAction == "None")
+        if (LevelController.GetComponent<PlayerCreatureController>().ChosenAction == "None")
         {
             if (this.GetComponent<CreatureToken>() != null)
             {
@@ -74,7 +74,7 @@ public class OnHoverInspectScript : MonoBehaviour, IPointerEnterHandler, IPointe
 
     public void OnMouseExit()
     {
-        if (LevelController.GetComponent<CreatureController>().ChosenAction == "None")
+        if (LevelController.GetComponent<PlayerCreatureController>().ChosenAction == "None")
         {
             if (this.GetComponent<CreatureToken>() != null)
             {

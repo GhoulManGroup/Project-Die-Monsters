@@ -19,7 +19,14 @@ public class DungeonLordPiece : MonoBehaviour
             Down.collider.GetComponent<GridScript>().myOwner = myOwner;
             Down.collider.GetComponent<GridScript>().myState = "DungeonLord";
             Down.collider.GetComponent<GridScript>().UpdateMaterial();
+
+            if (myOwner == "0")
+            {
+                GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().PlayerGridTile = Down.collider.gameObject;
+            }
         }
+
+
 
         Health = myDungeonLord.dungeonLordHealth;
         myName = myDungeonLord.dungeonLordName;

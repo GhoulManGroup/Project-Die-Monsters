@@ -8,7 +8,7 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
     public Ability myAbility;
     CreatureToken  myCreature;
     LevelController lvlRef;
-    CreatureController CCRef;
+    PlayerCreatureController CCRef;
     AbilityUIController AbilityWindow;
     public GameObject TriggeringCreature;
 
@@ -28,7 +28,7 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
     {
         myCreature = this.gameObject.GetComponent<CreatureToken>();
         AbilityWindow = GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>();
-        CCRef = GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>();
+        CCRef = GameObject.FindGameObjectWithTag("LevelController").GetComponent<PlayerCreatureController>();
         lvlRef = GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>();
     }
     public void CheckTrigger(string trigger, GameObject triggeredBy = null)
@@ -105,8 +105,8 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
     public void CancleAbilityCast()
     {
         GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>().boardInteraction = "None";
-        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenAction = "None";
-        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().OpenAndCloseControllerUI();
+        GameObject.FindGameObjectWithTag("LevelController").GetComponent<PlayerCreatureController>().ChosenAction = "None";
+        GameObject.FindGameObjectWithTag("LevelController").GetComponent<PlayerCreatureController>().OpenAndCloseControllerUI();
         lvlRef.turnPlayerPerformingAction = false;
         ResetAbilitySystem();
     }
@@ -148,7 +148,7 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
         {
             canBeCast = true;
             Debug.Log("AbilityCanBeCast");
-            GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().CheckPossibleActions();
+            GameObject.FindGameObjectWithTag("LevelController").GetComponent<PlayerCreatureController>().CheckPossibleActions();
         }else if (effectsCanBeDone != myAbility.abilityEffects.Count)
         {
             Debug.Log("AbilityCantBeCast");

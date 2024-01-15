@@ -19,8 +19,10 @@ public class AIManager : MonoBehaviour
     public List<GameObject> myCreatures = new List<GameObject>();
 
     [Header("PossibleActions")]
+    public bool canPlaceCreature = false;
     public int canAttack = 0;
     public int abiltiesCanBeCast;
+
     public void BeginTurn()
     {
         currentOpponent.GetComponent<AIOpponent>().SetUp();
@@ -28,7 +30,7 @@ public class AIManager : MonoBehaviour
         currentAction.SetActive(true);
         currentActionText.GetComponent<TextMeshProUGUI>().text = "AI Turn Start";
         //Determine Priority of what to day :?
-
+        //Check Can Actually Spawn Dungeon
         this.GetComponent<AIRollManager>().SetUpAIDice();
     }
 

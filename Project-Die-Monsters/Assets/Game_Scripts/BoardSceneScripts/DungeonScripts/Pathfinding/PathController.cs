@@ -67,7 +67,7 @@ public class PathController : MonoBehaviour
                 }
             }
         }
-        else if (checkWhat == "FindPath")
+        else if (checkWhat == "FindPath") 
         {                   
             if (tilesToCheck.Count != 0)
             {
@@ -263,7 +263,7 @@ public class PathController : MonoBehaviour
             chosenPiece.transform.position = Vector3.MoveTowards(chosenPiece.transform.position, positionToMove, moveSpeed* Time.deltaTime);
             yield return null;
         }
-            GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.GetComponent<CreatureToken>().FindTileBellowMe("Move");
+            GameObject.FindGameObjectWithTag("LevelController").GetComponent<PlayerCreatureController>().ChosenCreatureToken.GetComponent<CreatureToken>().FindTileBellowMe("Move");
             yield return null;
     }
 
@@ -291,8 +291,10 @@ public class PathController : MonoBehaviour
         startPosition.GetComponent<GridScript>().TileContents = "Empty";
         startPosition = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
         startPosition.GetComponent<GridScript>().TileContents = "Creature";
-        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenAction = "None";
-        GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().OpenAndCloseControllerUI();
+
+        //Add Check Here to see if Player or AI I current turn user ====================================================================== Then Do IF Else check to run the next step for either the PlayerCreatureController / AI Creature COntroller
+        GameObject.FindGameObjectWithTag("LevelController").GetComponent<PlayerCreatureController>().ChosenAction = "None";
+        GameObject.FindGameObjectWithTag("LevelController").GetComponent<PlayerCreatureController>().OpenAndCloseControllerUI();
         GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>().boardInteraction = "None";
     }
 

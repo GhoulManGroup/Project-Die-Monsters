@@ -2482,7 +2482,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1996620196}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CreatureController, Assembly-CSharp
         m_MethodName: DeclareAction
         m_Mode: 1
@@ -2808,7 +2808,7 @@ PrefabInstance:
     - target: {fileID: 7042398812724769515, guid: f58c8889844ec0840b12f4fb4297f123, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1996620191}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f58c8889844ec0840b12f4fb4297f123, type: 3}
 --- !u!224 &283235789 stripped
@@ -4205,7 +4205,7 @@ PrefabInstance:
     - target: {fileID: 7042398812724769515, guid: f58c8889844ec0840b12f4fb4297f123, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1996620191}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f58c8889844ec0840b12f4fb4297f123, type: 3}
 --- !u!224 &477734207 stripped
@@ -6554,6 +6554,7 @@ MonoBehaviour:
   currentAction: {fileID: 356088741}
   currentActionText: {fileID: 1495314519}
   myCreatures: []
+  canPlaceCreature: 0
   canAttack: 0
   abiltiesCanBeCast: 0
 --- !u!114 &772255056
@@ -6731,7 +6732,7 @@ PrefabInstance:
     - target: {fileID: 7042398812724769515, guid: f58c8889844ec0840b12f4fb4297f123, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1996620191}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f58c8889844ec0840b12f4fb4297f123, type: 3}
 --- !u!224 &788851538 stripped
@@ -8704,7 +8705,7 @@ PrefabInstance:
     - target: {fileID: 7042398812724769515, guid: f58c8889844ec0840b12f4fb4297f123, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1996620191}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f58c8889844ec0840b12f4fb4297f123, type: 3}
 --- !u!224 &1045742212 stripped
@@ -10459,7 +10460,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1996620196}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CreatureController, Assembly-CSharp
         m_MethodName: DeclareAction
         m_Mode: 1
@@ -11318,7 +11319,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1996620196}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CreatureController, Assembly-CSharp
         m_MethodName: DeclareAction
         m_Mode: 1
@@ -11676,7 +11677,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1996620196}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CreatureController, Assembly-CSharp
         m_MethodName: DeclareAction
         m_Mode: 1
@@ -14046,7 +14047,7 @@ GameObject:
   m_Layer: 0
   m_Name: '#DungeonSpawnTool'
   m_TagString: DungeonSpawner
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -14328,6 +14329,10 @@ MonoBehaviour:
   lastRotation: {x: 0, y: 0, z: 0, w: 0}
   lastPattern: 0
   ControlSchemeUI: {fileID: 0}
+  PlayerGridTile: {fileID: 0}
+  TilesToCheck: []
+  CheckedTiles: []
+  waitForPath: 1
 --- !u!4 &1644236087
 Transform:
   m_ObjectHideFlags: 0
@@ -16892,9 +16897,8 @@ GameObject:
   - component: {fileID: 1996620193}
   - component: {fileID: 1996620195}
   - component: {fileID: 1996620192}
-  - component: {fileID: 1996620191}
-  - component: {fileID: 1996620196}
   - component: {fileID: 1996620190}
+  - component: {fileID: 1996620196}
   m_Layer: 0
   m_Name: '#LevelController'
   m_TagString: LevelController
@@ -16927,18 +16931,6 @@ MonoBehaviour:
   rotationSpeed: 45
   moveSpeed: 2
   positionToMove: {x: 0, y: 0, z: 0}
---- !u!114 &1996620191
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1996620189}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6e8e3fd4255f81e45a57a894eb439fd9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1996620192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17069,7 +17061,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1996620189}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 410b4b8deb928484393625d8349d6a26, type: 3}
+  m_Script: {fileID: 11500000, guid: c7be1884077be0e4a932f8be1c931937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CreaturesOnBoard: []
@@ -19886,6 +19878,6 @@ PrefabInstance:
     - target: {fileID: 7042398812724769515, guid: f58c8889844ec0840b12f4fb4297f123, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1996620191}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f58c8889844ec0840b12f4fb4297f123, type: 3}

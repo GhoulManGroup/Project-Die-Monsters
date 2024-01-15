@@ -76,7 +76,7 @@ public class CreatureToken : MonoBehaviour
                 myCreature = GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectWindowController>().currentCreature;
            }
 
-            lvlRef.GetComponent<CreatureController>().CreaturesOnBoard.Add(this.gameObject); // add this piece to the creature controller script.
+            lvlRef.GetComponent<PlayerCreatureController>().CreaturesOnBoard.Add(this.gameObject); // add this piece to the creature controller script.
             lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false; // piece placed player no longer performing action.
             lvlRef.GetComponent<LevelController>().ableToInteractWithBoard = true; // Player can now interact with the board.
             lvlRef.GetComponent<LevelController>().CanEndTurn();
@@ -309,10 +309,10 @@ public class CreatureToken : MonoBehaviour
                     {
                         myBoardLocation.GetComponent<GridScript>().IsAnyMovementPossible();
                         lvlRef.GetComponent<CameraController>().switchCamera("Board");
-                        lvlRef.GetComponent<CreatureController>().ChosenAction = "None";
-                        lvlRef.GetComponent<CreatureController>().ChosenCreatureToken = this.gameObject;
+                        lvlRef.GetComponent<PlayerCreatureController>().ChosenAction = "None";
+                        lvlRef.GetComponent<PlayerCreatureController>().ChosenCreatureToken = this.gameObject;
                         lcScript.ableToInteractWithBoard = false;
-                        lvlRef.GetComponent<CreatureController>().OpenAndCloseControllerUI();
+                        lvlRef.GetComponent<PlayerCreatureController>().OpenAndCloseControllerUI();
                         CheckForAttackTarget();
                     }
                     break;
@@ -335,13 +335,13 @@ public class CreatureToken : MonoBehaviour
             myBoardLocation.GetComponent<GridScript>().TileContents = "Empty";
             myBoardLocation.GetComponent<GridScript>().creatureAboveMe = null;
 
-            if (lvlRef.GetComponent<CreatureController>().ChosenCreatureToken == this.gameObject)
+            if (lvlRef.GetComponent<PlayerCreatureController>().ChosenCreatureToken == this.gameObject)
             {
-                lvlRef.GetComponent<CreatureController>().CancleBTNFunction();
+                lvlRef.GetComponent<PlayerCreatureController>().CancleBTNFunction();
                 Debug.Log("Chosen Creature Died");
             }
 
-            lvlRef.GetComponent<CreatureController>().CreaturesOnBoard.Remove(this.gameObject);
+            lvlRef.GetComponent<PlayerCreatureController>().CreaturesOnBoard.Remove(this.gameObject);
             Destroy(this.gameObject);
         }
 

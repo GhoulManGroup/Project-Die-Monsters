@@ -8,6 +8,7 @@ using UnityEngine.UI;
 /// </summary>
 public class DungeonSpawner : MonoBehaviour
 {
+
     [Header("BoardLists")]
     int currentPattern = 0;
     public List<GameObject> DungeonDicePatterns = new List<GameObject>();
@@ -30,6 +31,10 @@ public class DungeonSpawner : MonoBehaviour
     [SerializeField]
     GameObject ControlSchemeUI; //UI Image showing user control scheme for moving the Spawner Object
 
+    [Header("AIDungeonSpawner")]
+ public GameObject PlayerGridTile;
+ public List<GameObject> TilesToCheck = new List<GameObject>();
+ public List<GameObject> CheckedTiles = new List<GameObject>();
 
     void Start()
     {
@@ -45,6 +50,7 @@ public class DungeonSpawner : MonoBehaviour
         checkPlayerAction();  
     }
 
+    #region Player Dungeon Spawning
     public void checkPlayerAction()
     {
         if (lvlRef.GetComponent<LevelController>().placingCreature == true)
@@ -220,6 +226,46 @@ public class DungeonSpawner : MonoBehaviour
         yield return null;
 
     }
+
+    #endregion
+
+    #region AI Dungeon Spawner
+
+    //Set up the tiles distance from player avatar so it knows which tiles are closer to the win condition to prioritise
+    public void DungeonSizeSetup()
+    {
+        Debug.Log(PlayerGridTile.name + "Inside Map Dungeon Size");
+
+        if (PlayerGridTile == null)
+        {
+            Debug.Log("Object Null Make Change to Fix");
+        }
+
+        TilesToCheck.Add(PlayerGridTile);
+
+        StartCoroutine(MapDungeonSize());
+    }
+    public IEnumerator MapDungeonSize()
+    {
+        if (TilesToCheck.Count != 0)
+        {
+            Debug.LogError(TilesToCheck.Count);
+
+            TilesToCheck[0].GetComponent<GridScript>().MapDungeonSizeForAI();
+
+            if (TilesToCheck.Count != 0)
+            {
+                StartCoroutine(MapDungeonSize());
+            }
+            else if (TilesToCheck.Count == 0)
+            {
+                CheckedTiles.Clear();
+                Debug.Log("Finished determining grid tile distance from player tile");
+            }
+        }
+        yield return null;
+    }
+    #endregion
 
     public void UpdatePieceMaterials()
     {

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 //This class attached to level controller controls the UI panel which displays the possible actions that creture can take this turn based on its performed actions and owners avalible crests.
 
-public class CreatureController : MonoBehaviour 
+public class PlayerCreatureController : MonoBehaviour 
 {
     [Header ("List of all Creatures on Board")]
    public List <GameObject> CreaturesOnBoard = new List<GameObject>(); // this list will store all the creatures on the board so I can reset their has moved or has used ability booleans.

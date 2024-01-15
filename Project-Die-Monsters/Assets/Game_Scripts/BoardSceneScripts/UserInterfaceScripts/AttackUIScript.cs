@@ -140,9 +140,9 @@ public class AttackUIScript : MonoBehaviour
                         hideAttackWindow();
                         //Call creature controller and set us back to controling the piece.
                         lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;
-                        lvlRef.GetComponent<CreatureController>().ChosenAction = "None";
-                        lvlRef.GetComponent<CreatureController>().CheckPossibleActions();
-                        lvlRef.GetComponent<CreatureController>().OpenAndCloseControllerUI();
+                        lvlRef.GetComponent<PlayerCreatureController>().ChosenAction = "None";
+                        lvlRef.GetComponent<PlayerCreatureController>().CheckPossibleActions();
+                        lvlRef.GetComponent<PlayerCreatureController>().OpenAndCloseControllerUI();
                         break;
                 }           
                 break;

@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class TargetManager : MonoBehaviour
 {
     // THIS SCRIPT IS TO FIND ALL POSSIBLE TARGETS NOT FILTER IF THEY ARE SUTIABLE FOR THE EFFECT.
-    CreatureController creatureController;
+    PlayerCreatureController creatureController;
     LevelController levelController;
     public AbilityEffect currentEffect;
     public bool hasDeclared = false;
@@ -22,7 +22,7 @@ public class TargetManager : MonoBehaviour
 
     public void Awake()
     {
-        creatureController = GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>();
+        creatureController = GameObject.FindGameObjectWithTag("LevelController").GetComponent<PlayerCreatureController>();
         levelController = GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>();
     }
 

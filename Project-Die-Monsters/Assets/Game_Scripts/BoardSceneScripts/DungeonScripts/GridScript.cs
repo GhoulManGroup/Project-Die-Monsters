@@ -21,6 +21,7 @@ public class GridScript : MonoBehaviour
 
     [Header("PathFinding")]
     public int distanceFromStartTile = 0;
+    public int distanceFromPlayerDungeonLord = 0;
 
     [Header("Tile Visuals")]
     public List<Material> myMat = new List<Material>();
@@ -49,33 +50,7 @@ public class GridScript : MonoBehaviour
         UpdateMaterial();
     }
 
-    public void UpdateMaterial()
-    {
-        switch (myState)
-        {
-            case "Empty":
-                this.GetComponent<MeshRenderer>().material = myMat[0];
-                break;
-
-            case "DungeonTile":
-                if (myOwner == "0")
-                {
-                    this.GetComponent<MeshRenderer>().material = myMat[1];
-                }
-
-                if (myOwner == "1")
-                {
-                    this.GetComponent<MeshRenderer>().material = myMat[3];
-                }
-
-                break;
-
-            case "DungeonLord":
-                this.GetComponent<MeshRenderer>().material = myMat[2];
-                break;
-        }
-    }
-
+    #region Tile Setup & Maintaince
     public void DeclareNeighbours()
     {
         for (int i = 0; i < 4; i++)
@@ -140,10 +115,67 @@ public class GridScript : MonoBehaviour
         }
     }
 
+    public void SetIndicatorMaterial(string whatMaterial)
+    {
+        myIndicator.gameObject.SetActive(true);
+        switch (whatMaterial)
+        {
+
+            case "MoveSpace":
+                myIndicator.GetComponent<MeshRenderer>().material = indicatorMat[0];
+                break;
+            case "PossibleTarget":
+                myIndicator.GetComponent<MeshRenderer>().material = indicatorMat[1];
+                break;
+            case "PickedTarget":
+                myIndicator.GetComponent<MeshRenderer>().material = indicatorMat[2];
+                break;
+            case "AOEMarker":
+                myIndicator.GetComponent<MeshRenderer>().material = indicatorMat[3];
+                break;
+        }
+    }
+
+    public void ResetGridTile()
+    {
+        distanceFromStartTile = 0;
+        myTextObject.GetComponent<TextMeshPro>().text = " ";
+        myIndicator.gameObject.SetActive(false);
+        fabAnimationDone = false;
+    }
+
+    public void UpdateMaterial()
+    {
+        switch (myState)
+        {
+            case "Empty":
+                this.GetComponent<MeshRenderer>().material = myMat[0];
+                break;
+
+            case "DungeonTile":
+                if (myOwner == "0")
+                {
+                    this.GetComponent<MeshRenderer>().material = myMat[1];
+                }
+
+                if (myOwner == "1")
+                {
+                    this.GetComponent<MeshRenderer>().material = myMat[3];
+                }
+
+                break;
+
+            case "DungeonLord":
+                this.GetComponent<MeshRenderer>().material = myMat[2];
+                break;
+        }
+    }
+
     public void updateTMPRO()
     {
         myTextObject.GetComponent<TextMeshPro>().text = distanceFromStartTile.ToString();
     }
+    #endregion
 
     #region Dungeon & Creature Placement
     public void CheckForDungeonConnection()
@@ -168,10 +200,12 @@ public class GridScript : MonoBehaviour
             }
         }
     }
+
     public void spawnMe(int patternToSpawn, float rotation)
     {
         StartCoroutine(SpawnCreatureAbove(patternToSpawn, rotation));
     }
+
     public IEnumerator SpawnCreatureAbove(int patternToSpawn, float rotation)
     {
         GameObject UnfoldMe = Instantiate(unfoldingDiePool[patternToSpawn],new Vector3(this.transform.position.x, 0.2f, this.transform.position.z), Quaternion.Euler(180f,rotation +90 ,0f));
@@ -193,19 +227,40 @@ public class GridScript : MonoBehaviour
 
         LvlRef.GetComponent<LevelController>().CanEndTurn();
     }
+
+    public void MapDungeonSizeForAI()
+    {
+        DungeonSpawner LvlDungeonSpawner = GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>();
+
+        for (int i = 0; i < Neighbours.Count; i++)
+        {
+            if (LvlDungeonSpawner.TilesToCheck.Contains(Neighbours[i]) || LvlDungeonSpawner.CheckedTiles.Contains(Neighbours[i]))
+            {
+                Debug.LogWarning("Already Inside Either List Do Nothing");
+            }
+            else
+            {
+                Neighbours[i].GetComponent<GridScript>().distanceFromPlayerDungeonLord = distanceFromPlayerDungeonLord += 1;
+                LvlDungeonSpawner.TilesToCheck.Add(Neighbours[i]);
+            }
+        }
+        LvlDungeonSpawner.TilesToCheck.Remove(this.gameObject);
+        LvlDungeonSpawner.CheckedTiles.Add(this.gameObject);
+    }
+    
     #endregion
 
 
-    #region CreatureMovementCode
+    #region PlayerCreatureMovementCode
     public void IsAnyMovementPossible() 
     {
-        LvlRef.GetComponent<CreatureController>().ableToMove = false;
+        LvlRef.GetComponent<PlayerCreatureController>().ableToMove = false;
         //This function checks if we can move at all before allowing the player to click the move button on the creature controller UI.
         for (int i = 0; i < Neighbours.Count; i++)
         {
             if (Neighbours[i].GetComponent<GridScript>().myState == "DungeonTile" && Neighbours[i].GetComponent<GridScript>().TileContents == "Empty")
             {
-                LvlRef.GetComponent<CreatureController>().ableToMove = true;
+                LvlRef.GetComponent<PlayerCreatureController>().ableToMove = true;
             }
         }
     }
@@ -293,8 +348,8 @@ public class GridScript : MonoBehaviour
     {// Use for current quick (Instant move) only. // Might use for abilities which instalty teleport so keep in during rewrite
         if (LvlRef.GetComponent<PathController>().quickMove == true)
         {
-            GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.transform.position = new Vector3(this.transform.position.x, 0.3f, this.transform.position.z);
-            GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().ChosenCreatureToken.GetComponent<CreatureToken>().FindTileBellowMe("Move");
+            GameObject.FindGameObjectWithTag("LevelController").GetComponent<PlayerCreatureController>().ChosenCreatureToken.transform.position = new Vector3(this.transform.position.x, 0.3f, this.transform.position.z);
+            GameObject.FindGameObjectWithTag("LevelController").GetComponent<PlayerCreatureController>().ChosenCreatureToken.GetComponent<CreatureToken>().FindTileBellowMe("Move");
             //LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().currentTurnParticipant].GetComponent<Player>().moveCrestPoints -= distanceFromStartTile;            
             TileContents = "Creature";
             LvlRef.GetComponent<PathController>().HasMoved();
@@ -336,6 +391,7 @@ public class GridScript : MonoBehaviour
     }
     #endregion
 
+    //On user Click Interactions / Player Only Interaction Code as AI will on click but istead call tile from script
     public void OnMouseDown()
     {
         if (GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>().boardInteraction == "Move")
@@ -368,34 +424,5 @@ public class GridScript : MonoBehaviour
         }
     }
 
-
-    public void SetIndicatorMaterial(string whatMaterial)
-    {
-        myIndicator.gameObject.SetActive(true);
-        switch (whatMaterial)
-        {
-            
-            case "MoveSpace":
-                myIndicator.GetComponent<MeshRenderer>().material = indicatorMat[0];
-                break;
-            case "PossibleTarget":
-                myIndicator.GetComponent<MeshRenderer>().material = indicatorMat[1];
-                break;                     
-            case "PickedTarget":
-                myIndicator.GetComponent<MeshRenderer>().material = indicatorMat[2];
-                break;
-            case "AOEMarker":
-                myIndicator.GetComponent<MeshRenderer>().material = indicatorMat[3];
-                break;
-        }
-    }
-
-    public void ResetGridTile()
-    {
-        distanceFromStartTile = 0;
-        myTextObject.GetComponent<TextMeshPro>().text = " ";
-        myIndicator.gameObject.SetActive(false);
-        fabAnimationDone = false;
-    }
 
 }

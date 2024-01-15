@@ -81,6 +81,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
 
                     case "AI":
                         Debug.Log("Hello From AI Development");
+
                         GameObject player = Instantiate(playerFab);
                         participants.Add(player);
 
@@ -94,6 +95,9 @@ public class LevelController : MonoBehaviour //This class controls everything at
 
                         DungeonLordStartTiles[0].GetComponent<DungeonLordPiece>().SetDungeonLordTile();
                         DungeonLordStartTiles[1].GetComponent<DungeonLordPiece>().SetDungeonLordTile();
+
+                        //Once we have declared dungeon lord tile positions map out each tiles distance from the player position
+                        GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().DungeonSizeSetup();
                         break;
                 }
                 break;
@@ -132,7 +136,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
     #region TurnManagement
     public void SetTurnPlayer() // call this function after turn player changes to update each script.
     {
-        this.GetComponent<CreatureController>().turnPlayer = participants[currentTurnParticipant].gameObject;
+        this.GetComponent<PlayerCreatureController>().turnPlayer = participants[currentTurnParticipant].gameObject;
         //this.GetComponent<CreaturePoolController>().turnPlayer = participants[currentTurnParticipant].gameObject;
         this.GetComponent<UIDiceController>().turnPlayer = participants[currentTurnParticipant].gameObject;
         GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectWindowController>().turnPlayer = participants[currentTurnParticipant].gameObject;
@@ -195,7 +199,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
         else
         {
             Debug.Log("No Triggers To Resolve " + turnPlayerPerformingAction + " " + AbilityWindow.creaturesToTrigger.Count);
-            GameObject.FindGameObjectWithTag("LevelController").GetComponent<CreatureController>().CheckCreatureStates();
+            GameObject.FindGameObjectWithTag("LevelController").GetComponent<PlayerCreatureController>().CheckCreatureStates();
         }
       
     }
@@ -225,11 +229,11 @@ public class LevelController : MonoBehaviour //This class controls everything at
         }
         if (turnPlayerPerformingAction == false)
         {
-            for (int i = 0; i < this.GetComponent<CreatureController>().CreaturesOnBoard.Count; i++)
+            for (int i = 0; i < this.GetComponent<PlayerCreatureController>().CreaturesOnBoard.Count; i++)
             {
-                if (this.GetComponent<CreatureController>().CreaturesOnBoard[i].GetComponent<AbilityManager>().myAbility.abilityActivatedHow == Ability.AbilityActivatedHow.Trigger)
+                if (this.GetComponent<PlayerCreatureController>().CreaturesOnBoard[i].GetComponent<AbilityManager>().myAbility.abilityActivatedHow == Ability.AbilityActivatedHow.Trigger)
                 {
-                    this.GetComponent<CreatureController>().CreaturesOnBoard[i].GetComponent<AbilityManager>().CheckTrigger("OnEndTurn");
+                    this.GetComponent<PlayerCreatureController>().CreaturesOnBoard[i].GetComponent<AbilityManager>().CheckTrigger("OnEndTurn");
                 }
             }
 
@@ -286,7 +290,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
         //this.GetComponent<CreaturePoolController>().enableButtons();
 
         //Run cancle on end turn to close the control UI if it is still open.
-        this.GetComponent<CreatureController>().CancleBTNFunction();
+        this.GetComponent<PlayerCreatureController>().CancleBTNFunction();
 
         //Reset the board tile dungeon connection state.
         GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().UpdateBoard();
@@ -295,7 +299,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
         UpdateTurnPlayerCrestDisplay();
 
         //Reset the states of all creature piece on the board (Move, Attack, ect)
-        this.GetComponent<CreatureController>().ResetCreatureStates(); //---- Need to Add Creatures we spawn to creature controller creature list in order to reset their states,.-------------------------------------------------------------------------------------------------------------------------------------
+        this.GetComponent<PlayerCreatureController>().ResetCreatureStates(); //---- Need to Add Creatures we spawn to creature controller creature list in order to reset their states,.-------------------------------------------------------------------------------------------------------------------------------------
 
         //Set the camera to the right board state.
         yield return new WaitForSeconds(1f);
