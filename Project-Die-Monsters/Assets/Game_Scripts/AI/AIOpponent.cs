@@ -22,7 +22,7 @@ public class AIOpponent : MonoBehaviour
     {
         if (AssignedDice == false)
         {
-            Debug.Log("Awake Add Dice To Die Deck");
+            //Debug.Log("Awake Add Dice To Die Deck");
             for (int i = 0; i < myOpponent.OpponentDeck.Count; i++)
             {
                 AIDiceDeck.Add(myOpponent.OpponentDeck[i]);

@@ -14,7 +14,7 @@ public class DungeonPatternScript : MonoBehaviour
     {
         for (int i = 0; i < PatternTilePostion.Count; i++)
         {
-            GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().DungeonTiles[i].transform.position = PatternTilePostion[i].transform.position;
+            GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().dungeonTiles[i].transform.position = PatternTilePostion[i].transform.position;
         }
     }
 }

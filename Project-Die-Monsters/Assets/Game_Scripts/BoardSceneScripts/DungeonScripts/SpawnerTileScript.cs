@@ -93,11 +93,40 @@ public class SpawnerTileScript : MonoBehaviour
             DungeonSpawner.transform.rotation = DungeonSpawner.lastRotation;
             }else if (lastInput == "PatternChange")
             {
-            DungeonSpawner.DungeonDicePatterns[DungeonSpawner.lastPattern].GetComponent<DungeonPatternScript>().ApplyPattern();
+            DungeonSpawner.dungeonDicePatterns[DungeonSpawner.lastPattern].GetComponent<DungeonPatternScript>().ApplyPattern();
             }
             DungeonSpawner.CheckPlacement(lastInput);
         }
     }
+
+    public void AICheckPlacement()
+    {
+        aboveEmptySpace = false;
+
+        RaycastHit Bellow;
+
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out Bellow, 5f))
+        {
+            if (Bellow.collider.gameObject != null)
+            {
+                Debug.LogWarning(Bellow.collider.gameObject.name);
+                if (Bellow.collider.GetComponent<GridScript>().myState == "Empty")
+                {
+                    aboveEmptySpace = true;
+                }
+                else
+                {
+                    Debug.LogWarning("Out of Bounds AI ");
+                    aboveEmptySpace = false;
+                }
+            }
+            else
+            {
+                Debug.Log("Cry");
+            }
+        }
+    }
+
    public IEnumerator DimensionTheDice(float Yrotation)
     {
         RaycastHit Bellow;

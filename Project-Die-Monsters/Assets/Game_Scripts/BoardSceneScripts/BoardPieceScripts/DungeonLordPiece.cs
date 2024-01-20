@@ -22,7 +22,12 @@ public class DungeonLordPiece : MonoBehaviour
 
             if (myOwner == "0")
             {
-                GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().PlayerGridTile = Down.collider.gameObject;
+                GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<AIDungeonSpawner>().PlayerGridTile = Down.collider.gameObject;
+            }
+
+            if (myOwner == "1") // Set opponent tile for AI to know where to start its dungeon checks from
+            {
+                GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<AIDungeonSpawner>().MyStartTile = Down.collider.gameObject;
             }
         }
 

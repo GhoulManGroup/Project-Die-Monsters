@@ -177,6 +177,7 @@ public class GridScript : MonoBehaviour
     }
     #endregion
 
+
     #region Dungeon & Creature Placement
     public void CheckForDungeonConnection()
     {
@@ -230,22 +231,50 @@ public class GridScript : MonoBehaviour
 
     public void MapDungeonSizeForAI()
     {
-        DungeonSpawner LvlDungeonSpawner = GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>();
+        AIDungeonSpawner LvlDungeonSpawner = GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<AIDungeonSpawner>();
 
         for (int i = 0; i < Neighbours.Count; i++)
         {
-            if (LvlDungeonSpawner.TilesToCheck.Contains(Neighbours[i]) || LvlDungeonSpawner.CheckedTiles.Contains(Neighbours[i]))
+            if (LvlDungeonSpawner.tilesToCheck.Contains(Neighbours[i]) || LvlDungeonSpawner.checkedTiles.Contains(Neighbours[i]))
             {
                 Debug.LogWarning("Already Inside Either List Do Nothing");
             }
             else
             {
                 Neighbours[i].GetComponent<GridScript>().distanceFromPlayerDungeonLord = distanceFromPlayerDungeonLord += 1;
-                LvlDungeonSpawner.TilesToCheck.Add(Neighbours[i]);
+                LvlDungeonSpawner.tilesToCheck.Add(Neighbours[i]);
             }
         }
-        LvlDungeonSpawner.TilesToCheck.Remove(this.gameObject);
-        LvlDungeonSpawner.CheckedTiles.Add(this.gameObject);
+        LvlDungeonSpawner.tilesToCheck.Remove(this.gameObject);
+        LvlDungeonSpawner.checkedTiles.Add(this.gameObject);
+    }
+
+    public void CheckForDungeonExpansion()
+    {
+        AIDungeonSpawner LvlDungeonSpawner = GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<AIDungeonSpawner>();
+
+        for (int i = 0; i < Neighbours.Count; i++)
+        {
+            if (Neighbours[i].GetComponent<GridScript>().myState == "Empty")
+            { // if the checked tiles neighbour is not already in a list then it can be added to the can I spawn here list.
+                if (!LvlDungeonSpawner.tilesToCheck.Contains(Neighbours[i]) || !LvlDungeonSpawner.checkedTiles.Contains(Neighbours[i]))
+                {
+                    LvlDungeonSpawner.spawnPointsToCheck.Add(Neighbours[i]);
+                }        
+            }else if (Neighbours[i].GetComponent<GridScript>().myState == "DungeonTile")
+            {
+                if (Neighbours[i].GetComponent<GridScript>().myOwner == "1")
+                {
+                    if (!LvlDungeonSpawner.tilesToCheck.Contains(Neighbours[i]) || !LvlDungeonSpawner.checkedTiles.Contains(Neighbours[i]))
+                    {
+                        LvlDungeonSpawner.tilesToCheck.Add(Neighbours[i]);
+                    }
+                    //if this tile is owned by me and not already in a list add it too check.
+                }
+            }
+            LvlDungeonSpawner.tilesToCheck.Remove(this.gameObject);
+            LvlDungeonSpawner.checkedTiles.Add(this.gameObject);
+        }
     }
     
     #endregion

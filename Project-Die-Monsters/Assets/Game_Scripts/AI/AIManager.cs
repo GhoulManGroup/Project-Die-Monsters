@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,28 +16,62 @@ public class AIManager : MonoBehaviour
     [SerializeField]
     GameObject currentActionText;
 
+    [HideInInspector]
+    public bool PhaseDone = false;
+
     [Header("Resources")]
     public List<GameObject> myCreatures = new List<GameObject>();
 
     [Header("PossibleActions")]
-    public bool canPlaceCreature = false;
+    public bool canPlaceCreature = false; //if dungeon can be expanded set to true
     public int canAttack = 0;
     public int abiltiesCanBeCast;
 
     public void BeginTurn()
     {
+        //Set up AI Dice Deck
         currentOpponent.GetComponent<AIOpponent>().SetUp();
-        Debug.Log("Being Turn Function");
+        
+        //Enable Phase UI display
         currentAction.SetActive(true);
+
+        //Set Text
         currentActionText.GetComponent<TextMeshProUGUI>().text = "AI Turn Start";
-        //Determine Priority of what to day :?
-        //Check Can Actually Spawn Dungeon
+
+        //Add other prep when developed 
+
+        //Start Dice Phase
+        StartCoroutine("DicePhase");
+        
+    }
+
+    public IEnumerator DicePhase()
+    {
+        AIDungeonSpawner LvlDungeonSpawner = GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<AIDungeonSpawner>();
+
+        LvlDungeonSpawner.tilesToCheck.Add(LvlDungeonSpawner.MyStartTile);
+
+        yield return LvlDungeonSpawner.StartCoroutine("AITileCheck", "CheckSpawnLocations");
+
+        //Do Check
+        LvlDungeonSpawner.StartCoroutine("CanAIDungeonExpand");
+
+        while (PhaseDone == false)
+        {
+            yield return null;
+        }
+
+        Debug.LogError("Path Check Done Start Dice");
+
         this.GetComponent<AIRollManager>().SetUpAIDice();
+
     }
 
     //Start AI Turn
 
     //Display AI Turn
+
+    //Find if can expand dungeon
 
     //Display Dice Roll
 

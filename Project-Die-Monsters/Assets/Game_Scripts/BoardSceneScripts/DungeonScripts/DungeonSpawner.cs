@@ -11,9 +11,9 @@ public class DungeonSpawner : MonoBehaviour
 
     [Header("BoardLists")]
     int currentPattern = 0;
-    public List<GameObject> DungeonDicePatterns = new List<GameObject>();
-    public List<GameObject> DungeonTiles = new List<GameObject>();
-    public List<GameObject> BoardTiles = new List<GameObject>();
+    public List<GameObject> dungeonDicePatterns = new List<GameObject>();
+    public List<GameObject> dungeonTiles = new List<GameObject>();
+    public List<GameObject> boardTiles = new List<GameObject>();
 
     [Header("SpawnStuff")]
     public bool canPlaceDie = false;
@@ -30,11 +30,6 @@ public class DungeonSpawner : MonoBehaviour
 
     [SerializeField]
     GameObject ControlSchemeUI; //UI Image showing user control scheme for moving the Spawner Object
-
-    [Header("AIDungeonSpawner")]
- public GameObject PlayerGridTile;
- public List<GameObject> TilesToCheck = new List<GameObject>();
- public List<GameObject> CheckedTiles = new List<GameObject>();
 
     void Start()
     {
@@ -64,18 +59,18 @@ public class DungeonSpawner : MonoBehaviour
     {
         if (lvlRef.GetComponent<LevelController>().placingCreature == true) // Next Condition to Change.
         {
-            for (int i = 0; i < DungeonTiles.Count; i++)
+            for (int i = 0; i < dungeonTiles.Count; i++)
             {
-                DungeonTiles[i].GetComponent<MeshRenderer>().enabled = true;
+                dungeonTiles[i].GetComponent<MeshRenderer>().enabled = true;
                 CheckPlacement("None");
             }
         }
 
         if (lvlRef.GetComponent<LevelController>().placingCreature == false)
         {
-            for (int i = 0; i < DungeonTiles.Count; i++)
+            for (int i = 0; i < dungeonTiles.Count; i++)
             {
-                DungeonTiles[i].GetComponent<MeshRenderer>().enabled = false;
+                dungeonTiles[i].GetComponent<MeshRenderer>().enabled = false;
             }
         }
     }
@@ -129,18 +124,18 @@ public class DungeonSpawner : MonoBehaviour
         {
             lastPattern = currentPattern;
 
-            if (currentPattern < DungeonDicePatterns.Count)
+            if (currentPattern < dungeonDicePatterns.Count)
             {
                 currentPattern += 1;
             }
 
-            if (currentPattern == DungeonDicePatterns.Count)
+            if (currentPattern == dungeonDicePatterns.Count)
             {
                 currentPattern = 0;
             }
 
             //Tell the spawner tiles to arrange themselves in the next pattern stored in the list then check if it is valid.
-            DungeonDicePatterns[currentPattern].GetComponent<DungeonPatternScript>().ApplyPattern();
+            dungeonDicePatterns[currentPattern].GetComponent<DungeonPatternScript>().ApplyPattern();
             CheckPlacement("PatternChange");
         }
 
@@ -153,19 +148,19 @@ public class DungeonSpawner : MonoBehaviour
         bool spawnableCubeWouldConnectToDungeon = false;
         canPlaceDie = false;
 
-        for (int i = 0; i < DungeonTiles.Count; i++)
+        for (int i = 0; i < dungeonTiles.Count; i++)
         {
-            DungeonTiles[i].GetComponent<SpawnerTileScript>().CheckPlacement(lastInput);
+            dungeonTiles[i].GetComponent<SpawnerTileScript>().CheckPlacement(lastInput);
         }
 
-        for (int i = 0; i < DungeonTiles.Count; i++)
+        for (int i = 0; i < dungeonTiles.Count; i++)
         {
-            if (DungeonTiles[i].GetComponent<SpawnerTileScript>().aboveEmptySpace == true)
+            if (dungeonTiles[i].GetComponent<SpawnerTileScript>().aboveEmptySpace == true)
             {
                 placeableTiles += 1;
             }
 
-            if (DungeonTiles[i].GetComponent<SpawnerTileScript>().wouldConnectToDungon == true)
+            if (dungeonTiles[i].GetComponent<SpawnerTileScript>().wouldConnectToDungon == true)
             {
                 spawnableCubeWouldConnectToDungeon = true;
             }
@@ -193,16 +188,18 @@ public class DungeonSpawner : MonoBehaviour
             }
         }
     }
+
     //Place the 3D model down first wait untill the animation is done then change the tiles bellow the spawner to match the turn players path colour.
     [HideInInspector]
     public bool waitForPath = true;
+
     IEnumerator SpawnDungeonPath()
     {
-        for (int i = 0; i < DungeonTiles.Count; i++)
+        for (int i = 0; i < dungeonTiles.Count; i++)
         {
-            if (DungeonTiles[i].GetComponent<SpawnerTileScript>().amSpawnTile == true)
+            if (dungeonTiles[i].GetComponent<SpawnerTileScript>().amSpawnTile == true)
             {
-                DungeonTiles[i].GetComponent<SpawnerTileScript>().StartCoroutine("DimensionTheDice", this.transform.localEulerAngles.y);
+                dungeonTiles[i].GetComponent<SpawnerTileScript>().StartCoroutine("DimensionTheDice", this.transform.localEulerAngles.y);
             }
         }
 
@@ -211,9 +208,9 @@ public class DungeonSpawner : MonoBehaviour
             yield return null;
         }
 
-        for (int i = 0; i < DungeonTiles.Count; i++)
+        for (int i = 0; i < dungeonTiles.Count; i++)
         {
-            DungeonTiles[i].GetComponent<SpawnerTileScript>().StartCoroutine("ApplyPathToBoard", this.transform.localEulerAngles.y);
+            dungeonTiles[i].GetComponent<SpawnerTileScript>().StartCoroutine("ApplyPathToBoard", this.transform.localEulerAngles.y);
         }
 
         lvlRef.GetComponent<LevelController>().placingCreature = false;
@@ -226,60 +223,21 @@ public class DungeonSpawner : MonoBehaviour
         yield return null;
 
     }
-
-    #endregion
-
-    #region AI Dungeon Spawner
-
-    //Set up the tiles distance from player avatar so it knows which tiles are closer to the win condition to prioritise
-    public void DungeonSizeSetup()
-    {
-        Debug.Log(PlayerGridTile.name + "Inside Map Dungeon Size");
-
-        if (PlayerGridTile == null)
-        {
-            Debug.Log("Object Null Make Change to Fix");
-        }
-
-        TilesToCheck.Add(PlayerGridTile);
-
-        StartCoroutine(MapDungeonSize());
-    }
-    public IEnumerator MapDungeonSize()
-    {
-        if (TilesToCheck.Count != 0)
-        {
-            Debug.LogError(TilesToCheck.Count);
-
-            TilesToCheck[0].GetComponent<GridScript>().MapDungeonSizeForAI();
-
-            if (TilesToCheck.Count != 0)
-            {
-                StartCoroutine(MapDungeonSize());
-            }
-            else if (TilesToCheck.Count == 0)
-            {
-                CheckedTiles.Clear();
-                Debug.Log("Finished determining grid tile distance from player tile");
-            }
-        }
-        yield return null;
-    }
     #endregion
 
     public void UpdatePieceMaterials()
     {
-        for (int i = 0; i < DungeonTiles.Count; i++)
+        for (int i = 0; i < dungeonTiles.Count; i++)
         {
-            DungeonTiles[i].GetComponent<SpawnerTileScript>().UpdateMaterial();
+            dungeonTiles[i].GetComponent<SpawnerTileScript>().UpdateMaterial();
         }
     }
 
     public void UpdateBoard()
     {
-        for (int i = 0; i < BoardTiles.Count; i++)
+        for (int i = 0; i < boardTiles.Count; i++)
         {
-            BoardTiles[i].GetComponent<GridScript>().turnPlayerDungeonConnection = false;
+            boardTiles[i].GetComponent<GridScript>().turnPlayerDungeonConnection = false;
         }
     }
 }

@@ -97,7 +97,7 @@ public class LevelController : MonoBehaviour //This class controls everything at
                         DungeonLordStartTiles[1].GetComponent<DungeonLordPiece>().SetDungeonLordTile();
 
                         //Once we have declared dungeon lord tile positions map out each tiles distance from the player position
-                        GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().DungeonSizeSetup();
+                        GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<AIDungeonSpawner>().DungeonSizeSetup();
                         break;
                 }
                 break;
@@ -193,12 +193,12 @@ public class LevelController : MonoBehaviour //This class controls everything at
         if (AbilityWindow.creaturesToTrigger.Count != 0 && turnPlayerPerformingAction == false)
         {
             ableToInteractWithBoard = false;
-            Debug.Log("Going To Trigger Abilties Now");
+            //Debug.Log("Going To Trigger Abilties Now");
             AbilityWindow.StartCoroutine("StackManager");
         }
         else
         {
-            Debug.Log("No Triggers To Resolve " + turnPlayerPerformingAction + " " + AbilityWindow.creaturesToTrigger.Count);
+            //Debug.Log("No Triggers To Resolve " + turnPlayerPerformingAction + " " + AbilityWindow.creaturesToTrigger.Count);
             GameObject.FindGameObjectWithTag("LevelController").GetComponent<PlayerCreatureController>().CheckCreatureStates();
         }
       
@@ -263,7 +263,6 @@ public class LevelController : MonoBehaviour //This class controls everything at
             }
             else if (gameManager.GetComponent<GameManagerScript>().desiredOpponent == "AI")
             {
-                Debug.Log("AI End Turn");
                 StartCoroutine("ResetFunction");
                 switch (currentTurnParticipant)
                 {
