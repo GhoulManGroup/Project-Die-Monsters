@@ -242,13 +242,28 @@ public class AIDungeonSpawner : MonoBehaviour
         checkHere = null;
     }
 
-    IEnumerator SpawnCreatureAI()
+    IEnumerator PlaceDungeonAI()
     {
-       // this.transform.position = 
+        for (int i = 0; i < this.GetComponent<DungeonSpawner>().dungeonTiles.Count; i++)
+        {
+            if (this.GetComponent<DungeonSpawner>().dungeonTiles[i].GetComponent<SpawnerTileScript>().amSpawnTile == true)
+            {
+                this.GetComponent<DungeonSpawner>().dungeonTiles[i].GetComponent<SpawnerTileScript>().StartCoroutine("DimensionTheDice", this.transform.localEulerAngles.y);
+            }
+        }
 
-        yield return null;
+        while (this.GetComponent<DungeonSpawner>().waitForPath == true)
+        {
+            yield return null;
+        }
+
+        for (int i = 0; i < this.GetComponent<DungeonSpawner>().dungeonTiles.Count; i++)
+        {
+            this.GetComponent<DungeonSpawner>().dungeonTiles[i].GetComponent<SpawnerTileScript>().StartCoroutine("ApplyPathToBoard", this.transform.localEulerAngles.y);
+        }
+        
     }
 
     #endregion
 
-    }
+}
