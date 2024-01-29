@@ -223,6 +223,9 @@ public class LevelController : MonoBehaviour //This class controls everything at
 
     private IEnumerator EndTurn()
     {
+
+       // if ()
+
         if (turnPlayerPerformingAction == true)
         {
             Debug.Log("Can't End Turn Yet");

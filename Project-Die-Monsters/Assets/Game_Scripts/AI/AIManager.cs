@@ -48,6 +48,7 @@ public class AIManager : MonoBehaviour
     public IEnumerator DicePhase()
     {
         AIDungeonSpawner LvlDungeonSpawner = GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<AIDungeonSpawner>();
+        LevelController LVLRef = GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>();
 
         LvlDungeonSpawner.tilesToCheck.Add(LvlDungeonSpawner.MyStartTile);
 
@@ -61,9 +62,14 @@ public class AIManager : MonoBehaviour
             yield return null;
         }
 
+        //Do Thing here
+
+        LvlDungeonSpawner.StartCoroutine("PlaceDungeonAI");
+
         Debug.LogError("Path Check Done Start Dice");
 
-        this.GetComponent<AIRollManager>().SetUpAIDice();
+        LVLRef.EndTurnFunction();
+        //this.GetComponent<AIRollManager>().SetUpAIDice();
 
     }
 

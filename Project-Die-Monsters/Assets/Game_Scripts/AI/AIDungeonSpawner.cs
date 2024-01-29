@@ -242,8 +242,15 @@ public class AIDungeonSpawner : MonoBehaviour
         checkHere = null;
     }
 
-    IEnumerator PlaceDungeonAI()
+    public IEnumerator PlaceDungeonAI()
     {
+
+        this.transform.position = new Vector3(tileCanSpawnFrom.transform.position.x, this.transform.position.y, tileCanSpawnFrom.transform.position.z);
+
+        patternToSpawnFrom.GetComponent<DungeonPatternScript>().ApplyPattern();
+
+        this.transform.Rotate(transform.rotation.x, transformToSpawnFrom, transform.rotation.z);
+
         for (int i = 0; i < this.GetComponent<DungeonSpawner>().dungeonTiles.Count; i++)
         {
             if (this.GetComponent<DungeonSpawner>().dungeonTiles[i].GetComponent<SpawnerTileScript>().amSpawnTile == true)
@@ -260,8 +267,7 @@ public class AIDungeonSpawner : MonoBehaviour
         for (int i = 0; i < this.GetComponent<DungeonSpawner>().dungeonTiles.Count; i++)
         {
             this.GetComponent<DungeonSpawner>().dungeonTiles[i].GetComponent<SpawnerTileScript>().StartCoroutine("ApplyPathToBoard", this.transform.localEulerAngles.y);
-        }
-        
+        } 
     }
 
     #endregion
