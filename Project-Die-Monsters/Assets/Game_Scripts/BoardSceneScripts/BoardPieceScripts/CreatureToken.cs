@@ -85,6 +85,7 @@ public class CreatureToken : MonoBehaviour
         if (myOwner == "AI") // change to opponent
         {
             //Add creature to AI creature controller script 
+
         }
 
         this.GetComponent<AbilityManager>().myAbility = this.myCreature.myAbility;
@@ -282,7 +283,6 @@ public class CreatureToken : MonoBehaviour
             canReachTarget = true;
         }
     } 
-
 
     public void OnMouseDown()
     {

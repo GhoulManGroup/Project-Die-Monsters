@@ -5,10 +5,10 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEditor.Experimental.GraphView;
 
-public class LevelController : MonoBehaviour //This class controls everything at the board scene level of the project.
+public class LevelController : MonoBehaviour //This class oversees the setup turn management & game states of a simple 1v1 level
 {
     #region Refrences
-    [Header("Refrences")]
+    [Header("Refrences & UI Objects")]
     //The projects game manager object which persists between scences.
     GameObject gameManager;
     public GameObject startTurnBTN;
@@ -16,12 +16,14 @@ public class LevelController : MonoBehaviour //This class controls everything at
     public GameObject currentGameEndScreen;
     public List<GameObject> DungeonLordStartTiles = new List<GameObject>();
 
-    [Header("Game Participants")]
+    [Header("Possible Participants")]
     // These two prefabs are the default player or AI opponent to be loaded into the level depending on who the opponent faces.
     public GameObject playerFab; 
     public GameObject opponent;
     //This list contains the opponent scriptable objects which contains the diffrent AI opponents the player can face, one will be added to the AI opponent object if present in the scene.
     public List<Opponent> opponentList = new List<Opponent>(); 
+
+    [Header("Current Game Participants")]
     //If either prefab are instaciated they will be added to this list as "Player1" and "Player2".
     public List<GameObject> participants = new List<GameObject>();
 
@@ -32,7 +34,6 @@ public class LevelController : MonoBehaviour //This class controls everything at
     public int currentTurnParticipant = 0;
 
     [Header("Turn Player Constraints & Resources")] // Tweak constraints.
-
     public bool turnPlayerPerformingAction = false; //Is the player currently doing somthing.
     public bool ableToInteractWithBoard = false; // Player is allowed to interact with the pieces on the board, checked before raycast on piece ect.
     public string boardInteraction = "None"; //What action the player is taking
@@ -218,70 +219,87 @@ public class LevelController : MonoBehaviour //This class controls everything at
     public void EndTurnFunction()
      {
         //Ensure that player isnt currently doing somthing.
+        Debug.Log("Start End Turn co");
         StartCoroutine("EndTurn");
      } 
 
     private IEnumerator EndTurn()
     {
-
-       // if ()
-
-        if (turnPlayerPerformingAction == true)
+        Debug.Log("Inside End TURN");
+        //If human player is current turn user then ensure all current qued actions are resolved, then perform an end of turn abiltiy trigger check and wait untill all are resolved before proceeding.
+        if (turnPlayerObject.GetComponent<Player>() != null)
         {
-            Debug.Log("Can't End Turn Yet");
+            if (turnPlayerPerformingAction == true)
+            {
+                Debug.Log("Can't End Turn Yet");
+            }
+            if (turnPlayerPerformingAction == false)
+            {
+                for (int i = 0; i < this.GetComponent<PlayerCreatureController>().CreaturesOnBoard.Count; i++)
+                {
+                    if (this.GetComponent<PlayerCreatureController>().CreaturesOnBoard[i].GetComponent<AbilityManager>().myAbility.abilityActivatedHow == Ability.AbilityActivatedHow.Trigger)
+                    {
+                        this.GetComponent<PlayerCreatureController>().CreaturesOnBoard[i].GetComponent<AbilityManager>().CheckTrigger("OnEndTurn");
+                    }
+                }
+
+                CheckForTriggersToResolve();
+
+                while (GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().creaturesToTrigger.Count > 0)
+                {
+                    yield return null;
+                }
+
+                SwitchPlayer();
+            }
         }
-        if (turnPlayerPerformingAction == false)
+        //Else if AI is current turn user do future stuff like handle AI end of turn
+        if (turnPlayerObject.GetComponent<AIOpponent>() != null)
         {
-            for (int i = 0; i < this.GetComponent<PlayerCreatureController>().CreaturesOnBoard.Count; i++)
+            Debug.Log("Inside AI End Turn Condtion");
+            //Who knows yet AI Abiltiy check here in future
+            SwitchPlayer();
+        }
+
+    }
+
+    private void SwitchPlayer()
+    {
+        if (gameManager.GetComponent<GameManagerScript>().desiredOpponent == "Player")
+        {
+            switch (currentTurnParticipant)
             {
-                if (this.GetComponent<PlayerCreatureController>().CreaturesOnBoard[i].GetComponent<AbilityManager>().myAbility.abilityActivatedHow == Ability.AbilityActivatedHow.Trigger)
-                {
-                    this.GetComponent<PlayerCreatureController>().CreaturesOnBoard[i].GetComponent<AbilityManager>().CheckTrigger("OnEndTurn");
-                }
+                case 0:
+                    currentTurnParticipant = 1;
+                    SetTurnPlayer();
+                    break;
+
+                case 1:
+                    currentTurnParticipant = 0;
+                    SetTurnPlayer();
+                    break;
             }
-
-            CheckForTriggersToResolve();
-
-            while (GameObject.FindGameObjectWithTag("AbilityWindow").GetComponent<AbilityUIController>().creaturesToTrigger.Count > 0)
+            startTurnBTN.SetActive(true);
+            StartCoroutine("ResetFunction");
+        }
+        else if (gameManager.GetComponent<GameManagerScript>().desiredOpponent == "AI")
+        {
+            switch (currentTurnParticipant)
             {
-                yield return null;
-            }
+                case 0:
+                    currentTurnParticipant = 1;
+                    SetTurnPlayer();
+                    GameObject.FindGameObjectWithTag("AIController").GetComponent<AIManager>().BeginTurn();
+                    break;
 
-            if (gameManager.GetComponent<GameManagerScript>().desiredOpponent == "Player")
-            {
-                switch (currentTurnParticipant)
-                {
-                    case 0:
-                        currentTurnParticipant = 1;
-                        SetTurnPlayer();
-                        break;
-
-                    case 1:
-                        currentTurnParticipant = 0;
-                        SetTurnPlayer();
-                        break;
-                }
-                startTurnBTN.SetActive(true);
-                StartCoroutine("ResetFunction");
+                case 1:
+                    startTurnBTN.SetActive(true);
+                    currentTurnParticipant = 0;
+                    SetTurnPlayer();
+                    startTurnBTN.SetActive(true);
+                    break;
             }
-            else if (gameManager.GetComponent<GameManagerScript>().desiredOpponent == "AI")
-            {
-                StartCoroutine("ResetFunction");
-                switch (currentTurnParticipant)
-                {
-                    case 0:
-                        currentTurnParticipant = 1;
-                        SetTurnPlayer();
-                        GameObject.FindGameObjectWithTag("AIController").GetComponent<AIManager>().BeginTurn();
-                        break;
-
-                    case 1:
-                        startTurnBTN.SetActive(true);
-                        currentTurnParticipant = 0;
-                        SetTurnPlayer();
-                        break;
-                }
-            }
+            StartCoroutine("ResetFunction");
         }
     }
     

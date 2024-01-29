@@ -13963,6 +13963,9 @@ MonoBehaviour:
   - {fileID: 895898146}
   - {fileID: 1794599850}
   CanPlaceHere: 0
+  tileCanSpawnFrom: {fileID: 0}
+  patternToSpawnFrom: {fileID: 0}
+  transformToSpawnFrom: 0
 --- !u!1 &1657201998
 GameObject:
   m_ObjectHideFlags: 0
@@ -17703,7 +17706,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2086019585
 RectTransform:
   m_ObjectHideFlags: 0

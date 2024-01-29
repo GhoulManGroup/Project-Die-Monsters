@@ -69,6 +69,7 @@ public class AIManager : MonoBehaviour
         Debug.LogError("Path Check Done Start Dice");
 
         LVLRef.EndTurnFunction();
+
         //this.GetComponent<AIRollManager>().SetUpAIDice();
 
     }
