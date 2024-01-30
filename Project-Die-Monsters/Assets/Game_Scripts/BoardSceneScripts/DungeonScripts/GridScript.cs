@@ -237,7 +237,6 @@ public class GridScript : MonoBehaviour
         {
             if (LvlDungeonSpawner.tilesToCheck.Contains(Neighbours[i]) || LvlDungeonSpawner.checkedTiles.Contains(Neighbours[i]))
             {
-                Debug.LogWarning("Already Inside Either List Do Nothing");
             }
             else
             {

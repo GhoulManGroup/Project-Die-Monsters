@@ -91,8 +91,6 @@ public class AIDungeonSpawner : MonoBehaviour
     //It does this by first finding the tile closest to the AI 
     public IEnumerator CanAIDungeonExpand()
     {
-        Debug.Log("Starting Check Of Point " + spawnPointsToCheck.Count );
-
         //Check all spawn points found by AItileCheck
         if (spawnPointsToCheck.Count != 0)
         {
@@ -111,7 +109,6 @@ public class AIDungeonSpawner : MonoBehaviour
 
             while (WaitCheck.Contains("CICP"));
             {
-                Debug.LogError("Inside While Loop CICP");
                 yield return null;
             }
 
@@ -240,10 +237,13 @@ public class AIDungeonSpawner : MonoBehaviour
         WaitCheck.Clear();
         rotationAttempts = 1;
         checkHere = null;
+        CanPlaceHere = false;
     }
 
     public IEnumerator PlaceDungeonAI()
     {
+
+        Debug.LogError("Sad");
 
         this.transform.position = new Vector3(tileCanSpawnFrom.transform.position.x, this.transform.position.y, tileCanSpawnFrom.transform.position.z);
 
@@ -267,8 +267,15 @@ public class AIDungeonSpawner : MonoBehaviour
         for (int i = 0; i < this.GetComponent<DungeonSpawner>().dungeonTiles.Count; i++)
         {
             this.GetComponent<DungeonSpawner>().dungeonTiles[i].GetComponent<SpawnerTileScript>().StartCoroutine("ApplyPathToBoard", this.transform.localEulerAngles.y);
-        } 
-    }
+        }
+
+        ResetSpawner();
+
+        //tileCanSpawnFrom;
+        //patternToSpawnFrom;
+
+        //transformToSpawnFrom;
+}
 
     #endregion
 

@@ -64,9 +64,11 @@ public class AIManager : MonoBehaviour
 
         //Do Thing here
 
-        LvlDungeonSpawner.StartCoroutine("PlaceDungeonAI");
+        yield return LvlDungeonSpawner.StartCoroutine("PlaceDungeonAI");
 
         Debug.LogError("Path Check Done Start Dice");
+
+        yield return new WaitForSeconds(4f);
 
         LVLRef.EndTurnFunction();
 

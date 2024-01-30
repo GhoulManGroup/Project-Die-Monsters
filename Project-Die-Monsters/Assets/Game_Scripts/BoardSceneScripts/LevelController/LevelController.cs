@@ -221,11 +221,11 @@ public class LevelController : MonoBehaviour //This class oversees the setup tur
         //Ensure that player isnt currently doing somthing.
         Debug.Log("Start End Turn co");
         StartCoroutine("EndTurn");
-     } 
+     }
 
     private IEnumerator EndTurn()
     {
-        Debug.Log("Inside End TURN");
+
         //If human player is current turn user then ensure all current qued actions are resolved, then perform an end of turn abiltiy trigger check and wait untill all are resolved before proceeding.
         if (turnPlayerObject.GetComponent<Player>() != null)
         {
@@ -250,56 +250,43 @@ public class LevelController : MonoBehaviour //This class oversees the setup tur
                     yield return null;
                 }
 
-                SwitchPlayer();
             }
-        }
-        //Else if AI is current turn user do future stuff like handle AI end of turn
-        if (turnPlayerObject.GetComponent<AIOpponent>() != null)
+        }else if (turnPlayerObject.GetComponent<AIOpponent>() != null)
         {
-            Debug.Log("Inside AI End Turn Condtion");
-            //Who knows yet AI Abiltiy check here in future
-            SwitchPlayer();
+            Debug.Log("Inside AI End Turn Condtion " + currentTurnParticipant);
         }
 
+        SwitchTurnPlayer();
+
+        StartCoroutine("ResetFunction");
     }
 
-    private void SwitchPlayer()
+    public void SwitchTurnPlayer()
     {
-        if (gameManager.GetComponent<GameManagerScript>().desiredOpponent == "Player")
+        switch (currentTurnParticipant)
         {
-            switch (currentTurnParticipant)
-            {
-                case 0:
-                    currentTurnParticipant = 1;
-                    SetTurnPlayer();
-                    break;
+            case 0:
 
-                case 1:
-                    currentTurnParticipant = 0;
-                    SetTurnPlayer();
-                    break;
-            }
-            startTurnBTN.SetActive(true);
-            StartCoroutine("ResetFunction");
-        }
-        else if (gameManager.GetComponent<GameManagerScript>().desiredOpponent == "AI")
-        {
-            switch (currentTurnParticipant)
-            {
-                case 0:
-                    currentTurnParticipant = 1;
-                    SetTurnPlayer();
+                currentTurnParticipant = 1;
+
+                SetTurnPlayer();
+
+                if (turnPlayerObject.GetComponent<Player>() != null)
+                {
+                    startTurnBTN.SetActive(true);
+                }
+                else if (turnPlayerObject.GetComponent<AIOpponent>() != null)
+                {
                     GameObject.FindGameObjectWithTag("AIController").GetComponent<AIManager>().BeginTurn();
-                    break;
+                }
+                break;
 
-                case 1:
-                    startTurnBTN.SetActive(true);
-                    currentTurnParticipant = 0;
-                    SetTurnPlayer();
-                    startTurnBTN.SetActive(true);
-                    break;
-            }
-            StartCoroutine("ResetFunction");
+            case 1: //0 participant is always a player so don't check for component
+                currentTurnParticipant = 0;
+                SetTurnPlayer();
+                startTurnBTN.SetActive(true);
+                break;
+
         }
     }
     
