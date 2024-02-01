@@ -270,6 +270,10 @@ public class GridScript : MonoBehaviour
                     }
                     //if this tile is owned by me and not already in a list add it too check.
                 }
+                else
+                {
+                    Debug.LogError("Hit Player Dungeon Do Nothing");
+                }
             }
             LvlDungeonSpawner.tilesToCheck.Remove(this.gameObject);
             LvlDungeonSpawner.checkedTiles.Add(this.gameObject);

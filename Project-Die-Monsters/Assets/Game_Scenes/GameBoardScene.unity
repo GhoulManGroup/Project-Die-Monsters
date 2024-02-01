@@ -2446,8 +2446,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CreatureController, Assembly-CSharp
+      - m_Target: {fileID: 1996620196}
+        m_TargetAssemblyTypeName: PlayerCreatureController, Assembly-CSharp
         m_MethodName: DeclareAction
         m_Mode: 1
         m_Arguments:
@@ -10276,8 +10276,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CreatureController, Assembly-CSharp
+      - m_Target: {fileID: 1996620196}
+        m_TargetAssemblyTypeName: PlayerCreatureController, Assembly-CSharp
         m_MethodName: DeclareAction
         m_Mode: 1
         m_Arguments:
@@ -11177,8 +11177,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CreatureController, Assembly-CSharp
+      - m_Target: {fileID: 1996620196}
+        m_TargetAssemblyTypeName: PlayerCreatureController, Assembly-CSharp
         m_MethodName: DeclareAction
         m_Mode: 1
         m_Arguments:
@@ -11530,8 +11530,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CreatureController, Assembly-CSharp
+      - m_Target: {fileID: 1996620196}
+        m_TargetAssemblyTypeName: PlayerCreatureController, Assembly-CSharp
         m_MethodName: DeclareAction
         m_Mode: 1
         m_Arguments:
