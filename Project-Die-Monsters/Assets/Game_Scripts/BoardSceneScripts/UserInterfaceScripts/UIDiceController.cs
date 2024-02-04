@@ -171,7 +171,6 @@ public class UIDiceController : MonoBehaviour // This class controls the In game
                 {// Add if rolled levle crest. Need to rewrite the script a bit more.
                     if (dieToRoll[i].GetComponent<SceneDieScript>().myDie.dieCreature.summonCost <= turnPlayer.GetComponent<Player>().summmonCrestPoints && dieToRoll[i].GetComponent<SceneDieScript>().isFree == false && dieToRoll[i].GetComponent<SceneDieScript>().rolledLevelCrest == true)
                     {
-                        Debug.Log("Can Pay to Summon " + dieToRoll[i].name);
                         dieToRoll[i].GetComponent<SceneDieScript>().canBeChosen = true;
                     }
                 }

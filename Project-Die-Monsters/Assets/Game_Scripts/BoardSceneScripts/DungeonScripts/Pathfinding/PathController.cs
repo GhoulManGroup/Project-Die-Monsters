@@ -76,7 +76,7 @@ public class PathController : MonoBehaviour
             }
             else if (tilesToCheck.Count == 0)
             {
-                ResetBoard("ShowOnlyPath");
+               ResetBoard("ShowOnlyPath");
                StartCoroutine("MovePieceThroughPath");
             }
         }

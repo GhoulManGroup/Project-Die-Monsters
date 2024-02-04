@@ -52,10 +52,16 @@ public class AIManager : MonoBehaviour
 
         LvlDungeonSpawner.tilesToCheck.Add(LvlDungeonSpawner.MyStartTile);
 
-        yield return LvlDungeonSpawner.StartCoroutine("AITileCheck", "CheckSpawnLocations");
+        LvlDungeonSpawner.AITileCheck("CheckSpawnLocations");
 
-        //Do Check
-        LvlDungeonSpawner.StartCoroutine("CanAIDungeonExpand");
+        while (PhaseDone == false)
+        {
+            yield return null;
+        }
+
+        PhaseDone = false;
+
+        yield return LvlDungeonSpawner.StartCoroutine("CanAIDungeonExpand");
 
         while (PhaseDone == false)
         {
@@ -63,8 +69,20 @@ public class AIManager : MonoBehaviour
         }
 
         //Do Thing here
+        //this.GetComponent<AIRollManager>().SetUpAIDice();
 
-        yield return LvlDungeonSpawner.StartCoroutine("PlaceDungeonAI");
+        if (canPlaceCreature == true) 
+        { 
+            yield return LvlDungeonSpawner.StartCoroutine("PlaceDungeonAI");
+            Debug.LogError("Spawning Creature can place creature");
+        }
+        else
+        {
+            Debug.LogError("Reseting Spawner cant place crearture");
+            LvlDungeonSpawner.ResetSpawner();
+        }
+
+        canPlaceCreature = false;
 
         Debug.LogError("Path Check Done Start Dice");
 
@@ -72,7 +90,7 @@ public class AIManager : MonoBehaviour
 
         LVLRef.EndTurnFunction();
 
-        //this.GetComponent<AIRollManager>().SetUpAIDice();
+
 
     }
 

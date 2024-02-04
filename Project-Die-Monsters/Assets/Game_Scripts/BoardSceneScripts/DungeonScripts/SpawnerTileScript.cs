@@ -109,7 +109,6 @@ public class SpawnerTileScript : MonoBehaviour
         {
             if (Bellow.collider.gameObject != null)
             {
-                Debug.LogWarning(Bellow.collider.gameObject.name);
                 if (Bellow.collider.GetComponent<GridScript>().myState == "Empty")
                 {
                     aboveEmptySpace = true;

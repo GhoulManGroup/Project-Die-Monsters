@@ -46,10 +46,10 @@ public class AIDungeonSpawner : MonoBehaviour
 
         tilesToCheck.Add(PlayerGridTile);
 
-        StartCoroutine(AITileCheck("MapDungeonSize"));
+        AITileCheck("MapDungeonSize");
     }
 
-    public IEnumerator AITileCheck(string UseFor)
+    public void AITileCheck(string UseFor)
     {// Method used to check through the board grid for the AI to find out things like size of dungeon or which tiles it could possibly expand the dungeon from.
 
         if (tilesToCheck.Count != 0)
@@ -63,16 +63,15 @@ public class AIDungeonSpawner : MonoBehaviour
                 tilesToCheck[0].GetComponent<GridScript>().CheckForDungeonExpansion();
             }
 
-            if (tilesToCheck.Count != 0)
-            {
-                StartCoroutine(AITileCheck(UseFor));
-            }
-            else if (tilesToCheck.Count == 0)
-            {
-                checkedTiles.Clear();
-            }
+        }else if (tilesToCheck.Count == 0)
+        {
+            
+            tilesToCheck.Clear();
+            checkedTiles.Clear();
+
+            GameObject.FindGameObjectWithTag("AIController").GetComponent<AIManager>().PhaseDone = true;
+
         }
-        yield return null;
     }
 
     GameObject checkHere;
@@ -115,6 +114,7 @@ public class AIDungeonSpawner : MonoBehaviour
             if (CanPlaceHere == true)
             {
                 tileCanSpawnFrom = checkHere;
+                GameObject.FindGameObjectWithTag("AIController").GetComponent<AIManager>().canPlaceCreature = true;
                 GameObject.FindGameObjectWithTag("AIController").GetComponent<AIManager>().PhaseDone = true;
             }
 
@@ -212,7 +212,6 @@ public class AIDungeonSpawner : MonoBehaviour
         {
             if (rotationAttempts < 4)
             {
-                Debug.Log(rotationAttempts);
 
                 this.transform.Rotate(0f, 90f, 0f);
 
@@ -238,12 +237,13 @@ public class AIDungeonSpawner : MonoBehaviour
         rotationAttempts = 1;
         checkHere = null;
         CanPlaceHere = false;
+        tileCanSpawnFrom = null;
+        patternToSpawnFrom = null;
+        transformToSpawnFrom = 0f;
     }
 
     public IEnumerator PlaceDungeonAI()
     {
-
-        Debug.LogError("Sad");
 
         this.transform.position = new Vector3(tileCanSpawnFrom.transform.position.x, this.transform.position.y, tileCanSpawnFrom.transform.position.z);
 
@@ -270,13 +270,7 @@ public class AIDungeonSpawner : MonoBehaviour
         }
 
         ResetSpawner();
-
-        //tileCanSpawnFrom;
-        //patternToSpawnFrom;
-
-        //transformToSpawnFrom;
-}
-
+    }
     #endregion
 
 }

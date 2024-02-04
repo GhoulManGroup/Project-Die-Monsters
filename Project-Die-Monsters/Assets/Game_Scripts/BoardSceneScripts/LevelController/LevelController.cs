@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEditor.Experimental.GraphView;
+using UnityEditorInternal;
 
 public class LevelController : MonoBehaviour //This class oversees the setup turn management & game states of a simple 1v1 level
 {
@@ -219,7 +220,6 @@ public class LevelController : MonoBehaviour //This class oversees the setup tur
     public void EndTurnFunction()
      {
         //Ensure that player isnt currently doing somthing.
-        Debug.Log("Start End Turn co");
         StartCoroutine("EndTurn");
      }
 
@@ -231,7 +231,8 @@ public class LevelController : MonoBehaviour //This class oversees the setup tur
         {
             if (turnPlayerPerformingAction == true)
             {
-                Debug.Log("Can't End Turn Yet");
+                Debug.Log("Cant End Turn Yet Player");
+                yield break;
             }
             if (turnPlayerPerformingAction == false)
             {
@@ -256,9 +257,11 @@ public class LevelController : MonoBehaviour //This class oversees the setup tur
             Debug.Log("Inside AI End Turn Condtion " + currentTurnParticipant);
         }
 
-        SwitchTurnPlayer();
-
         StartCoroutine("ResetFunction");
+
+        yield return new WaitForSeconds(1f);
+
+        SwitchTurnPlayer();
     }
 
     public void SwitchTurnPlayer()
@@ -292,6 +295,10 @@ public class LevelController : MonoBehaviour //This class oversees the setup tur
     
     public IEnumerator ResetFunction()
     {
+        if (gameManager.GetComponent<GameManagerScript>().desiredOpponent == "Player")
+        {
+            Debug.Log("Test");
+        }
         endTurnBTN.SetActive(false);
 
         //this.GetComponent<CreaturePoolController>().enableButtons();

@@ -237,6 +237,7 @@ public class GridScript : MonoBehaviour
         {
             if (LvlDungeonSpawner.tilesToCheck.Contains(Neighbours[i]) || LvlDungeonSpawner.checkedTiles.Contains(Neighbours[i]))
             {
+
             }
             else
             {
@@ -246,6 +247,7 @@ public class GridScript : MonoBehaviour
         }
         LvlDungeonSpawner.tilesToCheck.Remove(this.gameObject);
         LvlDungeonSpawner.checkedTiles.Add(this.gameObject);
+        LvlDungeonSpawner.AITileCheck("MapDungeonSize");
     }
 
     public void CheckForDungeonExpansion()
@@ -253,7 +255,7 @@ public class GridScript : MonoBehaviour
         AIDungeonSpawner LvlDungeonSpawner = GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<AIDungeonSpawner>();
 
         for (int i = 0; i < Neighbours.Count; i++)
-        {
+        { 
             if (Neighbours[i].GetComponent<GridScript>().myState == "Empty")
             { // if the checked tiles neighbour is not already in a list then it can be added to the can I spawn here list.
                 if (!LvlDungeonSpawner.tilesToCheck.Contains(Neighbours[i]) || !LvlDungeonSpawner.checkedTiles.Contains(Neighbours[i]))
@@ -264,20 +266,28 @@ public class GridScript : MonoBehaviour
             {
                 if (Neighbours[i].GetComponent<GridScript>().myOwner == "1")
                 {
-                    if (!LvlDungeonSpawner.tilesToCheck.Contains(Neighbours[i]) || !LvlDungeonSpawner.checkedTiles.Contains(Neighbours[i]))
+                    if (LvlDungeonSpawner.tilesToCheck.Contains(Neighbours[i]) || LvlDungeonSpawner.checkedTiles.Contains(Neighbours[i]))
+                    {
+                        
+                    }
+                    else
                     {
                         LvlDungeonSpawner.tilesToCheck.Add(Neighbours[i]);
                     }
-                    //if this tile is owned by me and not already in a list add it too check.
                 }
                 else
                 {
                     Debug.LogError("Hit Player Dungeon Do Nothing");
                 }
             }
-            LvlDungeonSpawner.tilesToCheck.Remove(this.gameObject);
-            LvlDungeonSpawner.checkedTiles.Add(this.gameObject);
         }
+
+        LvlDungeonSpawner.tilesToCheck.Remove(this.gameObject);
+
+        LvlDungeonSpawner.checkedTiles.Add(this.gameObject);
+
+        LvlDungeonSpawner.AITileCheck("CheckSpawnLocations");
+
     }
     
     #endregion
