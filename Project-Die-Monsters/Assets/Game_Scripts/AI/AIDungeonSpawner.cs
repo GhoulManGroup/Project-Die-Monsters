@@ -119,7 +119,7 @@ public class AIDungeonSpawner : MonoBehaviour
             }
 
             else
-            {
+            { //Breaks here when the game cant place here and tries to run itself again
                 spawnPointsToCheck.Remove(checkHere);
                 StartCoroutine("CanAIDungeonExpand");
                 //contiune the check till all spawn points are done.
@@ -176,6 +176,8 @@ public class AIDungeonSpawner : MonoBehaviour
             }
         }
 
+        WaitCheck.Remove("CICP");
+
         yield return null;
     }
 
@@ -211,6 +213,8 @@ public class AIDungeonSpawner : MonoBehaviour
             WaitCheck.Remove("CDP");
         }
 
+        // If we cant spawn try each rotation of this pattern untill all four have been tried then switch pattern and start the rotation checks again at this position.
+
         if (tilesCanSpawn != 6)
         {
             if (rotationAttempts < 4)
@@ -225,7 +229,7 @@ public class AIDungeonSpawner : MonoBehaviour
             }
             else if (rotationAttempts >= 4)
             {
-                //Broke Here When It Cant Get OUt
+
                 Debug.LogError("Pattern Resulted in No Sucess");
                 WaitCheck.Remove("CDP");
             }
