@@ -124,6 +124,7 @@ public class AIDungeonSpawner : MonoBehaviour
                 StartCoroutine("CanAIDungeonExpand");
                 //contiune the check till all spawn points are done.
             }
+
             //GameObject.FindGameObjectWithTag("AIController").GetComponent<AIManager>().PhaseDone = true;
         }
         else
@@ -151,7 +152,9 @@ public class AIDungeonSpawner : MonoBehaviour
             //Loop through each possible style of pattern on the board then call check dungeon pattern to see if that position / pattern results in a valid placement.
             spawnPattern[i].GetComponent<DungeonPatternScript>().ApplyPattern();
 
-            StartCoroutine("CheckDungeonPattern");
+            //StartCoroutine("CheckDungeonPattern");
+            Debug.LogError(spawnPattern[i].gameObject.name);
+            CheckDungeonPattern();
 
             while (WaitCheck.Contains("CDP"))
             {
@@ -176,7 +179,7 @@ public class AIDungeonSpawner : MonoBehaviour
         yield return null;
     }
 
-    public IEnumerator CheckDungeonPattern()
+    public void CheckDungeonPattern()
     {
         //Check if current pattern is above 6 empty tiles
         //If not rotate 3 times to see if that pattern/positon works when on either of the three other rotations.
@@ -217,15 +220,16 @@ public class AIDungeonSpawner : MonoBehaviour
 
                 rotationAttempts += 1;
 
-               StartCoroutine("CheckDungeonPattern");
+                //StartCoroutine("CheckDungeonPattern");
+                CheckDungeonPattern();
             }
             else if (rotationAttempts >= 4)
             {
+                //Broke Here When It Cant Get OUt
                 Debug.LogError("Pattern Resulted in No Sucess");
                 WaitCheck.Remove("CDP");
             }
         }
-        yield return null;
     }
 
     public void ResetSpawner()
