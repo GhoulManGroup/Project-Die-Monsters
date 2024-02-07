@@ -9,6 +9,10 @@ public class AIManager : MonoBehaviour
 {
     public static GameManagerScript instance { get; private set; }
 
+    AIDungeonSpawner LvlDungeonSpawner = GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<AIDungeonSpawner>();
+    LevelController LVLRef = GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>();
+
+
     //static AIManager Instance pro
     public GameObject currentOpponent;
     [SerializeField]
@@ -24,6 +28,7 @@ public class AIManager : MonoBehaviour
 
     [Header("PossibleActions")]
     public bool canPlaceCreature = false; //if dungeon can be expanded set to true
+    public bool hasCreture = false;
     public int canAttack = 0;
     public int abiltiesCanBeCast;
 
@@ -38,18 +43,13 @@ public class AIManager : MonoBehaviour
         //Set Text
         currentActionText.GetComponent<TextMeshProUGUI>().text = "AI Turn Start";
 
-        //Add other prep when developed 
+        //Check The Dungeon Can Expand 
+        StartCoroutine(CheckDungeonCanExpand());
 
-        //Start Dice Phase
-        StartCoroutine("DicePhase");
-        
     }
 
-    public IEnumerator DicePhase()
+    public IEnumerator CheckDungeonCanExpand()
     {
-        AIDungeonSpawner LvlDungeonSpawner = GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<AIDungeonSpawner>();
-        LevelController LVLRef = GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>();
-
         LvlDungeonSpawner.tilesToCheck.Add(LvlDungeonSpawner.MyStartTile);
 
         LvlDungeonSpawner.AITileCheck("CheckSpawnLocations");
@@ -68,11 +68,26 @@ public class AIManager : MonoBehaviour
             yield return null;
         }
 
+        StartCoroutine("DicePhase");
+    }
+    public IEnumerator DicePhase()
+    {
+        currentActionText.GetComponent<TextMeshProUGUI>().text = "AI Rolling Dice";
         //Do Thing here
         //this.GetComponent<AIRollManager>().SetUpAIDice();
 
-        if (canPlaceCreature == true) 
-        { 
+     
+
+        yield return new WaitForSeconds(4f);
+
+        LVLRef.EndTurnFunction();
+
+    }
+
+    public IEnumerator tempSummonCreaturePhaseCall()
+    {
+        if (canPlaceCreature == true )
+        {
             yield return LvlDungeonSpawner.StartCoroutine("PlaceDungeonAI");
             Debug.LogError("Spawning Creature can place creature");
         }
@@ -85,12 +100,16 @@ public class AIManager : MonoBehaviour
         canPlaceCreature = false;
 
         Debug.LogError("Path Check Done Start Dice");
-
-        yield return new WaitForSeconds(4f);
-
-        LVLRef.EndTurnFunction();
+    }
 
 
+    IEnumerator CreatureActionPhase()
+    {
+        yield return null;
+    }
+
+    public void EndTurn()
+    {
 
     }
 
