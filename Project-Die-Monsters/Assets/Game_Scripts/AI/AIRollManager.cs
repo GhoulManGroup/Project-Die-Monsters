@@ -50,6 +50,8 @@ public class AIRollManager : MonoBehaviour
 
     public void WhatDiceToAdd()
     {
+        diceToAdd = mRef.currentOpponent.GetComponent<AIOpponent>().myOpponent.OpponentDeck[0];
+        /*
         int lvl1CreatureCount = 0;
         int lvl2CreatureCount = 0;
         int lvl3CreatureCount = 0;
@@ -71,6 +73,7 @@ public class AIRollManager : MonoBehaviour
 
             }
         }
+        */
     }
 
     private IEnumerator RollDice()

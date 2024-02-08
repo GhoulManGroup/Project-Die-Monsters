@@ -12,7 +12,6 @@ public class AIManager : MonoBehaviour
     AIDungeonSpawner LvlDungeonSpawner = GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<AIDungeonSpawner>();
     LevelController LVLRef = GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>();
 
-
     //static AIManager Instance pro
     public GameObject currentOpponent;
     [SerializeField]
@@ -43,9 +42,10 @@ public class AIManager : MonoBehaviour
         //Set Text
         currentActionText.GetComponent<TextMeshProUGUI>().text = "AI Turn Start";
 
+        //Forgot to add back in the map dungeon call 
+
         //Check The Dungeon Can Expand 
         StartCoroutine(CheckDungeonCanExpand());
-
     }
 
     public IEnumerator CheckDungeonCanExpand()
@@ -73,12 +73,13 @@ public class AIManager : MonoBehaviour
     public IEnumerator DicePhase()
     {
         currentActionText.GetComponent<TextMeshProUGUI>().text = "AI Rolling Dice";
-        //Do Thing here
-        //this.GetComponent<AIRollManager>().SetUpAIDice();
 
-     
+        this.GetComponent<AIRollManager>().SetUpAIDice();
 
-        yield return new WaitForSeconds(4f);
+        while (PhaseDone == false)
+        {
+            yield return null;
+        }
 
         LVLRef.EndTurnFunction();
 
