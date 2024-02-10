@@ -21,7 +21,7 @@ public class AIDungeonSpawner : MonoBehaviour
     [Header("AIDungeonSpawner")]
     [HideInInspector]
     public GameObject PlayerGridTile;
-    [HideInInspector]
+    //[HideInInspector]
     public GameObject MyStartTile;
 
     public List<GameObject> tilesToCheck = new List<GameObject>();

@@ -9,8 +9,8 @@ public class AIManager : MonoBehaviour
 {
     public static GameManagerScript instance { get; private set; }
 
-    AIDungeonSpawner LvlDungeonSpawner = GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<AIDungeonSpawner>();
-    LevelController LVLRef = GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>();
+    AIDungeonSpawner LvlDungeonSpawner;
+    LevelController LVLRef;
 
     //static AIManager Instance pro
     public GameObject currentOpponent;
@@ -31,6 +31,12 @@ public class AIManager : MonoBehaviour
     public int canAttack = 0;
     public int abiltiesCanBeCast;
 
+    public void Start()
+    {
+        LvlDungeonSpawner = GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<AIDungeonSpawner>();
+        LVLRef = GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>();
+    }
+
     public void BeginTurn()
     {
         //Set up AI Dice Deck
@@ -50,7 +56,8 @@ public class AIManager : MonoBehaviour
 
     public IEnumerator CheckDungeonCanExpand()
     {
-        LvlDungeonSpawner.tilesToCheck.Add(LvlDungeonSpawner.MyStartTile);
+        Debug.LogError(LvlDungeonSpawner.MyStartTile.gameObject.name);
+        LvlDungeonSpawner.tilesToCheck.Add(LvlDungeonSpawner.MyStartTile.gameObject);
 
         LvlDungeonSpawner.AITileCheck("CheckSpawnLocations");
 
@@ -74,7 +81,7 @@ public class AIManager : MonoBehaviour
     {
         currentActionText.GetComponent<TextMeshProUGUI>().text = "AI Rolling Dice";
 
-        this.GetComponent<AIRollManager>().SetUpAIDice();
+        this.GetComponent<AIRollManager>().StartCoroutine("SetUpAIDice");
 
         while (PhaseDone == false)
         {

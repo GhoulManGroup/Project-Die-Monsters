@@ -242,7 +242,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
         //Add that current dice from the deck to the dice object.
         sceneDice.GetComponent<SceneDieScript>().myDie = turnPlayer.GetComponent<Player>().diceDeck[diceShown];
         //Add this die scriptable object to our die object.
-        sceneDice.GetComponent<SceneDieScript>().setUpDie();
+        sceneDice.GetComponent<SceneDieScript>().StartCoroutine("setUpDie");
 
         //Remove that dice from the dice deck list
         turnPlayer.GetComponent<Player>().diceDeck.RemoveAt(diceShown);
