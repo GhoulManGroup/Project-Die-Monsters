@@ -49,6 +49,8 @@ public class AIRollManager : MonoBehaviour
             DiceSpawned.GetComponent<SceneDieScript>().myDie = diceToAdd;
             yield return DiceSpawned.GetComponent<SceneDieScript>().StartCoroutine("setUpDie");
         }
+
+        yield return new WaitForSeconds(4f);
         
         StartCoroutine("RollDice");
     }

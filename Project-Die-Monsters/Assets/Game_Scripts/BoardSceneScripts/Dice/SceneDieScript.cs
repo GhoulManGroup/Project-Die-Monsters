@@ -7,10 +7,16 @@ public class SceneDieScript : MonoBehaviour
 {
     [Header("Refrence Objects")]
     GameObject levelController;
+    myController turnController;
     public UIDiceController playerController;
     public AIRollManager AIController;
     InspectWindowController inspectTab;
 
+    enum myController
+    {
+        Player,
+        AI
+    }
 
     public bool diceSetUp; // If the dice has a creature inside.
     public string rollResult; // What the dice has rolled.
@@ -41,11 +47,13 @@ public class SceneDieScript : MonoBehaviour
         if (levelController.GetComponent<LevelController>().turnPlayerObject.GetComponent<Player>() != null)
         {
             playerController = levelController.GetComponent<UIDiceController>();
+            turnController = myController.Player;
         }
         else if (levelController.GetComponent<LevelController>().turnPlayerObject.GetComponent<AIOpponent>() != null)
         {
 
             AIController = GameObject.FindGameObjectWithTag("AIController").GetComponent<AIRollManager>();
+            turnController = myController.AI;
         }
         else
         {
@@ -64,7 +72,7 @@ public class SceneDieScript : MonoBehaviour
 
     public void OnMouseDown()
     {
-        if (playerController.GetComponent<UIDiceController>() != null)
+        if (turnController == myController.Player)
         {
             if (playerController.hasRolledDice == false)
             {
@@ -175,11 +183,11 @@ public class SceneDieScript : MonoBehaviour
             diceSetUp = true;
         }
 
-        if (playerController != null)
+        if (turnController == myController.Player)
         {
             playerController.CheckAllDiceSetUp();
         }
-        else if (AIController != null)
+        else if (turnController == myController.AI)
         {
 
         }
@@ -241,44 +249,44 @@ public class SceneDieScript : MonoBehaviour
                 {
                     case "one":
                         rollResult = "LC1";
-                        if (playerController.GetComponent<UIDiceController>()!= null)
+                        if (turnController == myController.Player)
                         {
                             playerController.lvl1Crest += 1;
                         }
-                        else if (AIController.GetComponent<UIDiceController>() != null)
+                        else if (turnController == myController.AI)
                         {
                             AIController.crest1Count += 1;   
                         }
 
                         break;
                     case "two":
-                        if (playerController.GetComponent<UIDiceController>() != null)
+                        if (turnController == myController.Player)
                         {
                             playerController.lvl2Crest += 1;
                         }
-                        else if (AIController.GetComponent<UIDiceController>() != null)
+                        else if (turnController == myController.AI)
                         {
                             AIController.crest2Count+= 1;
                         }
                         rollResult = "LC2";
                         break;
                     case "three":
-                        if (playerController.GetComponent<UIDiceController>() != null)
+                        if (turnController == myController.Player)
                         {
                             playerController.lvl3Crest += 1;
                         }
-                        else if (AIController.GetComponent<UIDiceController>() != null)
+                        else if (turnController == myController.AI)
                         {
                             AIController.crest3Count += 1;
                         }
                         rollResult = "LC3";
                         break;
                     case "four":
-                        if (playerController.GetComponent<UIDiceController>() != null)
+                        if (turnController == myController.Player)
                         {
                             playerController.lvl4Crest += 1;
                         }
-                        else if (AIController.GetComponent<UIDiceController>() != null)
+                        else if (turnController == myController.AI)
                         {
                             AIController.Crest4Count += 1;   
                         }
@@ -287,67 +295,67 @@ public class SceneDieScript : MonoBehaviour
                 }
                 rolledLevelCrest = true;
                 canBeChosen = true;
-                if (playerController.GetComponent<UIDiceController>() != null)
+                if (turnController == myController.Player)
                 {
                     playerController.summonCrestPool += 1;
                 }
-                else if (AIController.GetComponent<UIDiceController>() != null)
+                else if (turnController == myController.AI)
                 {
                     AIController.summonCrestPool += 1;
                 }
                 break;
             case "Attack":
                 rollResult = "Attack";
-                if (playerController.GetComponent<UIDiceController>() != null)
+                if (turnController == myController.Player)
                 {
                     playerController.turnPlayer.GetComponent<Player>().attackCrestPoints += 1;
                 }
-                else if (AIController.GetComponent<UIDiceController>() != null)
+                else if (turnController == myController.AI)
                 {
                     AIController.attackCrestPool += 1;
                 }
                 break;
             case "Defence":
                 rollResult = "Defence";
-                if (playerController.GetComponent<UIDiceController>() != null)
+                if (turnController == myController.Player)
                 {
                     playerController.turnPlayer.GetComponent<Player>().defenceCrestPoints += 1;
                 }
-                else if (AIController.GetComponent<UIDiceController>() != null)
+                else if (turnController == myController.AI)
                 {
                     AIController.defenceCrestPool+= 1;
                 }
                 break;
             case "AP":
                 rollResult = "AP";
-                if (playerController.GetComponent<UIDiceController>() != null)
+                if (turnController == myController.Player)
                 {
                     playerController.turnPlayer.GetComponent<Player>().abiltyPowerCrestPoints += 1;
                 }
-                else if (AIController.GetComponent<UIDiceController>() != null)
+                else if (turnController == myController.AI)
                 {
                     AIController.abilityCrestPool += 1;
                 }    
                 break;
             case "Move":
                 rollResult = "Move";
-                if (playerController.GetComponent<UIDiceController>() != null)
+                if (turnController == myController.Player)
                 {
                     //playerController.turnPlayer.GetComponent<Player>().moveCrestPoints += 1;
                 }
-                else if (AIController.GetComponent<UIDiceController>() != null)
+                else if (turnController == myController.Player)
                 {
                     //Do Nothing not in build anymore
                 }
                 break;
         }
 
-        if (playerController.GetComponent<UIDiceController>() != null)
+        if (turnController == myController.Player)
         {
             playerController.dicechecked += 1;
             playerController.CheckCanSummonCreature();
         }
-        else if (AIController.GetComponent<AIRollManager>() != null)
+        else if (turnController == myController.AI)
         {
             AIController.diceRolled += 1;
         }
