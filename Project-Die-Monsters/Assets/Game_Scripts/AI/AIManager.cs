@@ -6,9 +6,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class AIManager : MonoBehaviour
-{
-    public static GameManagerScript instance { get; private set; }
-
+{ 
+   
     AIDungeonSpawner LvlDungeonSpawner;
     LevelController LVLRef;
 
@@ -27,7 +26,7 @@ public class AIManager : MonoBehaviour
 
     [Header("PossibleActions")]
     public bool canPlaceCreature = false; //if dungeon can be expanded set to true
-    public bool hasCreture = false;
+    public bool hasCreature = false;
     public int canAttack = 0;
     public int abiltiesCanBeCast;
 
@@ -88,37 +87,44 @@ public class AIManager : MonoBehaviour
             yield return null;
         }
 
-        LVLRef.EndTurnFunction();
+        Debug.Log("Dice Phase Done");
 
+        StartCoroutine(TempSummonCreaturePhaseCall());
     }
 
-    public IEnumerator tempSummonCreaturePhaseCall()
+    public IEnumerator TempSummonCreaturePhaseCall()
     {
-        if (canPlaceCreature == true )
+        if (canPlaceCreature == true && hasCreature == true)
         {
             yield return LvlDungeonSpawner.StartCoroutine("PlaceDungeonAI");
             Debug.LogError("Spawning Creature can place creature");
         }
         else
         {
-            Debug.LogError("Reseting Spawner cant place crearture");
+            Debug.LogError("Either Dungeon Cant Expand " + canPlaceCreature +" Or No Creature to Spawn " + hasCreature);
             LvlDungeonSpawner.ResetSpawner();
         }
 
         canPlaceCreature = false;
+        hasCreature = false;
 
-        Debug.LogError("Path Check Done Start Dice");
+        Debug.Log("Dungeon Phase Done Proceed to Creature Action Phase");
+
+        StartCoroutine(CreatureActionPhase());
     }
 
 
     IEnumerator CreatureActionPhase()
     {
+
         yield return null;
+        yield return new WaitForSeconds(3f);
+        EndTurn();
     }
 
     public void EndTurn()
     {
-
+        LVLRef.EndTurnFunction();
     }
 
     //Start AI Turn
@@ -130,4 +136,12 @@ public class AIManager : MonoBehaviour
     //Display Dice Roll
 
     //Start AI Roll Manager
+
+    // check for creature
+
+    // expand dungeon
+
+    // give creature orders
+
+    // end turn
 }

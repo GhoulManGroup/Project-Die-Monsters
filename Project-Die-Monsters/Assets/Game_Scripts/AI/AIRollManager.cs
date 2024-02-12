@@ -6,15 +6,15 @@ using UnityEngine;
 public class AIRollManager : MonoBehaviour
 {
     GameObject LVLRef;
+    AIOpponent currentOpponent;
     AIManager mRef;
 
     [Header("3D Dice Rolling")]
     [SerializeField] GameObject diceFab;
     public List<GameObject> spawnPoints = new List<GameObject>();
     public List<GameObject> DiceToRoll = new List<GameObject>();
+    [HideInInspector] public Creature creaturePicked;
     
-
-
     [Header("Dice Value Weight System")]
     Die diceToAdd;
 
@@ -29,12 +29,17 @@ public class AIRollManager : MonoBehaviour
     [HideInInspector] public int defenceCrestPool = 0;
     [HideInInspector] public int abilityCrestPool = 0;
 
-
-    public IEnumerator SetUpAIDice()
+    public void Start()
     {
         mRef = this.GetComponent<AIManager>();
         LVLRef = GameObject.FindGameObjectWithTag("LevelController");
+    }
+
+    public IEnumerator SetUpAIDice()
+    {
+
         LVLRef.GetComponent<CameraController>().switchCamera("Dice");
+        currentOpponent = LVLRef.GetComponent<LevelController>().participants[LVLRef.GetComponent<LevelController>().currentTurnParticipant].GetComponent<AIOpponent>();
 
         mRef.PhaseDone = false;
 
@@ -57,32 +62,8 @@ public class AIRollManager : MonoBehaviour
 
     public void WhatDiceToAdd()
     {
-        diceToAdd = mRef.currentOpponent.GetComponent<AIOpponent>().myOpponent.OpponentDeck[0];
-        mRef.currentOpponent.GetComponent<AIOpponent>().myOpponent.OpponentDeck.RemoveAt(0);
-
-        /*
-        int lvl1CreatureCount = 0;
-        int lvl2CreatureCount = 0;
-        int lvl3CreatureCount = 0;
-        int lvl4CreatureCount = 0;
-
-        for (int i = 0; i < mRef.currentOpponent.GetComponent<AIOpponent>().myOpponent.OpponentDeck.Count; i++)
-        {
-            if (mRef.currentOpponent.GetComponent<AIOpponent>().myOpponent.OpponentDeck[i].dieCreatureLevel == Die.DieCreatureLevel.one)
-            {
-
-            }else if (mRef.currentOpponent.GetComponent<AIOpponent>().myOpponent.OpponentDeck[i].dieCreatureLevel == Die.DieCreatureLevel.two)
-            {
-
-            }else if (mRef.currentOpponent.GetComponent<AIOpponent>().myOpponent.OpponentDeck[i].dieCreatureLevel == Die.DieCreatureLevel.three)
-            {
-
-            }else if (mRef.currentOpponent.GetComponent<AIOpponent>().myOpponent.OpponentDeck[i].dieCreatureLevel == Die.DieCreatureLevel.four)
-            {
-
-            }
-        }
-        */
+        diceToAdd = mRef.currentOpponent.GetComponent<AIOpponent>().AIDiceDeck[0];
+        mRef.currentOpponent.GetComponent<AIOpponent>().AIDiceDeck.RemoveAt(0);
     }
 
     private IEnumerator RollDice()
@@ -107,38 +88,89 @@ public class AIRollManager : MonoBehaviour
 
     private IEnumerator ResolveCrests()
     {
-        for (int i = 0; i < DiceToRoll.Count; i++)
+
+        //If AI can expand its dungeon check for summon crests //Check for Duplicates to summon for free //Check Can Summon via spending summonCrests //Store unused Crests
+
+        if (mRef.canPlaceCreature == true)
         {
-            if (crest4Count >= 2 && DiceToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC4")
+            for (int i = 0; i < DiceToRoll.Count; i++)
             {
-
-            }
-            else if (crest3Count >= 2 && DiceToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC3")
-            {
-
-            }
-            else if (crest2Count >= 2 && DiceToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC2")
-            {
-
-            }
-            else if (crest1Count >= 2 && DiceToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC1")
-            {
-
+                if (crest4Count >= 2 && DiceToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC4")
+                {
+                    creaturePicked = DiceToRoll[i].GetComponent<SceneDieScript>().myDie.dieCreature;
+                    mRef.hasCreature = true;
+                    summonCrestPool = 0;
+                    break;
+                }
+                else if (crest3Count >= 2 && DiceToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC3")
+                {
+                    creaturePicked = DiceToRoll[i].GetComponent<SceneDieScript>().myDie.dieCreature;
+                    mRef.hasCreature = true;
+                    summonCrestPool = 0;
+                    break;
+                }
+                else if (crest2Count >= 2 && DiceToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC2")
+                {
+                    creaturePicked = DiceToRoll[i].GetComponent<SceneDieScript>().myDie.dieCreature;
+                    mRef.hasCreature = true;
+                    summonCrestPool = 0;
+                    break;
+                }
+                else if (crest1Count >= 2 && DiceToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC1")
+                {
+                    creaturePicked = DiceToRoll[i].GetComponent<SceneDieScript>().myDie.dieCreature;
+                    mRef.hasCreature = true;
+                    summonCrestPool = 0;
+                    break;
+                }
+                else if (DiceToRoll[i].GetComponent<SceneDieScript>().myDie.dieCreature.summonCost <= currentOpponent.summmonCrestPoints)
+                {
+                    creaturePicked = DiceToRoll[i].GetComponent<SceneDieScript>().myDie.dieCreature;
+                    currentOpponent.summmonCrestPoints -= DiceToRoll[i].GetComponent<SceneDieScript>().myDie.dieCreature.summonCost;
+                    mRef.hasCreature = true;
+                    summonCrestPool = 0;
+                    break;
+                }
             }
         }
 
- 
+        //Remove chosen dice from dice deck
+        //Add unused dice back to dice deck for AI
+        UpdateAICrests();
+        ClearDice();
 
-        //Check for Duplicates 
-
-        //Check Can Summon via Crest Count
-
-        //Store Crests
         yield return null;
+
+        mRef.PhaseDone = true;
     }
 
-    void updateAICrests()
+    void UpdateAICrests()
+    {
+        currentOpponent.summmonCrestPoints += summonCrestPool;
+        currentOpponent.attackCrestPoints += attackCrestPool;
+        currentOpponent.abiltyPowerCrestPoints += abilityCrestPool;
+        currentOpponent.defenceCrestPoints += defenceCrestPool;
+
+        crest1Count = 0;
+        crest2Count = 0;
+        crest3Count = 0;
+        crest4Count = 0;
+        summonCrestPool = 0;
+        attackCrestPool = 0;
+        defenceCrestPool = 0;
+        abilityCrestPool = 0;
+    }
+
+    void ClearDice()
     {
 
+
+        foreach (var item in DiceToRoll)
+        {
+            Destroy(item.gameObject);
+        }
+
+        DiceToRoll.Clear();
+        diceRolled = 0;
     }
 }

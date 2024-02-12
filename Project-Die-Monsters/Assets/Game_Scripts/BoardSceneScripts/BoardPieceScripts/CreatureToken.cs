@@ -60,7 +60,7 @@ public class CreatureToken : MonoBehaviour
         myOwner = lcScript.currentTurnParticipant.ToString();  //set my owner to either player+ playerslotnumber or AI.
 
         //Check for either a player script or opponent script then pull the desired creature from the correct objects creaturelist and assign it to the creature piece. 
-        if (lcScript.participants[lcScript.currentTurnParticipant].GetComponent<Player>() != null && myOwner != "AI")
+        if (lcScript.participants[lcScript.currentTurnParticipant].GetComponent<Player>() != null)
         {
             /*
             if (lcScript.creaturePlacedFrom == "CreaturePool") //Cut From current Build as an option due to slow game pacing
@@ -82,10 +82,9 @@ public class CreatureToken : MonoBehaviour
             lvlRef.GetComponent<LevelController>().CanEndTurn();
         }
 
-        if (myOwner == "AI") // change to opponent
+        if (myOwner == "1" && lcScript.participants[lcScript.currentTurnParticipant].GetComponent<AIOpponent>() != null) // change to opponent
         {
-            myCreature = GameObject.FindGameObjectWithTag("AIManager").GetComponent<AIRollManager>().cr 
-
+            myCreature = GameObject.FindGameObjectWithTag("AIController").GetComponent<AIRollManager>().creaturePicked;
         }
 
         this.GetComponent<AbilityManager>().myAbility = this.myCreature.myAbility;
