@@ -84,7 +84,7 @@ public class CreatureToken : MonoBehaviour
 
         if (myOwner == "AI") // change to opponent
         {
-            //Add creature to AI creature controller script 
+            myCreature = GameObject.FindGameObjectWithTag("AIManager").GetComponent<AIRollManager>().cr 
 
         }
 

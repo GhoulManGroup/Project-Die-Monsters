@@ -288,13 +288,16 @@ public class SceneDieScript : MonoBehaviour
                         }
                         else if (turnController == myController.AI)
                         {
-                            AIController.Crest4Count += 1;   
+                            AIController.crest4Count += 1;   
                         }
                         rollResult = "LC4";
                         break;
                 }
+
                 rolledLevelCrest = true;
+
                 canBeChosen = true;
+
                 if (turnController == myController.Player)
                 {
                     playerController.summonCrestPool += 1;

@@ -23,7 +23,7 @@ public class AIRollManager : MonoBehaviour
     [HideInInspector] public int crest1Count = 0;
     [HideInInspector] public int crest2Count = 0;
     [HideInInspector] public int crest3Count = 0;
-    [HideInInspector] public int Crest4Count = 0;
+    [HideInInspector] public int crest4Count = 0;
     [HideInInspector] public int summonCrestPool = 0;
     [HideInInspector] public int attackCrestPool = 0;
     [HideInInspector] public int defenceCrestPool = 0;
@@ -102,10 +102,43 @@ public class AIRollManager : MonoBehaviour
 
         Debug.Log("Dice Rolled And Results Checked");
 
+        StartCoroutine(ResolveCrests());
     }
 
-    private IEnumerator countCrests()
+    private IEnumerator ResolveCrests()
     {
+        for (int i = 0; i < DiceToRoll.Count; i++)
+        {
+            if (crest4Count >= 2 && DiceToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC4")
+            {
+
+            }
+            else if (crest3Count >= 2 && DiceToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC3")
+            {
+
+            }
+            else if (crest2Count >= 2 && DiceToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC2")
+            {
+
+            }
+            else if (crest1Count >= 2 && DiceToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC1")
+            {
+
+            }
+        }
+
+ 
+
+        //Check for Duplicates 
+
+        //Check Can Summon via Crest Count
+
+        //Store Crests
         yield return null;
+    }
+
+    void updateAICrests()
+    {
+
     }
 }
