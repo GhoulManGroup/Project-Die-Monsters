@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class AICreatureController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public List<GameObject> myCreatures = new List<GameObject>();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    // for each creature check possible actions that can be taken
+
+    //Attack
+
+    //Move
+
+    //Ability 
+
 }

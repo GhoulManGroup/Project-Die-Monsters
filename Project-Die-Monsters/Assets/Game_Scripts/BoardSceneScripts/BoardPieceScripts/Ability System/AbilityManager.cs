@@ -37,18 +37,18 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
         {
             if (trigger == myAbility.howTriggered.ToString())
             {
-                Debug.Log("Trigger Match" + trigger + myAbility.howTriggered);
+                //Debug.Log("Trigger Match" + trigger + myAbility.howTriggered);
                 TriggeringCreature = triggeredBy;
                 AbilityWindow.creaturesToTrigger.Add(this.gameObject);
             }
             else
             {
-                Debug.Log("Trigger Not Matched" + trigger + myAbility.howTriggered);
+                //Debug.Log("Trigger Not Matched" + trigger + myAbility.howTriggered);
             }
         }
         else
         {
-            Debug.Log("No Trigger On Creature" + this.gameObject.name);
+            //Debug.Log("No Trigger On Creature" + this.gameObject.name);
         }
     }
 

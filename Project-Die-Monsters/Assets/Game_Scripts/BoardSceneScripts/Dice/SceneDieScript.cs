@@ -106,8 +106,6 @@ public class SceneDieScript : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log("Dice Setup Done " + this.gameObject.name);
-
         // Reset the contents of my face crest list before we add the new ones.
         myFaceCrests.Clear();
         //Check each enum in MyDie, and add the results to mycrest list as a string.

@@ -100,7 +100,7 @@ public class AIDungeonSpawner : MonoBehaviour
                 if (spawnPointsToCheck[i].GetComponent<GridScript>().distanceFromPlayerDungeonLord < checkHere.GetComponent<GridScript>().distanceFromPlayerDungeonLord)
                 {
                     checkHere = spawnPointsToCheck[i];
-                    Debug.LogError("Replaced Spawn Point for Closer Point Tile");
+                    //Debug.LogError("Replaced Spawn Point for Closer Point Tile");
                 }
             }
 
@@ -152,19 +152,15 @@ public class AIDungeonSpawner : MonoBehaviour
             //Loop through each possible style of pattern on the board then call check dungeon pattern to see if that position / pattern results in a valid placement.
             spawnPattern[i].GetComponent<DungeonPatternScript>().ApplyPattern();
 
-            //StartCoroutine("CheckDungeonPattern");
-            Debug.LogError(spawnPattern[i].gameObject.name);
             CheckDungeonPattern();
 
             while (WaitCheck.Contains("CDP"))
             {
-                Debug.LogError("Inside While Loop CDP");
                 yield return null;
             }
 
             if (CanPlaceHere == true)
             {
-                Debug.Log("Check Done Pattern / Location Found");
                 patternToSpawnFrom = spawnPattern[i].gameObject;
                 WaitCheck.Remove("CICP");
                 break;
@@ -172,7 +168,6 @@ public class AIDungeonSpawner : MonoBehaviour
             else
             {
                 rotationAttempts = 1;
-                Debug.Log("Swapping Pattern");
             }
         }
 

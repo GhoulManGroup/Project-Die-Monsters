@@ -21,14 +21,10 @@ public class AIManager : MonoBehaviour
     [HideInInspector]
     public bool PhaseDone = false;
 
-    [Header("Resources")]
-    public List<GameObject> myCreatures = new List<GameObject>();
-
     [Header("PossibleActions")]
     public bool canPlaceCreature = false; //if dungeon can be expanded set to true
-    public bool hasCreature = false;
-    public int canAttack = 0;
-    public int abiltiesCanBeCast;
+    public bool hasCreatureToPlace = false; // did dice roll result in summonable creature
+    [HideInInspector] public bool hasCreature = false; // If false skip creature action phase 
 
     public void Start()
     {
@@ -55,7 +51,6 @@ public class AIManager : MonoBehaviour
 
     public IEnumerator CheckDungeonCanExpand()
     {
-        Debug.LogError(LvlDungeonSpawner.MyStartTile.gameObject.name);
         LvlDungeonSpawner.tilesToCheck.Add(LvlDungeonSpawner.MyStartTile.gameObject);
 
         LvlDungeonSpawner.AITileCheck("CheckSpawnLocations");
@@ -94,19 +89,19 @@ public class AIManager : MonoBehaviour
 
     public IEnumerator TempSummonCreaturePhaseCall()
     {
-        if (canPlaceCreature == true && hasCreature == true)
+        if (canPlaceCreature == true && hasCreatureToPlace == true)
         {
             yield return LvlDungeonSpawner.StartCoroutine("PlaceDungeonAI");
             Debug.LogError("Spawning Creature can place creature");
         }
         else
         {
-            Debug.LogError("Either Dungeon Cant Expand " + canPlaceCreature +" Or No Creature to Spawn " + hasCreature);
+            Debug.LogError("Either Dungeon Cant Expand " + canPlaceCreature +" Or No Creature to Spawn " + hasCreatureToPlace);
             LvlDungeonSpawner.ResetSpawner();
         }
 
         canPlaceCreature = false;
-        hasCreature = false;
+        hasCreatureToPlace = false;
 
         Debug.Log("Dungeon Phase Done Proceed to Creature Action Phase");
 

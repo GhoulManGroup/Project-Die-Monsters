@@ -69,8 +69,6 @@ public class AIRollManager : MonoBehaviour
     private IEnumerator RollDice()
     {
 
-        Debug.LogError("Inisde THe Menbrane");
-
         for (int i = 0; i < DiceToRoll.Count; i++)
         {
             DiceToRoll[i].GetComponent<SceneDieScript>().spinDie();
@@ -98,28 +96,28 @@ public class AIRollManager : MonoBehaviour
                 if (crest4Count >= 2 && DiceToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC4")
                 {
                     creaturePicked = DiceToRoll[i].GetComponent<SceneDieScript>().myDie.dieCreature;
-                    mRef.hasCreature = true;
+                    mRef.hasCreatureToPlace = true;
                     summonCrestPool = 0;
                     break;
                 }
                 else if (crest3Count >= 2 && DiceToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC3")
                 {
                     creaturePicked = DiceToRoll[i].GetComponent<SceneDieScript>().myDie.dieCreature;
-                    mRef.hasCreature = true;
+                    mRef.hasCreatureToPlace = true;
                     summonCrestPool = 0;
                     break;
                 }
                 else if (crest2Count >= 2 && DiceToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC2")
                 {
                     creaturePicked = DiceToRoll[i].GetComponent<SceneDieScript>().myDie.dieCreature;
-                    mRef.hasCreature = true;
+                    mRef.hasCreatureToPlace = true;
                     summonCrestPool = 0;
                     break;
                 }
                 else if (crest1Count >= 2 && DiceToRoll[i].GetComponent<SceneDieScript>().rollResult == "LC1")
                 {
                     creaturePicked = DiceToRoll[i].GetComponent<SceneDieScript>().myDie.dieCreature;
-                    mRef.hasCreature = true;
+                    mRef.hasCreatureToPlace = true;
                     summonCrestPool = 0;
                     break;
                 }
@@ -127,7 +125,7 @@ public class AIRollManager : MonoBehaviour
                 {
                     creaturePicked = DiceToRoll[i].GetComponent<SceneDieScript>().myDie.dieCreature;
                     currentOpponent.summmonCrestPoints -= DiceToRoll[i].GetComponent<SceneDieScript>().myDie.dieCreature.summonCost;
-                    mRef.hasCreature = true;
+                    mRef.hasCreatureToPlace = true;
                     summonCrestPool = 0;
                     break;
                 }
@@ -140,12 +138,14 @@ public class AIRollManager : MonoBehaviour
         ClearDice();
 
         yield return null;
-
+        LVLRef.GetComponent<CameraController>().switchCamera("Board");
         mRef.PhaseDone = true;
     }
 
     void UpdateAICrests()
     {
+
+        Debug.Log(summonCrestPool + "AIGains This many Summon Crests");
         currentOpponent.summmonCrestPoints += summonCrestPool;
         currentOpponent.attackCrestPoints += attackCrestPool;
         currentOpponent.abiltyPowerCrestPoints += abilityCrestPool;
@@ -167,10 +167,16 @@ public class AIRollManager : MonoBehaviour
 
         foreach (var item in DiceToRoll)
         {
+            if (item.GetComponent<SceneDieScript>().myDie.dieCreature != creaturePicked)
+            {
+                mRef.currentOpponent.GetComponent<AIOpponent>().AIDiceDeck.Add(item.GetComponent<SceneDieScript>().myDie);
+            }
             Destroy(item.gameObject);
         }
 
         DiceToRoll.Clear();
         diceRolled = 0;
+
+        Debug.Log(mRef.currentOpponent.GetComponent<AIOpponent>().AIDiceDeck.Count);
     }
 }
