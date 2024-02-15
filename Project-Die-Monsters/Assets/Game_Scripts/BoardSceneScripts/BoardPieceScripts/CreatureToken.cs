@@ -306,6 +306,7 @@ public class CreatureToken : MonoBehaviour
                 case "None":
                     if (myOwner == lvlRef.GetComponent<LevelController>().currentTurnParticipant.ToString())
                     {
+                        //Add Is Player CHeck
                         myBoardLocation.GetComponent<GridScript>().IsAnyMovementPossible();
                         lvlRef.GetComponent<CameraController>().switchCamera("Board");
                         lvlRef.GetComponent<PlayerCreatureController>().ChosenAction = "None";
@@ -313,6 +314,8 @@ public class CreatureToken : MonoBehaviour
                         lcScript.ableToInteractWithBoard = false;
                         lvlRef.GetComponent<PlayerCreatureController>().OpenAndCloseControllerUI();
                         CheckForAttackTarget();
+
+                        //Add Is AI Check
                     }
                     break;
             }

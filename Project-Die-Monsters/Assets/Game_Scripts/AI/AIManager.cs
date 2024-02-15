@@ -111,9 +111,25 @@ public class AIManager : MonoBehaviour
 
     IEnumerator CreatureActionPhase()
     {
+        PhaseDone = false;
 
-        yield return null;
+        if (this.GetComponent<AICreatureController>().myCreatures.Count != 0)
+        {
+            this.GetComponent<AICreatureController>().StartCoroutine("PerformAction");
+
+            while(PhaseDone == false)
+            {
+                yield return null;
+            }
+        }
+        else
+        {
+            PhaseDone = true;
+            Debug.Log("No Creature To Act");
+        }
+
         yield return new WaitForSeconds(3f);
+
         EndTurn();
     }
 
