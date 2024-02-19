@@ -19,7 +19,7 @@ public class PathController : MonoBehaviour
 
     public List<GameObject> tilesToCheck = new List<GameObject>(); // What tiles we want to check the state of its neighbours
     public List<GameObject> checkedTiles = new List<GameObject>();
-    public List<GameObject> reachableTiles = new List<GameObject>();
+    public List<GameObject> reachableTiles = new List<GameObject>(); //AI Go through this list and pick the one with the lowest value. 
     public List<GameObject> chosenPathTiles = new List<GameObject>();
 
     public int possibleMoveDistance; 

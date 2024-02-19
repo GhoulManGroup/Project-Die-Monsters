@@ -6402,6 +6402,7 @@ GameObject:
   - component: {fileID: 772255054}
   - component: {fileID: 772255055}
   - component: {fileID: 772255056}
+  - component: {fileID: 772255057}
   m_Layer: 0
   m_Name: '#AIController'
   m_TagString: AIController
@@ -6440,11 +6441,9 @@ MonoBehaviour:
   currentAction: {fileID: 356088741}
   currentActionText: {fileID: 1495314519}
   PhaseDone: 0
-  myCreatures: []
   canPlaceCreature: 0
-  hasCreture: 0
-  canAttack: 0
-  abiltiesCanBeCast: 0
+  hasCreatureToPlace: 0
+  hasCreature: 0
 --- !u!114 &772255056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6463,15 +6462,29 @@ MonoBehaviour:
   - {fileID: 1342201825}
   - {fileID: 1353850599}
   DiceToRoll: []
+  creaturePicked: {fileID: 0}
   diceRolled: 0
   crest1Count: 0
   crest2Count: 0
   crest3Count: 0
-  Crest4Count: 0
+  crest4Count: 0
   summonCrestPool: 0
   attackCrestPool: 0
   defenceCrestPool: 0
   abilityCrestPool: 0
+--- !u!114 &772255057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 772255052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c122758df4741ed429340e7b35e254b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myCreatures: []
 --- !u!1 &780854274
 GameObject:
   m_ObjectHideFlags: 0

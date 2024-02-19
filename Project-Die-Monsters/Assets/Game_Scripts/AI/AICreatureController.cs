@@ -5,10 +5,21 @@ using UnityEngine;
 public class AICreatureController : MonoBehaviour
 {
     public List<GameObject> myCreatures = new List<GameObject>();
-    
+
+    PathController pathfinding;
+
+    public void Start()
+    {
+        pathfinding = GameObject.FindGameObjectWithTag("LevelController").GetComponent<PathController>();
+    }
 
     public IEnumerator PerformAction()
     {
+
+        //Check Creature can do any of the three actions // Then Do them Then Check Again till all actions are false
+
+        // Add this check for all creatures in list so do a diffrent corutine I suppose.
+
         yield return StartCoroutine(AICreatureAttack());
 
         yield return StartCoroutine(AICreatureCastAbility());
@@ -29,6 +40,25 @@ public class AICreatureController : MonoBehaviour
 
     IEnumerator AICreatureMove()
     {
+        pathfinding.StartCoroutine("DeclarePathfindingConditions", myCreatures[0]);
+
+        GameObject tileChosen = pathfinding.reachableTiles[0];
+
+        for (int i = 0; i < pathfinding.reachableTiles.Count; i++)
+        {
+            if (pathfinding.reachableTiles[i].GetComponent<GridScript>().distanceFromPlayerDungeonLord < tileChosen.GetComponent<GridScript>().distanceFromPlayerDungeonLord)
+            {
+                Debug.Log("Found Closer Tile Move to this instead");
+                tileChosen = pathfinding.reachableTiles[i];
+            }
+        }
+
+        pathfinding.desiredPosition = tileChosen;
+        pathfinding.tilesToCheck.Clear();
+        pathfinding.tilesToCheck.Add(pathfinding.desiredPosition);
+        pathfinding.EstablishPossibleMoves("FindPath");
+ 
+        // Pick by declaring the tile that is in possible moves in path controller with the loqest tile value
         yield return null;
     }
 
