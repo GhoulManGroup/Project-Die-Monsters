@@ -85,6 +85,7 @@ public class CreatureToken : MonoBehaviour
         if (myOwner == "1" && lcScript.participants[lcScript.currentTurnParticipant].GetComponent<AIOpponent>() != null) // change to opponent
         {
             myCreature = GameObject.FindGameObjectWithTag("AIController").GetComponent<AIRollManager>().creaturePicked;
+            GameObject.FindGameObjectWithTag("AIController").GetComponent<AICreatureController>().myCreatures.Add(this.gameObject);
         }
 
         this.GetComponent<AbilityManager>().myAbility = this.myCreature.myAbility;

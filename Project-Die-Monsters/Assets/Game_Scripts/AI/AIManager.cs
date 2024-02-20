@@ -115,7 +115,7 @@ public class AIManager : MonoBehaviour
 
         if (this.GetComponent<AICreatureController>().myCreatures.Count != 0)
         {
-            this.GetComponent<AICreatureController>().StartCoroutine("PerformAction");
+            this.GetComponent<AICreatureController>().StartCoroutine("PerformActions");
 
             while(PhaseDone == false)
             {

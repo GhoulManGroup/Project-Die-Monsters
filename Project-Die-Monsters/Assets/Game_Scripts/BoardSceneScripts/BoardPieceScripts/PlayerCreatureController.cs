@@ -66,7 +66,7 @@ public class PlayerCreatureController : MonoBehaviour
         if (ChosenAction == "None")
         {
             //Check if the creature has already moved this turn.
-            if (ChosenCreatureToken.GetComponent<CreatureToken>().hasMovedThisTurn == false)
+            if (ChosenCreatureToken.GetComponent<CreatureToken>().hasMovedThisTurn == false && ableToMove == true)
             {
                 OrderBTNS[0].GetComponent<Button>().interactable = true;
 
