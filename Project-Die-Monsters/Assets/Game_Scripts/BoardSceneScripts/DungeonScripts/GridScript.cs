@@ -294,6 +294,7 @@ public class GridScript : MonoBehaviour
 
 
     #region PlayerCreatureMovementCode
+    /* Possible old movement code
     public void IsAnyMovementPossible() 
     {
         LvlRef.GetComponent<PlayerCreatureController>().ableToMove = false;
@@ -305,7 +306,7 @@ public class GridScript : MonoBehaviour
                 LvlRef.GetComponent<PlayerCreatureController>().ableToMove = true;
             }
         }
-    }
+    }*/
 
     public void FindPossibleMovements()
     {
@@ -328,8 +329,7 @@ public class GridScript : MonoBehaviour
                         //Then if all these conditions are met we add the tile to the list to check and increase that tiles distancefromstart by 1 space to indicate its 1 away from this tile.
                         LvlRef.GetComponent<PathController>().tilesToCheck.Add(Neighbours[i].gameObject);
                         Neighbours[i].gameObject.GetComponent<GridScript>().distanceFromStartTile = distanceFromStartTile + 1;
-                        Neighbours[i].gameObject.GetComponent<GridScript>().SetIndicatorMaterial("MoveSpace");
-                        Neighbours[i].gameObject.GetComponent<GridScript>().updateTMPRO();
+
                         //Add the neighbour to the list of possible tiles to move to.
                         LvlRef.GetComponent<PathController>().reachableTiles.Add(Neighbours[i].gameObject);
                     }
@@ -342,6 +342,12 @@ public class GridScript : MonoBehaviour
         LvlRef.GetComponent<PathController>().EstablishPossibleMoves("CheckPossibleMoves");
     }
 
+    public void ShowPossibleMovements()
+    {
+        this.SetIndicatorMaterial("MoveSpace");
+        updateTMPRO();
+    }
+    
     public void FindPossiblePathToStart()
     {
         //This list exists to pick a path if there are branching valid choices back.
@@ -356,14 +362,12 @@ public class GridScript : MonoBehaviour
                     if (Neighbours[i].GetComponent<GridScript>().distanceFromStartTile == distanceFromStartTile - 1)
                     {//Then encase there are multiple vaild routes back to start we add it to duplicates so we can randomly pick one of those neighbour tiles once we found them all.
                         dupliacteProtect.Add(Neighbours[i]);
-                       // Debug.Log("Not Start Check for duplicates");
                     }
                 }            
             }//Else if it is start we found our intended move spot so stop the function.
             else if (Neighbours[i] == LvlRef.GetComponent<PathController>().startPosition)
             {
                 LvlRef.GetComponent<PathController>().tilesToCheck.Remove(this.gameObject);
-                //LvlRef.GetComponent<PathController>().chosenPathTiles.Add(Neighbours[i]); Cant add start since we don't want to move into that spot just end the search for it.
                 LvlRef.GetComponent<PathController>().EstablishPossibleMoves("FindPath");
                 return;
             }
@@ -438,7 +442,7 @@ public class GridScript : MonoBehaviour
     {
         if (GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>().boardInteraction == "Move")
         {
-            if (LvlRef.GetComponent<PathController>().reachableTiles.Contains(this.gameObject) && LvlRef.GetComponent<PathController>().allowedToMove == true)
+            if (LvlRef.GetComponent<PathController>().reachableTiles.Contains(this.gameObject) && LvlRef.GetComponent<PathController>().possibleToMove == true)
             {
                 if (LvlRef.GetComponent<PathController>().quickMove == false)
                 {
@@ -453,7 +457,7 @@ public class GridScript : MonoBehaviour
                     MoveCreaturetome();
                 }
 
-                LvlRef.GetComponent<PathController>().allowedToMove = false;
+                LvlRef.GetComponent<PathController>().possibleToMove = false;
             }
             else
             {

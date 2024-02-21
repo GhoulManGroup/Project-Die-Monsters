@@ -307,8 +307,7 @@ public class CreatureToken : MonoBehaviour
                 case "None":
                     if (myOwner == lvlRef.GetComponent<LevelController>().currentTurnParticipant.ToString())
                     {
-                        //Add Is Player CHeck
-                        myBoardLocation.GetComponent<GridScript>().IsAnyMovementPossible();
+                        // myBoardLocation.GetComponent<GridScript>().IsAnyMovementPossible();
                         lvlRef.GetComponent<CameraController>().switchCamera("Board");
                         lvlRef.GetComponent<PlayerCreatureController>().ChosenAction = "None";
                         lvlRef.GetComponent<PlayerCreatureController>().ChosenCreatureToken = this.gameObject;

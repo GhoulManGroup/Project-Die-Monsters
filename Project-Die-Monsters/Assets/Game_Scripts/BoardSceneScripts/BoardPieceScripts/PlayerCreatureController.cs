@@ -15,6 +15,7 @@ public class PlayerCreatureController : MonoBehaviour
     GameObject mRef; //Game Manager
     GameObject lvlRef;
     LevelController lcScript;
+    PathController pathfinding;
 
     [Header("Order UI")]
     public List <GameObject> OrderBTNS = new List<GameObject>();
@@ -34,6 +35,8 @@ public class PlayerCreatureController : MonoBehaviour
         mRef = GameObject.FindGameObjectWithTag("GameController");
         lvlRef = GameObject.FindGameObjectWithTag("LevelController");
         lcScript = lvlRef.GetComponent<LevelController>();
+        pathfinding = lvlRef.GetComponent<PathController>();
+        
         ChosenAction = "None";
         OpenAndCloseControllerUI();
     }
@@ -48,6 +51,7 @@ public class PlayerCreatureController : MonoBehaviour
                 OrderBTNS[i].GetComponent<Button>().interactable = false;
                 OrderBTNS[i].gameObject.SetActive(true);
             }
+
             CheckPossibleActions();
         }
 
@@ -65,8 +69,10 @@ public class PlayerCreatureController : MonoBehaviour
     {
         if (ChosenAction == "None")
         {
-            //Check if the creature has already moved this turn.
-            if (ChosenCreatureToken.GetComponent<CreatureToken>().hasMovedThisTurn == false && ableToMove == true)
+            //Check Can Move Here Rather than On Mouse Down On Creature
+            lvlRef.GetComponent<PathController>().DeclarePathfindingConditions(ChosenCreatureToken);
+
+            if (ChosenCreatureToken.GetComponent<CreatureToken>().hasMovedThisTurn == false && pathfinding.possibleToMove == true)
             {
                 OrderBTNS[0].GetComponent<Button>().interactable = true;
 
@@ -143,7 +149,8 @@ public class PlayerCreatureController : MonoBehaviour
                     lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = true;
                     ChosenAction = "Move";
                     lvlRef.GetComponent<LevelController>().boardInteraction = "Move";
-                    lvlRef.GetComponent<PathController>().DeclarePathfindingConditions(ChosenCreatureToken);
+                    pathfinding.EstablishPossibleMoves("ShowPossibleMoves");
+                    //lvlRef.GetComponent<PathController>().DeclarePathfindingConditions(ChosenCreatureToken);
                 }
                 break;
 
@@ -174,6 +181,7 @@ public class PlayerCreatureController : MonoBehaviour
                     case "None":
                         //Close Creature Order UI.
                         ChosenCreatureToken.GetComponent<AbilityManager>().ResetAbilitySystem();
+                        pathfinding.ResetBoard("Reset");
                         CancleBTNFunction();
                         break;
 
@@ -191,14 +199,13 @@ public class PlayerCreatureController : MonoBehaviour
 
                     case "Move":
                         lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;
-                        lvlRef.GetComponent<PathController>().ResetBoard("Reset");
                         lvlRef.GetComponent<LevelController>().boardInteraction = "None";
+                        pathfinding.ResetBoard("Reset");
                         ChosenAction = "None";
                         break;
                 }
                 break;
         }
-
         OpenAndCloseControllerUI();
     }
 

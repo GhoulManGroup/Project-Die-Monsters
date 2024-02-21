@@ -19,7 +19,7 @@ public class AICreatureController : MonoBehaviour
     public IEnumerator PerformActions()
     {
         creature = myCreatures[0].GetComponent<CreatureToken>();
-
+        pathfinding.StartCoroutine("DeclarePathfindingConditions", creature);
 
         //Check Creature can do any of the three actions // Then Do them Then Check Again till all actions are false
 
@@ -29,10 +29,8 @@ public class AICreatureController : MonoBehaviour
 
         yield return StartCoroutine(AICreatureCastAbility());
 
-        if (CanMove())
-        {
-            yield return StartCoroutine(AICreatureMove());
-        }
+        yield return StartCoroutine(AICreatureMove());
+        
 
         yield return null;
     }
@@ -49,7 +47,6 @@ public class AICreatureController : MonoBehaviour
 
     IEnumerator AICreatureMove()
     {
-        pathfinding.StartCoroutine("DeclarePathfindingConditions", myCreatures[0]);
 
         GameObject tileChosen = pathfinding.reachableTiles[0];
 
@@ -69,11 +66,6 @@ public class AICreatureController : MonoBehaviour
  
         // Pick by declaring the tile that is in possible moves in path controller with the loqest tile value
         yield return null;
-    }
-
-    bool CanMove()
-    {
-        
     }
 
     // for each creature check possible actions that can be taken

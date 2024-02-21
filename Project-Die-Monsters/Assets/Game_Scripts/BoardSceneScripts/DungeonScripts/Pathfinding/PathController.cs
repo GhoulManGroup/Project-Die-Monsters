@@ -6,7 +6,7 @@ public class PathController : MonoBehaviour
 { // This class is our controller script for player related use of pathfinding in our project.
     [Header("PlaceHolder Constraints")]
     public bool quickMove = false;
-    public bool allowedToMove = false;
+    public bool possibleToMove = false;
 
     [Header("Declerations")]
     GameObject levelController;
@@ -57,16 +57,23 @@ public class PathController : MonoBehaviour
             if (tilesToCheck.Count != 0)
             {
                 tilesToCheck[0].GetComponent<GridScript>().FindPossibleMovements();
-
             }
             else if (tilesToCheck.Count == 0)
             {
                 if (reachableTiles.Count != 0)
                 {
-                    allowedToMove = true;                
+                    possibleToMove = true;
                 }
             }
         }
+        else if (checkWhat == "ShowPossibleMoves")
+        {
+            for (int i = 0; i < reachableTiles.Count; i++)
+            {
+                reachableTiles[i].GetComponent<GridScript>().ShowPossibleMovements();
+            }
+        }
+
         else if (checkWhat == "FindPath") 
         {                   
             if (tilesToCheck.Count != 0)
