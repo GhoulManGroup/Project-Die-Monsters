@@ -147,8 +147,14 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
         if (effectsCanBeDone == myAbility.abilityEffects.Count)
         {
             canBeCast = true;
+
             Debug.Log("AbilityCanBeCast");
-            GameObject.FindGameObjectWithTag("LevelController").GetComponent<PlayerCreatureController>().CheckPossibleActions();
+
+            if (lvlRef.turnPlayerObject.GetComponent<Player>() != null)
+            {
+                GameObject.FindGameObjectWithTag("LevelController").GetComponent<PlayerCreatureController>().CheckPossibleActions();
+            }
+
         }else if (effectsCanBeDone != myAbility.abilityEffects.Count)
         {
             Debug.Log("AbilityCantBeCast");

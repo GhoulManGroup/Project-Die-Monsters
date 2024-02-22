@@ -8,6 +8,8 @@ public class AICreatureController : MonoBehaviour
 
     PathController pathfinding;
     CreatureToken creature;
+    AbilityManager ability;
+    bool actionsDone = false;
 
     public bool creatureCheckDone = false;
 
@@ -16,10 +18,46 @@ public class AICreatureController : MonoBehaviour
         pathfinding = GameObject.FindGameObjectWithTag("LevelController").GetComponent<PathController>();
     }
 
-    public IEnumerator PerformActions()
+    public IEnumerator ActionPhase()
     {
-        creature = myCreatures[0].GetComponent<CreatureToken>();
-        pathfinding.StartCoroutine("DeclarePathfindingConditions", creature);
+        for (int i = 0; i < myCreatures.Count; i++)
+        {
+            creature = myCreatures[0].GetComponent<CreatureToken>();
+            ability = myCreatures[0].GetComponent<AbilityManager>();
+            CheckPossibleActions();
+            actionsDone = false;
+            yield return PerformActions();
+
+            while(actionsDone == false)
+            {
+                yield return null;
+            }
+        }
+
+        yield return null;
+    }
+
+    public void CheckPossibleActions()
+    {
+        pathfinding.StartCoroutine("DeclarePathfindingConditions", myCreatures[0]);
+    }
+
+    IEnumerator PerformActions()
+    {
+        if (creature.canReachTarget == true)
+        {
+
+        }
+
+        if (ability.canBeCast == true)
+        {
+
+        }
+
+        if (pathfinding.possibleToMove == true)
+        {
+
+        }
 
         //Check Creature can do any of the three actions // Then Do them Then Check Again till all actions are false
 
@@ -31,8 +69,6 @@ public class AICreatureController : MonoBehaviour
 
         yield return StartCoroutine(AICreatureMove());
         
-
-        yield return null;
     }
 
     IEnumerator AICreatureAttack()
@@ -68,12 +104,5 @@ public class AICreatureController : MonoBehaviour
         yield return null;
     }
 
-    // for each creature check possible actions that can be taken
-
-    //Attack
-
-    //Move
-
-    //Ability 
 
 }
