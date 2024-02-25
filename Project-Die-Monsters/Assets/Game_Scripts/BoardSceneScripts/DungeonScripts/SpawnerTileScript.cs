@@ -11,12 +11,12 @@ public class SpawnerTileScript : MonoBehaviour
     public bool amSpawnTile; // this bool simply identifies which of the six dungeon tiles needs to tell the bellow board tile to spawn a creature rather than adding in calls ect.
 
     public List<Material> myMat = new List<Material>();
-    DungeonSpawner DungeonSpawner;
+    DungeonSpawner LvlDungeonSpawner;
 
     // Start is called before the first frame update
     void Start()
     {
-        DungeonSpawner = GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>();
+        LvlDungeonSpawner = GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>();
         UpdateMaterial();
     }
 
@@ -87,15 +87,15 @@ public class SpawnerTileScript : MonoBehaviour
             // reset dungeonSpawner position rotation / pattern to last acceptable one to prevent the infinte loop.
             if (lastInput == "Move")
             {
-                DungeonSpawner.transform.position = DungeonSpawner.lastPos;
+                LvlDungeonSpawner.transform.position = LvlDungeonSpawner.lastPos;
             }else if (lastInput == "Rotate")
             {
-            DungeonSpawner.transform.rotation = DungeonSpawner.lastRotation;
+            LvlDungeonSpawner.transform.rotation = LvlDungeonSpawner.lastRotation;
             }else if (lastInput == "PatternChange")
             {
-            DungeonSpawner.dungeonDicePatterns[DungeonSpawner.lastPattern].GetComponent<DungeonPatternScript>().ApplyPattern();
+            LvlDungeonSpawner.dungeonDicePatterns[LvlDungeonSpawner.lastPattern].GetComponent<DungeonPatternScript>().ApplyPattern();
             }
-            DungeonSpawner.CheckPlacement(lastInput);
+            LvlDungeonSpawner.CheckPlacement(lastInput);
         }
     }
 

@@ -7,9 +7,9 @@ public class AICreatureController : MonoBehaviour
     public List<GameObject> myCreatures = new List<GameObject>();
 
     PathController pathfinding;
-    CreatureToken creature;
+    public CreatureToken creature;
     AbilityManager ability;
-    bool actionsDone = false;
+    public bool actionsDone = false;
 
     public bool creatureCheckDone = false;
 
@@ -22,10 +22,17 @@ public class AICreatureController : MonoBehaviour
     {
         for (int i = 0; i < myCreatures.Count; i++)
         {
+
+            Debug.Log(i);
+
             creature = myCreatures[0].GetComponent<CreatureToken>();
+
             ability = myCreatures[0].GetComponent<AbilityManager>();
-            CheckPossibleActions();
+
+            yield return CheckPossibleActions();
+
             actionsDone = false;
+
             yield return PerformActions();
 
             while(actionsDone == false)
@@ -37,37 +44,31 @@ public class AICreatureController : MonoBehaviour
         yield return null;
     }
 
-    public void CheckPossibleActions()
+    public IEnumerator CheckPossibleActions()
     {
-        pathfinding.StartCoroutine("DeclarePathfindingConditions", myCreatures[0]);
+        yield return pathfinding.StartCoroutine("DeclarePathfindingConditions", myCreatures[0]);
     }
 
     IEnumerator PerformActions()
     {
-        if (creature.canReachTarget == true)
+        if (creature.canReachTarget == true && creature.hasAttackedThisTurn == false)
         {
-
+            yield return StartCoroutine(AICreatureAttack());
         }
 
-        if (ability.canBeCast == true)
+        if (ability.canBeCast == true && creature.hasUsedAbilityThisTurn == false)
         {
-
+            yield return StartCoroutine(AICreatureCastAbility());
         }
 
-        if (pathfinding.possibleToMove == true)
+        if (pathfinding.possibleToMove == true && creature.hasMovedThisTurn == false)
         {
-
+            yield return StartCoroutine(AICreatureMove());
         }
 
         //Check Creature can do any of the three actions // Then Do them Then Check Again till all actions are false
 
         // Add this check for all creatures in list so do a diffrent corutine I suppose.
-
-        yield return StartCoroutine(AICreatureAttack());
-
-        yield return StartCoroutine(AICreatureCastAbility());
-
-        yield return StartCoroutine(AICreatureMove());
         
     }
 

@@ -270,8 +270,10 @@ public class PathController : MonoBehaviour
             chosenPiece.transform.position = Vector3.MoveTowards(chosenPiece.transform.position, positionToMove, moveSpeed* Time.deltaTime);
             yield return null;
         }
-            GameObject.FindGameObjectWithTag("LevelController").GetComponent<PlayerCreatureController>().ChosenCreatureToken.GetComponent<CreatureToken>().FindTileBellowMe("Move");
-            yield return null;
+            
+        chosenPiece.GetComponent<CreatureToken>().FindTileBellowMe("Move");
+
+        yield return null;
     }
 
     public void HasMoved()
