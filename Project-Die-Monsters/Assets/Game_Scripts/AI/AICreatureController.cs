@@ -43,20 +43,39 @@ public class AICreatureController : MonoBehaviour
 
         yield return null;
     }
+    int actionsToTake = 0;
 
     public IEnumerator CheckPossibleActions()
     {
         yield return pathfinding.StartCoroutine("DeclarePathfindingConditions", myCreatures[0]);
+        if (creature.canReachTarget == true && creature.hasAttackedThisTurn == false)
+        {
+            actionsToTake += 1;
+        }
+
+        yield return  ability.StartCoroutine("CheckAbilityCanBeCast");
+        if (ability.canBeCast == true && creature.hasUsedAbilityThisTurn == false && ability.)
+        {
+            actionsToTake += 1;
+        }
+
+        creature.CheckForAttackTarget();
+        if (creature.canReachTarget == true)
+        {
+            actionsToTake += 1;
+        }
+
+        Debug.Log(actionsToTake);
     }
 
     IEnumerator PerformActions()
     {
-        if (creature.canReachTarget == true && creature.hasAttackedThisTurn == false)
+
         {
             yield return StartCoroutine(AICreatureAttack());
         }
 
-        if (ability.canBeCast == true && creature.hasUsedAbilityThisTurn == false)
+        if (ability.canBeCast == true && )
         {
             yield return StartCoroutine(AICreatureCastAbility());
         }
@@ -65,6 +84,16 @@ public class AICreatureController : MonoBehaviour
         {
             yield return StartCoroutine(AICreatureMove());
         }
+
+        if (actionsToTake != 0)
+        {
+
+        }
+        else
+        {
+
+        }
+
 
         //Check Creature can do any of the three actions // Then Do them Then Check Again till all actions are false
 
@@ -84,7 +113,6 @@ public class AICreatureController : MonoBehaviour
 
     IEnumerator AICreatureMove()
     {
-
         GameObject tileChosen = pathfinding.reachableTiles[0];
 
         for (int i = 0; i < pathfinding.reachableTiles.Count; i++)
