@@ -101,26 +101,19 @@ public class PlayerCreatureController : MonoBehaviour
 
             if (myAbility != null)
             {
-                if (myAbility.abilityActivatedHow == Ability.AbilityActivatedHow.Activated)
+                if (turnPlayer.GetComponent<Player>().abiltyPowerCrestPoints >= myAbility.abilityCost && ChosenCreatureToken.GetComponent<CreatureToken>().hasUsedAbilityThisTurn == false)
                 {
-                    if (turnPlayer.GetComponent<Player>().abiltyPowerCrestPoints >= myAbility.abilityCost && ChosenCreatureToken.GetComponent<CreatureToken>().hasUsedAbilityThisTurn == false)
+                    if (ChosenCreatureToken.GetComponent<AbilityManager>().canBeCast != true)
                     {
-                        if (ChosenCreatureToken.GetComponent<AbilityManager>().canBeCast != true)
-                        {
-                            ChosenCreatureToken.GetComponent<AbilityManager>().StartCoroutine("CheckAbilityCanBeCast");
-                        }
-                        else if (ChosenCreatureToken.GetComponent<AbilityManager>().canBeCast == true)
-                        {
-                            //ChosenCreatureToken.GetComponent<AbilityManager>().checkingCanCast = false;
-                            OrderBTNS[2].GetComponent<Button>().interactable = true;
-                        }
+                        ChosenCreatureToken.GetComponent<AbilityManager>().StartCoroutine("CheckAbilityCanBeCast");
                     }
-                    else if (turnPlayer.GetComponent<Player>().abiltyPowerCrestPoints < myAbility.abilityCost || ChosenCreatureToken.GetComponent<CreatureToken>().hasUsedAbilityThisTurn == true || ChosenCreatureToken.GetComponent<AbilityManager>().canBeCast == false)
+                    else if (ChosenCreatureToken.GetComponent<AbilityManager>().canBeCast == true)
                     {
-                        OrderBTNS[2].GetComponent<Button>().interactable = false;
+                        //ChosenCreatureToken.GetComponent<AbilityManager>().checkingCanCast = false;
+                        OrderBTNS[2].GetComponent<Button>().interactable = true;
                     }
                 }
-                else if (myAbility.abilityActivatedHow != Ability.AbilityActivatedHow.Activated)
+                else if (turnPlayer.GetComponent<Player>().abiltyPowerCrestPoints < myAbility.abilityCost || ChosenCreatureToken.GetComponent<CreatureToken>().hasUsedAbilityThisTurn == true || ChosenCreatureToken.GetComponent<AbilityManager>().canBeCast == false)
                 {
                     OrderBTNS[2].GetComponent<Button>().interactable = false;
                 }

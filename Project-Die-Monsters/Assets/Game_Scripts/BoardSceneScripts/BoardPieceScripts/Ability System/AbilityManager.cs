@@ -130,37 +130,46 @@ public class AbilityManager : MonoBehaviour //This script will oversee the use o
         StopAllCoroutines();
     }
 
-    public IEnumerator CheckAbilityCanBeCast( )
+    public IEnumerator CheckAbilityCanBeCast()
     {
-        for (int i = 0; i < myAbility.abilityEffects.Count; i++)
-        {//Loop through each effect and check.
-            checkingEffect = true;
-            this.GetComponent<TargetManager>().currentEffect = myAbility.abilityEffects[i];
-            this.GetComponent<EffectManager>().effectToResolve = myAbility.abilityEffects[i];
-            this.GetComponent<EffectManager>().StartCoroutine("EffectChecking");
-            while (checkingEffect == true)
-            {
-                yield return null;
-            }
-        }
-
-        if (effectsCanBeDone == myAbility.abilityEffects.Count)
+        if (myAbility.abilityActivatedHow == Ability.AbilityActivatedHow.Activated)
         {
-            canBeCast = true;
-
-            Debug.Log("AbilityCanBeCast");
-
-            if (lvlRef.turnPlayerObject.GetComponent<Player>() != null)
-            {
-                GameObject.FindGameObjectWithTag("LevelController").GetComponent<PlayerCreatureController>().CheckPossibleActions();
+            for (int i = 0; i < myAbility.abilityEffects.Count; i++)
+            {//Loop through each effect and check.
+                checkingEffect = true;
+                this.GetComponent<TargetManager>().currentEffect = myAbility.abilityEffects[i];
+                this.GetComponent<EffectManager>().effectToResolve = myAbility.abilityEffects[i];
+                this.GetComponent<EffectManager>().StartCoroutine("EffectChecking");
+                while (checkingEffect == true)
+                {
+                    yield return null;
+                }
             }
 
-        }else if (effectsCanBeDone != myAbility.abilityEffects.Count)
-        {
-            Debug.Log("AbilityCantBeCast");
-            ResetManager();
-        }
+            if (effectsCanBeDone == myAbility.abilityEffects.Count)
+            {
+                canBeCast = true;
 
-        yield return null;
+                Debug.Log("AbilityCanBeCast");
+
+                if (lvlRef.turnPlayerObject.GetComponent<Player>() != null)
+                {
+                    GameObject.FindGameObjectWithTag("LevelController").GetComponent<PlayerCreatureController>().CheckPossibleActions();
+                }
+
+            }
+            else if (effectsCanBeDone != myAbility.abilityEffects.Count)
+            {
+                Debug.Log("AbilityCantBeCast");
+                ResetManager();
+            }
+
+            yield return null;
+        }
+        else if (myAbility.abilityActivatedHow == Ability.AbilityActivatedHow.Trigger || myAbility.abilityActivatedHow == Ability.AbilityActivatedHow.None) 
+        {
+            Debug.Log("Cant Cast This Ability as ability is of type: " + myAbility.abilityActivatedHow);
+            canBeCast = false;
+        } 
     }
 }
