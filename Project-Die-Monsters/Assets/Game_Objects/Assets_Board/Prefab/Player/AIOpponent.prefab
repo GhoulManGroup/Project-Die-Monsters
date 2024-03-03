@@ -45,9 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myOpponent: {fileID: 0}
-  summmonCrestPoints: 0
+  summmonCrestPoints: 100
   moveCrestPoints: 0
-  attackCrestPoints: 0
-  defenceCrestPoints: 0
-  abiltyPowerCrestPoints: 0
-  CreaturePool: []
+  attackCrestPoints: 100
+  defenceCrestPoints: 100
+  abiltyPowerCrestPoints: 100
+  AIDiceDeck: []

@@ -11,6 +11,7 @@ public class PathController : MonoBehaviour
     [Header("Declerations")]
     GameObject levelController;
     LevelController LCScript;
+    AICreatureController aiCreatureController;
     public GameObject chosenPiece; // the board piece we are moving or doing other things ect.
 
     [Header("Pathfinding Varibles Movement")]
@@ -33,6 +34,7 @@ public class PathController : MonoBehaviour
     {
         levelController = GameObject.FindGameObjectWithTag("LevelController");
         LCScript = levelController.GetComponent<LevelController>();
+        aiCreatureController = GameObject.FindGameObjectWithTag("AIController").GetComponent<AICreatureController>();
     }
 
     //Rotate to face the direction we need to walk.
@@ -301,10 +303,18 @@ public class PathController : MonoBehaviour
         startPosition = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
         startPosition.GetComponent<GridScript>().TileContents = "Creature";
 
-        //Add Check Here to see if Player or AI I current turn user ====================================================================== Then Do IF Else check to run the next step for either the PlayerCreatureController / AI Creature COntroller
-        GameObject.FindGameObjectWithTag("LevelController").GetComponent<PlayerCreatureController>().ChosenAction = "None";
-        GameObject.FindGameObjectWithTag("LevelController").GetComponent<PlayerCreatureController>().OpenAndCloseControllerUI();
-        GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>().boardInteraction = "None";
+        if (LCScript.turnPlayerObject.GetComponent<Player>() != null)
+        {
+            GameObject.FindGameObjectWithTag("LevelController").GetComponent<PlayerCreatureController>().ChosenAction = "None";
+            GameObject.FindGameObjectWithTag("LevelController").GetComponent<PlayerCreatureController>().OpenAndCloseControllerUI();
+            GameObject.FindGameObjectWithTag("LevelController").GetComponent<LevelController>().boardInteraction = "None";
+        }
+
+        if (LCScript.turnPlayerObject.GetComponent<AIOpponent>() != null)
+        {
+            aiCreatureController.actionDone = true;
+        }
+
     }
 
     #endregion

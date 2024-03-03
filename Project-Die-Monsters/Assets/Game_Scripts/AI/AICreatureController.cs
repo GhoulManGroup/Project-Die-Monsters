@@ -11,11 +11,13 @@ public class AICreatureController : MonoBehaviour
     AbilityManager ability;
 
     public bool actionsDone = false;
+    public bool actionDone = false;
 
     [Header("Creature Actions")]
-    bool canMove = false;
-    bool canAttack = false;
-    bool CanAbility = false;
+    [SerializeField] bool canMove = false;
+    [SerializeField] bool wantToMove = true;
+    [SerializeField] bool canAttack = false;
+    [SerializeField] bool CanAbility = false;
 
     public void Start()
     {
@@ -26,11 +28,11 @@ public class AICreatureController : MonoBehaviour
     {
         for (int i = 0; i < myCreatures.Count; i++)
         {
-            Debug.Log(i);
+            creature = myCreatures[i].GetComponent<CreatureToken>();
 
-            creature = myCreatures[0].GetComponent<CreatureToken>();
+            ability = myCreatures[i].GetComponent<AbilityManager>();
 
-            ability = myCreatures[0].GetComponent<AbilityManager>();
+            Debug.Log(i + creature.name);
 
             yield return CheckPossibleActions();
 
@@ -44,7 +46,13 @@ public class AICreatureController : MonoBehaviour
             }
         }
 
-        yield return null;
+       this.GetComponent<AIManager>().PhaseDone= true;
+    }
+
+    private void ResetToDefault()
+    {
+        actionsDone = false;
+        actionDone = false;
     }
 
     int actionsToTake = 0;
@@ -52,14 +60,6 @@ public class AICreatureController : MonoBehaviour
     public IEnumerator CheckPossibleActions()
     {
         actionsToTake = 0;
-
-        yield return pathfinding.StartCoroutine("DeclarePathfindingConditions", myCreatures[0]);
-        if (creature.hasMovedThisTurn == false && pathfinding.possibleToMove == true)
-        {
-            canMove = true;
-            Debug.Log("Can Move");
-            actionsToTake += 1;
-        }
 
         yield return  ability.StartCoroutine("CheckAbilityCanBeCast");
         if (ability.canBeCast == true && creature.hasUsedAbilityThisTurn == false && creature.abilityCost <= this.GetComponent<AIManager>().currentOpponent.GetComponent<AIOpponent>().abiltyPowerCrestPoints)
@@ -76,6 +76,21 @@ public class AICreatureController : MonoBehaviour
             Debug.Log("Can Attack");
             actionsToTake += 1;
         }
+
+        yield return pathfinding.StartCoroutine("DeclarePathfindingConditions", creature.gameObject);
+        if (creature.hasMovedThisTurn == false && pathfinding.possibleToMove == true)
+        {
+            if (canAttack == true)
+            {
+                wantToMove = false;
+            }else
+            {
+                wantToMove = true;
+                canMove = true;
+                Debug.Log("Can Move");
+                actionsToTake += 1;
+            }
+        }
     }
 
     IEnumerator PerformActions()
@@ -85,14 +100,14 @@ public class AICreatureController : MonoBehaviour
             yield return StartCoroutine(AICreatureAttack());
         }
 
+        if (canMove == true && wantToMove == true)
+        {
+            yield return StartCoroutine(AICreatureMove());
+        }
+
         if (CanAbility == true)
         {
             yield return StartCoroutine(AICreatureCastAbility());
-        }
-
-        if (canMove == true)
-        {
-            yield return StartCoroutine(AICreatureMove());
         }
 
         yield return CheckPossibleActions();
@@ -136,9 +151,14 @@ public class AICreatureController : MonoBehaviour
         pathfinding.tilesToCheck.Clear();
         pathfinding.tilesToCheck.Add(pathfinding.desiredPosition);
         pathfinding.EstablishPossibleMoves("FindPath");
- 
-        // Pick by declaring the tile that is in possible moves in path controller with the loqest tile value
-        yield return null;
+
+        while (actionDone == false)
+        {
+            yield return null;
+        }
+
+        actionDone = false;
+        Debug.Log("Move Action Done For Creature");
     }
 
 

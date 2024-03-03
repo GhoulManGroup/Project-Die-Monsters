@@ -140,6 +140,7 @@ public class SpawnerTileScript : MonoBehaviour
             {
                 yield return null;
             }
+
             GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<DungeonSpawner>().waitForPath = false;
         }
    }

@@ -60,7 +60,7 @@ public class CreatureToken : MonoBehaviour
         myOwner = lcScript.currentTurnParticipant.ToString();  //set my owner to either player+ playerslotnumber or AI.
 
         //Check for either a player script or opponent script then pull the desired creature from the correct objects creaturelist and assign it to the creature piece. 
-        if (lcScript.participants[lcScript.currentTurnParticipant].GetComponent<Player>() != null)
+        if (lcScript.turnPlayerObject.GetComponent<Player>() != null)
         {
             /*
             if (lcScript.creaturePlacedFrom == "CreaturePool") //Cut From current Build as an option due to slow game pacing
@@ -82,10 +82,12 @@ public class CreatureToken : MonoBehaviour
             lvlRef.GetComponent<LevelController>().CanEndTurn();
         }
 
-        if (myOwner == "1" && lcScript.participants[lcScript.currentTurnParticipant].GetComponent<AIOpponent>() != null) // change to opponent
+        if (myOwner == "1" && lcScript.turnPlayerObject.GetComponent<AIOpponent>() != null) // change to opponent
         {
             myCreature = GameObject.FindGameObjectWithTag("AIController").GetComponent<AIRollManager>().creaturePicked;
             GameObject.FindGameObjectWithTag("AIController").GetComponent<AICreatureController>().myCreatures.Add(this.gameObject);
+            Debug.LogError("Phase Done Creature Spawned");
+            GameObject.FindGameObjectWithTag("AIController").GetComponent<AIManager>().PhaseDone = true;
         }
 
         this.GetComponent<AbilityManager>().myAbility = this.myCreature.myAbility;
@@ -158,7 +160,6 @@ public class CreatureToken : MonoBehaviour
                     myBoardLocation.GetComponent<GridScript>().creatureAboveMe = null;
                 }
                 myBoardLocation = Down.collider.gameObject;
-                Debug.Log(Down.collider.gameObject);
                 Down.collider.GetComponent<GridScript>().TileContents = "Creature";
                 Down.collider.GetComponent<GridScript>().creatureAboveMe = this.gameObject;
             }

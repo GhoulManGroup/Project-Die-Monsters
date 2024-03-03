@@ -18,7 +18,7 @@ public class AIManager : MonoBehaviour
     [SerializeField]
     GameObject currentActionText;
 
-    [HideInInspector]
+    //[HideInInspector]
     public bool PhaseDone = false;
 
     [Header("PossibleActions")]
@@ -91,7 +91,15 @@ public class AIManager : MonoBehaviour
     {
         if (canPlaceCreature == true && hasCreatureToPlace == true)
         {
+            PhaseDone = false;
+
             yield return LvlDungeonSpawner.StartCoroutine("PlaceDungeonAI");
+
+            while (PhaseDone == false)
+            {
+                yield return null;
+            }
+
             Debug.LogError("Spawning Creature can place creature");
         }
         else
@@ -104,6 +112,8 @@ public class AIManager : MonoBehaviour
         hasCreatureToPlace = false;
 
         Debug.Log("Dungeon Phase Done Proceed to Creature Action Phase");
+
+        yield return new WaitForSeconds(3f);
 
         StartCoroutine(CreatureActionPhase());
     }
@@ -124,7 +134,6 @@ public class AIManager : MonoBehaviour
         }
         else
         {
-            PhaseDone = true;
             Debug.Log("No Creature To Act");
         }
 
