@@ -79,8 +79,6 @@ public class AIRollManager : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log("Dice Rolled And Results Checked");
-
         StartCoroutine(ResolveCrests());
     }
 
@@ -144,8 +142,6 @@ public class AIRollManager : MonoBehaviour
 
     void UpdateAICrests()
     {
-
-        Debug.Log(summonCrestPool + "AIGains This many Summon Crests");
         currentOpponent.summmonCrestPoints += summonCrestPool;
         currentOpponent.attackCrestPoints += attackCrestPool;
         currentOpponent.abiltyPowerCrestPoints += abilityCrestPool;
@@ -176,7 +172,5 @@ public class AIRollManager : MonoBehaviour
 
         DiceToRoll.Clear();
         diceRolled = 0;
-
-        Debug.Log(mRef.currentOpponent.GetComponent<AIOpponent>().AIDiceDeck.Count);
     }
 }

@@ -55,10 +55,11 @@ public class AICreatureController : MonoBehaviour
         actionDone = false;
     }
 
-    int actionsToTake = 0;
+    [SerializeField]  int actionsToTake = 0;
 
     public IEnumerator CheckPossibleActions()
     {
+        Debug.Log("CheckAction");
         actionsToTake = 0;
 
         yield return  ability.StartCoroutine("CheckAbilityCanBeCast");
@@ -87,7 +88,6 @@ public class AICreatureController : MonoBehaviour
             {
                 wantToMove = true;
                 canMove = true;
-                Debug.Log("Can Move");
                 actionsToTake += 1;
             }
         }
@@ -95,6 +95,8 @@ public class AICreatureController : MonoBehaviour
 
     IEnumerator PerformActions()
     {
+        Debug.Log("StartingPerformAction");
+
         if (canAttack == true)
         {
             yield return StartCoroutine(AICreatureAttack());
@@ -142,13 +144,12 @@ public class AICreatureController : MonoBehaviour
         {
             if (pathfinding.reachableTiles[i].GetComponent<GridScript>().distanceFromPlayerDungeonLord < tileChosen.GetComponent<GridScript>().distanceFromPlayerDungeonLord)
             {
-                Debug.Log("Found Closer Tile Move to this instead");
+                Debug.Log("Found Closer Tile Move to this instead" + tileChosen.gameObject.name);
                 tileChosen = pathfinding.reachableTiles[i];
             }
         }
 
         pathfinding.desiredPosition = tileChosen;
-        pathfinding.tilesToCheck.Clear();
         pathfinding.tilesToCheck.Add(pathfinding.desiredPosition);
         pathfinding.EstablishPossibleMoves("FindPath");
 
@@ -158,7 +159,17 @@ public class AICreatureController : MonoBehaviour
         }
 
         actionDone = false;
+
+
         Debug.Log("Move Action Done For Creature");
+    }
+
+    public void ResetCreatures()
+    {
+        for (int i = 0; i < myCreatures.Count; i++)
+        {
+            myCreatures[i].GetComponent<CreatureToken>().CreatureResetTurnEnd();
+        }
     }
 
 

@@ -82,8 +82,7 @@ public class AIManager : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log("Dice Phase Done");
-
+        LVLRef.UpdateTurnPlayerCrestDisplay();
         StartCoroutine(TempSummonCreaturePhaseCall());
     }
 
@@ -99,8 +98,6 @@ public class AIManager : MonoBehaviour
             {
                 yield return null;
             }
-
-            Debug.LogError("Spawning Creature can place creature");
         }
         else
         {
@@ -110,8 +107,6 @@ public class AIManager : MonoBehaviour
 
         canPlaceCreature = false;
         hasCreatureToPlace = false;
-
-        Debug.Log("Dungeon Phase Done Proceed to Creature Action Phase");
 
         yield return new WaitForSeconds(3f);
 

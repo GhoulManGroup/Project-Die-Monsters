@@ -367,6 +367,7 @@ public class GridScript : MonoBehaviour
             }//Else if it is start we found our intended move spot so stop the function.
             else if (Neighbours[i] == LvlRef.GetComponent<PathController>().startPosition)
             {
+                Debug.LogError("Found Start" + Neighbours[i].gameObject.name);
                 LvlRef.GetComponent<PathController>().tilesToCheck.Remove(this.gameObject);
                 LvlRef.GetComponent<PathController>().EstablishPossibleMoves("FindPath");
                 return;

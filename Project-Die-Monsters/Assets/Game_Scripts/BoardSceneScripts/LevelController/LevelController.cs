@@ -179,7 +179,8 @@ public class LevelController : MonoBehaviour //This class oversees the setup tur
             turnPlayerUIDisplay[3].text = participants[currentTurnParticipant].GetComponent<Player>().defenceCrestPoints.ToString();
             //turnPlayerUIDisplay[4].text = participants[currentTurnParticipant].GetComponent<Player>().moveCrestPoints.ToString(); no longer active UI element so disable
             turnPlayerUIDisplay[5].text = participants[currentTurnParticipant].GetComponent<Player>().summmonCrestPoints.ToString();
-        }else if (turnPlayerObject.GetComponent<AIManager>() != null)
+
+        }else if (turnPlayerObject.GetComponent<AIOpponent>() != null)
         {
             turnPlayerUIDisplay[1].text = participants[currentTurnParticipant].GetComponent<AIOpponent>().attackCrestPoints.ToString();
             turnPlayerUIDisplay[2].text = participants[currentTurnParticipant].GetComponent<AIOpponent>().abiltyPowerCrestPoints.ToString();
@@ -314,14 +315,15 @@ public class LevelController : MonoBehaviour //This class oversees the setup tur
         UpdateTurnPlayerCrestDisplay();
 
         //Reset the states of all creature piece on the board (Move, Attack, ect)
-        this.GetComponent<PlayerCreatureController>().ResetCreatureStates(); //---- Need to Add Creatures we spawn to creature controller creature list in order to reset their states,.-------------------------------------------------------------------------------------------------------------------------------------
+        this.GetComponent<PlayerCreatureController>().ResetCreatureStates();
+        GameObject.FindGameObjectWithTag("AIController").GetComponent<AICreatureController>().ResetCreatures();
 
         //Set the camera to the right board state.
         yield return new WaitForSeconds(1f);
 
         if (gameManager.GetComponent<GameManagerScript>().desiredOpponent == "AI")
         {//When the AI turn begins switch camera to board scene untill Ai decides to move to dice.
-            if (currentTurnParticipant != 1)
+            if (turnPlayerObject.GetComponent<AIOpponent>() != null)
             {
                 this.GetComponent<CameraController>().switchCamera("Alt");
             }

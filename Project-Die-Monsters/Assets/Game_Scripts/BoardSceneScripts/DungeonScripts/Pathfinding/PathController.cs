@@ -298,7 +298,7 @@ public class PathController : MonoBehaviour
         }
         chosenPiece.GetComponent<CreatureToken>().hasMovedThisTurn = true;
         chosenPiece.GetComponent<CreatureToken>().CheckForAttackTarget();
-        ResetBoard("Reset");
+        StartCoroutine(ResetBoard("Reset"));
         startPosition.GetComponent<GridScript>().TileContents = "Empty";
         startPosition = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
         startPosition.GetComponent<GridScript>().TileContents = "Creature";
@@ -319,7 +319,7 @@ public class PathController : MonoBehaviour
 
     #endregion
 
-    public void ResetBoard(string why)
+    public IEnumerator ResetBoard(string why)
     {// Go through every grid tile that has been interacted with and reset it to its default state.
      //Hides the Sprites above each tile that show movement or valid targets ect.
         if (why == "Reset")
@@ -342,5 +342,8 @@ public class PathController : MonoBehaviour
                 }
             }
         }
+
+        Debug.LogError("Reseting THing");
+        yield return null;
     }
 }

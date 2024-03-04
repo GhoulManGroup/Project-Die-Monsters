@@ -86,7 +86,6 @@ public class CreatureToken : MonoBehaviour
         {
             myCreature = GameObject.FindGameObjectWithTag("AIController").GetComponent<AIRollManager>().creaturePicked;
             GameObject.FindGameObjectWithTag("AIController").GetComponent<AICreatureController>().myCreatures.Add(this.gameObject);
-            Debug.LogError("Phase Done Creature Spawned");
             GameObject.FindGameObjectWithTag("AIController").GetComponent<AIManager>().PhaseDone = true;
         }
 
