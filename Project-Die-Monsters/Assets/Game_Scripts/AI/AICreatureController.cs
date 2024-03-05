@@ -44,6 +44,8 @@ public class AICreatureController : MonoBehaviour
             {
                 yield return null;
             }
+
+            yield return new WaitForSeconds(1f);
         }
 
        this.GetComponent<AIManager>().PhaseDone= true;
@@ -84,12 +86,18 @@ public class AICreatureController : MonoBehaviour
             if (canAttack == true)
             {
                 wantToMove = false;
-            }else
+            }
+            else
             {
                 wantToMove = true;
                 canMove = true;
                 actionsToTake += 1;
             }
+        }
+        else
+        {
+            //clear list if not going to be used to move else it will block stuff
+            pathfinding.StartCoroutine("ResetBoard", "Reset");
         }
     }
 
@@ -120,7 +128,7 @@ public class AICreatureController : MonoBehaviour
             PerformActions();
         }
         else
-        {
+        { 
             Debug.Log("No More Actions Any MOre");
             actionsDone = true;
         }   

@@ -85,7 +85,7 @@ public class PathController : MonoBehaviour
             }
             else if (tilesToCheck.Count == 0)
             {
-               ResetBoard("ShowOnlyPath");
+               StartCoroutine("ResetBoard","ShowOnlyPath");
                StartCoroutine("MovePieceThroughPath");
             }
         }
@@ -298,7 +298,7 @@ public class PathController : MonoBehaviour
         }
         chosenPiece.GetComponent<CreatureToken>().hasMovedThisTurn = true;
         chosenPiece.GetComponent<CreatureToken>().CheckForAttackTarget();
-        StartCoroutine(ResetBoard("Reset"));
+        StartCoroutine("ResetBoard", "Reset");
         startPosition.GetComponent<GridScript>().TileContents = "Empty";
         startPosition = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
         startPosition.GetComponent<GridScript>().TileContents = "Creature";
@@ -328,9 +328,14 @@ public class PathController : MonoBehaviour
             {
                 checkedTiles[i].GetComponent<GridScript>().ResetGridTile();
             }
+
             tilesToCheck.Clear();
             checkedTiles.Clear();
             reachableTiles.Clear();
+            Debug.LogError(tilesToCheck.Count);
+            Debug.LogError(checkedTiles.Count);
+            Debug.LogError(reachableTiles.Count);
+            Debug.LogError("Reset Clear EVEYERTHING");
         }
         else if (why == "ShowOnlyPath")
         {
@@ -342,8 +347,6 @@ public class PathController : MonoBehaviour
                 }
             }
         }
-
-        Debug.LogError("Reseting THing");
         yield return null;
     }
 }

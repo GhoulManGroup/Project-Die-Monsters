@@ -174,7 +174,7 @@ public class PlayerCreatureController : MonoBehaviour
                     case "None":
                         //Close Creature Order UI.
                         ChosenCreatureToken.GetComponent<AbilityManager>().ResetAbilitySystem();
-                        pathfinding.ResetBoard("Reset");
+                        pathfinding.StartCoroutine("ResetBoard", "Reset");
                         CancleBTNFunction();
                         break;
 
@@ -193,7 +193,7 @@ public class PlayerCreatureController : MonoBehaviour
                     case "Move":
                         lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;
                         lvlRef.GetComponent<LevelController>().boardInteraction = "None";
-                        pathfinding.ResetBoard("Reset");
+                        pathfinding.StartCoroutine("ResetBoard", "Reset");
                         ChosenAction = "None";
                         break;
                 }
