@@ -73,7 +73,7 @@ public class AICreatureController : MonoBehaviour
         }
 
         creature.CheckForAttackTarget();
-        if (creature.canReachTarget == true && creature.hasAttackedThisTurn == false)
+        if (creature.canReachTarget == true && creature.hasAttackedThisTurn == false && creature.attackCost <= this.GetComponent<AIManager>().currentOpponent.GetComponent<AIOpponent>().attackCrestPoints)
         {
             canAttack = true;
             Debug.Log("Can Attack");
