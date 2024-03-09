@@ -161,27 +161,53 @@ public class AttackUIScript : MonoBehaviour
 
     public void AttackAction()
     {
-        if (attackingPlayer.GetComponent<AIOpponent>() != null) 
+        if (attackingPlayer.GetComponent<AIOpponent>() != null)
         {
             attackingPlayer.GetComponent<AIOpponent>().attackCrestPoints -= attacker.GetComponent<CreatureToken>().attackCost;
-           
+
             if (defendingPlayer.GetComponent<Player>().defenceCrestPoints >= defender.defenseCost)
             {
                 Action = "Defend";
                 UIElements[15].GetComponent<Image>().sprite = spriteList[1];
                 buttonState();
-
+            }else
+            {
+                ResolveCombat();
             }
-            else if (attackingPlayer.GetComponent<Player>() != null)
+
+        }
+        else if (attackingPlayer.GetComponent<Player>() != null)
         {
             attackingPlayer.GetComponent<Player>().attackCrestPoints -= attacker.GetComponent<CreatureToken>().attackCost;
+
+            if (defendingPlayer.GetComponent<AIOpponent>() != null)
+            {
+                if (defendingPlayer.GetComponent<AIOpponent>().defenceCrestPoints >= defender.defenseCost) 
+                {
+                    applyDefence = true;
+                }
+
+                ResolveCombat();
+            }else if (defendingPlayer.GetComponent<Player>() != null)
+            {
+                if (defendingPlayer.GetComponent<Player>().defenceCrestPoints >= defender.defenseCost)
+                {
+                    Action = "Defend";
+                    UIElements[15].GetComponent<Image>().sprite = spriteList[1];
+                    buttonState();
+                }
+                else
+                {
+                    ResolveCombat();
+                }
+            }
         }
 
 
-
+      
         //Check if other player has enough points to cover their defence cost. if so offer choice if not skip to damage calc.
    
-        }
+        
         else if (defendingPlayer.GetComponent<Player>().defenceCrestPoints == 0)
         {
             Action = "Resolve";
@@ -195,6 +221,12 @@ public class AttackUIScript : MonoBehaviour
     {
         switch (Action)
         {
+            case "AIDecision":
+                AUIButtons[0].GetComponent<Button>().interactable = false;
+                AUIButtons[1].GetComponent<Button>().interactable = false;
+                AUIButtons[2].GetComponent<Button>().interactable = false;
+                AUIButtons[3].GetComponent<Button>().interactable = false;
+                break;
             case "Decide":
                 AUIButtons[0].GetComponent<Button>().interactable = true;
                 AUIButtons[1].GetComponent<Button>().interactable = false;
@@ -237,6 +269,7 @@ public class AttackUIScript : MonoBehaviour
                 Debug.Log("Defence True");
 
                 damage -= defender.GetComponent<CreatureToken>().currentDefence;
+
                 print(damage);
 
                 if (damage > 0)
@@ -260,7 +293,12 @@ public class AttackUIScript : MonoBehaviour
         Action = "Over";
 
         //Update our button states & update the UI details eg health.
-        buttonState();
+        if (attackingPlayer.GetComponent<Player>() != null) 
+        {
+            buttonState();
+
+        }
+
         setDetails();
 
         // check if defender health is less than 0 if so run the chekcstate function to destory it then change the UI sprite to Empty.
@@ -275,5 +313,15 @@ public class AttackUIScript : MonoBehaviour
         attacker.GetComponent<CreatureToken>().hasAttackedThisTurn = true;
         lvlRef.GetComponent<LevelController>().CheckForTriggersToResolve();
     }
-
+    //Sytsten disc
+    //Enum Planet || Phenonmeon
+    //Hazzard
+    //Hazzard Level
+    //Ability [Effect ScriptableHere]
+    //List Slots
+    //Node Lists
+    //Yellow Node
+    //Red Node
+    //Blue Node
+    //Grey Nodes
 }
