@@ -73,7 +73,7 @@ public class AICreatureController : MonoBehaviour
         }
 
         creature.CheckForAttackTarget();
-        if (creature.canReachTarget == true && creature.hasAttackedThisTurn == false)
+        if (creature.canReachTarget == true && creature.hasAttackedThisTurn == false && creature.attackCost <= this.GetComponent<AIManager>().currentOpponent.GetComponent<AIOpponent>().attackCrestPoints)
         {
             canAttack = true;
             Debug.Log("Can Attack");
@@ -136,6 +136,11 @@ public class AICreatureController : MonoBehaviour
 
     IEnumerator AICreatureAttack()
     {
+        //Find creature who is either > lowest health || on a tile closest to the goal
+        //Declare attack 
+        // Open UI
+        //Awaiting player defend crest chance
+        //Resolcve combat
         yield return null;
     }
 

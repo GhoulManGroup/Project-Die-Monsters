@@ -16,28 +16,16 @@ public class InspectWindowController : MonoBehaviour //This script will control 
     //AttackTargetSelection, display the details of the possible attack targets of chosen piece.
 
     #region VariblesEct
-    [Header("Interface UI Panels")] //The Game Objects that comprise the inspect UI.
-    public GameObject creatureInspectUI; //Parent of CIUI
+    [Header("Interface UI Panels")] //These game objects are the UI tabs which are displayed base on what object is hovered over.
+    [SerializeField] CreatureDisplayTab creatureWindow;
     public GameObject dungeonLordInspectUI; //Parent of DLIUI
     public GameObject crestDisplay; //Shows what crests a dice in the pool has.
-    [SerializeField] CreatureInspectElements  creatureWindow = default;
+
+
     [SerializeField] DungeonLordInspectElements dungeonLordWindow = default;
     [SerializeField] InspectionWindowButtons inspectWindowButtons = default;
 
     #region SeralizedFields
-    [Serializable]
-    struct CreatureInspectElements
-    {
-        public GameObject creatureArt;
-        public GameObject creatureLevel;
-        public GameObject creatureTribe;
-        public GameObject creatureType;
-        public Text creatureName;
-        public Text creatureAbility;
-        public Text attackValue;
-        public Text defenceValue;
-        public Text healthValue;
-    }
     [Serializable]
     struct DungeonLordInspectElements
     {
@@ -75,7 +63,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
     public GameObject currentDungeonLordPiece;
     
     // what target out of what ever list is being accesssed is shown.
-    int targetShown = 0; //Which of the creature chosens possible attack targets are being displayed.
+    public int targetShown = 0; //Which of the creature chosens possible attack targets are being displayed.
 
     //Used to store the string value of openedFor, to tell the buttons what they need to do based on why the UI is open.
     string pressedFor;
@@ -86,13 +74,14 @@ public class InspectWindowController : MonoBehaviour //This script will control 
     {
         CloseInspectWindow();
         levelManager = GameObject.FindGameObjectWithTag("LevelController");
+        creatureWindow.MyController = this.gameObject;
     }
 
     #region displayAndHideUI
     public void CloseInspectWindow()
     {
         dungeonLordInspectUI.gameObject.SetActive(false);
-        creatureInspectUI.gameObject.SetActive(false);
+        creatureWindow.gameObject.gameObject.SetActive(false);
         inspectWindowButtons.declareBTN.SetActive(false);
         inspectWindowButtons.nextBTN.SetActive(false);
         inspectWindowButtons.backBTN.SetActive(false);
@@ -107,8 +96,8 @@ public class InspectWindowController : MonoBehaviour //This script will control 
         {
             case "DrawDice":
                 currentCreature = turnPlayer.GetComponent<Player>().diceDeck[diceShown].dieCreature;
-                DisplayCreatureDetails(openedFor);
-                creatureInspectUI.SetActive(true);
+                creatureWindow.PreviewCreature(openedFor);
+                creatureWindow.gameObject.SetActive(true);
                 inspectWindowButtons.declareBTN.SetActive(true);
                 inspectWindowButtons.nextBTN.SetActive(true);
                 inspectWindowButtons.backBTN.SetActive(true);
@@ -116,8 +105,8 @@ public class InspectWindowController : MonoBehaviour //This script will control 
 
             case "DieInspect":
                 currentCreature = sceneDice.GetComponent<SceneDieScript>().myDie.dieCreature;
-                DisplayCreatureDetails(openedFor);
-                creatureInspectUI.SetActive(true);
+                creatureWindow.PreviewCreature(openedFor);
+                creatureWindow.gameObject.SetActive(true);
                 break;
             /*
             case "PoolInspect":
@@ -127,8 +116,8 @@ public class InspectWindowController : MonoBehaviour //This script will control 
                 break;               
            */
             case "PieceInspect":
-                DisplayCreatureDetails(openedFor);
-                creatureInspectUI.SetActive(true);
+                creatureWindow.PreviewCreature(openedFor);
+                creatureWindow.gameObject.SetActive(true);
                 break;
 
             case "DungeonLordInspect":
@@ -147,8 +136,8 @@ public class InspectWindowController : MonoBehaviour //This script will control 
                 {
                     //Else display the useall creature window with the current creature object scored in the list.
                     currentCreature = currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>().myCreature;
-                    creatureInspectUI.gameObject.SetActive(true);
-                    DisplayCreatureDetails(openedFor);
+                    creatureWindow.gameObject.gameObject.SetActive(true);
+                    creatureWindow.PreviewCreature(openedFor);
                 }
                 inspectWindowButtons.declareBTN.SetActive(true);
                 inspectWindowButtons.nextBTN.SetActive(true);
@@ -157,46 +146,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
         }  
     }
 
-    public void DisplayCreatureDetails(string usedFor)
-    { 
-        //Check if we are displaying a creature in the scriptable object store in a dice for example or a creature piece on the board then set the details of the UI Panel.
-        if (usedFor == "DrawDice" || usedFor == "DieInspect" || usedFor == "PoolInspect")
-        {
-            creatureWindow.creatureName.GetComponent<Text>().text = currentCreature.CreatureName;
-            if (currentCreature.myAbility != null)
-            {
-                creatureWindow.creatureAbility.GetComponent<Text>().text = currentCreature.myAbility.AbilityName + " " + currentCreature.myAbility.AbilityDescriptionText;
-            }
-            creatureWindow.attackValue.GetComponent<Text>().text = "ATK" + currentCreature.Attack;
-            creatureWindow.defenceValue.GetComponent<Text>().text = "DEF" + currentCreature.Defence;
-            creatureWindow.healthValue.GetComponent<Text>().text = "HP" + currentCreature.Health;
-        }else if (usedFor == "PieceInspect")
-        {
-            creatureWindow.creatureName.GetComponent<Text>().text = currentCreature.CreatureName;
-            if (currentCreature.myAbility != null)
-            {
-                creatureWindow.creatureAbility.GetComponent<Text>().text = currentCreature.myAbility.AbilityName + " " + currentCreature.myAbility.AbilityDescriptionText;
-            }
-            creatureWindow.attackValue.GetComponent<Text>().text = "ATK" + currentCreaturePiece.GetComponent<CreatureToken>().currentAttack;
-            creatureWindow.defenceValue.GetComponent<Text>().text = "DEF" + currentCreaturePiece.GetComponent<CreatureToken>().currentDefence;
-            creatureWindow.healthValue.GetComponent<Text>().text = "HP" + currentCreaturePiece.GetComponent<CreatureToken>().currentHealth;
-        }else if (usedFor == "AttackTargetSelection")
-        {
-            CreatureToken target = currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>();
-            creatureWindow.creatureName.GetComponent<Text>().text = target.myCreature.name;
-            if (currentCreature.myAbility != null)
-            {
-                creatureWindow.creatureAbility.GetComponent<Text>().text = currentCreature.myAbility.AbilityName + " " + currentCreature.myAbility.AbilityDescriptionText;
-            }
-            creatureWindow.attackValue.GetComponent<Text>().text = "ATK" + target.currentAttack;
-            creatureWindow.defenceValue.GetComponent<Text>().text = "DEF" + target.currentDefence;
-            creatureWindow.healthValue.GetComponent<Text>().text = "HP" + target.currentHealth;
-        }
-        creatureWindow.creatureArt.GetComponent<Image>().sprite = currentCreature.CardArt;
-        creatureWindow.creatureLevel.GetComponent<Image>().sprite = currentCreature.LevelSprite;
-        creatureWindow.creatureTribe.GetComponent<Image>().sprite = currentCreature.TribeSprite;
-        creatureWindow.creatureType.GetComponent<Image>().sprite = currentCreature.TypeSprite;
-    }
+
 
     public void DisplayDungeonLord()
     {
@@ -280,7 +230,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
                     {
                         diceShown += 1;
                         currentCreature = turnPlayer.GetComponent<Player>().diceDeck[diceShown].dieCreature;
-                        DisplayCreatureDetails(pressedFor);
+                        creatureWindow.PreviewCreature(pressedFor);
                     }
                 }
 
@@ -294,7 +244,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
                             DisplayDungeonLord();
                         }else if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>() != null)
                         {
-                            DisplayCreatureDetails(pressedFor);
+                            creatureWindow.PreviewCreature(pressedFor);
                         }
                     }
                 }
@@ -307,7 +257,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
                     {
                         diceShown -= 1;
                         currentCreature = turnPlayer.GetComponent<Player>().diceDeck[diceShown].dieCreature;
-                        DisplayCreatureDetails(pressedFor);
+                        creatureWindow.PreviewCreature(pressedFor);
                     }
                 }
 
@@ -322,7 +272,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
                         }
                         else if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>() != null)
                         {
-                            DisplayCreatureDetails(pressedFor);
+                            creatureWindow.PreviewCreature(pressedFor);
                         }
                     }
                 }
@@ -372,8 +322,8 @@ public class InspectWindowController : MonoBehaviour //This script will control 
     {
         //Declare creature in target list as attack target then send that information to creature vs creature combat script.
         GameObject CW = GameObject.FindGameObjectWithTag("CombatWindow");
-        CW.GetComponent<AttackUIScript>().attacker = currentCreaturePiece;
-        CW.GetComponent<AttackUIScript>().defender = currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].gameObject;
+        CW.GetComponent<AttackUIScript>().attacker = currentCreaturePiece.GetComponent<CreatureToken>();
+        CW.GetComponent<AttackUIScript>().defender = currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].gameObject.GetComponent<CreatureToken>();
         CW.GetComponent<AttackUIScript>().Action = "Decide";
         CW.GetComponent<AttackUIScript>().displayAttackWindow();
         //Hide this Window for now

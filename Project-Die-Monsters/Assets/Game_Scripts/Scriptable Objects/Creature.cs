@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -26,6 +27,8 @@ public class Creature : ScriptableObject
     public int Attack;
     public int Defence;
     public int MoveDistance;
+    public int AttackCost;
+    public int DefenceCost;
 
     public Ability myAbility;
 

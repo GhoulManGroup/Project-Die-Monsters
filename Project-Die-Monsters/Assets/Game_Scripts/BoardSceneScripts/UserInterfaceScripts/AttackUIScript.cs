@@ -3,29 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
+using UnityEditor.Experimental.GraphView;
 
 public class AttackUIScript : MonoBehaviour
 {
     GameObject lvlRef;
-
-    [Header("UI Elements")]
-    public List<GameObject> UIElements = new List<GameObject>();
-    public List<GameObject> AUIButtons = new List<GameObject>();
-    public List<Sprite> spriteList = new List<Sprite>();
+    GameObject AIManager;
 
     [Header("Participants")]
 
     // The creature pieces involved in the combat.
-    public GameObject attacker;
-    public GameObject defender;
+    public CreatureToken attacker;
+    public CreatureToken defender;
 
     // The Players or AI Who own those pieces.
     public GameObject attackingPlayer;
     public GameObject defendingPlayer;
 
     // The components of both objects.
-    public List<GameObject> AttackerDisplay = new List<GameObject>();
-    public List<GameObject> DefenderDisplay = new List<GameObject>();
+    public GameObject attackerDisplay;
+    public GameObject defenderDisplay;
+
+    [Header("UI Elements")]
+    public List<GameObject> UIElements = new List<GameObject>();
+    public List<GameObject> AUIButtons = new List<GameObject>();
+    public List<Sprite> spriteList = new List<Sprite>();
+
+  //If player wait for input, If AI just check for player can defend then await input if true else resolve combat while polsihing the entire process to have visual 
 
     [Header("Combat Priority")]
 
@@ -38,8 +43,29 @@ public class AttackUIScript : MonoBehaviour
     {
         //Hide window at start.
         hideAttackWindow();
+        AIManager = GameObject.FindGameObjectWithTag("AIController");
         lvlRef = GameObject.FindGameObjectWithTag("LevelController");
         UIElements[15].GetComponent<Image>().sprite = spriteList[0];
+    }
+
+    public void setDetails()
+    {
+
+        //Establish who is attacking and who is defending.
+        if (lvlRef.GetComponent<LevelController>().currentTurnParticipant.ToString() == "0")
+        {
+            attackingPlayer = lvlRef.GetComponent<LevelController>().participants[0].gameObject;
+            defendingPlayer = lvlRef.GetComponent<LevelController>().participants[1].gameObject;
+        }
+        else if (lvlRef.GetComponent<LevelController>().currentTurnParticipant.ToString() == "1")
+        {
+            attackingPlayer = lvlRef.GetComponent<LevelController>().participants[1].gameObject;
+            defendingPlayer = lvlRef.GetComponent<LevelController>().participants[0].gameObject;
+        }
+
+        // set the stats of the creature pieces to the UI.
+        attackerDisplay.GetComponent<CreatureDisplayTab>().DisplayCombatParticpants(attacker);
+        defenderDisplay.GetComponent<CreatureDisplayTab>().DisplayCombatParticpants(defender);
     }
 
     public void hideAttackWindow()
@@ -91,23 +117,7 @@ public class AttackUIScript : MonoBehaviour
         switch (attackBTNPressed)
         {
             case "AttackBTN":
-                //Subtract the cost of the attack from the player attack crests pool.
-                attackingPlayer.GetComponent<Player>().attackCrestPoints -= attacker.GetComponent<CreatureToken>().attackCost;
-
-                //Check if other player has enough points to cover their defence cost. if so offer choice if not skip to damage calc.
-                if (defendingPlayer.GetComponent<Player>().defenceCrestPoints > 0)
-                {
-                    Action = "Defend";
-                    UIElements[15].GetComponent<Image>().sprite = spriteList[1];
-                    buttonState();
-                    
-                }else if (defendingPlayer.GetComponent<Player>().defenceCrestPoints == 0)
-                {
-                    Action = "Resolve";
-                    UIElements[15].GetComponent<Image>().sprite = spriteList[2];
-                    buttonState();
-                    ResolveCombat();
-                }
+                AttackAction();    
                 break;
 
             case "DefendBTN":
@@ -149,31 +159,36 @@ public class AttackUIScript : MonoBehaviour
         }
     }
 
-    public void setDetails()
+    public void AttackAction()
     {
-
-        //Establish who is attacking and who is defending.
-        if (lvlRef.GetComponent<LevelController>().currentTurnParticipant.ToString() == "0")
+        if (attackingPlayer.GetComponent<AIOpponent>() != null) 
         {
-            attackingPlayer = lvlRef.GetComponent<LevelController>().participants[0].gameObject;
-            defendingPlayer = lvlRef.GetComponent<LevelController>().participants[1].gameObject;
-        }
-        else if (lvlRef.GetComponent<LevelController>().currentTurnParticipant.ToString() == "1")
+            attackingPlayer.GetComponent<AIOpponent>().attackCrestPoints -= attacker.GetComponent<CreatureToken>().attackCost;
+           
+            if (defendingPlayer.GetComponent<Player>().defenceCrestPoints >= defender.defenseCost)
+            {
+                Action = "Defend";
+                UIElements[15].GetComponent<Image>().sprite = spriteList[1];
+                buttonState();
+
+            }
+            else if (attackingPlayer.GetComponent<Player>() != null)
         {
-            attackingPlayer = lvlRef.GetComponent<LevelController>().participants[1].gameObject;
-            defendingPlayer = lvlRef.GetComponent<LevelController>().participants[0].gameObject;
+            attackingPlayer.GetComponent<Player>().attackCrestPoints -= attacker.GetComponent<CreatureToken>().attackCost;
         }
 
-        // set the stats of the creature pieces to the UI.
-        AttackerDisplay[1].GetComponent<Text>().text = attacker.GetComponent<CreatureToken>().currentAttack.ToString();
-        AttackerDisplay[2].GetComponent<Text>().text = attacker.GetComponent<CreatureToken>().currentDefence.ToString();
-        AttackerDisplay[3].GetComponent<Text>().text = attacker.GetComponent<CreatureToken>().currentHealth.ToString();
-        AttackerDisplay[4].GetComponent<Image>().sprite = attacker.GetComponent<CreatureToken>().myCreature.CardArt;
 
-        DefenderDisplay[1].GetComponent<Text>().text = defender.GetComponent<CreatureToken>().currentAttack.ToString();
-        DefenderDisplay[2].GetComponent<Text>().text = defender.GetComponent<CreatureToken>().currentDefence.ToString();
-        DefenderDisplay[3].GetComponent<Text>().text = defender.GetComponent<CreatureToken>().currentHealth.ToString();
-        DefenderDisplay[4].GetComponent<Image>().sprite = defender.GetComponent<CreatureToken>().myCreature.CardArt;
+
+        //Check if other player has enough points to cover their defence cost. if so offer choice if not skip to damage calc.
+   
+        }
+        else if (defendingPlayer.GetComponent<Player>().defenceCrestPoints == 0)
+        {
+            Action = "Resolve";
+            UIElements[15].GetComponent<Image>().sprite = spriteList[2];
+            buttonState();
+            ResolveCombat();
+        }
     }
 
     public void buttonState() //Update the button interactable state based on the action.

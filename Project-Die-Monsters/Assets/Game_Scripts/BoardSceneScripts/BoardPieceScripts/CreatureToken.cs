@@ -31,6 +31,7 @@ public class CreatureToken : MonoBehaviour
     public int attackDistance = 1; // how far we can attack.
     public int attackCost = 1; // how much to attack.
     public int abilityCost = 1; // how much does the ability of creature cost to cast.
+    public int defenseCost = 1;
 
     //Creature Owner
     public string myOwner;
@@ -110,6 +111,8 @@ public class CreatureToken : MonoBehaviour
         attackCap = myCreature.Attack;
         defenceCap = myCreature.Defence;
         moveDistanceCap= myCreature.MoveDistance;
+        defenseCost = myCreature.DefenceCost;
+        attackCost = myCreature.AttackCost;
 
         if (myCreature.myAbility != null)
         {
