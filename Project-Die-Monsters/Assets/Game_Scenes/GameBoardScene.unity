@@ -5932,6 +5932,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1393003801003386822, guid: c3b451e3668ecbc4a9e9ae670c563eeb, type: 3}
   m_PrefabInstance: {fileID: 772055624}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &772055626 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1393003801003386823, guid: c3b451e3668ecbc4a9e9ae670c563eeb, type: 3}
+  m_PrefabInstance: {fileID: 772055624}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &772255052
 GameObject:
   m_ObjectHideFlags: 0
@@ -7350,8 +7355,11 @@ MonoBehaviour:
   defender: {fileID: 0}
   attackingPlayer: {fileID: 0}
   defendingPlayer: {fileID: 0}
-  attackerDisplay: {fileID: 0}
-  defenderDisplay: {fileID: 0}
+  attackerDisplay: {fileID: 1069750985}
+  defenderDisplay: {fileID: 772055626}
+  phaseIcon: {fileID: 834549820}
+  defenderStateIcon: {fileID: 1001544270}
+  attackerStateIcon: {fileID: 1383655266}
   UIElements:
   - {fileID: 1001544270}
   - {fileID: 1383655266}
@@ -8214,6 +8222,11 @@ PrefabInstance:
 --- !u!224 &1069750984 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1393003801003386822, guid: c3b451e3668ecbc4a9e9ae670c563eeb, type: 3}
+  m_PrefabInstance: {fileID: 1069750983}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1069750985 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1393003801003386823, guid: c3b451e3668ecbc4a9e9ae670c563eeb, type: 3}
   m_PrefabInstance: {fileID: 1069750983}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1070299391

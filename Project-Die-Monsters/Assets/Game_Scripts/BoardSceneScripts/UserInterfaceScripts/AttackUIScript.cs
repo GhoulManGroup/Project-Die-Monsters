@@ -1,4 +1,5 @@
 using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,9 +27,24 @@ public class AttackUIScript : MonoBehaviour
     public GameObject defenderDisplay;
 
     [Header("UI Elements")]
-    public List<GameObject> UIElements = new List<GameObject>();
-    public List<GameObject> AUIButtons = new List<GameObject>();
-    public List<Sprite> spriteList = new List<Sprite>();
+    [SerializeField] GameObject phaseIcon;
+    [SerializeField] GameObject defenderStateIcon;
+    [SerializeField] GameObject attackerStateIcon;
+    [SerializeField] Button attackBTN;
+    [SerializeField] Button defendBTN;
+    [SerializeField] Button abilityBTN;
+    [SerializeField] Button declineBTN;
+
+    [SerializeField] UISpriteList spriteList = ;
+
+    struct UISpriteList 
+    {
+        Sprite attackIcon;
+        Sprite defendIcon;
+        Sprite abilityIcon;
+        Sprite resoluctionIcon;
+        Sprite deathIcon;
+    }
 
   //If player wait for input, If AI just check for player can defend then await input if true else resolve combat while polsihing the entire process to have visual 
 
@@ -45,7 +61,7 @@ public class AttackUIScript : MonoBehaviour
         hideAttackWindow();
         AIManager = GameObject.FindGameObjectWithTag("AIController");
         lvlRef = GameObject.FindGameObjectWithTag("LevelController");
-        UIElements[15].GetComponent<Image>().sprite = spriteList[0];
+        //phaseIcon.GetComponent<Image>().sprite = 
     }
 
     public void setDetails()
@@ -105,7 +121,7 @@ public class AttackUIScript : MonoBehaviour
             }
         }
 
-        UIElements[15].GetComponent<Image>().sprite = spriteList[0];
+        UIElements[2].GetComponent<Image>().sprite = spriteList[0];
         buttonState();
         setDetails();
     }
@@ -124,7 +140,7 @@ public class AttackUIScript : MonoBehaviour
                 //Apply defence value to combat this fight.
                 buttonState();
                 applyDefence = true;
-                UIElements[15].GetComponent<Image>().sprite = spriteList[2];
+                UIElements[2].GetComponent<Image>().sprite = spriteList[2];
                 Action = "Resolve";
                 ResolveCombat();
                 break;
@@ -211,7 +227,7 @@ public class AttackUIScript : MonoBehaviour
         else if (defendingPlayer.GetComponent<Player>().defenceCrestPoints == 0)
         {
             Action = "Resolve";
-            UIElements[15].GetComponent<Image>().sprite = spriteList[2];
+            UIElements[2].GetComponent<Image>().sprite = spriteList[2];
             buttonState();
             ResolveCombat();
         }
@@ -313,15 +329,4 @@ public class AttackUIScript : MonoBehaviour
         attacker.GetComponent<CreatureToken>().hasAttackedThisTurn = true;
         lvlRef.GetComponent<LevelController>().CheckForTriggersToResolve();
     }
-    //Sytsten disc
-    //Enum Planet || Phenonmeon
-    //Hazzard
-    //Hazzard Level
-    //Ability [Effect ScriptableHere]
-    //List Slots
-    //Node Lists
-    //Yellow Node
-    //Red Node
-    //Blue Node
-    //Grey Nodes
 }
