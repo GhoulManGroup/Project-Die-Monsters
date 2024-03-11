@@ -71,7 +71,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
 
     // Start is called before the first frame update
     void Start()
-    {
+    { 
         CloseInspectWindow();
         levelManager = GameObject.FindGameObjectWithTag("LevelController");
         creatureWindow.MyController = this.gameObject;
@@ -325,7 +325,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
         CW.GetComponent<AttackUIScript>().attacker = currentCreaturePiece.GetComponent<CreatureToken>();
         CW.GetComponent<AttackUIScript>().defender = currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].gameObject.GetComponent<CreatureToken>();
         CW.GetComponent<AttackUIScript>().Action = "Decide";
-        CW.GetComponent<AttackUIScript>().displayAttackWindow();
+        CW.GetComponent<AttackUIScript>().DisplayAttackWindow("Decide");
         //Hide this Window for now
         CloseInspectWindow();
     }

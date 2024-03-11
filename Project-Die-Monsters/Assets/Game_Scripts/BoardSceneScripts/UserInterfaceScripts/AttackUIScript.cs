@@ -1,14 +1,14 @@
 using System.Collections;
-
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
-using UnityEditor.Experimental.GraphView;
 
 public class AttackUIScript : MonoBehaviour
 {
+    #region Varibles
+
     GameObject lvlRef;
     GameObject AIManager;
 
@@ -27,6 +27,8 @@ public class AttackUIScript : MonoBehaviour
     public GameObject defenderDisplay;
 
     [Header("UI Elements")]
+
+    [SerializeField] GameObject panel;
     [SerializeField] GameObject phaseIcon;
     [SerializeField] GameObject defenderStateIcon;
     [SerializeField] GameObject attackerStateIcon;
@@ -35,18 +37,21 @@ public class AttackUIScript : MonoBehaviour
     [SerializeField] Button abilityBTN;
     [SerializeField] Button declineBTN;
 
-    [SerializeField] UISpriteList spriteList = ;
+    [SerializeField] UISpriteList Sprites = default;
 
-    struct UISpriteList 
+
+    [Serializable]
+    struct UISpriteList
     {
-        Sprite attackIcon;
-        Sprite defendIcon;
-        Sprite abilityIcon;
-        Sprite resoluctionIcon;
-        Sprite deathIcon;
+        public Sprite attackIcon;
+        public Sprite defendIcon;
+        public Sprite abilityIcon;
+        public Sprite resoluctionIcon;
+        public Sprite deathIcon;
     }
+    #endregion
 
-  //If player wait for input, If AI just check for player can defend then await input if true else resolve combat while polsihing the entire process to have visual 
+    //If player wait for input, If AI just check for player can defend then await input if true else resolve combat while polsihing the entire process to have visual 
 
     [Header("Combat Priority")]
 
@@ -58,15 +63,14 @@ public class AttackUIScript : MonoBehaviour
     public void Awake()
     {
         //Hide window at start.
-        hideAttackWindow();
+        HideAttackWindow();
         AIManager = GameObject.FindGameObjectWithTag("AIController");
         lvlRef = GameObject.FindGameObjectWithTag("LevelController");
         //phaseIcon.GetComponent<Image>().sprite = 
     }
 
-    public void setDetails()
+    public void SetDetails()
     {
-
         //Establish who is attacking and who is defending.
         if (lvlRef.GetComponent<LevelController>().currentTurnParticipant.ToString() == "0")
         {
@@ -84,46 +88,21 @@ public class AttackUIScript : MonoBehaviour
         defenderDisplay.GetComponent<CreatureDisplayTab>().DisplayCombatParticpants(defender);
     }
 
-    public void hideAttackWindow()
+    public void HideAttackWindow()
     {
-        for (int i = 0; i < UIElements.Count; i++)
-        {
-            if (UIElements[i].GetComponent<Image>() != null)
-            {
-                UIElements[i].GetComponent<Image>().enabled = false;
-            }
-
-            if (UIElements[i].GetComponent<Text>() != null)
-            {
-                UIElements[i].GetComponent<Text>().enabled = false;
-            }
-        }
-
-        AUIButtons[0].GetComponent<Button>().interactable = false;
-        AUIButtons[1].GetComponent<Button>().interactable = false;
-        AUIButtons[2].GetComponent<Button>().interactable = false;
-        AUIButtons[3].GetComponent<Button>().interactable = false;
+        panel.SetActive(false);
+        attackBTN.interactable = false;
+        defendBTN.interactable = false;
+        abilityBTN.interactable = false;
+        declineBTN.interactable = false;
     }
 
-    public void displayAttackWindow()
+    public void DisplayAttackWindow(string action)
     {
-        // show the attack window UI
-        for (int i = 1; i < UIElements.Count; i++)
-        {
-            if (UIElements[i].GetComponent<Image>() != null)
-            {
-                UIElements[i].GetComponent<Image>().enabled = true;
-            }
-
-            if (UIElements[i].GetComponent<Text>() != null)
-            {
-                UIElements[i].GetComponent<Text>().enabled = true;
-            }
-        }
-
-        UIElements[2].GetComponent<Image>().sprite = spriteList[0];
+        Action = action;
+        panel.SetActive(true);
         buttonState();
-        setDetails();
+        SetDetails();
     }
 
     public void ButtonPressed()
@@ -133,14 +112,15 @@ public class AttackUIScript : MonoBehaviour
         switch (attackBTNPressed)
         {
             case "AttackBTN":
-                AttackAction();    
+                AttackAction(); 
                 break;
 
             case "DefendBTN":
-                //Apply defence value to combat this fight.
+                
                 buttonState();
                 applyDefence = true;
-                UIElements[2].GetComponent<Image>().sprite = spriteList[2];
+
+                //phaseIcon.GetComponent<Image>().sprite = spriteList.defed
                 Action = "Resolve";
                 ResolveCombat();
                 break;
@@ -158,12 +138,12 @@ public class AttackUIScript : MonoBehaviour
                         break;
                     case "Decide":
                         // go back to target list.
-                        hideAttackWindow();
+                        HideAttackWindow();
                         GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectWindowController>().OpenInspectWindow("AttackTargetSelection");
                         break;
                     case "Over":
                         //Combat over contiune turn.
-                        hideAttackWindow();
+                        HideAttackWindow();
                         //Call creature controller and set us back to controling the piece.
                         lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;
                         lvlRef.GetComponent<PlayerCreatureController>().ChosenAction = "None";
@@ -172,6 +152,50 @@ public class AttackUIScript : MonoBehaviour
                         break;
                 }           
                 break;
+        }
+    }
+
+    public void buttonState() //Update the button interactable state based on the action.
+    {
+        switch (Action)
+        {
+            case "AIDecision":
+                attackBTN.interactable = true;
+                defendBTN.interactable = true;
+                abilityBTN.interactable = true;
+                declineBTN.interactable = true;
+                break;
+            case "Decide":
+                attackBTN.interactable = true;
+                defendBTN.interactable = true;
+                abilityBTN.interactable = true;
+                declineBTN.interactable = true;
+                break;
+            case "Resolve":
+                attackBTN.interactable = true;
+                defendBTN.interactable = true;
+                abilityBTN.interactable = true;
+                declineBTN.interactable = true;
+                break;
+            case "Defend":
+                attackBTN.interactable = true;
+                defendBTN.interactable = true;
+                abilityBTN.interactable = true;
+                declineBTN.interactable = true;
+                break;
+            case "Ability":
+                attackBTN.interactable = true;
+                defendBTN.interactable = true;
+                abilityBTN.interactable = true;
+                declineBTN.interactable = true;
+                break;
+            case "Over":
+                attackBTN.interactable = true;
+                defendBTN.interactable = true;
+                abilityBTN.interactable = true;
+                declineBTN.interactable = true;
+                break;
+            
         }
     }
 
@@ -184,7 +208,7 @@ public class AttackUIScript : MonoBehaviour
             if (defendingPlayer.GetComponent<Player>().defenceCrestPoints >= defender.defenseCost)
             {
                 Action = "Defend";
-                UIElements[15].GetComponent<Image>().sprite = spriteList[1];
+               // UIElements[15].GetComponent<Image>().sprite = spriteList[1];
                 buttonState();
             }else
             {
@@ -209,7 +233,7 @@ public class AttackUIScript : MonoBehaviour
                 if (defendingPlayer.GetComponent<Player>().defenceCrestPoints >= defender.defenseCost)
                 {
                     Action = "Defend";
-                    UIElements[15].GetComponent<Image>().sprite = spriteList[1];
+                    //UIElements[15].GetComponent<Image>().sprite = spriteList[1];
                     buttonState();
                 }
                 else
@@ -227,48 +251,9 @@ public class AttackUIScript : MonoBehaviour
         else if (defendingPlayer.GetComponent<Player>().defenceCrestPoints == 0)
         {
             Action = "Resolve";
-            UIElements[2].GetComponent<Image>().sprite = spriteList[2];
+            //UIElements[2].GetComponent<Image>().sprite = spriteList[2];
             buttonState();
             ResolveCombat();
-        }
-    }
-
-    public void buttonState() //Update the button interactable state based on the action.
-    {
-        switch (Action)
-        {
-            case "AIDecision":
-                AUIButtons[0].GetComponent<Button>().interactable = false;
-                AUIButtons[1].GetComponent<Button>().interactable = false;
-                AUIButtons[2].GetComponent<Button>().interactable = false;
-                AUIButtons[3].GetComponent<Button>().interactable = false;
-                break;
-            case "Decide":
-                AUIButtons[0].GetComponent<Button>().interactable = true;
-                AUIButtons[1].GetComponent<Button>().interactable = false;
-                AUIButtons[2].GetComponent<Button>().interactable = true;
-                AUIButtons[3].GetComponent<Button>().interactable = true;
-                break;
-            case "Resolve":
-                AUIButtons[0].GetComponent<Button>().interactable = false;
-                AUIButtons[1].GetComponent<Button>().interactable = false;
-                AUIButtons[2].GetComponent<Button>().interactable = false;
-                AUIButtons[3].GetComponent<Button>().interactable = false;
-                break;
-            case "Defend":
-                AUIButtons[0].GetComponent<Button>().interactable = false;
-                AUIButtons[1].GetComponent<Button>().interactable = true;
-                AUIButtons[2].GetComponent<Button>().interactable = false;
-                AUIButtons[3].GetComponent<Button>().interactable = true;
-                break;
-            case "Ability":
-
-                break;
-            case "Over":
-                AUIButtons[1].GetComponent<Button>().interactable = false;
-                AUIButtons[3].GetComponent<Button>().interactable = true;
-                break;
-            
         }
     }
 
@@ -315,12 +300,12 @@ public class AttackUIScript : MonoBehaviour
 
         }
 
-        setDetails();
+        SetDetails();
 
         // check if defender health is less than 0 if so run the chekcstate function to destory it then change the UI sprite to Empty.
         if (defender.GetComponent<CreatureToken>().currentHealth <= 0)
         {
-           UIElements[0].GetComponent<Image>().enabled = true;
+           //UIElements[0].GetComponent<Image>().enabled = true;
            attacker.GetComponent<AbilityManager>().CheckTrigger("OnKill", attacker.gameObject);
         }
         attacker.GetComponent<AbilityManager>().CheckTrigger("OnAttack", attacker.gameObject);
