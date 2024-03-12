@@ -7349,22 +7349,20 @@ MonoBehaviour:
   defendingPlayer: {fileID: 0}
   attackerDisplay: {fileID: 1069750985}
   defenderDisplay: {fileID: 772055626}
+  panel: {fileID: 1410605031}
   phaseIcon: {fileID: 834549820}
   defenderStateIcon: {fileID: 1001544270}
   attackerStateIcon: {fileID: 1383655266}
-  UIElements:
-  - {fileID: 1001544270}
-  - {fileID: 1383655266}
-  - {fileID: 834549820}
-  AUIButtons:
-  - {fileID: 887952317}
-  - {fileID: 1766424547}
-  - {fileID: 216208124}
-  - {fileID: 56508722}
-  spriteList:
-  - {fileID: 21300000, guid: 905f4702794b6184cb7c7cc381f3f90d, type: 3}
-  - {fileID: 21300000, guid: 8043505a735062a4d92785e38b202b1e, type: 3}
-  - {fileID: 21300000, guid: dd3abe6c05412b845a0645f21341b43c, type: 3}
+  attackBTN: {fileID: 887952321}
+  defendBTN: {fileID: 1766424551}
+  abilityBTN: {fileID: 216208128}
+  declineBTN: {fileID: 56508724}
+  Sprites:
+    attackIcon: {fileID: 21300000, guid: 905f4702794b6184cb7c7cc381f3f90d, type: 3}
+    defendIcon: {fileID: 21300000, guid: 8043505a735062a4d92785e38b202b1e, type: 3}
+    abilityIcon: {fileID: 21300000, guid: 3cddf7a4431b1b044b2ea23071209eb8, type: 3}
+    resoluctionIcon: {fileID: 21300000, guid: bfbeb7dbe6d945e4ba4ca38267852d26, type: 3}
+    deathIcon: {fileID: 21300000, guid: 18cefd1fdb8593e4aa245b25330990a5, type: 3}
   Action: Decide
 --- !u!1 &919795003
 GameObject:

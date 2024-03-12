@@ -160,15 +160,15 @@ public class AttackUIScript : MonoBehaviour
         switch (Action)
         {
             case "AIDecision":
-                attackBTN.interactable = true;
-                defendBTN.interactable = true;
-                abilityBTN.interactable = true;
-                declineBTN.interactable = true;
+                attackBTN.interactable = false;
+                defendBTN.interactable = false;
+                abilityBTN.interactable = false;
+                declineBTN.interactable = false;
                 break;
             case "Decide":
                 attackBTN.interactable = true;
-                defendBTN.interactable = true;
-                abilityBTN.interactable = true;
+                defendBTN.interactable = false;
+                abilityBTN.interactable = false;
                 declineBTN.interactable = true;
                 break;
             case "Resolve":
@@ -178,21 +178,21 @@ public class AttackUIScript : MonoBehaviour
                 declineBTN.interactable = true;
                 break;
             case "Defend":
-                attackBTN.interactable = true;
+                attackBTN.interactable = false;
                 defendBTN.interactable = true;
-                abilityBTN.interactable = true;
+                abilityBTN.interactable = false;
                 declineBTN.interactable = true;
                 break;
             case "Ability":
-                attackBTN.interactable = true;
-                defendBTN.interactable = true;
+                attackBTN.interactable = false;
+                defendBTN.interactable = false;
                 abilityBTN.interactable = true;
                 declineBTN.interactable = true;
                 break;
             case "Over":
-                attackBTN.interactable = true;
-                defendBTN.interactable = true;
-                abilityBTN.interactable = true;
+                attackBTN.interactable = false;
+                defendBTN.interactable = false;
+                abilityBTN.interactable = false;
                 declineBTN.interactable = true;
                 break;
             
@@ -297,7 +297,6 @@ public class AttackUIScript : MonoBehaviour
         if (attackingPlayer.GetComponent<Player>() != null) 
         {
             buttonState();
-
         }
 
         SetDetails();

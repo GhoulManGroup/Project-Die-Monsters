@@ -136,6 +136,19 @@ public class AICreatureController : MonoBehaviour
 
     IEnumerator AICreatureAttack()
     {
+        AttackUIScript combatWindow = GameObject.FindGameObjectWithTag("CombatWindow").GetComponent<AttackUIScript>();
+
+        //Declare attacker
+        combatWindow.attacker = creature;
+
+        //declare defender
+        CreatureToken defender;
+        for (int i = 0; i < creature.targets.Count; i++)
+        {
+
+        }
+       
+        combatWindow.defender = creature.targets[0].GetComponent<CreatureToken>(); // replace with pick target creature with lowest tile
         //Find creature who is either > lowest health || on a tile closest to the goal
         //Declare attack 
         // Open UI
