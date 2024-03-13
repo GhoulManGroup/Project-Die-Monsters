@@ -142,10 +142,18 @@ public class AICreatureController : MonoBehaviour
         combatWindow.attacker = creature;
 
         //declare defender
-        CreatureToken defender;
+        CreatureToken defender = creature.targets[0].GetComponent<CreatureToken>();
+
         for (int i = 0; i < creature.targets.Count; i++)
         {
-
+            if (creature.targets[i].GetComponent<CreatureToken>().myBoardLocation.GetComponent<GridScript>().distanceFromPlayerDungeonLord < defender.myBoardLocation.GetComponent<GridScript>().distanceFromPlayerDungeonLord)
+            {
+                if (defender.currentHealth > creature.currentAttack) // If current target can't be killed switch to closer target to prioritse as kill is a better choice.
+                {
+                    defender = creature.targets[i].GetComponent<CreatureToken>();
+                }
+                Debug.Log("Replaced Target With Higher Priority");
+            }
         }
        
         combatWindow.defender = creature.targets[0].GetComponent<CreatureToken>(); // replace with pick target creature with lowest tile

@@ -66,7 +66,7 @@ public class AttackUIScript : MonoBehaviour
         HideAttackWindow();
         AIManager = GameObject.FindGameObjectWithTag("AIController");
         lvlRef = GameObject.FindGameObjectWithTag("LevelController");
-        //phaseIcon.GetComponent<Image>().sprite = 
+        phaseIcon.GetComponent<Image>().sprite = Sprites.attackIcon;
     }
 
     public void SetDetails()
@@ -208,7 +208,7 @@ public class AttackUIScript : MonoBehaviour
             if (defendingPlayer.GetComponent<Player>().defenceCrestPoints >= defender.defenseCost)
             {
                 Action = "Defend";
-               // UIElements[15].GetComponent<Image>().sprite = spriteList[1];
+                phaseIcon.GetComponent<Image>().sprite = Sprites.defendIcon;
                 buttonState();
             }else
             {
@@ -233,7 +233,7 @@ public class AttackUIScript : MonoBehaviour
                 if (defendingPlayer.GetComponent<Player>().defenceCrestPoints >= defender.defenseCost)
                 {
                     Action = "Defend";
-                    //UIElements[15].GetComponent<Image>().sprite = spriteList[1];
+                    phaseIcon.GetComponent<Image>().sprite = Sprites.defendIcon;
                     buttonState();
                 }
                 else
@@ -251,7 +251,7 @@ public class AttackUIScript : MonoBehaviour
         else if (defendingPlayer.GetComponent<Player>().defenceCrestPoints == 0)
         {
             Action = "Resolve";
-            //UIElements[2].GetComponent<Image>().sprite = spriteList[2];
+            phaseIcon.GetComponent<Image>().sprite = Sprites.resoluctionIcon;
             buttonState();
             ResolveCombat();
         }
@@ -262,12 +262,16 @@ public class AttackUIScript : MonoBehaviour
         // Set damage value.
         int damage = attacker.GetComponent<CreatureToken>().currentAttack;
 
+        attackerStateIcon.GetComponent<Image>().sprite = Sprites.attackIcon;
+        //Play Attack Noise
+
         //Check for defence.
         switch (applyDefence)
         {
             // Subtract the damage value from defender health if damage > 0.
             case true:
-                Debug.Log("Defence True");
+
+                defenderStateIcon.GetComponent<Image>().sprite = Sprites.defendIcon;
 
                 damage -= defender.GetComponent<CreatureToken>().currentDefence;
 
@@ -301,14 +305,17 @@ public class AttackUIScript : MonoBehaviour
 
         SetDetails();
 
+        attacker.GetComponent<AbilityManager>().CheckTrigger("OnAttack", attacker.gameObject);
+
+        defender.GetComponent<AbilityManager>().CheckTrigger("OnHit", attacker.gameObject);
+
         // check if defender health is less than 0 if so run the chekcstate function to destory it then change the UI sprite to Empty.
         if (defender.GetComponent<CreatureToken>().currentHealth <= 0)
         {
-           //UIElements[0].GetComponent<Image>().enabled = true;
+           defenderDisplay.GetComponent<Image>().sprite = Sprites.deathIcon;
            attacker.GetComponent<AbilityManager>().CheckTrigger("OnKill", attacker.gameObject);
         }
-        attacker.GetComponent<AbilityManager>().CheckTrigger("OnAttack", attacker.gameObject);
-        defender.GetComponent<AbilityManager>().CheckTrigger("OnHit", attacker.gameObject);
+
         attacker.GetComponent<CreatureToken>().CheckForAttackTarget();
         attacker.GetComponent<CreatureToken>().hasAttackedThisTurn = true;
         lvlRef.GetComponent<LevelController>().CheckForTriggersToResolve();
