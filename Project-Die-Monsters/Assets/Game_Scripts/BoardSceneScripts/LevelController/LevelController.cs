@@ -255,7 +255,7 @@ public class LevelController : MonoBehaviour //This class oversees the setup tur
             }
         }else if (turnPlayerObject.GetComponent<AIOpponent>() != null)
         {
-            Debug.Log("Inside AI End Turn Condtion " + currentTurnParticipant);
+            //Debug.Log("Inside AI End Turn Condtion " + currentTurnParticipant);
 
         }
 

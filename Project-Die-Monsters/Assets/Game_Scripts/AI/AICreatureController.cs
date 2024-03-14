@@ -101,12 +101,18 @@ public class AICreatureController : MonoBehaviour
         }
     }
 
+    public void performActionAgain()
+    {
+       PerformActions();
+    }
+
     IEnumerator PerformActions()
     {
         Debug.Log("StartingPerformAction");
 
         if (canAttack == true)
         {
+            Debug.Log("AttackCall");
             yield return StartCoroutine(AICreatureAttack());
         }
 
@@ -125,7 +131,8 @@ public class AICreatureController : MonoBehaviour
         if (actionsToTake != 0)
         {
             Debug.Log("Still Actions Can Be Taken By Creature" + creature.name);
-            PerformActions();
+            performActionAgain();
+            
         }
         else
         { 
@@ -136,6 +143,7 @@ public class AICreatureController : MonoBehaviour
 
     IEnumerator AICreatureAttack()
     {
+        Debug.LogError("Test Combat");
         AttackUIScript combatWindow = GameObject.FindGameObjectWithTag("CombatWindow").GetComponent<AttackUIScript>();
 
         //Declare attacker
@@ -171,14 +179,15 @@ public class AICreatureController : MonoBehaviour
     }
 
     IEnumerator AICreatureMove()
-    {
+    { 
+
         GameObject tileChosen = pathfinding.reachableTiles[0];
 
         for (int i = 0; i < pathfinding.reachableTiles.Count; i++)
         {
             if (pathfinding.reachableTiles[i].GetComponent<GridScript>().distanceFromPlayerDungeonLord < tileChosen.GetComponent<GridScript>().distanceFromPlayerDungeonLord)
             {
-                Debug.Log("Found Closer Tile Move to this instead" + tileChosen.gameObject.name);
+                //Debug.Log("Found Closer Tile Move to this instead" + tileChosen.gameObject.name);
                 tileChosen = pathfinding.reachableTiles[i];
             }
         }

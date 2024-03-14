@@ -332,10 +332,6 @@ public class PathController : MonoBehaviour
             tilesToCheck.Clear();
             checkedTiles.Clear();
             reachableTiles.Clear();
-            Debug.LogError(tilesToCheck.Count);
-            Debug.LogError(checkedTiles.Count);
-            Debug.LogError(reachableTiles.Count);
-            Debug.LogError("Reset Clear EVEYERTHING");
         }
         else if (why == "ShowOnlyPath")
         {
