@@ -142,13 +142,20 @@ public class AttackUIScript : MonoBehaviour
                         GameObject.FindGameObjectWithTag("InspectWindow").GetComponent<InspectWindowController>().OpenInspectWindow("AttackTargetSelection");
                         break;
                     case "Over":
-                        //Combat over contiune turn.
-                        HideAttackWindow();
-                        //Call creature controller and set us back to controling the piece.
-                        lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;
-                        lvlRef.GetComponent<PlayerCreatureController>().ChosenAction = "None";
-                        lvlRef.GetComponent<PlayerCreatureController>().CheckPossibleActions();
-                        lvlRef.GetComponent<PlayerCreatureController>().OpenAndCloseControllerUI();
+                        if (attackingPlayer.GetComponent<AIOpponent>() != null)
+                        {
+                            AIManager.GetComponent<AICreatureController>().actionDone = true;
+                        }
+                        if (attackingPlayer.GetComponent<Player>() != null)
+                        {
+                            //Combat over contiune turn.
+                            HideAttackWindow();
+                            //Call creature controller and set us back to controling the piece.
+                            lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;
+                            lvlRef.GetComponent<PlayerCreatureController>().ChosenAction = "None";
+                            lvlRef.GetComponent<PlayerCreatureController>().CheckPossibleActions();
+                            lvlRef.GetComponent<PlayerCreatureController>().OpenAndCloseControllerUI();
+                        }
                         break;
                 }           
                 break;
@@ -297,12 +304,7 @@ public class AttackUIScript : MonoBehaviour
         //Change state to over.
         Action = "Over";
 
-        //Update our button states & update the UI details eg health.
-        if (attackingPlayer.GetComponent<Player>() != null) 
-        {
-            buttonState();
-        }
-
+        buttonState();
         SetDetails();
 
         attacker.GetComponent<AbilityManager>().CheckTrigger("OnAttack", attacker.gameObject);

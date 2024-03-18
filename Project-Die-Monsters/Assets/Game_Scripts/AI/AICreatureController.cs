@@ -103,7 +103,8 @@ public class AICreatureController : MonoBehaviour
 
     public void performActionAgain()
     {
-       PerformActions();
+       // StartCoroutine(CheckPossibleActions());
+        StartCoroutine(PerformActions());
     }
 
     IEnumerator PerformActions()
@@ -163,14 +164,22 @@ public class AICreatureController : MonoBehaviour
                 Debug.Log("Replaced Target With Higher Priority");
             }
         }
-       
-        combatWindow.defender = creature.targets[0].GetComponent<CreatureToken>(); // replace with pick target creature with lowest tile
-        //Find creature who is either > lowest health || on a tile closest to the goal
-        //Declare attack 
-        // Open UI
-        //Awaiting player defend crest chance
-        //Resolcve combat
-        yield return null;
+
+        combatWindow.defender = defender; // replace with pick target creature with lowest tile
+
+        combatWindow.DisplayAttackWindow("AIDecision");
+
+        yield return new WaitForSeconds(5f);
+
+        combatWindow.AttackAction();
+
+        while (actionDone == false)
+        {
+            yield return null;
+        }
+
+        actionDone = false;
+
     }
 
     IEnumerator AICreatureCastAbility()
@@ -180,7 +189,7 @@ public class AICreatureController : MonoBehaviour
 
     IEnumerator AICreatureMove()
     { 
-
+        //ADD Text to explain each step of the combat phase to the player eg, use defence crest? , Exit combat. Add text to Window I think for each Button.
         GameObject tileChosen = pathfinding.reachableTiles[0];
 
         for (int i = 0; i < pathfinding.reachableTiles.Count; i++)
