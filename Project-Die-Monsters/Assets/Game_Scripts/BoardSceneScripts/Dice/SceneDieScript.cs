@@ -94,7 +94,7 @@ public class SceneDieScript : MonoBehaviour
         }
         else
         {
-            Debug.Log("Hello From OMD");
+
         }
     }
 

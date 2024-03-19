@@ -33,10 +33,13 @@ public class AttackUIScript : MonoBehaviour
     [SerializeField] GameObject defenderStateIcon;
     [SerializeField] GameObject attackerStateIcon;
     [SerializeField] Button attackBTN;
+    [SerializeField] Text attackBTNTxT;
     [SerializeField] Button defendBTN;
+    [SerializeField] Text defendBTNTxT;
     [SerializeField] Button abilityBTN;
+    [SerializeField] Text abilityBTNTxT;
     [SerializeField] Button declineBTN;
-
+    [SerializeField] Text declineBTNTxT;
     [SerializeField] UISpriteList Sprites = default;
 
 
@@ -115,13 +118,11 @@ public class AttackUIScript : MonoBehaviour
                 AttackAction(); 
                 break;
 
-            case "DefendBTN":
-                
-                buttonState();
+            case "DefendBTN":     
                 applyDefence = true;
-
-                //phaseIcon.GetComponent<Image>().sprite = spriteList.defed
+                phaseIcon.GetComponent<Image>().sprite = Sprites.defendIcon;
                 Action = "Resolve";
+                buttonState();
                 ResolveCombat();
                 break;
 
@@ -149,13 +150,13 @@ public class AttackUIScript : MonoBehaviour
                         if (attackingPlayer.GetComponent<Player>() != null)
                         {
                             //Combat over contiune turn.
-                            HideAttackWindow();
                             //Call creature controller and set us back to controling the piece.
                             lvlRef.GetComponent<LevelController>().turnPlayerPerformingAction = false;
                             lvlRef.GetComponent<PlayerCreatureController>().ChosenAction = "None";
                             lvlRef.GetComponent<PlayerCreatureController>().CheckPossibleActions();
                             lvlRef.GetComponent<PlayerCreatureController>().OpenAndCloseControllerUI();
                         }
+                            HideAttackWindow();
                         break;
                 }           
                 break;
@@ -316,10 +317,16 @@ public class AttackUIScript : MonoBehaviour
         {
            defenderDisplay.GetComponent<Image>().sprite = Sprites.deathIcon;
            attacker.GetComponent<AbilityManager>().CheckTrigger("OnKill", attacker.gameObject);
+            defender.CheckCreatureHealth();
         }
 
         attacker.GetComponent<CreatureToken>().CheckForAttackTarget();
         attacker.GetComponent<CreatureToken>().hasAttackedThisTurn = true;
         lvlRef.GetComponent<LevelController>().CheckForTriggersToResolve();
+    }
+
+    public void ClearDetails()
+    {
+
     }
 }

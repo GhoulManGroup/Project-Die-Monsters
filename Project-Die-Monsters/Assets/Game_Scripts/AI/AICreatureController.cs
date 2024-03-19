@@ -73,6 +73,7 @@ public class AICreatureController : MonoBehaviour
         }
 
         creature.CheckForAttackTarget();
+        Debug.LogError(creature.canReachTarget + " This Creature Can Reach Target");
         if (creature.canReachTarget == true && creature.hasAttackedThisTurn == false && creature.attackCost <= this.GetComponent<AIManager>().currentOpponent.GetComponent<AIOpponent>().attackCrestPoints)
         {
             canAttack = true;
@@ -89,6 +90,7 @@ public class AICreatureController : MonoBehaviour
             }
             else
             {
+                Debug.Log("Can Move");
                 wantToMove = true;
                 canMove = true;
                 actionsToTake += 1;
@@ -144,6 +146,8 @@ public class AICreatureController : MonoBehaviour
 
     IEnumerator AICreatureAttack()
     {
+        //ADD Text to explain each step of the combat phase to the player eg, use defence crest? , Exit combat. Add text to Window I think for each Button.
+
         Debug.LogError("Test Combat");
         AttackUIScript combatWindow = GameObject.FindGameObjectWithTag("CombatWindow").GetComponent<AttackUIScript>();
 
@@ -170,7 +174,7 @@ public class AICreatureController : MonoBehaviour
         combatWindow.DisplayAttackWindow("AIDecision");
 
         yield return new WaitForSeconds(5f);
-
+       
         combatWindow.AttackAction();
 
         while (actionDone == false)
@@ -189,7 +193,7 @@ public class AICreatureController : MonoBehaviour
 
     IEnumerator AICreatureMove()
     { 
-        //ADD Text to explain each step of the combat phase to the player eg, use defence crest? , Exit combat. Add text to Window I think for each Button.
+
         GameObject tileChosen = pathfinding.reachableTiles[0];
 
         for (int i = 0; i < pathfinding.reachableTiles.Count; i++)
@@ -211,8 +215,6 @@ public class AICreatureController : MonoBehaviour
         }
 
         actionDone = false;
-
-
         Debug.Log("Move Action Done For Creature");
     }
 

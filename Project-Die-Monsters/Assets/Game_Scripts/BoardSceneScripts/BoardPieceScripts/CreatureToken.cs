@@ -172,6 +172,7 @@ public class CreatureToken : MonoBehaviour
     public void CheckForAttackTarget()
     {
         targets.Clear(); // empty the list of any existing targets then add new ones.
+        canReachTarget = false;
 
         for (int i = 0; i < 4; i++)
         {
