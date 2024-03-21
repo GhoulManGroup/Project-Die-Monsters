@@ -32,8 +32,6 @@ public class AICreatureController : MonoBehaviour
 
             ability = myCreatures[i].GetComponent<AbilityManager>();
 
-            Debug.Log(i + creature.name);
-
             yield return CheckPossibleActions();
 
             actionsDone = false;
@@ -48,27 +46,30 @@ public class AICreatureController : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
 
-       this.GetComponent<AIManager>().PhaseDone= true;
+       this.GetComponent<AIManager>().PhaseDone = true;
+        ResetToDefault();
+        actionsDone = false;
     }
 
     private void ResetToDefault()
     {
-        actionsDone = false;
         actionDone = false;
+        canMove = false;
+        wantToMove = false;
+        canAttack = false;
+        CanAbility = false;
     }
 
     [SerializeField]  int actionsToTake = 0;
 
     public IEnumerator CheckPossibleActions()
     {
-        Debug.Log("CheckAction");
         actionsToTake = 0;
 
         yield return  ability.StartCoroutine("CheckAbilityCanBeCast");
         if (ability.canBeCast == true && creature.hasUsedAbilityThisTurn == false && creature.abilityCost <= this.GetComponent<AIManager>().currentOpponent.GetComponent<AIOpponent>().abiltyPowerCrestPoints)
         {
             CanAbility = true;
-            Debug.Log("Can Cast Ability");
             actionsToTake += 1;
         }
 
@@ -77,7 +78,6 @@ public class AICreatureController : MonoBehaviour
         if (creature.canReachTarget == true && creature.hasAttackedThisTurn == false && creature.attackCost <= this.GetComponent<AIManager>().currentOpponent.GetComponent<AIOpponent>().attackCrestPoints)
         {
             canAttack = true;
-            Debug.Log("Can Attack");
             actionsToTake += 1;
         }
 
@@ -90,7 +90,6 @@ public class AICreatureController : MonoBehaviour
             }
             else
             {
-                Debug.Log("Can Move");
                 wantToMove = true;
                 canMove = true;
                 actionsToTake += 1;
@@ -115,7 +114,6 @@ public class AICreatureController : MonoBehaviour
 
         if (canAttack == true)
         {
-            Debug.Log("AttackCall");
             yield return StartCoroutine(AICreatureAttack());
         }
 
@@ -139,8 +137,9 @@ public class AICreatureController : MonoBehaviour
         }
         else
         { 
-            Debug.Log("No More Actions Any MOre");
+            Debug.Log("No More Actions Any More");
             actionsDone = true;
+            ResetToDefault();
         }   
     }
 
@@ -192,8 +191,8 @@ public class AICreatureController : MonoBehaviour
     }
 
     IEnumerator AICreatureMove()
-    { 
-
+    {
+        Debug.Log("Starting Move Action");
         GameObject tileChosen = pathfinding.reachableTiles[0];
 
         for (int i = 0; i < pathfinding.reachableTiles.Count; i++)
@@ -215,7 +214,6 @@ public class AICreatureController : MonoBehaviour
         }
 
         actionDone = false;
-        Debug.Log("Move Action Done For Creature");
     }
 
     public void ResetCreatures()
