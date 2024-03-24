@@ -29,12 +29,14 @@ public class PathController : MonoBehaviour
     float wantedDir;
     float directionToTurn;
     public Vector3 positionToMove;
-
+    
     public void Awake()
     {
+       
         levelController = GameObject.FindGameObjectWithTag("LevelController");
         LCScript = levelController.GetComponent<LevelController>();
         aiCreatureController = GameObject.FindGameObjectWithTag("AIController").GetComponent<AICreatureController>();
+        
     }
 
     //Rotate to face the direction we need to walk.
@@ -328,7 +330,6 @@ public class PathController : MonoBehaviour
             {
                 checkedTiles[i].GetComponent<GridScript>().ResetGridTile();
             }
-
             tilesToCheck.Clear();
             checkedTiles.Clear();
             reachableTiles.Clear();

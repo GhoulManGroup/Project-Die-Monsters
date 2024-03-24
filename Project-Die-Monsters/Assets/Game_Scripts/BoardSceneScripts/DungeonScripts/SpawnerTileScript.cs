@@ -115,7 +115,7 @@ public class SpawnerTileScript : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogWarning("Out of Bounds AI ");
+                   // Debug.LogWarning("Out of Bounds AI ");
                     aboveEmptySpace = false;
                 }
             }

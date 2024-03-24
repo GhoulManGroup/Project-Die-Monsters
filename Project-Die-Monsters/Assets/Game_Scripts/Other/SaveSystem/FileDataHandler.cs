@@ -20,6 +20,7 @@ public class FileDataHandler
     {
         // use due to diffrent OS having diffrent path seperators.
         string fullPath = Path.Combine(dataDirPath, dataFileName);
+        Debug.Log(fullPath);
         GameData loadedData = null;
         if (File.Exists(fullPath))
         {

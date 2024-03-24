@@ -225,7 +225,7 @@ public class AIDungeonSpawner : MonoBehaviour
             else if (rotationAttempts >= 4)
             {
 
-                Debug.LogError("Pattern Resulted in No Sucess");
+                //Debug.LogError("Pattern Resulted in No Sucess");
                 WaitCheck.Remove("CDP");
             }
         }

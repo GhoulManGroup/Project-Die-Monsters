@@ -19,6 +19,9 @@ public class AICreatureController : MonoBehaviour
     [SerializeField] bool canAttack = false;
     [SerializeField] bool CanAbility = false;
 
+    [Header("Debug")]
+    public string WhichActionIsBrokenTracker = "None";
+
     public void Start()
     {
         pathfinding = GameObject.FindGameObjectWithTag("LevelController").GetComponent<PathController>();
@@ -98,14 +101,15 @@ public class AICreatureController : MonoBehaviour
         else
         {
             //clear list if not going to be used to move else it will block stuff
+            Debug.Log("Can't Move Clear Pathfinding for next creature");
             pathfinding.StartCoroutine("ResetBoard", "Reset");
         }
     }
 
-    public void performActionAgain()
+    public IEnumerator performActionAgain()
     {
-       // StartCoroutine(CheckPossibleActions());
-        StartCoroutine(PerformActions());
+        yield return StartCoroutine(CheckPossibleActions());
+        yield return StartCoroutine(PerformActions());
     }
 
     IEnumerator PerformActions()
@@ -114,11 +118,13 @@ public class AICreatureController : MonoBehaviour
 
         if (canAttack == true)
         {
+            Debug.Log("Starting Attack Action");
             yield return StartCoroutine(AICreatureAttack());
         }
 
         if (canMove == true && wantToMove == true)
         {
+            Debug.Log("Starting Move Action");
             yield return StartCoroutine(AICreatureMove());
         }
 
@@ -127,17 +133,17 @@ public class AICreatureController : MonoBehaviour
             yield return StartCoroutine(AICreatureCastAbility());
         }
 
-        yield return CheckPossibleActions();
+        Debug.Log("Actions Remaning : " + actionsToTake);
 
         if (actionsToTake != 0)
         {
-            Debug.Log("Still Actions Can Be Taken By Creature" + creature.name);
-            performActionAgain();
+            Debug.Log("Still Actions Can Be Taken By Creature : " + creature.name);
+            StartCoroutine(performActionAgain());
             
         }
         else
         { 
-            Debug.Log("No More Actions Any More");
+            Debug.Log("No More Actions  Can Be Taken By Creature : " + creature.name);
             actionsDone = true;
             ResetToDefault();
         }   
@@ -145,11 +151,10 @@ public class AICreatureController : MonoBehaviour
 
     IEnumerator AICreatureAttack()
     {
+        WhichActionIsBrokenTracker = "Attack";
         //ADD Text to explain each step of the combat phase to the player eg, use defence crest? , Exit combat. Add text to Window I think for each Button.
-
-        Debug.LogError("Test Combat");
         AttackUIScript combatWindow = GameObject.FindGameObjectWithTag("CombatWindow").GetComponent<AttackUIScript>();
-
+        
         //Declare attacker
         combatWindow.attacker = creature;
 
@@ -181,7 +186,9 @@ public class AICreatureController : MonoBehaviour
             yield return null;
         }
 
+        actionsToTake -= 1;
         actionDone = false;
+        WhichActionIsBrokenTracker = "None";
 
     }
 
@@ -192,7 +199,7 @@ public class AICreatureController : MonoBehaviour
 
     IEnumerator AICreatureMove()
     {
-        Debug.Log("Starting Move Action");
+        WhichActionIsBrokenTracker = "Movement";
         GameObject tileChosen = pathfinding.reachableTiles[0];
 
         for (int i = 0; i < pathfinding.reachableTiles.Count; i++)
@@ -213,7 +220,9 @@ public class AICreatureController : MonoBehaviour
             yield return null;
         }
 
+        actionsToTake -= 1;
         actionDone = false;
+        WhichActionIsBrokenTracker = "None";
     }
 
     public void ResetCreatures()
