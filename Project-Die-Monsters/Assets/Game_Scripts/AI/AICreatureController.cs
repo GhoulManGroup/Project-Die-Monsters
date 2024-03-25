@@ -77,7 +77,6 @@ public class AICreatureController : MonoBehaviour
         }
 
         creature.CheckForAttackTarget();
-        Debug.LogError(creature.canReachTarget + " This Creature Can Reach Target");
         if (creature.canReachTarget == true && creature.hasAttackedThisTurn == false && creature.attackCost <= this.GetComponent<AIManager>().currentOpponent.GetComponent<AIOpponent>().attackCrestPoints)
         {
             canAttack = true;
@@ -108,7 +107,6 @@ public class AICreatureController : MonoBehaviour
 
     public IEnumerator performActionAgain()
     {
-        yield return StartCoroutine(CheckPossibleActions());
         yield return StartCoroutine(PerformActions());
     }
 
@@ -134,6 +132,8 @@ public class AICreatureController : MonoBehaviour
         }
 
         Debug.Log("Actions Remaning : " + actionsToTake);
+
+        yield return StartCoroutine(CheckPossibleActions());
 
         if (actionsToTake != 0)
         {
@@ -200,6 +200,13 @@ public class AICreatureController : MonoBehaviour
     IEnumerator AICreatureMove()
     {
         WhichActionIsBrokenTracker = "Movement";
+
+        if (pathfinding.reachableTiles.Count == 0)
+        {
+            Debug.LogError("No path WHy Am I called");
+            actionsToTake -= 1;
+            yield break;
+        }
         GameObject tileChosen = pathfinding.reachableTiles[0];
 
         for (int i = 0; i < pathfinding.reachableTiles.Count; i++)
