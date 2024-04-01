@@ -29,7 +29,9 @@ public class PathController : MonoBehaviour
     float wantedDir;
     float directionToTurn;
     public Vector3 positionToMove;
-    
+
+    [Header("Debug")]
+    public string WhichStepIsBroken;
     public void Awake()
     {
        
@@ -43,6 +45,7 @@ public class PathController : MonoBehaviour
 
     public void DeclarePathfindingConditions(GameObject creatureTokenPicked)
     {
+        WhichStepIsBroken = "Declare";
         chosenPiece = creatureTokenPicked;
         possibleMoveDistance = creatureTokenPicked.GetComponent<CreatureToken>().currentMoveDistance;
         startPosition = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
@@ -58,6 +61,7 @@ public class PathController : MonoBehaviour
     {
         if (checkWhat == "CheckPossibleMoves")
         {
+            WhichStepIsBroken = "CheckPossibleMoves";
             if (tilesToCheck.Count != 0)
             {
                 tilesToCheck[0].GetComponent<GridScript>().FindPossibleMovements();
@@ -79,11 +83,11 @@ public class PathController : MonoBehaviour
         }
 
         else if (checkWhat == "FindPath") 
-        {                   
+        {
+            WhichStepIsBroken = "FindPath";
             if (tilesToCheck.Count != 0)
             {
-                tilesToCheck[0].GetComponent<GridScript>().FindPossiblePathToStart();
-               
+                tilesToCheck[0].GetComponent<GridScript>().FindPossiblePathToStart();   
             }
             else if (tilesToCheck.Count == 0)
             {
@@ -96,6 +100,8 @@ public class PathController : MonoBehaviour
   
     IEnumerator MovePieceThroughPath()
     {
+        WhichStepIsBroken = "MovePiece";
+        Debug.Log(WhichStepIsBroken);
         // Check the size of chosenPath, if its 0 then we are next to desired position else  we pick the tile closest to start being the last one added so listName.count
         GameObject currentPos = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
         GameObject desiredPos = null;
@@ -282,6 +288,7 @@ public class PathController : MonoBehaviour
 
     public void HasMoved()
     {
+        WhichStepIsBroken = "HasMoved";
         //Set <CreatureToken> var myDir to value so we can use it to determine forward in AOE casting.
         switch (wantedDir)
         {

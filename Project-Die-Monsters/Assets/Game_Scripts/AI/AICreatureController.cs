@@ -207,6 +207,7 @@ public class AICreatureController : MonoBehaviour
             actionsToTake -= 1;
             yield break;
         }
+
         GameObject tileChosen = pathfinding.reachableTiles[0];
 
         for (int i = 0; i < pathfinding.reachableTiles.Count; i++)
