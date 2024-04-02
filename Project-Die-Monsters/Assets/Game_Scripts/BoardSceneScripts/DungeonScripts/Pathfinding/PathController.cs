@@ -72,6 +72,10 @@ public class PathController : MonoBehaviour
                 {
                     possibleToMove = true;
                 }
+                else
+                {
+                    Debug.Log("Not Possible TO move ");
+                }
             }
         }
         else if (checkWhat == "ShowPossibleMoves")

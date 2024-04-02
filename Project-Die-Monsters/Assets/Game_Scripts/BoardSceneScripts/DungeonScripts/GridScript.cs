@@ -7,6 +7,7 @@ public class GridScript : MonoBehaviour
 {
     [Header("refrences")]
     GameObject LvlRef;
+    PathController pathController;
     [SerializeField]
     GameObject myTextObject;
     [SerializeField]
@@ -42,10 +43,14 @@ public class GridScript : MonoBehaviour
     GameObject NeighbourSouth;
     GameObject NeighbourWest;
 
+    [Header("Debug")]
+    public string WhereInFindPathIsBug = "None";
+
     void Start()
     {
         myTextObject.GetComponent<TextMeshPro>().text = " ";
         LvlRef = GameObject.FindGameObjectWithTag("LevelController");
+        pathController = LvlRef.GetComponent<PathController>();
         DeclareNeighbours();
         UpdateMaterial();
     }
@@ -316,6 +321,7 @@ public class GridScript : MonoBehaviour
             if (LvlRef.GetComponent<PathController>().tilesToCheck.Contains(Neighbours[i].gameObject) || LvlRef.GetComponent<PathController>().checkedTiles.Contains(Neighbours[i].gameObject))
             {
                 //Already Checked don't do anything more with it.
+                Debug.Log("AAAAHHHHH");
             }
             else
             {
@@ -353,40 +359,53 @@ public class GridScript : MonoBehaviour
         //This list exists to pick a path if there are branching valid choices back.
         List<GameObject> dupliacteProtect = new List<GameObject>();
 
+        WhereInFindPathIsBug = "Neighbour Check Loop";
+
         for (int i = 0; i < Neighbours.Count; i++)
-        {//If the current one isn't start then check if its one of the grid tiles we already established as a valid move then check its closer to start than we already are.      
-            if (Neighbours[i] != LvlRef.GetComponent<PathController>().startPosition)
+        {//If the current one isn't start then check if its one of the grid tiles we already established as a valid move then check its closer to start than we already are.    
+            if (pathController.tilesToCheck.Contains(Neighbours[i].gameObject) || pathController.checkedTiles.Contains(Neighbours[i].gameObject))
             {
-                if (LvlRef.GetComponent<PathController>().reachableTiles.Contains(Neighbours[i]))
+                pathController.tilesToCheck.Remove(this.gameObject);
+                pathController.EstablishPossibleMoves("FindPath");
+            }
+            else
+            {
+                if (Neighbours[i] != pathController.startPosition)
                 {
-                    if (Neighbours[i].GetComponent<GridScript>().distanceFromStartTile == distanceFromStartTile - 1)
-                    {//Then encase there are multiple vaild routes back to start we add it to duplicates so we can randomly pick one of those neighbour tiles once we found them all.
-                        dupliacteProtect.Add(Neighbours[i]);
+                    if (pathController.reachableTiles.Contains(Neighbours[i]))
+                    {
+                        if (Neighbours[i].GetComponent<GridScript>().distanceFromStartTile == distanceFromStartTile - 1)
+                        {//Then encase there are multiple vaild routes back to start we add it to duplicates so we can randomly pick one of those neighbour tiles once we found them all.
+                            dupliacteProtect.Add(Neighbours[i]);
+                        }
                     }
-                }            
-            }//Else if it is start we found our intended move spot so stop the function.
-            else if (Neighbours[i] == LvlRef.GetComponent<PathController>().startPosition)
-            {
-                //Debug.LogError("Found Start" + Neighbours[i].gameObject.name);
-                LvlRef.GetComponent<PathController>().tilesToCheck.Remove(this.gameObject);
-                LvlRef.GetComponent<PathController>().EstablishPossibleMoves("FindPath");
-                return;
+                }//Else if it is start we found our intended move spot so stop the function.
+                else if (Neighbours[i] == pathController.startPosition)
+                {
+                    //Debug.LogError("Found Start" + Neighbours[i].gameObject.name);
+                    WhereInFindPathIsBug = "Found Start";
+                    pathController.tilesToCheck.Remove(this.gameObject);
+                    pathController.EstablishPossibleMoves("FindPath");
+                    return;
+                }
             }
 
         }
 
         while (dupliacteProtect.Count > 1)
         {
+            WhereInFindPathIsBug = "Remove Duplicate Possible Path";
             int removeMe = Random.Range(0, dupliacteProtect.Count);
             dupliacteProtect.RemoveAt(removeMe);
         }
         
         if (dupliacteProtect.Count == 1)
         {
-            LvlRef.GetComponent<PathController>().chosenPathTiles.Add(dupliacteProtect[0]);
-            LvlRef.GetComponent<PathController>().tilesToCheck.Add(dupliacteProtect[0]);
-            LvlRef.GetComponent<PathController>().tilesToCheck.Remove(this.gameObject);
-            LvlRef.GetComponent<PathController>().EstablishPossibleMoves("FindPath");
+            WhereInFindPathIsBug = "Tile Chosen Return To Find Path";
+            pathController.chosenPathTiles.Add(dupliacteProtect[0]);
+            pathController.tilesToCheck.Add(dupliacteProtect[0]);
+            pathController.tilesToCheck.Remove(this.gameObject);
+            pathController.EstablishPossibleMoves("FindPath");
         }
  
     }
@@ -395,8 +414,8 @@ public class GridScript : MonoBehaviour
     {// Use for current quick (Instant move) only. // Might use for abilities which instalty teleport so keep in during rewrite
         if (LvlRef.GetComponent<PathController>().quickMove == true)
         {
-            GameObject.FindGameObjectWithTag("LevelController").GetComponent<PlayerCreatureController>().ChosenCreatureToken.transform.position = new Vector3(this.transform.position.x, 0.3f, this.transform.position.z);
-            GameObject.FindGameObjectWithTag("LevelController").GetComponent<PlayerCreatureController>().ChosenCreatureToken.GetComponent<CreatureToken>().FindTileBellowMe("Move");
+            LvlRef.GetComponent<PlayerCreatureController>().ChosenCreatureToken.transform.position = new Vector3(this.transform.position.x, 0.3f, this.transform.position.z);
+            LvlRef.GetComponent<PlayerCreatureController>().ChosenCreatureToken.GetComponent<CreatureToken>().FindTileBellowMe("Move");
             //LvlRef.GetComponent<LevelController>().participants[LvlRef.GetComponent<LevelController>().currentTurnParticipant].GetComponent<Player>().moveCrestPoints -= distanceFromStartTile;            
             TileContents = "Creature";
             LvlRef.GetComponent<PathController>().HasMoved();
