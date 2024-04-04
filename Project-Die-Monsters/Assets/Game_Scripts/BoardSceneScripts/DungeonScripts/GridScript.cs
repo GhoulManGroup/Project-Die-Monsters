@@ -321,7 +321,6 @@ public class GridScript : MonoBehaviour
             if (LvlRef.GetComponent<PathController>().tilesToCheck.Contains(Neighbours[i].gameObject) || LvlRef.GetComponent<PathController>().checkedTiles.Contains(Neighbours[i].gameObject))
             {
                 //Already Checked don't do anything more with it.
-                Debug.Log("AAAAHHHHH");
             }
             else
             {
@@ -363,7 +362,7 @@ public class GridScript : MonoBehaviour
 
         for (int i = 0; i < Neighbours.Count; i++)
         {//If the current one isn't start then check if its one of the grid tiles we already established as a valid move then check its closer to start than we already are.    
-            if (pathController.tilesToCheck.Contains(Neighbours[i].gameObject) || pathController.checkedTiles.Contains(Neighbours[i].gameObject))
+            if (pathController.tilesToCheck.Contains(Neighbours[i].gameObject))
             {
                 pathController.tilesToCheck.Remove(this.gameObject);
                 pathController.EstablishPossibleMoves("FindPath");

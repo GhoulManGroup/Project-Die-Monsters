@@ -105,10 +105,11 @@ public class PathController : MonoBehaviour
     IEnumerator MovePieceThroughPath()
     {
         WhichStepIsBroken = "MovePiece";
-        Debug.Log(WhichStepIsBroken);
         // Check the size of chosenPath, if its 0 then we are next to desired position else  we pick the tile closest to start being the last one added so listName.count
         GameObject currentPos = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
         GameObject desiredPos = null;
+
+        Debug.LogError(chosenPathTiles.Count);
 
         if (chosenPathTiles.Count == 0)
         {
@@ -329,7 +330,6 @@ public class PathController : MonoBehaviour
         }
 
     }
-
     #endregion
 
     public IEnumerator ResetBoard(string why)
