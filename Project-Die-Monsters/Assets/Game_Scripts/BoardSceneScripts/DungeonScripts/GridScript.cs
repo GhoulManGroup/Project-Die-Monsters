@@ -282,7 +282,7 @@ public class GridScript : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogError("Hit Player Dungeon Do Nothing");
+                    //Debug.LogError("Hit Player Dungeon Do Nothing");
                 }
             }
         }

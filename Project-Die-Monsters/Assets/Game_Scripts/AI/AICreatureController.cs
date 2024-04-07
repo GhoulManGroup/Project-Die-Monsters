@@ -17,6 +17,7 @@ public class AICreatureController : MonoBehaviour
     [SerializeField] bool canMove = false;
     [SerializeField] bool wantToMove = true;
     [SerializeField] bool canAttack = false;
+    [SerializeField] string attackTarget = "None";
     [SerializeField] bool CanAbility = false;
 
     [Header("Debug")]
@@ -81,6 +82,9 @@ public class AICreatureController : MonoBehaviour
         {
             canAttack = true;
             actionsToTake += 1;
+        }else
+        {
+            canAttack = false;
         }
 
         yield return pathfinding.StartCoroutine("DeclarePathfindingConditions", creature.gameObject);
@@ -125,15 +129,20 @@ public class AICreatureController : MonoBehaviour
             Debug.Log("Starting Move Action");
             yield return StartCoroutine(AICreatureMove());
         }
+        else
+        {
+            pathfinding.StartCoroutine("ResetBoard", "Reset");
+        }
 
         if (CanAbility == true)
         {
             yield return StartCoroutine(AICreatureCastAbility());
         }
 
-        Debug.Log("Actions Remaning : " + actionsToTake);
 
         yield return StartCoroutine(CheckPossibleActions());
+
+        Debug.LogError("Actions Remaning : " + actionsToTake);
 
         if (actionsToTake != 0)
         {
@@ -144,6 +153,7 @@ public class AICreatureController : MonoBehaviour
         else
         { 
             Debug.Log("No More Actions  Can Be Taken By Creature : " + creature.name);
+            pathfinding.StartCoroutine("ResetBoard", "Reset");
             actionsDone = true;
             ResetToDefault();
         }   
@@ -159,27 +169,48 @@ public class AICreatureController : MonoBehaviour
         combatWindow.attacker = creature;
 
         //declare defender
-        CreatureToken defender = creature.targets[0].GetComponent<CreatureToken>();
 
+
+        //Check for Dungeon Lord else, pick creature with best chance of victory.
         for (int i = 0; i < creature.targets.Count; i++)
         {
-            if (creature.targets[i].GetComponent<CreatureToken>().myBoardLocation.GetComponent<GridScript>().distanceFromPlayerDungeonLord < defender.myBoardLocation.GetComponent<GridScript>().distanceFromPlayerDungeonLord)
+
+            if (creature.targets[i].GetComponent<DungeonLord>() != null)
             {
-                if (defender.currentHealth > creature.currentAttack) // If current target can't be killed switch to closer target to prioritse as kill is a better choice.
+                attackTarget = "DungeonLord";
+                break;
+            }
+            
+            if (creature.targets[i].GetComponent<CreatureToken>() != null)
+            {
+                CreatureToken defender = creature.targets[0].GetComponent<CreatureToken>();
+
+                attackTarget = "Creature";
+                if (creature.targets[i].GetComponent<CreatureToken>().myBoardLocation.GetComponent<GridScript>().distanceFromPlayerDungeonLord < defender.myBoardLocation.GetComponent<GridScript>().distanceFromPlayerDungeonLord)
                 {
-                    defender = creature.targets[i].GetComponent<CreatureToken>();
+                    if (defender.currentHealth > creature.currentAttack) // If current target can't be killed switch to closer target to prioritse as kill is a better choice.
+                    {
+                        defender = creature.targets[i].GetComponent<CreatureToken>();
+                    }
                 }
-                Debug.Log("Replaced Target With Higher Priority");
             }
         }
 
-        combatWindow.defender = defender; // replace with pick target creature with lowest tile
 
-        combatWindow.DisplayAttackWindow("AIDecision");
 
-        yield return new WaitForSeconds(5f);
-       
-        combatWindow.AttackAction();
+        if (attackTarget == "DungeonLord")
+        {
+            //Do Damage to Dungeon Lord then Pass.
+        }else if (attackTarget == "Creature")
+        {
+            combatWindow.defender = defender; // replace with pick target creature with lowest tile
+
+            combatWindow.DisplayAttackWindow("AIDecision");
+
+            yield return new WaitForSeconds(5f);
+
+            combatWindow.AttackAction();
+        }
 
         while (actionDone == false)
         {

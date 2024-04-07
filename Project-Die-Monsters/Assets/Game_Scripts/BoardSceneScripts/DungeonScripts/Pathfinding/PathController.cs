@@ -33,12 +33,10 @@ public class PathController : MonoBehaviour
     [Header("Debug")]
     public string WhichStepIsBroken;
     public void Awake()
-    {
-       
+    {    
         levelController = GameObject.FindGameObjectWithTag("LevelController");
         LCScript = levelController.GetComponent<LevelController>();
         aiCreatureController = GameObject.FindGameObjectWithTag("AIController").GetComponent<AICreatureController>();
-        
     }
 
     //Rotate to face the direction we need to walk.
