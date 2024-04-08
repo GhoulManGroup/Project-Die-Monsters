@@ -74,11 +74,11 @@ public class LevelController : MonoBehaviour //This class oversees the setup tur
                         participants.Add(player2);
 
                         //Setup the Dungeon Lords
-                        DungeonLordStartTiles[0].GetComponent<DungeonLordPiece>().myOwner = "0";
-                        DungeonLordStartTiles[1].GetComponent<DungeonLordPiece>().myOwner = "1";
+                        DungeonLordStartTiles[0].GetComponent<DungeonLordToken>().myOwner = "0";
+                        DungeonLordStartTiles[1].GetComponent<DungeonLordToken>().myOwner = "1";
 
-                        DungeonLordStartTiles[0].GetComponent<DungeonLordPiece>().SetDungeonLordTile();
-                        DungeonLordStartTiles[1].GetComponent<DungeonLordPiece>().SetDungeonLordTile();            
+                        DungeonLordStartTiles[0].GetComponent<DungeonLordToken>().SetDungeonLordTile();
+                        DungeonLordStartTiles[1].GetComponent<DungeonLordToken>().SetDungeonLordTile();            
                         break;
 
                     case "AI":
@@ -92,11 +92,11 @@ public class LevelController : MonoBehaviour //This class oversees the setup tur
                         participants.Add(enemy);
                         GameObject.FindGameObjectWithTag("AIController").GetComponent<AIManager>().currentOpponent = enemy;
 
-                        DungeonLordStartTiles[0].GetComponent<DungeonLordPiece>().myOwner = "0";
-                        DungeonLordStartTiles[1].GetComponent<DungeonLordPiece>().myOwner = "1";
+                        DungeonLordStartTiles[0].GetComponent<DungeonLordToken>().myOwner = "0";
+                        DungeonLordStartTiles[1].GetComponent<DungeonLordToken>().myOwner = "1";
 
-                        DungeonLordStartTiles[0].GetComponent<DungeonLordPiece>().SetDungeonLordTile();
-                        DungeonLordStartTiles[1].GetComponent<DungeonLordPiece>().SetDungeonLordTile();
+                        DungeonLordStartTiles[0].GetComponent<DungeonLordToken>().SetDungeonLordTile();
+                        DungeonLordStartTiles[1].GetComponent<DungeonLordToken>().SetDungeonLordTile();
 
                         //Once we have declared dungeon lord tile positions map out each tiles distance from the player position
                         GameObject.FindGameObjectWithTag("DungeonSpawner").GetComponent<AIDungeonSpawner>().DungeonSizeSetup();

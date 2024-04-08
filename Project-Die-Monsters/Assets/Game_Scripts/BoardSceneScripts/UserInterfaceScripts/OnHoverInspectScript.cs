@@ -57,12 +57,12 @@ public class OnHoverInspectScript : MonoBehaviour, IPointerEnterHandler, IPointe
                 InspectWindow.GetComponent<InspectWindowController>().currentCreaturePiece = this.gameObject;
                 InspectWindow.GetComponent<InspectWindowController>().OpenInspectWindow("PieceInspect");
             }
-            else if (this.GetComponent<DungeonLordPiece>() != null)
+            else if (this.GetComponent<DungeonLordToken>() != null)
             {
                 InspectWindow.GetComponent<InspectWindowController>().currentDungeonLordPiece = this.gameObject;
                 InspectWindow.GetComponent<InspectWindowController>().OpenInspectWindow("DungeonLordInspect");
             }
-            else if (this.GetComponent<CreatureToken>() == null && this.GetComponent<DungeonLordPiece>() == null)
+            else if (this.GetComponent<CreatureToken>() == null && this.GetComponent<DungeonLordToken>() == null)
             {
                 Debug.Log("Why Am i Here " + gameObject.name);
             }
@@ -80,11 +80,11 @@ public class OnHoverInspectScript : MonoBehaviour, IPointerEnterHandler, IPointe
             {
                 InspectWindow.GetComponent<InspectWindowController>().CloseInspectWindow();
             }
-            else if (this.GetComponent<DungeonLordPiece>() != null)
+            else if (this.GetComponent<DungeonLordToken>() != null)
             {
                 InspectWindow.GetComponent<InspectWindowController>().CloseInspectWindow();
             }
-            else if (this.GetComponent<CreatureToken>() == null && this.GetComponent<DungeonLordPiece>() == null)
+            else if (this.GetComponent<CreatureToken>() == null && this.GetComponent<DungeonLordToken>() == null)
             {
                 Debug.Log("Why Am i Here " + gameObject.name);
             }

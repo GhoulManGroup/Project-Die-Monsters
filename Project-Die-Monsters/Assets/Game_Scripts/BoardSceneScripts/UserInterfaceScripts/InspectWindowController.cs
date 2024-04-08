@@ -127,7 +127,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
 
             case "AttackTargetSelection":
                 Debug.Log(currentCreaturePiece.name);
-                if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<DungeonLordPiece>() != null)
+                if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<DungeonLordToken>() != null)
                 {
                     //if  current target is dungeon lord then display dungeon lord window rather than the default creature display
                     dungeonLordInspectUI.SetActive(true);
@@ -150,7 +150,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
 
     public void DisplayDungeonLord()
     {
-        switch (currentDungeonLordPiece.GetComponent<DungeonLordPiece>().Health)
+        switch (currentDungeonLordPiece.GetComponent<DungeonLordToken>().Health)
         {
             case 0:
                 Debug.Log("Why Open game should be over");
@@ -171,9 +171,9 @@ public class InspectWindowController : MonoBehaviour //This script will control 
                 dungeonLordWindow.lifeIconThree.SetActive(true);
                 break;
         }
-        dungeonLordWindow.dungeonLordName.text = currentDungeonLordPiece.GetComponent<DungeonLordPiece>().myName;
-        dungeonLordWindow.dungeonLordOwner.text = currentDungeonLordPiece.GetComponent<DungeonLordPiece>().myOwner;
-        dungeonLordWindow.lifeText.text = currentDungeonLordPiece.GetComponent<DungeonLordPiece>().Health.ToString();
+        dungeonLordWindow.dungeonLordName.text = currentDungeonLordPiece.GetComponent<DungeonLordToken>().myName;
+        dungeonLordWindow.dungeonLordOwner.text = currentDungeonLordPiece.GetComponent<DungeonLordToken>().myOwner;
+        dungeonLordWindow.lifeText.text = currentDungeonLordPiece.GetComponent<DungeonLordToken>().Health.ToString();
         
     }
     #endregion
@@ -211,7 +211,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
 
                 if (pressedFor == "AttackTargetSelection") //Display BTN
                 {
-                    if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<DungeonLordPiece>() != null)
+                    if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<DungeonLordToken>() != null)
                     {
                         DungeonLordIsAttackTarget();
                     }
@@ -239,7 +239,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
                     if (targetShown < currentCreaturePiece.GetComponent<CreatureToken>().targets.Count - 1)
                     {
                         targetShown += 1;
-                        if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<DungeonLordPiece>() != null)
+                        if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<DungeonLordToken>() != null)
                         {
                             DisplayDungeonLord();
                         }else if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<CreatureToken>() != null)
@@ -266,7 +266,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
                     if (targetShown > 0)
                     {
                         targetShown -= 1;
-                        if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<DungeonLordPiece>() != null)
+                        if (currentCreaturePiece.GetComponent<CreatureToken>().targets[targetShown].GetComponent<DungeonLordToken>() != null)
                         {
                             DisplayDungeonLord();
                         }
@@ -343,7 +343,7 @@ public class InspectWindowController : MonoBehaviour //This script will control 
             levelManager.GetComponent<LevelController>().participants[1].gameObject.GetComponent<Player>().attackCrestPoints -= currentCreaturePiece.GetComponent<CreatureToken>().attackCost;
         }
         Debug.Log("DungeonLordHasTakenDamage");
-        currentDungeonLordPiece.GetComponent<DungeonLordPiece>().takeDamage();
+        currentDungeonLordPiece.GetComponent<DungeonLordToken>().TakeDamage();
         CloseInspectWindow();
     }
 }

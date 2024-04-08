@@ -162,35 +162,45 @@ public class AICreatureController : MonoBehaviour
     IEnumerator AICreatureAttack()
     {
         WhichActionIsBrokenTracker = "Attack";
+
+
         //ADD Text to explain each step of the combat phase to the player eg, use defence crest? , Exit combat. Add text to Window I think for each Button.
         AttackUIScript combatWindow = GameObject.FindGameObjectWithTag("CombatWindow").GetComponent<AttackUIScript>();
         
         //Declare attacker
         combatWindow.attacker = creature;
 
-        //declare defender
-
+        //declare target / defender
+        CreatureToken defender = null;
+        DungeonLordToken dungeonLord = null;
 
         //Check for Dungeon Lord else, pick creature with best chance of victory.
         for (int i = 0; i < creature.targets.Count; i++)
         {
 
-            if (creature.targets[i].GetComponent<DungeonLord>() != null)
+            if (creature.targets[i].GetComponent<DungeonLordToken>() != null)
             {
                 attackTarget = "DungeonLord";
+                dungeonLord = creature.targets[i].GetComponent<DungeonLordToken>();
                 break;
             }
             
             if (creature.targets[i].GetComponent<CreatureToken>() != null)
             {
-                CreatureToken defender = creature.targets[0].GetComponent<CreatureToken>();
-
                 attackTarget = "Creature";
-                if (creature.targets[i].GetComponent<CreatureToken>().myBoardLocation.GetComponent<GridScript>().distanceFromPlayerDungeonLord < defender.myBoardLocation.GetComponent<GridScript>().distanceFromPlayerDungeonLord)
+
+                if (defender == null)
                 {
-                    if (defender.currentHealth > creature.currentAttack) // If current target can't be killed switch to closer target to prioritse as kill is a better choice.
+                    defender = creature.targets[i].GetComponent<CreatureToken>();
+                }
+                else
+                {
+                    if (creature.targets[i].GetComponent<CreatureToken>().myBoardLocation.GetComponent<GridScript>().distanceFromPlayerDungeonLord < defender.myBoardLocation.GetComponent<GridScript>().distanceFromPlayerDungeonLord)
                     {
-                        defender = creature.targets[i].GetComponent<CreatureToken>();
+                        if (defender.currentHealth > creature.currentAttack) // If current target can't be killed switch to closer target to prioritse as kill is a better choice.
+                        {
+                            defender = creature.targets[i].GetComponent<CreatureToken>();
+                        }
                     }
                 }
             }
@@ -200,6 +210,8 @@ public class AICreatureController : MonoBehaviour
 
         if (attackTarget == "DungeonLord")
         {
+            Debug.Log("hitting Dungeon Lord AGHAHAHAHA");
+            dungeonLord.TakeDamage();
             //Do Damage to Dungeon Lord then Pass.
         }else if (attackTarget == "Creature")
         {

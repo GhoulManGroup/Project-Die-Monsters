@@ -192,9 +192,9 @@ public class CreatureToken : MonoBehaviour
                                 }
                             }
 
-                            if (Forward.collider.GetComponent<DungeonLordPiece>() != null)
+                            if (Forward.collider.GetComponent<DungeonLordToken>() != null)
                             {
-                                if (Forward.collider.GetComponent<DungeonLordPiece>().myOwner != myOwner)
+                                if (Forward.collider.GetComponent<DungeonLordToken>().myOwner != myOwner)
                                 {
                                     targets.Add(Forward.collider.gameObject);
                                 }
@@ -217,9 +217,9 @@ public class CreatureToken : MonoBehaviour
                                 }
                             }
 
-                            if (Back.collider.GetComponent<DungeonLordPiece>() != null)
+                            if (Back.collider.GetComponent<DungeonLordToken>() != null)
                             {
-                                if (Back.collider.GetComponent<DungeonLordPiece>().myOwner != myOwner)
+                                if (Back.collider.GetComponent<DungeonLordToken>().myOwner != myOwner)
                                 {
                                     targets.Add(Back.collider.gameObject);
                                 }
@@ -242,9 +242,9 @@ public class CreatureToken : MonoBehaviour
                                 }
                             }
 
-                            if (Up.collider.GetComponent<DungeonLordPiece>() != null)
+                            if (Up.collider.GetComponent<DungeonLordToken>() != null)
                             {
-                                if (Up.collider.GetComponent<DungeonLordPiece>().myOwner != myOwner)
+                                if (Up.collider.GetComponent<DungeonLordToken>().myOwner != myOwner)
                                 {
                                     targets.Add(Up.collider.gameObject);
                                 }
@@ -266,9 +266,9 @@ public class CreatureToken : MonoBehaviour
                                 }
                             }
 
-                            if (Down.collider.GetComponent<DungeonLordPiece>() != null)
+                            if (Down.collider.GetComponent<DungeonLordToken>() != null)
                             {
-                                if (Down.collider.GetComponent<DungeonLordPiece>().myOwner != myOwner)
+                                if (Down.collider.GetComponent<DungeonLordToken>().myOwner != myOwner)
                                 {
                                     targets.Add(Down.collider.gameObject);
                                 }

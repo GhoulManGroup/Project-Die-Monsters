@@ -2934,13 +2934,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 349105848}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcfcd246a8205344da94c12a1cbb94b3, type: 3}
+  m_Script: {fileID: 11500000, guid: c2b96fbe519fb84469bbdc16653e6111, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   myDungeonLord: {fileID: 11400000, guid: eeedc62ed7f062a4cad1da36ae24754e, type: 2}
-  myOwner: 1
+  myOwner: 
   myName: 
-  Health: 3
+  Health: 0
 --- !u!114 &349105854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6037,7 +6037,9 @@ MonoBehaviour:
   canMove: 0
   wantToMove: 1
   canAttack: 0
+  attackTarget: None
   CanAbility: 0
+  WhichActionIsBrokenTracker: None
   actionsToTake: 0
 --- !u!1 &780854274
 GameObject:
@@ -7354,9 +7356,13 @@ MonoBehaviour:
   defenderStateIcon: {fileID: 1001544270}
   attackerStateIcon: {fileID: 1383655266}
   attackBTN: {fileID: 887952321}
+  attackBTNTxT: {fileID: 0}
   defendBTN: {fileID: 1766424551}
+  defendBTNTxT: {fileID: 0}
   abilityBTN: {fileID: 216208128}
+  abilityBTNTxT: {fileID: 0}
   declineBTN: {fileID: 56508724}
+  declineBTNTxT: {fileID: 0}
   Sprites:
     attackIcon: {fileID: 21300000, guid: 905f4702794b6184cb7c7cc381f3f90d, type: 3}
     defendIcon: {fileID: 21300000, guid: 8043505a735062a4d92785e38b202b1e, type: 3}
@@ -14803,13 +14809,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1919373821}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcfcd246a8205344da94c12a1cbb94b3, type: 3}
+  m_Script: {fileID: 11500000, guid: c2b96fbe519fb84469bbdc16653e6111, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   myDungeonLord: {fileID: 11400000, guid: eeedc62ed7f062a4cad1da36ae24754e, type: 2}
   myOwner: 
   myName: 
-  Health: 3
+  Health: 0
 --- !u!114 &1919373827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15617,6 +15623,7 @@ MonoBehaviour:
   rotationSpeed: 45
   moveSpeed: 2
   positionToMove: {x: 0, y: 0, z: 0}
+  WhichStepIsBroken: 
 --- !u!114 &1996620192
 MonoBehaviour:
   m_ObjectHideFlags: 0
