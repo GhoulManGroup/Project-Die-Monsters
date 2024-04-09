@@ -26,5 +26,7 @@ MonoBehaviour:
   Health: 15
   Attack: 10
   Defence: 15
-  MoveDistance: 2
+  MoveDistance: 200
+  AttackCost: 0
+  DefenceCost: 0
   myAbility: {fileID: 11400000, guid: 52b0a590a5ef8084db7efb2c70e813e2, type: 2}

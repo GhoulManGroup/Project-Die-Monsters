@@ -212,6 +212,16 @@ public class AICreatureController : MonoBehaviour
         {
             Debug.Log("hitting Dungeon Lord AGHAHAHAHA");
             dungeonLord.TakeDamage();
+
+            if (dungeonLord.Health == 0)
+            {
+                StopAllCoroutines();
+                Debug.Log("Ending AI Turn as it has won.");
+            }
+
+            yield return new WaitForSeconds(1f);
+            creature.hasAttackedThisTurn = true;
+            actionDone = true;
             //Do Damage to Dungeon Lord then Pass.
         }else if (attackTarget == "Creature")
         {
