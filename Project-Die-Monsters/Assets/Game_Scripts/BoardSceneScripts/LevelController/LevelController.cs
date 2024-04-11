@@ -328,6 +328,9 @@ public class LevelController : MonoBehaviour //This class oversees the setup tur
                 this.GetComponent<CameraController>().switchCamera("Alt");
             }
         }
+
+        DungeonLordStartTiles[0].GetComponent<DungeonLordToken>().canTakeDamage = true;
+        DungeonLordStartTiles[1].GetComponent<DungeonLordToken>().canTakeDamage = true;
     }
 
     #endregion

@@ -90,7 +90,7 @@ public class AICreatureController : MonoBehaviour
         yield return pathfinding.StartCoroutine("DeclarePathfindingConditions", creature.gameObject);
         if (creature.hasMovedThisTurn == false && pathfinding.possibleToMove == true)
         {
-            if (canAttack == true)
+            if (canAttack == true || creature.myBoardLocation.GetComponent<GridScript>().distanceFromPlayerDungeonLord == 1)
             {
                 wantToMove = false;
             }
@@ -205,7 +205,6 @@ public class AICreatureController : MonoBehaviour
                 }
             }
         }
-
 
 
         if (attackTarget == "DungeonLord")
