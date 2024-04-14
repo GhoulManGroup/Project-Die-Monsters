@@ -108,8 +108,6 @@ public class PathController : MonoBehaviour
         GameObject currentPos = chosenPiece.GetComponent<CreatureToken>().myBoardLocation;
         GameObject desiredPos = null;
 
-        Debug.LogError(chosenPathTiles.Count);
-
         if (chosenPathTiles.Count == 0)
         {
             desiredPos = desiredPosition;

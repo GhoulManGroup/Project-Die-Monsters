@@ -2934,7 +2934,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 349105848}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2b96fbe519fb84469bbdc16653e6111, type: 3}
+  m_Script: {fileID: 11500000, guid: 83a1a9c1dcaec18408a4a306452039c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   myDungeonLord: {fileID: 11400000, guid: eeedc62ed7f062a4cad1da36ae24754e, type: 2}
@@ -14810,7 +14810,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1919373821}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c2b96fbe519fb84469bbdc16653e6111, type: 3}
+  m_Script: {fileID: 11500000, guid: 83a1a9c1dcaec18408a4a306452039c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   myDungeonLord: {fileID: 11400000, guid: eeedc62ed7f062a4cad1da36ae24754e, type: 2}
@@ -15691,10 +15691,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startTurnBTN: {fileID: 349136845}
   endTurnBTN: {fileID: 2086019584}
-  currentGameEndScreen: {fileID: 0}
   DungeonLordStartTiles:
   - {fileID: 1919373821}
   - {fileID: 349105848}
+  currentGameEndScreen: {fileID: 2095680450}
+  WinnerText: {fileID: 0}
   playerFab: {fileID: 1640307794083697217, guid: f365061563cae5d409cb98399b77873a, type: 3}
   opponent: {fileID: 4515286982498500112, guid: fc69f8bdcd2da3a46abe6a9dabb0fe47, type: 3}
   opponentList:
@@ -16803,7 +16804,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2095680451
 RectTransform:
   m_ObjectHideFlags: 0

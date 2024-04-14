@@ -12,10 +12,14 @@ public class LevelController : MonoBehaviour //This class oversees the setup tur
     [Header("Refrences & UI Objects")]
     //The projects game manager object which persists between scences.
     GameObject gameManager;
+
     public GameObject startTurnBTN;
     public GameObject endTurnBTN;
-    public GameObject currentGameEndScreen;
     public List<GameObject> DungeonLordStartTiles = new List<GameObject>();
+
+    [Header("End Game UI")]
+    public GameObject currentGameEndScreen;
+    [SerializeField] Text WinnerText;
 
     [Header("Possible Participants")]
     // These two prefabs are the default player or AI opponent to be loaded into the level depending on who the opponent faces.
