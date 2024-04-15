@@ -11,6 +11,7 @@ TagManager:
   - AIController
   - DeckWindow
   - AbilityWindow
+  - RunManager
   layers:
   - Default
   - TransparentFX
