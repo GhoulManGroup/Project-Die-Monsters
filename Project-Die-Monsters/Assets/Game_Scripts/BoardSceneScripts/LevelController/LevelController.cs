@@ -108,6 +108,10 @@ public class LevelController : MonoBehaviour //This class oversees the setup tur
                 }
                 break;
 
+            case "RogueLike":
+
+                break;
+
             case "Multiplayer":
                 participants.AddRange(GameObject.FindGameObjectsWithTag("Player"));
                 break;

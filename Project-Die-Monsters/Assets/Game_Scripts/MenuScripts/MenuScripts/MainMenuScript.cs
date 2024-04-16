@@ -34,7 +34,10 @@ public class MainMenuScript : MonoBehaviour
         switch (BTNPressed)
         {
             case "RogueLike":
-                print("In Development");
+                MRef.GetComponent<DeckManager>().decksInPlay.Add(0);
+                MRef.GetComponent<GameManagerScript>().gameMode = "RogueLike";
+                LoadingManager.loadingManager.LoadSceneAdditive("GameRogueLike", true);
+                LoadingManager.loadingManager.UnloadScene("MenuMain");
                 break;
             case "QuickPlay":
                 MRef.GetComponent<DeckManager>().decksInPlay.Add(0);

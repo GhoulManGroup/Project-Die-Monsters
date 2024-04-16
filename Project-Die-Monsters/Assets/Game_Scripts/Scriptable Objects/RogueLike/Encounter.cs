@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "DieMonsters", menuName = "DieMonsters/Encounter")]
+[CreateAssetMenu(fileName = "Encounter", menuName = "RogueLike/Encounter")]
 public class Encounter : ScriptableObject
 {
     public DungeonLord myEncounterOpponent;
