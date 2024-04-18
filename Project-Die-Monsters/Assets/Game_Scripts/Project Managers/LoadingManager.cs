@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class LoadingManager : MonoBehaviour
 {
     public static LoadingManager loadingManager { get; private set; }
+    public bool isLoaded = false;
 
     [SerializeField] GameObject loadingSceneCamera; // use untill other scene has loaded in.
     [SerializeField] Image loadingBackground;
@@ -93,6 +94,7 @@ public class LoadingManager : MonoBehaviour
         loadingBackground.enabled = false;
         loadingBar.enabled = false;
         ContiuneBTN.SetActive(false);
+        isLoaded = true;
     }
 
     public void UnloadScene(string sceneName)

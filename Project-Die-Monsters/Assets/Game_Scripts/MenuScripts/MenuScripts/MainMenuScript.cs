@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class MainMenuScript : MonoBehaviour
 {
@@ -14,16 +15,39 @@ public class MainMenuScript : MonoBehaviour
     public GameObject MenuMain;
     public GameObject deckPick;
 
+    [Header("UI Elements")]
+    public List<GameObject> UIPanels = new List<GameObject>();
+
     // Start is called before the first frame update
-    void Start()
+    
+    IEnumerator Start()
     {
         MRef = GameObject.FindGameObjectWithTag("GameController");
-        showWhichUI();
+
+        for (int i = 0; i < UIPanels.Count; i++)
+        {
+            UIPanels[i].GetComponent<Image>().CrossFadeAlpha(0.1f, 0f, true);
+        }
+
+        while (LoadingManager.loadingManager.isLoaded == false)
+        {
+            yield return null;
+        }
+
+       StartCoroutine(FirstTimeShowMenu());
     }
 
-    // Update is called once per frame
-    void Update()
+    public IEnumerator FirstTimeShowMenu()
     {
+        showWhichUI();
+
+        for (int i = 0; i < UIPanels.Count; i++)
+        {
+            Debug.Log("Hoaa");
+            UIPanels[i].GetComponent<Image>().CrossFadeAlpha(1, 6f, false);
+        }
+
+        yield return null;
         
     }
 
