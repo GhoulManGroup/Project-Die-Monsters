@@ -1,4 +1,5 @@
 using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,6 +12,7 @@ public class MainMenuScript : MonoBehaviour
     string opponentType = null;
 
     GameObject MRef;
+    public Image dUMMY;
 
     public GameObject MenuMain;
     public GameObject deckPick;
@@ -24,32 +26,33 @@ public class MainMenuScript : MonoBehaviour
     {
         MRef = GameObject.FindGameObjectWithTag("GameController");
 
-        for (int i = 0; i < UIPanels.Count; i++)
-        {
-            UIPanels[i].GetComponent<Image>().CrossFadeAlpha(0.1f, 0f, true);
-        }
+         UIPanels[0].GetComponent<CanvasGroup>().alpha = 0f;
 
-        while (LoadingManager.loadingManager.isLoaded == false)
-        {
-            yield return null;
-        }
+       // while (LoadingManager.loadingManager.isLoaded == false)
+       // {
+           yield return null;
+       // }
 
-       StartCoroutine(FirstTimeShowMenu());
+        StartCoroutine(Fade(null, false));
     }
-
-    public IEnumerator FirstTimeShowMenu()
+    
+    IEnumerator Fade(GameObject fadeThis, bool fadeIn)
     {
-        showWhichUI();
 
-        for (int i = 0; i < UIPanels.Count; i++)
+        dUMMY.GetComponent<Image>().CrossFadeAlpha(0f, 5f, false);
+        if (fadeIn == true) 
         {
-            Debug.Log("Hoaa");
-            UIPanels[i].GetComponent<Image>().CrossFadeAlpha(1, 6f, false);
+
+        }
+
+        else if (fadeIn == false)
+        {
+
         }
 
         yield return null;
-        
     }
+
 
     public void MenuBTNPressed()
     {
@@ -69,7 +72,7 @@ public class MainMenuScript : MonoBehaviour
                 MRef.GetComponent<GameManagerScript>().desiredOpponent = "Player";
                 LoadingManager.loadingManager.LoadSceneAdditive("GameBoardScene",true);
                 LoadingManager.loadingManager.UnloadScene("MenuMain");
-                showWhichUI();
+                //showWhichUI();
                 break;
             case "Multiplayer":
                 Debug.Log("In Development");
@@ -95,23 +98,23 @@ public class MainMenuScript : MonoBehaviour
                 {
                     case "OpponentPick":
                         ActiveUI = "MainMenu";
-                        showWhichUI();
+                       // showWhichUI();
                         break;
                     case "DeckSelect":
                         ActiveUI = "OpponentPick";
-                        showWhichUI();
+                        //showWhichUI();
                         break;
                 }
                 break;
             case "PVP":
                 ActiveUI = "DeckSelect";
                 opponentType = "Player";
-                showWhichUI();
+               // showWhichUI();
                 break;
             case "PVE":
                 ActiveUI = "DeckSelect";
                 opponentType = "AI";
-                showWhichUI();
+                //showWhichUI();
                 break;
             case "DeckOne":
                 
@@ -130,22 +133,6 @@ public class MainMenuScript : MonoBehaviour
                 break;
             case "Play":
 
-                break;
-        }
-    }
-
-    public void showWhichUI()
-    {
-        MenuMain.SetActive(false);
-        deckPick.SetActive(false);
-
-        switch (ActiveUI)
-        {
-            case "MainMenu":
-                MenuMain.SetActive(true);
-                break;
-            case "DeckSelect":
-                deckPick.SetActive(true);
                 break;
         }
     }
