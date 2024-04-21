@@ -18,7 +18,7 @@ public class MainMenuScript : MonoBehaviour
     public GameObject deckPick;
 
     [Header("UI Elements")]
-    public List<GameObject> UIPanels = new List<GameObject>();
+    [SerializeField] List<CanvasGroup> ObjectsToFade = new List<CanvasGroup>();
 
     // Start is called before the first frame update
     
@@ -26,33 +26,25 @@ public class MainMenuScript : MonoBehaviour
     {
         MRef = GameObject.FindGameObjectWithTag("GameController");
 
-         UIPanels[0].GetComponent<CanvasGroup>().alpha = 0f;
-
        // while (LoadingManager.loadingManager.isLoaded == false)
        // {
            yield return null;
-       // }
+        // }
 
-        StartCoroutine(Fade(null, false));
+        StartCoroutine(FadeInMenu());
     }
-    
-    IEnumerator Fade(GameObject fadeThis, bool fadeIn)
+
+    IEnumerator FadeInMenu()
     {
-
-        dUMMY.GetComponent<Image>().CrossFadeAlpha(0f, 5f, false);
-        if (fadeIn == true) 
+        for (int i = 0; i < ObjectsToFade.Count; i++)
         {
-
+            while (ObjectsToFade[i].GetComponent<CanvasGroup>().alpha != 1)
+            {
+                yield return new WaitForSeconds(0.1f);
+                ObjectsToFade[i].GetComponent<CanvasGroup>().alpha += 0.2f;
+            }
         }
-
-        else if (fadeIn == false)
-        {
-
-        }
-
-        yield return null;
     }
-
 
     public void MenuBTNPressed()
     {
