@@ -8,6 +8,7 @@ public class GameManagerScript : MonoBehaviour
 
     [Header("Game Location & Other Settings")]
 
+    public DeckManager deckManager;
     public string gameLocation = "MainMenu";
     public string gameMode; // check to see what mode of play we are in so we know which player constraint to apply eg normal game rules or rougelike session modified ones.
     public string desiredOpponent; // this varible stores what opponent the player will face based on the options they pick in the menu so the level controler knows what settings to intialize.
@@ -24,7 +25,9 @@ public class GameManagerScript : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        
+
+        deckManager = this.GetComponent<DeckManager>();
+
         DontDestroyOnLoad(gameObject);
     }
 

@@ -25,12 +25,11 @@ public class LoadingManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
+        Debug.Log("tEST SOMTIGN IS TRACKING");
         LoadSceneAdditive("GameManagers");
         LoadSceneAdditive("MenuMain");
         UnloadScene("GameManagers");
     }
-
     public void LoadScene(string sceneName)
     {
         StartCoroutine(LoadSceneAsync(sceneName));   
