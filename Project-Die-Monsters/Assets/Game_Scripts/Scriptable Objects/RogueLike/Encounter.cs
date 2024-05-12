@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Encounter", menuName = "RogueLike/Encounter")]
 public class Encounter : ScriptableObject
 {
-    public DungeonLord myEncounterOpponent;
+    public Opponent myEncounterOpponent;
 
     public EncounterType encounterType;
 

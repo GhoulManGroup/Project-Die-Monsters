@@ -25,5 +25,5 @@ EditorBuildSettings:
     guid: 835d3fc29fad3f84baa571c3f3d656c3
   - enabled: 1
     path: Assets/Game_Scenes/GameRogueLike.unity
-    guid: 4a287f95c2e37b84190df31c57c97613
+    guid: c9014102d5d053944b25cdab29cd2ab2
   m_configObjects: {}
