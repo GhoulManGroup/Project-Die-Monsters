@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class Map : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [Header("Map Perameters")]
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField] int mapHeightLimit;
+
+    [SerializeField] int mapWidthLimit;
+
+    [SerializeField] int rowWidth;
+                
+
+    public void SetDetails()
     {
-        
+        mapHeightLimit = 4 + this.GetComponent<RunManager>().runProgress;
+        mapWidthLimit = Random.Range(1, this.GetComponent<RunManager>().runProgress + 1);
     }
 }
+    
