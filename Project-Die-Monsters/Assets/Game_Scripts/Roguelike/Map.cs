@@ -18,7 +18,7 @@ public class Map : MonoBehaviour
     public void SetDetails()
     {
         mapHeightLimit = 4 + this.GetComponent<RunManager>().runProgress;
-        //mapWidthLimit = 1 + this.get
+        mapWidthLimit = 1 + this.GetComponent<RunManager>().runProgress;
     }
 
     public void SpawnMap()
@@ -28,10 +28,12 @@ public class Map : MonoBehaviour
             if (i == 0)
             {
                 // spawn in start spot
+                Instantiate(spawnNode, new Vector3(i * 0, i, 0), Quaternion.identity);
             }
             else if (i == mapHeightLimit)
             {
                 // spawn 1 in end spot Random.Range(1, this.GetComponent<RunManager>().runProgress + 1);
+                Instantiate(spawnNode, new Vector3(i * 0, mapHeightLimit, 0), Quaternion.identity);
             }
             else
             {
