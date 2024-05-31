@@ -12,7 +12,7 @@ public class RunManager : MonoBehaviour
     private void Start()
     {
         // set deck.
-        runDeck = GameManagerScript.instance.deckManager.DeckSlots[GameManagerScript.instance.deckManager.decksInPlay[0]];
+       // runDeck = GameManagerScript.instance.deckManager.DeckSlots[GameManagerScript.instance.deckManager.decksInPlay[0]];
         runProgress = 1;
         //Spawn Level .. Spawner Scriptable Object //
 
