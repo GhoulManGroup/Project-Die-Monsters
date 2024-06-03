@@ -11,15 +11,18 @@ public class Map : MonoBehaviour
     [SerializeField] int mapWidthLimit;
 
     [SerializeField] GameObject spawnNode;
-    public List<Encounter> encounters = new List<Encounter>();
+
+    public List<GameObject> encounters = new List<GameObject>();
 
     RunManager runManager;
 
+    #region Setup
+
     private void Start()
     {
-        runManager = GameObject.FindGameObjectWithTag("RunManager").GetComponent<RunManager>() ;
+        runManager = GameObject.FindGameObjectWithTag("RunManager").GetComponent<RunManager>();
         SetDetails();
-        SpawnMap();
+        SpawnMapNodes();
     }
 
     public void SetDetails()
@@ -28,7 +31,7 @@ public class Map : MonoBehaviour
         mapWidthLimit = 1 + runManager.runProgress;
     }
 
-    public void SpawnMap()
+    public void SpawnMapNodes()
     {
         List<int> usedPositons = new List<int>();
         GameObject SpawnedObject = null;
@@ -50,7 +53,6 @@ public class Map : MonoBehaviour
                 SpawnedObject.transform.SetParent(this.gameObject.transform.parent, true);
                 SpawnedObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(mapWidthLimit / 2 * 100, mapHeightLimit * 100);
                 SpawnedObject.name = i.ToString();
-
             }
             else
             {
@@ -63,7 +65,28 @@ public class Map : MonoBehaviour
                     SpawnedObject.name = i.ToString();
                 }
             }
+            SpawnedObject.GetComponent<MapEncounter>().myRow = i;
+            encounters.Add(SpawnedObject);
         }
     }
+
+    public void ConnectMapNodes()
+    {
+        for (int i = 0; i < encounters.Count; i++)
+        {
+            if (i == 0)
+            {
+                
+            }else if (i == mapHeightLimit)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+    }
+
+    #endregion
 }
-    

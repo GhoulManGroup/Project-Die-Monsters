@@ -9,6 +9,8 @@ public class MapEncounter : MonoBehaviour
 
     public Encounter myEncounter;
 
+    public int myRow;
+
     public List<Sprite> encounterIcon = new List<Sprite>();
 
     public void Start()
