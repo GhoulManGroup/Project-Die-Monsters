@@ -70,8 +70,16 @@ public class Map : MonoBehaviour
         }
     }
 
+        List<GameObject> currentRow = new List<GameObject>();
+        List<GameObject> nextRow = new List<GameObject>();
     public void ConnectMapNodes()
     {
+        //Chose a node starting from 0
+        //Connect to every node.
+
+
+
+
         for (int i = 0; i < encounters.Count; i++)
         {
             if (i == 0)
@@ -86,6 +94,11 @@ public class Map : MonoBehaviour
 
             }
         }
+    }
+
+    public void ConnectMe(GameObject connectThis)
+    {
+
     }
 
     #endregion
