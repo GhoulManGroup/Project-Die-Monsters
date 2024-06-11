@@ -15,9 +15,7 @@ public class RunManager : MonoBehaviour
        // runDeck = GameManagerScript.instance.deckManager.DeckSlots[GameManagerScript.instance.deckManager.decksInPlay[0]];
         runProgress = 1;
         //Spawn Level .. Spawner Scriptable Object //
-
         //When Player Selects Level Node > Hide Everything but keep it running I guess:>
-
     }
 
 

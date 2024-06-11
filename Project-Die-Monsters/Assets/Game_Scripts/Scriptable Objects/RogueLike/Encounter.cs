@@ -11,7 +11,7 @@ public class Encounter : ScriptableObject
 
     public enum EncounterType
     {
-        Shop, Mystery, Easy, Medium, Hard, Boss
+       Start, Shop, Mystery, Easy, Medium, Hard, Boss
     }
 
 }

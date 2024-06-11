@@ -17,4 +17,15 @@ public class MapEncounter : MonoBehaviour
     {
         //Set sprites here among other setups
     }
+
+    public void ChosenNode()
+    {
+
+    }
+
+    public void EnableConnections()
+    {
+
+    }
+
 }

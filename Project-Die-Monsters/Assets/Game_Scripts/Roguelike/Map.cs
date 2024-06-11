@@ -14,6 +14,8 @@ public class Map : MonoBehaviour
 
     public List<GameObject> encounters = new List<GameObject>();
 
+    public MapEncounter startingNode;
+
     RunManager runManager;
 
     #region Setup
@@ -45,6 +47,9 @@ public class Map : MonoBehaviour
                 SpawnedObject.transform.SetParent(this.gameObject.transform.parent, true);
                 SpawnedObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(mapWidthLimit / 2 * 100, i * 100);
                 SpawnedObject.name = i.ToString();
+                startingNode = SpawnedObject.GetComponent<MapEncounter>();
+                SpawnedObject.GetComponent<MapEncounter>().myRow = i;
+                encounters.Add(SpawnedObject);
             }
             else if (i == mapHeightLimit)
             {
@@ -53,6 +58,8 @@ public class Map : MonoBehaviour
                 SpawnedObject.transform.SetParent(this.gameObject.transform.parent, true);
                 SpawnedObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(mapWidthLimit / 2 * 100, mapHeightLimit * 100);
                 SpawnedObject.name = i.ToString();
+                SpawnedObject.GetComponent<MapEncounter>().myRow = i;
+                encounters.Add(SpawnedObject);
             }
             else
             {
@@ -63,42 +70,50 @@ public class Map : MonoBehaviour
                     SpawnedObject.transform.SetParent(this.gameObject.transform.parent, true);
                     SpawnedObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(positionX * 100, i * 100);
                     SpawnedObject.name = i.ToString();
+                    SpawnedObject.GetComponent<MapEncounter>().myRow = i;
+                    encounters.Add(SpawnedObject);
+                    encounters.Add(SpawnedObject);
                 }
             }
-            SpawnedObject.GetComponent<MapEncounter>().myRow = i;
-            encounters.Add(SpawnedObject);
+
         }
+
+        ConnectMapNodes();
     }
 
         List<GameObject> currentRow = new List<GameObject>();
+
         List<GameObject> nextRow = new List<GameObject>();
     public void ConnectMapNodes()
     {
         //Chose a node starting from 0
         //Connect to every node.
 
-
-
-
         for (int i = 0; i < encounters.Count; i++)
         {
-            if (i == 0)
+            MapEncounter currentNode = encounters[i].GetComponent<MapEncounter>();
+
+            if (currentNode.myRow == 0)
             {
-                
-            }else if (i == mapHeightLimit)
+                //Find all nodes in row 1 and connect to starting node.
+                foreach (var item in encounters)
+                {
+                    if (item.GetComponent<MapEncounter>().myRow == 1)
+                    {
+                        currentNode.myConnections.Add(item);
+                    }
+                    else
+                    {
+                        //Do Nothing
+                    }
+                }
+            }else if (currentNode.myRow == mapHeightLimit)
             {
 
             }
-            else
-            {
 
-            }
+
         }
-    }
-
-    public void ConnectMe(GameObject connectThis)
-    {
-
     }
 
     #endregion
