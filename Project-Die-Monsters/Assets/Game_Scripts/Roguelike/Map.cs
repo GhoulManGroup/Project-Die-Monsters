@@ -81,9 +81,11 @@ public class Map : MonoBehaviour
         ConnectMapNodes();
     }
 
-        List<GameObject> currentRow = new List<GameObject>();
+    int rowValue = 0;
 
-        List<GameObject> nextRow = new List<GameObject>();
+    List<GameObject> currentRow = new List<GameObject>();
+
+    List<GameObject> nextRow = new List<GameObject>();
     public void ConnectMapNodes()
     {
         //Chose a node starting from 0
@@ -109,9 +111,18 @@ public class Map : MonoBehaviour
                 }
             }else if (currentNode.myRow == mapHeightLimit)
             {
-
+                // Do Nothing
             }
+            else
+            {
+                // find all encounters in this row , all encounters in the next row
+                for (int d = 0; d < encounters.Count; d++)
+                {
+                    if (encounters[d].GetComponent<MapEncounter>().myRow == current )
+                }
 
+                //Then make sure every node has atleast 1 row.
+            }
 
         }
     }
