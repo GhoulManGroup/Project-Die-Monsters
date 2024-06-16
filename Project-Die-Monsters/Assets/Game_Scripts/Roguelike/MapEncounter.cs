@@ -7,9 +7,13 @@ public class MapEncounter : MonoBehaviour
 {
     public List<GameObject> myConnections = new List<GameObject>();
 
+    bool isActive = false;
+
     public Encounter myEncounter;
 
-    public int myRow;
+    public int myFloor;
+    public int myPostion;
+
 
     public List<Sprite> encounterIcon = new List<Sprite>();
 

@@ -1,6 +1,10 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using static UnityEditor.Progress;
+
 
 public class Map : MonoBehaviour
 {
@@ -12,120 +16,93 @@ public class Map : MonoBehaviour
 
     [SerializeField] GameObject spawnNode;
 
-    public List<GameObject> encounters = new List<GameObject>();
+    private GameObject CurrentNode;
 
-    public MapEncounter startingNode;
+    [System.Serializable]
+    public class Floors
+    {
+        public List<GameObject> floorMapNodes = new List<GameObject>();
+    }
 
+    public List<Floors> floorList = new List<Floors>();
+    
     RunManager runManager;
 
     #region Setup
 
     private void Start()
     {
-        runManager = GameObject.FindGameObjectWithTag("RunManager").GetComponent<RunManager>();
-        SetDetails();
-        SpawnMapNodes();
+         runManager = GameObject.FindGameObjectWithTag("RunManager").GetComponent<RunManager>();
+         SetDetails();
+         SpawnMapNodes();
     }
+
 
     public void SetDetails()
     {
         mapHeightLimit = 4 + runManager.runProgress;
-        mapWidthLimit = 1 + runManager.runProgress;
+        mapWidthLimit = 4 + runManager.runProgress;
     }
 
+  //The slay the spire system is smarter than my dumb idea of trying to randomly spawn nodes and paths in random psoiton rather than its system whihc is more logical and smarter than me
     public void SpawnMapNodes()
     {
-        List<int> usedPositons = new List<int>();
-        GameObject SpawnedObject = null;
-
-        for (int i = 0; i <= mapHeightLimit; i++)
+        for (int i = 0; i <= mapHeightLimit -1; i++)
         {
-            if (i == 0)
-            {
-                // spawn in start spot
-                SpawnedObject = Instantiate(spawnNode, this.transform.position, Quaternion.identity);
-                SpawnedObject.transform.SetParent(this.gameObject.transform.parent, true);
-                SpawnedObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(mapWidthLimit / 2 * 100, i * 100);
-                SpawnedObject.name = i.ToString();
-                startingNode = SpawnedObject.GetComponent<MapEncounter>();
-                SpawnedObject.GetComponent<MapEncounter>().myRow = i;
-                encounters.Add(SpawnedObject);
-            }
-            else if (i == mapHeightLimit)
-            {
-                // spawn 1 in end spot Random.Range(1, this.GetComponent<RunManager>().runProgress + 1);
-                SpawnedObject = Instantiate(spawnNode,new Vector3(0f,0f,0f), Quaternion.identity);
-                SpawnedObject.transform.SetParent(this.gameObject.transform.parent, true);
-                SpawnedObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(mapWidthLimit / 2 * 100, mapHeightLimit * 100);
-                SpawnedObject.name = i.ToString();
-                SpawnedObject.GetComponent<MapEncounter>().myRow = i;
-                encounters.Add(SpawnedObject);
-            }
-            else
-            {
-                for (int j = 0; j < mapWidthLimit; j++)
-                {
-                    float positionX = Random.Range(0, mapWidthLimit);
-                    SpawnedObject = Instantiate(spawnNode, this.transform.position, Quaternion.identity);
-                    SpawnedObject.transform.SetParent(this.gameObject.transform.parent, true);
-                    SpawnedObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(positionX * 100, i * 100);
-                    SpawnedObject.name = i.ToString();
-                    SpawnedObject.GetComponent<MapEncounter>().myRow = i;
-                    encounters.Add(SpawnedObject);
-                    encounters.Add(SpawnedObject);
-                }
-            }
+            floorList.Add(new Floors());
 
+            for (int j = 0; j < mapWidthLimit -1; j++)
+            {
+                GameObject currentNode = Instantiate(spawnNode, new Vector3(j, i, 0), Quaternion.identity);
+                currentNode.GetComponent<MapEncounter>().myFloor = i;
+                currentNode.GetComponent<MapEncounter>().myPostion = j;
+                floorList[i].floorMapNodes.Add(currentNode);
+            }
         }
 
-        ConnectMapNodes();
+        int chosenNode = Random.RandomRange(0, mapWidthLimit - 1);
+
+        CurrentNode = floorList[0].floorMapNodes[chosenNode];
     }
 
-    int rowValue = 0;
 
-    List<GameObject> currentRow = new List<GameObject>();
-
-    List<GameObject> nextRow = new List<GameObject>();
-    public void ConnectMapNodes()
+    //Paths must only connect to node 1 down 1 up or above itself, may not go above if another apth is already going up from current node, first node must have two connections minmum all must connect to boss
+    public void GeneratePaths()
     {
-        //Chose a node starting from 0
-        //Connect to every node.
+        
+        // Choose nodes in the first floor thats value are within a range of the starting node to be out first connections
+        //Have those connections then chose two paths atleast that would not result in both targeting the same node.
 
-        for (int i = 0; i < encounters.Count; i++)
+
+        // Find Above MapNodes
+       // for(floorList[CurrentNode.])
+    }
+
+    public void ConnectNode()
+    {
+        MapEncounter myComp = CurrentNode.GetComponent<MapEncounter>();
+        GameObject Left;
+        GameObject Right;
+        GameObject Above;
+
+        Above = floorList[myComp.myFloor +1].floorMapNodes[myComp.myPostion];
+        if (myComp.myPostion != 0)
         {
-            MapEncounter currentNode = encounters[i].GetComponent<MapEncounter>();
-
-            if (currentNode.myRow == 0)
-            {
-                //Find all nodes in row 1 and connect to starting node.
-                foreach (var item in encounters)
-                {
-                    if (item.GetComponent<MapEncounter>().myRow == 1)
-                    {
-                        currentNode.myConnections.Add(item);
-                    }
-                    else
-                    {
-                        //Do Nothing
-                    }
-                }
-            }else if (currentNode.myRow == mapHeightLimit)
-            {
-                // Do Nothing
-            }
-            else
-            {
-                // find all encounters in this row , all encounters in the next row
-                for (int d = 0; d < encounters.Count; d++)
-                {
-                    if (encounters[d].GetComponent<MapEncounter>().myRow == current )
-                }
-
-                //Then make sure every node has atleast 1 row.
-            }
+            Left = floorList[myComp.myFloor + 1].floorMapNodes[myComp.myPostion -1];
+        }
+        if (myComp.myPostion != mapWidthLimit)
+        {
 
         }
+
+
+    }
+    //Have a nice visual thing where all the encoutners are dice and they roll which encoutner they are at the start of the level.
+    public void AssignEncoutners()
+    {
+
     }
 
     #endregion
+
 }
