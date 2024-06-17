@@ -16,7 +16,7 @@ public class Map : MonoBehaviour
 
     [SerializeField] GameObject spawnNode;
 
-    private GameObject CurrentNode;
+    [SerializeField] GameObject CurrentNode;
 
     [System.Serializable]
     public class Floors
@@ -54,8 +54,11 @@ public class Map : MonoBehaviour
             for (int j = 0; j < mapWidthLimit -1; j++)
             {
                 GameObject currentNode = Instantiate(spawnNode, new Vector3(j, i, 0), Quaternion.identity);
+                currentNode.transform.SetParent(this.gameObject.transform.parent, true);
+                currentNode.GetComponent<RectTransform>().anchoredPosition = new Vector2(j * 175, i * 175);
+                currentNode.name = i.ToString();
                 currentNode.GetComponent<MapEncounter>().myFloor = i;
-                currentNode.GetComponent<MapEncounter>().myPostion = j;
+                currentNode.GetComponent<MapEncounter>().myPostion = j +1;
                 floorList[i].floorMapNodes.Add(currentNode);
             }
         }
@@ -63,13 +66,16 @@ public class Map : MonoBehaviour
         int chosenNode = Random.RandomRange(0, mapWidthLimit - 1);
 
         CurrentNode = floorList[0].floorMapNodes[chosenNode];
+
+        GeneratePaths();
     }
 
 
     //Paths must only connect to node 1 down 1 up or above itself, may not go above if another apth is already going up from current node, first node must have two connections minmum all must connect to boss
     public void GeneratePaths()
     {
-        
+        StartCoroutine(ConnectNode(3));
+
         // Choose nodes in the first floor thats value are within a range of the starting node to be out first connections
         //Have those connections then chose two paths atleast that would not result in both targeting the same node.
 
@@ -78,25 +84,53 @@ public class Map : MonoBehaviour
        // for(floorList[CurrentNode.])
     }
 
-    public void ConnectNode()
+
+    [SerializeField] GameObject Left;
+    [SerializeField] GameObject Right;
+    [SerializeField] GameObject Above;
+
+    public IEnumerator ConnectNode(int nodesToConnect)
     {
         MapEncounter myComp = CurrentNode.GetComponent<MapEncounter>();
-        GameObject Left;
-        GameObject Right;
-        GameObject Above;
+
 
         Above = floorList[myComp.myFloor +1].floorMapNodes[myComp.myPostion];
+
         if (myComp.myPostion != 0)
         {
             Left = floorList[myComp.myFloor + 1].floorMapNodes[myComp.myPostion -1];
         }
-        if (myComp.myPostion != mapWidthLimit)
+        if (myComp.myPostion != mapWidthLimit -1)
         {
-
+            Right = floorList[myComp.myFloor + 1].floorMapNodes[myComp.myPostion + 1];
         }
 
+        while (myComp.myConnections.Count < nodesToConnect)
+        {
+            yield return null;
+
+            int pickNode = Random.RandomRange(1, 4);
+
+            Debug.Log(pickNode);
+
+            if (pickNode == 1 && Right != null && !myComp.myConnections.Contains(Right))
+            {
+                myComp.myConnections.Add(Right);
+            }
+
+            else if (pickNode == 2 && Above != null && !myComp.myConnections.Contains(Above))
+            {
+                myComp.myConnections.Add(Above);
+            }
+
+            else if (pickNode == 3 && Left != null && !myComp.myConnections.Contains(Left))
+            {
+                myComp.myConnections.Add(Left);
+            }
+        }
 
     }
+
     //Have a nice visual thing where all the encoutners are dice and they roll which encoutner they are at the start of the level.
     public void AssignEncoutners()
     {
