@@ -18,6 +18,8 @@ public class Map : MonoBehaviour
 
     [SerializeField] GameObject CurrentNode;
 
+    [SerializeField] GameObject BossRoom;
+
     [System.Serializable]
     public class Floors
     {
@@ -56,7 +58,7 @@ public class Map : MonoBehaviour
                 GameObject currentNode = Instantiate(spawnNode, new Vector3(j, i, 0), Quaternion.identity);
                 currentNode.transform.SetParent(this.gameObject.transform.parent, true);
                 currentNode.GetComponent<RectTransform>().anchoredPosition = new Vector2(j * 175, i * 175);
-                currentNode.name = i.ToString();
+                currentNode.name = i.ToString() + " " + j.ToString();
                 currentNode.GetComponent<MapEncounter>().myFloor = i;
                 currentNode.GetComponent<MapEncounter>().myPostion = j +1;
                 floorList[i].floorMapNodes.Add(currentNode);
@@ -89,23 +91,29 @@ public class Map : MonoBehaviour
     [SerializeField] GameObject Right;
     [SerializeField] GameObject Above;
 
-    public IEnumerator ConnectNode(int nodesToConnect)
+    public IEnumerator ConnectNode(int connectionsToMake)
     {
         MapEncounter myComp = CurrentNode.GetComponent<MapEncounter>();
 
-
-        Above = floorList[myComp.myFloor +1].floorMapNodes[myComp.myPostion];
-
-        if (myComp.myPostion != 0)
+        if (myComp.myFloor != mapHeightLimit - 1)
         {
-            Left = floorList[myComp.myFloor + 1].floorMapNodes[myComp.myPostion -1];
+            Above = floorList[myComp.myFloor + 1].floorMapNodes[myComp.myPostion - 1];
+
+            if (myComp.myPostion != 0)
+            {
+                Left = floorList[myComp.myFloor + 1].floorMapNodes[myComp.myPostion - 2];
+            }
+            if (myComp.myPostion != mapWidthLimit - 1)
+            {
+                Right = floorList[myComp.myFloor + 1].floorMapNodes[myComp.myPostion];
+            }
         }
-        if (myComp.myPostion != mapWidthLimit -1)
+        else if (myComp.myFloor == mapHeightLimit - 1)
         {
-            Right = floorList[myComp.myFloor + 1].floorMapNodes[myComp.myPostion + 1];
+            //Connect only to the boss room
         }
 
-        while (myComp.myConnections.Count < nodesToConnect)
+        while (myComp.myConnections.Count < connectionsToMake)
         {
             yield return null;
 
@@ -116,16 +124,18 @@ public class Map : MonoBehaviour
             if (pickNode == 1 && Right != null && !myComp.myConnections.Contains(Right))
             {
                 myComp.myConnections.Add(Right);
-            }
+                Right.GetComponent<MapEncounter>().connectionsToMake += 1;            }
 
             else if (pickNode == 2 && Above != null && !myComp.myConnections.Contains(Above))
             {
                 myComp.myConnections.Add(Above);
+                Above.GetComponent<MapEncounter>().connectionsToMake += 1;
             }
 
             else if (pickNode == 3 && Left != null && !myComp.myConnections.Contains(Left))
             {
                 myComp.myConnections.Add(Left);
+                Left.GetComponent<MapEncounter>().connectionsToMake += 1;
             }
         }
 

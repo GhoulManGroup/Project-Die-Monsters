@@ -12,8 +12,10 @@ public class MapEncounter : MonoBehaviour
     public Encounter myEncounter;
 
     public int myFloor;
+
     public int myPostion;
 
+    public int connectionsToMake = 0;
 
     public List<Sprite> encounterIcon = new List<Sprite>();
 
